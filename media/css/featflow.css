@@ -1,0 +1,236 @@
+body {
+    background-image: url(background.png);
+    background-repeat: repeat-both;
+}
+
+.container {
+    background-image: url(background.png);
+    background-repeat: repeat-both;
+}
+
+#wrapper {
+    background: white;
+    border-top: 3px solid #5664f9;
+    box-shadow: 8px 8px 8px black;
+}
+
+#header {
+/*
+    background-image: url(header.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+*/
+    background-color: none;
+}
+
+#header img {
+    width: 100%;
+}
+
+#header h1 {
+    display: none;
+}
+
+#footer {
+    padding-top: 1.5em;
+    border-top: 1px dotted black;
+}
+
+#links {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  text-align: right;
+  margin-top: -2.99em;
+}
+
+#links a {
+    padding: 1em 1em 0 1em;
+    background-color: white;
+    color: #666;
+    display: inline-block;
+    font-weight: bold;
+    text-decoration: none;
+    border-top: 4px solid #999;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 8px 8px 8px black;
+}
+
+#links a:hover {
+    background-color: #cbcc9a;
+    color: black;
+}
+
+#menu {
+  padding: 1em;
+  /*text-shadow: 3px 3px 3px #999;*/
+}
+
+#menu a {
+    border-left: 1px solid silver;
+    color: #666;
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    padding-left: 14px;
+    background-image: url(tree-item.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+#menu a:hover {
+    background-color: #cbcc9a;
+    color: black;
+}
+
+.submenu {
+    border-left: 1px solid silver;
+    padding-left: 14px;
+    padding-bottom: 0.5em;
+}
+
+.submenu:last-child {
+    border-left: none;
+}
+
+p {
+    text-align: justify;
+}
+
+dt { color: #666; margin-top: 1.5em; border-bottom: 1px solid silver; }
+dd { text-align: justify; }
+
+/*
+h1, h2, h3, h4, h5, h6 { color:#5664f9; font-weight: bold; }
+*/
+
+#content > h1, #content > h2 { margin-top: 2em; }
+
+#content > h1+h2 { margin-top: 1em; }
+
+#content > #breadcrumbs+hr+h1 { margin-top: 0em; }
+
+.address {
+    display: inline-block; 
+    white-space: pre;
+}
+
+.label {
+    display: inline-block;
+    font-weight: bold;
+    padding-right: 1em;
+    text-align: right;
+    width: 6em;
+    vertical-align: top;
+}
+
+.math { font-style: italic; }
+.MathJax .math { font-style: normal !important; }
+.displaymath { text-align: center; }
+.equation { text-align: center;  margin-bottom: 1.5em; }
+.selected { background: #eee; }
+table { border: 1px solid silver; border-top: 3px solid silver; }
+table td { vertical-align: top; }
+table th { font-weight: bold; }
+
+div.Gallery
+{
+  border: 1px solid #999999;
+  padding: 0;
+  margin: 10px;
+  font-size: 12px;
+}
+
+div.Gallery ul {
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  background: #eee;
+  margin: 0 0 20px 0;
+  height: 20px;
+  border-bottom: 1px solid #ddd;
+  display: block;
+  text-align: center;
+}
+
+div.Gallery ul li {
+  display: inline;
+  padding: 4px 5px;
+}
+
+div.Gallery img
+{
+  max-width: 100%;
+  height: auto;
+}
+
+div.Gallery a
+{
+  color: #999999;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+div.Gallery a:hover
+{
+  color: #5664f8;
+}
+
+div.Gallery .picture
+{
+  text-align: center;
+}
+
+div.Gallery .caption
+{
+  margin: 20px 0 0 0;
+  text-align: center;
+  background: #eee;
+  border-top: 1px solid #ddd;
+}
+
+a.tooltip { position: relative; }
+a.tooltip span { display: none; }
+a.tooltip:hover span { display: block; position: absolute; width: 250px; top: 4em; left: 0; z-index: 20; border: 1px solid silver; padding: 0.5em; text-align: justify; color: #666; background: white; font-weight: normal; font-size: 80%; }
+
+table.Contact tr td:first-child {
+  width: 6em;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 1em;
+}
+
+.sc {
+  font-variant: small-caps;
+}
+
+.todo {
+  background: orange;
+  color: black;
+  font-weight: bold;
+  padding: 1em;
+}
+
+ul {
+  list-style-type: square;
+}
+
+.plain tbody td, .plain tbody tr:nth-child(even) td, .plain tbody tr.even td {
+  background: inherit;
+}
+
+caption {
+  background: silver;
+  font-weight: bold;
+}
+
+pre {
+  background: #eee;
+  padding: 1em;
+  border: 1px solid silver;
+  border-left: 5px solid silver;
+  border-right: 5px solid silver;
+}
+
+.center { text-align: center; }

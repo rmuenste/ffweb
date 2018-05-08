@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+"http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>The Virtual Album of Fluid Motion </TITLE>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta name="description" content="The Virtual Album of Fluid Motion">
+<meta name="author" content="Stefan Turek/Susanne Kilian">
+<meta name="keywords" content="High Performance Computing, Finite Elements, Scientific Computing, Numerical Simulation, Computational Fluid Dynamics, Parallelization, Scientific Visualization, Multimedia, Virtual Album, Partial Differential Equations, Navier-Stokes Equations, Incompressible Flows, Stationary flows, Nonstationary Flows, Mesh Generation, Multigrid, Virtual Flow Laboratory">
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<SCRIPT type="text/javascript" language="JavaScript">
+<!--
+menu10 = new Image;
+menu20 = new Image;
+menu30 = new Image;
+menu40 = new Image;
+menu50 = new Image;
+menu60 = new Image;
+menu70 = new Image;
+menu80 = new Image;
+menu90 = new Image;
+
+menu11 = new Image;
+menu21 = new Image;
+menu31 = new Image;
+menu41 = new Image;
+menu51 = new Image;
+menu61 = new Image;
+menu71 = new Image;
+menu81 = new Image;
+menu91 = new Image;
+
+menu10.src="icons/contact01.png";
+menu20.src="icons/featflow01.png";
+menu30.src="icons/video01.png";
+menu40.src="icons/introduction01.png";
+menu50.src="icons/cfd01.png";
+menu60.src="icons/outlook01.png";
+menu70.src="icons/motivation01.png";
+menu80.src="icons/contents01.png";
+menu90.src="icons/state01.png";
+
+menu11.src="icons/contact02.png";
+menu21.src="icons/featflow02.png";
+menu31.src="icons/video02.png";
+menu41.src="icons/introduction02.png";
+menu51.src="icons/cfd02.png";
+menu61.src="icons/outlook02.png";
+menu71.src="icons/motivation02.png";
+menu81.src="icons/contents02.png";
+menu91.src="icons/state02.png";
+
+if(top.frames.length > 0)
+top.location.href=self.location;
+//-->
+</SCRIPT>               
+
+</HEAD>
+
+<BODY BGCOLOR="#d6f1ff" LINK="#d6f1ff" VLINK="#151389">
+
+
+
+<TABLE ALIGN=CENTER BORDER=0 cellspacing=0 cellpadding=0>
+
+<TR>
+	<TD ALIGN=Center COLSPAN=3 WIDTH=600 HEIGHT=80>
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/title11.png" ALT="The Virtual Album of Fluid Motion" BORDER=0 WIDTH=600 HEIGHT=80><BR>
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN=Center WIDTH="200" HEIGHT="520">
+
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/back11.png" WIDTH="200" HEIGHT="80" ALT="" BORDER=0><BR>
+                <A HREF="http://www.mathematik.uni-dortmund.de/~featflow/album/contact.html" 
+                        onmouseover="menu1.src=menu11.src"
+                        onmouseout="menu1.src=menu10.src">    
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/contact01.png" WIDTH="200" HEIGHT="80" 
+			ALT="Contact" BORDER=0 NAME=menu1></A><BR>
+
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/back21.png" WIDTH="200" HEIGHT="60" ALT="" BORDER=0><BR>
+                <A HREF="http://www.mathematik.uni-dortmund.de/~featflow/index.html" 
+                        onmouseover="menu2.src=menu21.src"
+                        onmouseout="menu2.src=menu20.src">    
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/featflow01.png" WIDTH="200" HEIGHT="80" 
+			ALT="Featflow Home Page" BORDER=0 NAME=menu2></A><BR>
+
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/back31.png" WIDTH="200" HEIGHT="60" ALT="" BORDER=0><BR>
+                <A HREF="http://www.mathematik.uni-dortmund.de/~featflow/album/video.html" 
+                        onmouseover="menu3.src=menu31.src"
+                        onmouseout="menu3.src=menu30.src">    
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/video01.png" WIDTH="200" HEIGHT="80" 
+			ALT="New Videos" BORDER=0 NAME=menu3></A><BR>
+
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/back41.png" WIDTH="200" HEIGHT="80" ALT="" BORDER=0><BR>
+	</TD>
+
+
+	<TD ALIGN=Center WIDTH="200" HEIGHT="520">
+
+                <A HREF="http://www.mathematik.uni-dortmund.de/~featflow/album/introduction.html" 
+                        onmouseover="menu4.src=menu41.src"
+                        onmouseout="menu4.src=menu40.src">    
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/introduction01.png" WIDTH="200" HEIGHT="80" 
+			ALT="Introduction" BORDER=0 NAME=menu4></A><BR>
+
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/cfd_up.png" WIDTH="200" HEIGHT="80" ALT="" BORDER=0><BR>
+
+                <A HREF="http://www.mathematik.uni-dortmund.de/~featflow/album/catalog/cfd_high_2d/temp2_shad.mpeg" 
+                        onmouseover="menu5.src=menu51.src"
+                        onmouseout="menu5.src=menu50.src">    
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/cfd01.png" WIDTH="200" HEIGHT="200" 
+			ALT="Demo of flow around the characters CFD (2.5MB)" BORDER=0 NAME=menu5></A><BR>
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/cfd_down.png" WIDTH="200" HEIGHT="80" ALT="" BORDER=0><BR>
+
+                <A HREF="http://www.mathematik.uni-dortmund.de/~featflow/album/outlook.html" 
+                        onmouseover="menu6.src=menu61.src"
+                        onmouseout="menu6.src=menu60.src">    
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/outlook01.png" WIDTH="200" HEIGHT="80" 
+			ALT="Outlook" BORDER=0 NAME=menu6></A><BR>
+	</TD>
+
+	<TD ALIGN=Center WIDTH="200" HEIGHT="520">
+
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/back12.png" WIDTH="200" HEIGHT="80" ALT="" BORDER=0><BR>
+
+                <A HREF="http://www.mathematik.uni-dortmund.de/~featflow/album/motivation.html" 
+                        onmouseover="menu7.src=menu71.src"
+                        onmouseout="menu7.src=menu70.src">    
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/motivation01.png" WIDTH="200" HEIGHT="80" 
+			ALT="Motivation" BORDER=0 NAME=menu7></A><BR>
+
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/back22.png" WIDTH="200" HEIGHT="60" ALT="" BORDER=0><BR>
+                <A HREF="http://www.mathematik.uni-dortmund.de/~featflow/album/contents.html" 
+                        onmouseover="menu8.src=menu81.src"
+                        onmouseout="menu8.src=menu80.src">    
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/contents01.png" WIDTH="200" HEIGHT="80" 
+			ALT="Contents" BORDER=0 NAME=menu8></A><BR>
+
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/back32.png" WIDTH="200" HEIGHT="60" ALT="" BORDER=0><BR>
+                <A HREF="http://www.mathematik.uni-dortmund.de/~featflow/album/state.html" 
+                        onmouseover="menu9.src=menu91.src"
+                        onmouseout="menu9.src=menu90.src">    
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/state01.png" WIDTH="200" HEIGHT="80" 
+			ALT="Current State" BORDER=0 NAME=menu9></A><BR>
+
+        	<IMG SRC="http://www.mathematik.uni-dortmund.de/~featflow/album/icons/back42.png" WIDTH="200" HEIGHT="80" ALT="" BORDER=0><BR>
+	</TD>
+</TR>
+
+
+
+</TABLE>
+
+</BODY>
+</HTML>
+
+
+
+
+
