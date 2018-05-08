@@ -1,0 +1,1580 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>PP3D - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../index.html">Home</a>
+  <a href="../../contact.html">Contact</a><a href="../../software.html">Software</a><div class="submenu"><a href="../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../software/featflow.html">FEATFLOW</a><a href="../../software/featflow2.html">FEATFLOW2</a><a href="../../software/parpp3d.html">parPP3D</a><a href="../../software/documentation.html">Documentation</a></div><a href="../../team.html">Team</a><a href="../../links.html">Links</a><div class="submenu"><a href="../../links/websites.html">Websites</a><a href="../../links/software_links.html">Software</a></div><a href="../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../ff_benchmarks.html" class="selected">FeatFlow Benchmark Suite</a><div class="submenu"><a href="cc2d.html">CC2D</a><a href="cc3d.html">CC3D</a><a href="pp2d.html">PP2D</a><a href="pp3d.html" class="selected">PP3D</a></div><a href="../cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../publications.html">Publications</a><a href="../../services.html">Services</a><div class="submenu"><a href="../../services/cdrom.html">CD-ROM</a><a href="../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../news.html">News</a><a href="../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../index.html">Home</a> » <a href="../../benchmarks.html">Benchmarks</a> » <a href="../ff_benchmarks.html">FeatFlow Benchmark Suite</a> » <a href="pp3d.html">PP3D</a>  </div>
+
+  <hr />
+
+  <h2>PP3D</h2>
+<ul class="List">
+<li><a href="pp3d.html#streamline">PP3D, streamline diffusion</a></li>
+<li><a href="pp3d.html#upwinding">PP3D, upwinding</a></li>
+</ul>
+<hr />
+<h3 id="streamline">The PP3D benchmarks, streamline diffusion</h3>
+<h4>Results for nonsteady test case PP3D-SD</h4>
+<table class="Basic" border="0">
+<thead> 
+<tr>
+<th>Type</th> <th align="right">total</th> <th align="right">PRO</th> <th align="right">LC</th> <th align="right">ILU</th> <th align="right">MAT</th> <th align="right">U-MG</th> <th align="right">P-MG</th>
+</tr>
+</thead> 
+<tbody>
+<tr class="One" valign="top">
+<td title="pc64-i7-linux-icc">Intel Core i7 X980/IFC (3333 GHz)</td>
+<td align="right"><strong>116</strong></td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">18</td>
+<td align="right">34</td>
+<td align="right">44</td>
+<td align="right">16</td>
+</tr>
+<tr class="Two" valign="top">
+<td>Intel Core i7 X980/GCC (3333 GHz)</td>
+<td align="right"><strong>131</strong></td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">17</td>
+<td align="right">56</td>
+<td align="right">38</td>
+<td align="right">14</td>
+</tr>
+<tr class="One" valign="top">
+<td title="pc64-i7-linux-icc">Intel Xeon E5520 (2270 MHz)</td>
+<td align="right"><strong>191</strong></td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">30</td>
+<td align="right">76</td>
+<td align="right">57</td>
+<td align="right">21</td>
+</tr>
+<tr class="Two">
+<td>Intel Core2 Duo Linux/IFC (2400 MHz)</td>
+<td align="right"><strong>212</strong></td>
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="right">32</td>
+<td align="right">65</td>
+<td align="right">76</td>
+<td align="right">27</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Xeon Linux/IFC (3600 MHz)</td>
+<td align="right"><strong>317</strong></td>
+<td align="right">1</td>
+<td align="right">14</td>
+<td align="right">38</td>
+<td align="right">107</td>
+<td align="right">118</td>
+<td align="right">40</td>
+</tr>
+<tr class="Two">
+<td>AMD Opteron 852 Linux/PathScale (2600 MHz)</td>
+<td align="right"><strong>353</strong></td>
+<td align="right">1</td>
+<td align="right">14</td>
+<td align="right">36</td>
+<td align="right">117</td>
+<td align="right">132</td>
+<td align="right">53</td>
+</tr>
+<tr class="One">
+<td>IBM Power4/64bit (1700 MHz)</td>
+<td align="right"><strong>391</strong></td>
+<td align="right">1</td>
+<td align="right">15</td>
+<td align="right">55</td>
+<td align="right">145</td>
+<td align="right">126</td>
+<td align="right">49</td>
+</tr>
+<tr class="Two">
+<td>IBM Power4/32bit (1700 MHz)</td>
+<td align="right"><strong>397</strong></td>
+<td align="right">1</td>
+<td align="right">14</td>
+<td align="right">53</td>
+<td align="right">163</td>
+<td align="right">119</td>
+<td align="right">46</td>
+</tr>
+<tr class="One">
+<td>AMD Opteron 250 Linux/GCC/<a href="http://www.cs.utexas.edu/users/flame/goto/">Goto</a> (2400 MHz)</td>
+<td align="right"><strong>404</strong></td>
+<td align="right">2</td>
+<td align="right">16</td>
+<td align="right">38</td>
+<td align="right">150</td>
+<td align="right">140</td>
+<td align="right">57</td>
+</tr>
+<tr class="Two">
+<td>HP Itanium II HPUX (1600 MHz)</td>
+<td align="right"><strong>412</strong></td>
+<td align="right">1</td>
+<td align="right">17</td>
+<td align="right">44</td>
+<td align="right">144</td>
+<td align="right">144</td>
+<td align="right">63</td>
+</tr>
+<tr class="One">
+<td>AMD Opteron 248 Linux/GCC/<a href="http://www.cs.utexas.edu/users/flame/goto/">Goto</a> (2200 MHz)</td>
+<td align="right"><strong>432</strong></td>
+<td align="right">1</td>
+<td align="right">17</td>
+<td align="right">41</td>
+<td align="right">162</td>
+<td align="right">149</td>
+<td align="right">60</td>
+</tr>
+<tr class="Two">
+<td>HP Itanium II Linux/IFC (1500 MHz)</td>
+<td align="right"><strong>476</strong></td>
+<td align="right">1</td>
+<td align="right">20</td>
+<td align="right">53</td>
+<td align="right">195</td>
+<td align="right">145</td>
+<td align="right">62</td>
+</tr>
+<tr class="One">
+<td>IBM Power4 (1300 MHz)</td>
+<td align="right"><strong>477</strong></td>
+<td align="right">2</td>
+<td align="right">20</td>
+<td align="right">67</td>
+<td align="right">177</td>
+<td align="right">150</td>
+<td align="right">62</td>
+</tr>
+<tr class="Two">
+<td>HP Itanium II HPUX (1500 MHz)</td>
+<td align="right"><strong>520</strong></td>
+<td align="right">2</td>
+<td align="right">23</td>
+<td align="right">50</td>
+<td align="right">170</td>
+<td align="right">192</td>
+<td align="right">83</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Xeon Linux/GCC (3000 MHz)</td>
+<td align="right"><strong>534</strong></td>
+<td align="right">2</td>
+<td align="right">25</td>
+<td align="right">46</td>
+<td align="right">223</td>
+<td align="right">179</td>
+<td align="right">59</td>
+</tr>
+<tr class="Two">
+<td>IBM Power5 Linux/GCC (1650 MHz)</td>
+<td align="right"><strong>542</strong></td>
+<td align="right">2</td>
+<td align="right">20</td>
+<td align="right">61</td>
+<td align="right">251</td>
+<td align="right">150</td>
+<td align="right">58</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Linux/GCC (2600 MHz)</td>
+<td align="right"><strong>545</strong></td>
+<td align="right">2</td>
+<td align="right">23</td>
+<td align="right">46</td>
+<td align="right">239</td>
+<td align="right">166</td>
+<td align="right">69</td>
+</tr>
+<tr class="Two">
+<td>Intel Itanium II Linux/IFC (1400 MHz)</td>
+<td align="right"><strong>552</strong></td>
+<td align="right">2</td>
+<td align="right">24</td>
+<td align="right">61</td>
+<td align="right">211</td>
+<td align="right">176</td>
+<td align="right">78</td>
+</tr>
+<tr class="One">
+<td>AMD Opteron 242 Linux/GCC (1800 MHz)</td>
+<td align="right"><strong>590</strong></td>
+<td align="right">2</td>
+<td align="right">23</td>
+<td align="right">55</td>
+<td align="right">229</td>
+<td align="right">204</td>
+<td align="right">76</td>
+</tr>
+<tr class="Two">
+<td>DEC 21364 ES47 (1000 MHz)</td>
+<td align="right"><strong>599</strong></td>
+<td align="right">2</td>
+<td align="right">24</td>
+<td align="right">66</td>
+<td align="right">222</td>
+<td align="right">193</td>
+<td align="right">92</td>
+</tr>
+<tr class="One">
+<td>AMD Athlon XP Linux/GCC (2080 MHz)</td>
+<td align="right"><strong>707</strong></td>
+<td align="right">2</td>
+<td align="right">30</td>
+<td align="right">54</td>
+<td align="right">200</td>
+<td align="right">297</td>
+<td align="right">122</td>
+</tr>
+<tr class="Two">
+<td>DEC 21264C ES45 (1000 MHz)</td>
+<td align="right"><strong>722</strong></td>
+<td align="right">2</td>
+<td align="right">29</td>
+<td align="right">71</td>
+<td align="right">266</td>
+<td align="right">256</td>
+<td align="right">98</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Linux/IFC/ATLAS (2600 MHz)</td>
+<td align="right"><strong>811</strong></td>
+<td align="right">2</td>
+<td align="right">31</td>
+<td align="right">72</td>
+<td align="right">263</td>
+<td align="right">313</td>
+<td align="right">129</td>
+</tr>
+<tr class="Two">
+<td>Intel P4 Linux/GCC (2600 MHz)</td>
+<td align="right"><strong>874</strong></td>
+<td align="right">3</td>
+<td align="right">37</td>
+<td align="right">65</td>
+<td align="right">255</td>
+<td align="right">366</td>
+<td align="right">146</td>
+</tr>
+<tr class="One">
+<td>DEC 21264B ES40 (833 MHz)</td>
+<td align="right"><strong>903</strong></td>
+<td align="right">2</td>
+<td align="right">43</td>
+<td align="right">94</td>
+<td align="right">267</td>
+<td align="right">376</td>
+<td align="right">119</td>
+</tr>
+<tr class="Two">
+<td>DEC 21264A ES40 (667 MHz)</td>
+<td align="right"><strong>942</strong></td>
+<td align="right">3</td>
+<td align="right">40</td>
+<td align="right">101</td>
+<td align="right">327</td>
+<td align="right">341</td>
+<td align="right">129</td>
+</tr>
+<tr class="One">
+<td>HP PA-RISC 8700 HPUX (550 MHz)</td>
+<td align="right"><strong>1027</strong></td>
+<td align="right">3</td>
+<td align="right">41</td>
+<td align="right">102</td>
+<td align="right">334</td>
+<td align="right">400</td>
+<td align="right">146</td>
+</tr>
+<tr class="Two">
+<td>Intel P4 Linux/IFC/ATLAS (1700 MHz)</td>
+<td align="right"><strong>1041</strong></td>
+<td align="right">3</td>
+<td align="right">40</td>
+<td align="right">98</td>
+<td align="right">403</td>
+<td align="right">360</td>
+<td align="right">135</td>
+</tr>
+<tr class="One">
+<td>Intel P4 WinXP/Salford F77 (2400 MHz)</td>
+<td align="right"><strong>1114</strong></td>
+<td align="right">4</td>
+<td align="right">39</td>
+<td align="right">74</td>
+<td align="right">457</td>
+<td align="right">387</td>
+<td align="right">152</td>
+</tr>
+<tr class="Two">
+<td>AMD Athlon XP Linux/IFC (1343 MHz)</td>
+<td align="right"><strong>1227</strong></td>
+<td align="right">3</td>
+<td align="right">51</td>
+<td align="right">89</td>
+<td align="right">315</td>
+<td align="right">542</td>
+<td align="right">224</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Linux/IFC (1700 MHz)</td>
+<td align="right"><strong>1265</strong></td>
+<td align="right">4</td>
+<td align="right">54</td>
+<td align="right">89</td>
+<td align="right">344</td>
+<td align="right">551</td>
+<td align="right">222</td>
+</tr>
+<tr class="Two">
+<td>Apple G4 OSX/GCC (1500 MHz)</td>
+<td align="right"><strong>1393</strong></td>
+<td align="right">5</td>
+<td align="right">70</td>
+<td align="right">89</td>
+<td align="right">336</td>
+<td align="right">628</td>
+<td align="right">262</td>
+</tr>
+<tr class="One">
+<td>Sun UltraSparc IIICu (1015 MHz)</td>
+<td align="right"><strong>1413</strong></td>
+<td align="right">4</td>
+<td align="right">45</td>
+<td align="right">105</td>
+<td align="right">381</td>
+<td align="right">680</td>
+<td align="right">196</td>
+</tr>
+<tr class="Two">
+<td>AMD Athlon XPM Linux/GCC (1327 MHz)</td>
+<td align="right"><strong>1435</strong></td>
+<td align="right">4</td>
+<td align="right">61</td>
+<td align="right">106</td>
+<td align="right">322</td>
+<td align="right">671</td>
+<td align="right">270</td>
+</tr>
+<tr class="One">
+<td>AMD Athlon Linux/IFC (1200 MHz)</td>
+<td align="right"><strong>1470</strong></td>
+<td align="right">4</td>
+<td align="right">53</td>
+<td align="right">106</td>
+<td align="right">365</td>
+<td align="right">683</td>
+<td align="right">258</td>
+</tr>
+<tr class="Two">
+<td>DEC 21264 WS (500 MHz)</td>
+<td align="right"><strong>1476</strong></td>
+<td align="right">4</td>
+<td align="right">66</td>
+<td align="right">146</td>
+<td align="right">504</td>
+<td align="right">530</td>
+<td align="right">224</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Linux/GCC (1700 MHz)</td>
+<td align="right"><strong>1526</strong></td>
+<td align="right">5</td>
+<td align="right">72</td>
+<td align="right">126</td>
+<td align="right">533</td>
+<td align="right">563</td>
+<td align="right">226</td>
+</tr>
+<tr class="Two">
+<td>Sun UltraSparc IIICu (900 MHz)</td>
+<td align="right"><strong>1594</strong></td>
+<td align="right">2</td>
+<td align="right">46</td>
+<td align="right">120</td>
+<td align="right">460</td>
+<td align="right">754</td>
+<td align="right">207</td>
+</tr>
+<tr class="One">
+<td>Intel PIII Linux/IFC (1000 MHz)</td>
+<td align="right"><strong>1640</strong></td>
+<td align="right">5</td>
+<td align="right">72</td>
+<td align="right">126</td>
+<td align="right">500</td>
+<td align="right">673</td>
+<td align="right">263</td>
+</tr>
+<tr class="Two">
+<td>Intel Itanium IA-64 (800 MHz)</td>
+<td align="right"><strong>1653</strong></td>
+<td align="right">4</td>
+<td align="right">46</td>
+<td align="right">164</td>
+<td align="right">530</td>
+<td align="right">674</td>
+<td align="right">234</td>
+</tr>
+<tr class="One">
+<td>Sun UltraSPARC-III (750 MHz)</td>
+<td align="right"><strong>2131</strong></td>
+<td align="right">5</td>
+<td align="right">84</td>
+<td align="right">153</td>
+<td align="right">551</td>
+<td align="right">1046</td>
+<td align="right">290</td>
+</tr>
+<tr class="Two">
+<td>IBM PWR3 (200 MHZ)</td>
+<td align="right"><strong>2178</strong></td>
+<td align="right">7</td>
+<td align="right">91</td>
+<td align="right">272</td>
+<td align="right">810</td>
+<td align="right">711</td>
+<td align="right">285</td>
+</tr>
+<tr class="One">
+<td>AMD K7 700 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>2301</strong></td>
+<td align="right">7</td>
+<td align="right">91</td>
+<td align="right">190</td>
+<td align="right">619</td>
+<td align="right">999</td>
+<td align="right">394</td>
+</tr>
+<tr class="Two">
+<td>Hitachi SR8000 (375 MHz) single mode</td>
+<td align="right"><strong>2380</strong></td>
+<td align="right">7</td>
+<td align="right">60</td>
+<td align="right">331</td>
+<td align="right">853</td>
+<td align="right">826</td>
+<td align="right">302</td>
+</tr>
+<tr class="One">
+<td>IBM POWER2SC (170 MHZ)</td>
+<td align="right"><strong>2748</strong></td>
+<td align="right">10</td>
+<td align="right">94</td>
+<td align="right">271</td>
+<td align="right">1212</td>
+<td align="right">812</td>
+<td align="right">347</td>
+</tr>
+<tr class="Two">
+<td>AMD K7 500 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>2977</strong></td>
+<td align="right">8</td>
+<td align="right">113</td>
+<td align="right">246</td>
+<td align="right">917</td>
+<td align="right">1226</td>
+<td align="right">465</td>
+</tr>
+<tr class="One">
+<td>PIII 700 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>3220</strong></td>
+<td align="right">8</td>
+<td align="right">131</td>
+<td align="right">259</td>
+<td align="right">1060</td>
+<td align="right">1260</td>
+<td align="right">501</td>
+</tr>
+<tr class="Two">
+<td>SUN E3500 (400 MHz/SC5.0)</td>
+<td align="right"><strong>3290</strong></td>
+<td align="right">9</td>
+<td align="right">127</td>
+<td align="right">275</td>
+<td align="right">1087</td>
+<td align="right">1382</td>
+<td align="right">420</td>
+</tr>
+<tr class="One">
+<td>DEC 21164 PC (533 MHZ/LINUX/F77)</td>
+<td align="right"><strong>3376</strong></td>
+<td align="right">8</td>
+<td align="right">138</td>
+<td align="right">240</td>
+<td align="right">984</td>
+<td align="right">1442</td>
+<td align="right">562</td>
+</tr>
+<tr class="Two">
+<td>HP C240 (240 MHz)</td>
+<td align="right"><strong>3520</strong></td>
+<td align="right">11</td>
+<td align="right">136</td>
+<td align="right">345</td>
+<td align="right">1186</td>
+<td align="right">1340</td>
+<td align="right">498</td>
+</tr>
+<tr class="One">
+<td>PII450 MHz(XEON) (NT/VF6.1)</td>
+<td align="right"><strong>3558</strong></td>
+<td align="right">10</td>
+<td align="right">140</td>
+<td align="right">270</td>
+<td align="right">1380</td>
+<td align="right">1280</td>
+<td align="right">478</td>
+</tr>
+<tr class="Two">
+<td>DEC 21164 WS (500 MHz)</td>
+<td align="right"><strong>3604</strong></td>
+<td align="right">9</td>
+<td align="right">155</td>
+<td align="right">325</td>
+<td align="right">988</td>
+<td align="right">1563</td>
+<td align="right">619</td>
+</tr>
+<tr class="One">
+<td>PIII 500 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>4268</strong></td>
+<td align="right">11</td>
+<td align="right">168</td>
+<td align="right">350</td>
+<td align="right">1481</td>
+<td align="right">1600</td>
+<td align="right">656</td>
+</tr>
+<tr class="Two">
+<td>SUN ULTRA60 (300 MHz;SC4.2)</td>
+<td align="right"><strong>4317</strong></td>
+<td align="right">12</td>
+<td align="right">156</td>
+<td align="right">315</td>
+<td align="right">1470</td>
+<td align="right">1706</td>
+<td align="right">656</td>
+</tr>
+<tr class="One">
+<td>SUN ULTRA10 (333 MHz;SC4.2)</td>
+<td align="right"><strong>4360</strong></td>
+<td align="right">12</td>
+<td align="right">172</td>
+<td align="right">314</td>
+<td align="right">1387</td>
+<td align="right">1772</td>
+<td align="right">698</td>
+</tr>
+<tr class="Two">
+<td>SUN ULTRA30 (300 MHz)</td>
+<td align="right"><strong>4642</strong></td>
+<td align="right">12</td>
+<td align="right">165</td>
+<td align="right">325</td>
+<td align="right">1425</td>
+<td align="right">1971</td>
+<td align="right">740</td>
+</tr>
+<tr class="One">
+<td>DEC 21164 PC (533 MHZ/LINUX/ECGS)</td>
+<td align="right"><strong>4684</strong></td>
+<td align="right">12</td>
+<td align="right">206</td>
+<td align="right">276</td>
+<td align="right">1640</td>
+<td align="right">1856</td>
+<td align="right">696</td>
+</tr>
+<tr class="Two">
+<td>PII 400 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>4927</strong></td>
+<td align="right">13</td>
+<td align="right">199</td>
+<td align="right">391</td>
+<td align="right">1798</td>
+<td align="right">1802</td>
+<td align="right">721</td>
+</tr>
+<tr class="One">
+<td>SUN ULTRA 450 (250 MHz)</td>
+<td align="right"><strong>5457</strong></td>
+<td align="right">14</td>
+<td align="right">183</td>
+<td align="right">383</td>
+<td align="right">1777</td>
+<td align="right">2277</td>
+<td align="right">821</td>
+</tr>
+<tr class="Two">
+<td>SUN ULTRA1 (200 MHz)</td>
+<td align="right"><strong>5855</strong></td>
+<td align="right">17</td>
+<td align="right">195</td>
+<td align="right">425</td>
+<td align="right">1940</td>
+<td align="right">2415</td>
+<td align="right">858</td>
+</tr>
+<tr class="One">
+<td>IBM 590 (66 MHZ)</td>
+<td align="right"><strong>5970</strong></td>
+<td align="right">23</td>
+<td align="right">202</td>
+<td align="right">626</td>
+<td align="right">2973</td>
+<td align="right">1511</td>
+<td align="right">629</td>
+</tr>
+<tr class="Two">
+<td>SGI PCH/10 (196 MHz)</td>
+<td align="right"><strong>6639</strong></td>
+<td align="right">21</td>
+<td align="right">225</td>
+<td align="right">622</td>
+<td align="right">1876</td>
+<td align="right">2838</td>
+<td align="right">1048</td>
+</tr>
+<tr class="One">
+<td>SGI PI2/10 (195 MHz)</td>
+<td align="right"><strong>6947</strong></td>
+<td align="right">19</td>
+<td align="right">277</td>
+<td align="right">614</td>
+<td align="right">1578</td>
+<td align="right">3240</td>
+<td align="right">1209</td>
+</tr>
+<tr class="Two">
+<td>SUN ULTRA1 (170 MHz)</td>
+<td align="right"><strong>6953</strong></td>
+<td align="right">21</td>
+<td align="right">230</td>
+<td align="right">518</td>
+<td align="right">2320</td>
+<td align="right">2804</td>
+<td align="right">1056</td>
+</tr>
+<tr class="One">
+<td>PENTIUM II (266 MHz)</td>
+<td align="right"><strong>7211</strong></td>
+<td align="right">17</td>
+<td align="right">294</td>
+<td align="right">472</td>
+<td align="right">3127</td>
+<td align="right">2324</td>
+<td align="right">973</td>
+</tr>
+<tr class="Two">
+<td>IBM 580</td>
+<td align="right"><strong>10778</strong></td>
+<td align="right">43</td>
+<td align="right">455</td>
+<td align="right">1056</td>
+<td align="right">4937</td>
+<td align="right">2970</td>
+<td align="right">1309</td>
+</tr>
+<tr class="One">
+<td>PC 200</td>
+<td align="right"><strong>11135</strong></td>
+<td align="right"> </td>
+<td align="right"> </td>
+<td align="right"> </td>
+<td align="right"> </td>
+<td align="right"> </td>
+<td align="right"> </td>
+</tr>
+<tr class="Two">
+<td>HP C110</td>
+<td align="right"><strong>11458</strong></td>
+<td align="right">34</td>
+<td align="right">411</td>
+<td align="right">820</td>
+<td align="right">3039</td>
+<td align="right">5120</td>
+<td align="right">2035</td>
+</tr>
+<tr class="One">
+<td>SGI PI2/8 (75 MHz)</td>
+<td align="right"><strong>13113</strong></td>
+<td align="right">40</td>
+<td align="right">439</td>
+<td align="right">1184</td>
+<td align="right">4764</td>
+<td align="right">4907</td>
+<td align="right">1768</td>
+</tr>
+<tr class="Two">
+<td>SGI r4400 (250 MHz)</td>
+<td align="right"><strong>13282</strong></td>
+<td align="right">35</td>
+<td align="right">509</td>
+<td align="right">738</td>
+<td align="right">4864</td>
+<td align="right">5203</td>
+<td align="right">1923</td>
+</tr>
+<tr class="One">
+<td>IBM 950</td>
+<td align="right"><strong>16178</strong></td>
+<td align="right">61</td>
+<td align="right">573</td>
+<td align="right">1430</td>
+<td align="right">8316</td>
+<td align="right">4039</td>
+<td align="right">1750</td>
+</tr>
+<tr class="Two">
+<td>SUN H20/100</td>
+<td align="right"><strong>17623</strong></td>
+<td align="right">54</td>
+<td align="right">713</td>
+<td align="right">1257</td>
+<td align="right">5272</td>
+<td align="right">7434</td>
+<td align="right">2882</td>
+</tr>
+<tr class="One">
+<td>SUN S20/61</td>
+<td align="right"><strong>19308</strong></td>
+<td align="right">58</td>
+<td align="right">753</td>
+<td align="right">1304</td>
+<td align="right">6706</td>
+<td align="right">7513</td>
+<td align="right">2963</td>
+</tr>
+<tr class="Two">
+<td>SUN S20/51</td>
+<td align="right"><strong>28213</strong></td>
+<td align="right">77</td>
+<td align="right">1014</td>
+<td align="right">1647</td>
+<td align="right">10581</td>
+<td align="right">10823</td>
+<td align="right">4047</td>
+</tr>
+</tbody>
+</table>
+<h3 id="upwinding">The PP3D benchmarks, upwinding</h3>
+<h4>Results for nonsteady test case PP3D-UPW</h4>
+<div>
+<table class="Basic">
+<thead> 
+<tr>
+<th>Type</th> <th align="right">total</th> <th align="right">PRO</th> <th align="right">LC</th> <th align="right">ILU</th> <th align="right">MAT</th> <th align="right">U-MG</th> <th align="right">P-MG</th>
+</tr>
+<tr class="One" valign="top">
+<td title="pc64-i7-linux-icc">Intel Core i7 X980/IFC (3333 GHz)</td>
+<td align="right"><strong>93</strong></td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">21</td>
+<td align="right">53</td>
+<td align="right">12</td>
+</tr>
+<tr class="Two" valign="top">
+<td>Intel Core i7 X980/GCC (3333 GHz)</td>
+<td align="right"><strong>101</strong></td>
+<td align="right">0</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">23</td>
+<td align="right">56</td>
+<td align="right">14</td>
+</tr>
+<tr class="One" valign="top">
+<td title="pc64-i7-linux-icc">Intel Xeon E5520 (2270 MHz)</td>
+<td align="right"><strong>144</strong></td>
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">33</td>
+<td align="right">79</td>
+<td align="right">20</td>
+</tr>
+<tr class="Two">
+<td>Intel Core2 Duo Linux/IFC (2400 MHz)</td>
+<td align="right"><strong>192</strong></td>
+<td align="right">1</td>
+<td align="right">15</td>
+<td align="right">0</td>
+<td align="right">47</td>
+<td align="right">102</td>
+<td align="right">27</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Xeon Linux/IFC (3600 MHz)</td>
+<td align="right"><strong>253</strong></td>
+<td align="right">1</td>
+<td align="right">20</td>
+<td align="right">0</td>
+<td align="right">55</td>
+<td align="right">137</td>
+<td align="right">40</td>
+</tr>
+<tr class="Two">
+<td>AMD Opteron 852 Linux/PathScale (2600 MHz)</td>
+<td align="right"><strong>276</strong></td>
+<td align="right">1</td>
+<td align="right">21</td>
+<td align="right">0</td>
+<td align="right">41</td>
+<td align="right">160</td>
+<td align="right">52</td>
+</tr>
+<tr class="One">
+<td>AMD Opteron 250 Linux/GCC/ <a href="http://www.cs.utexas.edu/users/flame/goto/">Goto</a> (2400 MHz)</td>
+<td align="right"><strong>302</strong></td>
+<td align="right">1</td>
+<td align="right">24</td>
+<td align="right">0</td>
+<td align="right">56</td>
+<td align="right">165</td>
+<td align="right">56</td>
+</tr>
+<tr class="Two">
+<td>IBM Power4/32bit (1700 MHz)</td>
+<td align="right"><strong>309</strong></td>
+<td align="right">1</td>
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">57</td>
+<td align="right">183</td>
+<td align="right">45</td>
+</tr>
+<tr class="One">
+<td>AMD Opteron 248 Linux/GCC/<a href="http://www.cs.utexas.edu/users/flame/goto/">Goto</a> (2200 MHz)</td>
+<td align="right"><strong>311</strong></td>
+<td align="right">1</td>
+<td align="right">25</td>
+<td align="right">0</td>
+<td align="right">51</td>
+<td align="right">174</td>
+<td align="right">60</td>
+</tr>
+<tr class="Two">
+<td>HP Itanium II HPUX (1600 MHz)</td>
+<td align="right"><strong>316</strong></td>
+<td align="right">1</td>
+<td align="right">24</td>
+<td align="right">0</td>
+<td align="right">50</td>
+<td align="right">180</td>
+<td align="right">61</td>
+</tr>
+<tr class="One">
+<td>IBM Power4/64bit (1700 MHz)</td>
+<td align="right"><strong>328</strong></td>
+<td align="right">1</td>
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">58</td>
+<td align="right">200</td>
+<td align="right">46</td>
+</tr>
+<tr class="Two">
+<td>IBM Power4 (1300 MHz)</td>
+<td align="right"><strong>384</strong></td>
+<td align="right">1</td>
+<td align="right">31</td>
+<td align="right">0</td>
+<td align="right">76</td>
+<td align="right">216</td>
+<td align="right">59</td>
+</tr>
+<tr class="One">
+<td>HP Itanium II Linux/IFC (1500 MHz)</td>
+<td align="right"><strong>385</strong></td>
+<td align="right">1</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">78</td>
+<td align="right">216</td>
+<td align="right">60</td>
+</tr>
+<tr class="Two">
+<td>AMD Opteron 242 Linux/GCC (1800 MHz)</td>
+<td align="right"><strong>418</strong></td>
+<td align="right">2</td>
+<td align="right">32</td>
+<td align="right">0</td>
+<td align="right">81</td>
+<td align="right">228</td>
+<td align="right">74</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Xeon Linux/GCC (3000 MHz)</td>
+<td align="right"><strong>421</strong></td>
+<td align="right">2</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">94</td>
+<td align="right">231</td>
+<td align="right">58</td>
+</tr>
+<tr class="Two">
+<td>IBM Power5 Linux/GCC (1650 MHz)</td>
+<td align="right"><strong>421</strong></td>
+<td align="right">2</td>
+<td align="right">30</td>
+<td align="right">0</td>
+<td align="right">103</td>
+<td align="right">229</td>
+<td align="right">56</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Linux/GCC (2600 MHz)</td>
+<td align="right"><strong>422</strong></td>
+<td align="right">2</td>
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">94</td>
+<td align="right">225</td>
+<td align="right">66</td>
+</tr>
+<tr class="Two">
+<td>HP Itanium II HPUX (1500 MHz)</td>
+<td align="right"><strong>423</strong></td>
+<td align="right">1</td>
+<td align="right">33</td>
+<td align="right">0</td>
+<td align="right">74</td>
+<td align="right">234</td>
+<td align="right">80</td>
+</tr>
+<tr class="One">
+<td>Intel Itanium II Linux/IFC (1400 MHz)</td>
+<td align="right"><strong>456</strong></td>
+<td align="right">2</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">87</td>
+<td align="right">256</td>
+<td align="right">75</td>
+</tr>
+<tr class="Two">
+<td>DEC 21364 ES47 (1000 MHz)</td>
+<td align="right"><strong>496</strong></td>
+<td align="right">2</td>
+<td align="right">42</td>
+<td align="right">0</td>
+<td align="right">74</td>
+<td align="right">289</td>
+<td align="right">90</td>
+</tr>
+<tr class="One">
+<td>AMD Athlon XP Linux/GCC (2080 MHz)</td>
+<td align="right"><strong>535</strong></td>
+<td align="right">2</td>
+<td align="right">42</td>
+<td align="right">0</td>
+<td align="right">72</td>
+<td align="right">301</td>
+<td align="right">118</td>
+</tr>
+<tr class="Two">
+<td>Intel P4 Linux/IFC/ATLAS (2600 MHz)</td>
+<td align="right"><strong>582</strong></td>
+<td align="right">2</td>
+<td align="right">45</td>
+<td align="right">0</td>
+<td align="right">75</td>
+<td align="right">345</td>
+<td align="right">114</td>
+</tr>
+<tr class="One">
+<td>DEC 21264C ES45 (1000 MHz)</td>
+<td align="right"><strong>584</strong></td>
+<td align="right">2</td>
+<td align="right">51</td>
+<td align="right">0</td>
+<td align="right">76</td>
+<td align="right">353</td>
+<td align="right">101</td>
+</tr>
+<tr class="Two">
+<td>Intel P4 Linux/GCC (2600 MHz)</td>
+<td align="right"><strong>649</strong></td>
+<td align="right">3</td>
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">113</td>
+<td align="right">338</td>
+<td align="right">142</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Linux/IFC/ATLAS (1700 MHz)</td>
+<td align="right"><strong>753</strong></td>
+<td align="right">3</td>
+<td align="right">58</td>
+<td align="right">0</td>
+<td align="right">112</td>
+<td align="right">447</td>
+<td align="right">131</td>
+</tr>
+<tr class="Two">
+<td>DEC 21264B ES40 (833 MHz)</td>
+<td align="right"><strong>755</strong></td>
+<td align="right">2</td>
+<td align="right">73</td>
+<td align="right">0</td>
+<td align="right">92</td>
+<td align="right">464</td>
+<td align="right">123</td>
+</tr>
+<tr class="One">
+<td>DEC 21264A ES40 (667 MHz)</td>
+<td align="right"><strong>805</strong></td>
+<td align="right">3</td>
+<td align="right">71</td>
+<td align="right">0</td>
+<td align="right">116</td>
+<td align="right">478</td>
+<td align="right">137</td>
+</tr>
+<tr class="Two">
+<td>HP PA-RISC 8700 HPUX (550 MHz)</td>
+<td align="right"><strong>815</strong></td>
+<td align="right">3</td>
+<td align="right">60</td>
+<td align="right">0</td>
+<td align="right">116</td>
+<td align="right">493</td>
+<td align="right">142</td>
+</tr>
+<tr class="One">
+<td>Intel P4 WinXP/Salford F77 (2400 MHz)</td>
+<td align="right"><strong>923</strong></td>
+<td align="right">3</td>
+<td align="right">70</td>
+<td align="right">0</td>
+<td align="right">143</td>
+<td align="right">556</td>
+<td align="right">148</td>
+</tr>
+<tr class="Two">
+<td>AMD Athlon XP Linux/IFC (1343 MHz)</td>
+<td align="right"><strong>935</strong></td>
+<td align="right">3</td>
+<td align="right">68</td>
+<td align="right">0</td>
+<td align="right">100</td>
+<td align="right">538</td>
+<td align="right">224</td>
+</tr>
+<tr class="One">
+<td>Intel P4 Linux/IFC (1700 MHz)</td>
+<td align="right"><strong>967</strong></td>
+<td align="right">4</td>
+<td align="right">76</td>
+<td align="right">0</td>
+<td align="right">112</td>
+<td align="right">557</td>
+<td align="right">216</td>
+</tr>
+<tr class="Two">
+<td>Intel P4 Linux/GCC (1700 MHz)</td>
+<td align="right"><strong>1052</strong></td>
+<td align="right">4</td>
+<td align="right">97</td>
+<td align="right">0</td>
+<td align="right">161</td>
+<td align="right">567</td>
+<td align="right">221</td>
+</tr>
+<tr class="One">
+<td>AMD Athlon XPM Linux/GCC (1327 MHz)</td>
+<td align="right"><strong>1137</strong></td>
+<td align="right">4</td>
+<td align="right">84</td>
+<td align="right">0</td>
+<td align="right">131</td>
+<td align="right">655</td>
+<td align="right">261</td>
+</tr>
+<tr class="Two">
+<td>Apple G4 OSX/GCC (1500 MHz)</td>
+<td align="right"><strong>1220</strong></td>
+<td align="right">5</td>
+<td align="right">95</td>
+<td align="right">0</td>
+<td align="right">165</td>
+<td align="right">697</td>
+<td align="right">255</td>
+</tr>
+<tr class="One">
+<td>Intel PIII Linux/IFC (1000 MHz)</td>
+<td align="right"><strong>1225</strong></td>
+<td align="right">5</td>
+<td align="right">92</td>
+<td align="right">0</td>
+<td align="right">167</td>
+<td align="right">695</td>
+<td align="right">265</td>
+</tr>
+<tr class="Two">
+<td>DEC 21264 WS (500 MHz)</td>
+<td align="right"><strong>1290</strong></td>
+<td align="right">4</td>
+<td align="right">103</td>
+<td align="right">0</td>
+<td align="right">229</td>
+<td align="right">730</td>
+<td align="right">222</td>
+</tr>
+<tr class="One">
+<td>AMD Athlon Linux/IFC (1200 MHz)</td>
+<td align="right"><strong>1299</strong></td>
+<td align="right">4</td>
+<td align="right">78</td>
+<td align="right">0</td>
+<td align="right">119</td>
+<td align="right">843</td>
+<td align="right">254</td>
+</tr>
+<tr class="Two">
+<td>Sun UltraSparc IIICu (1015 MHz)</td>
+<td align="right"><strong>1497</strong></td>
+<td align="right">4</td>
+<td align="right">78</td>
+<td align="right">0</td>
+<td align="right">163</td>
+<td align="right">1055</td>
+<td align="right">196</td>
+</tr>
+<tr class="One">
+<td>Intel Itanium IA-64 (800 MHz)</td>
+<td align="right"><strong>1535</strong></td>
+<td align="right">4</td>
+<td align="right">79</td>
+<td align="right">0</td>
+<td align="right">237</td>
+<td align="right">979</td>
+<td align="right">235</td>
+</tr>
+<tr class="Two">
+<td>Sun UltraSparc IIICu (900 MHz)</td>
+<td align="right"><strong>1688</strong></td>
+<td align="right">2</td>
+<td align="right">85</td>
+<td align="right">0</td>
+<td align="right">196</td>
+<td align="right">1192</td>
+<td align="right">209</td>
+</tr>
+<tr class="One">
+<td>IBM PWR3 (200 MHZ)</td>
+<td align="right"><strong>1698</strong></td>
+<td align="right">7</td>
+<td align="right">123</td>
+<td align="right">1</td>
+<td align="right">325</td>
+<td align="right">955</td>
+<td align="right">285</td>
+</tr>
+<tr class="Two">
+<td>AMD K7 700 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>1954</strong></td>
+<td align="right">6</td>
+<td align="right">134</td>
+<td align="right">0</td>
+<td align="right">233</td>
+<td align="right">1192</td>
+<td align="right">386</td>
+</tr>
+<tr class="One">
+<td>IBM POWER2SC (170 MHZ)</td>
+<td align="right"><strong>1986</strong></td>
+<td align="right">10</td>
+<td align="right">141</td>
+<td align="right">1</td>
+<td align="right">461</td>
+<td align="right">1032</td>
+<td align="right">339</td>
+</tr>
+<tr class="Two">
+<td>Sun UltraSPARC-III (750 MHz)</td>
+<td align="right"><strong>2071</strong></td>
+<td align="right">5</td>
+<td align="right">131</td>
+<td align="right">0</td>
+<td align="right">208</td>
+<td align="right">1435</td>
+<td align="right">290</td>
+</tr>
+<tr class="One">
+<td>PIII 700 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>2424</strong></td>
+<td align="right">8</td>
+<td align="right">184</td>
+<td align="right">1</td>
+<td align="right">295</td>
+<td align="right">1445</td>
+<td align="right">490</td>
+</tr>
+<tr class="Two">
+<td>Hitachi SR8000 (375 MHz) single mode</td>
+<td align="right"><strong>2428</strong></td>
+<td align="right">7</td>
+<td align="right">100</td>
+<td align="right">1</td>
+<td align="right">341</td>
+<td align="right">1677</td>
+<td align="right">301</td>
+</tr>
+<tr class="One">
+<td>AMD K7 500 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>2574</strong></td>
+<td align="right">8</td>
+<td align="right">176</td>
+<td align="right">1</td>
+<td align="right">348</td>
+<td align="right">1577</td>
+<td align="right">462</td>
+</tr>
+<tr class="Two">
+<td>DEC 21164 PC (533 MHZ/LINUX/F77)</td>
+<td align="right"><strong>2760</strong></td>
+<td align="right">8</td>
+<td align="right">214</td>
+<td align="right">1</td>
+<td align="right">317</td>
+<td align="right">1672</td>
+<td align="right">556</td>
+</tr>
+<tr class="One">
+<td>SUN E3500 (400 MHz/SC5.0)</td>
+<td align="right"><strong>2780</strong></td>
+<td align="right">9</td>
+<td align="right">194</td>
+<td align="right">1</td>
+<td align="right">322</td>
+<td align="right">1836</td>
+<td align="right">416</td>
+</tr>
+<tr class="Two">
+<td>HP C240 (240 MHz)</td>
+<td align="right"><strong>2815</strong></td>
+<td align="right">11</td>
+<td align="right">200</td>
+<td align="right">1</td>
+<td align="right">433</td>
+<td align="right">1678</td>
+<td align="right">489</td>
+</tr>
+<tr class="One">
+<td>PII450 MHz(XEON) (NT/VF6.1)</td>
+<td align="right"><strong>2889</strong></td>
+<td align="right">10</td>
+<td align="right">240</td>
+<td align="right">1</td>
+<td align="right">430</td>
+<td align="right">1609</td>
+<td align="right">599</td>
+</tr>
+<tr class="Two">
+<td>DEC 21164 WS (500MHz)</td>
+<td align="right"><strong>3006</strong></td>
+<td align="right">9</td>
+<td align="right">239</td>
+<td align="right">1</td>
+<td align="right">359</td>
+<td align="right">1824</td>
+<td align="right">572</td>
+</tr>
+<tr class="One">
+<td>PIII 500 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>3227</strong></td>
+<td align="right">10</td>
+<td align="right">242</td>
+<td align="right">1</td>
+<td align="right">412</td>
+<td align="right">1915</td>
+<td align="right">646</td>
+</tr>
+<tr class="Two">
+<td>SUN ULTRA10 (333 MHz;SC4.2)</td>
+<td align="right"><strong>3399</strong></td>
+<td align="right">12</td>
+<td align="right">241</td>
+<td align="right">1</td>
+<td align="right">394</td>
+<td align="right">2062</td>
+<td align="right">685</td>
+</tr>
+<tr class="One">
+<td>SUN ULTRA60 (300 MHz;SC4.2)</td>
+<td align="right"><strong>3439</strong></td>
+<td align="right">12</td>
+<td align="right">237</td>
+<td align="right">1</td>
+<td align="right">428</td>
+<td align="right">2113</td>
+<td align="right">645</td>
+</tr>
+<tr class="Two">
+<td>SUN ULTRA30 (300 MHz)</td>
+<td align="right"><strong>3725</strong></td>
+<td align="right">12</td>
+<td align="right">250</td>
+<td align="right">1</td>
+<td align="right">432</td>
+<td align="right">2326</td>
+<td align="right">703</td>
+</tr>
+<tr class="One">
+<td>DEC 21164 PC (533 MHZ/LINUX/ECGS)</td>
+<td align="right"><strong>3827</strong></td>
+<td align="right">11</td>
+<td align="right">316</td>
+<td align="right">1</td>
+<td align="right">615</td>
+<td align="right">2188</td>
+<td align="right">693</td>
+</tr>
+<tr class="Two">
+<td>IBM 590 (66 MHZ)</td>
+<td align="right"><strong>4025</strong></td>
+<td align="right">22</td>
+<td align="right">303</td>
+<td align="right">1</td>
+<td align="right">1091</td>
+<td align="right">1988</td>
+<td align="right">615</td>
+</tr>
+<tr class="One">
+<td>PII 400 MHz (LINUX/ECGS)</td>
+<td align="right"><strong>4089</strong></td>
+<td align="right">12</td>
+<td align="right">289</td>
+<td align="right">1</td>
+<td align="right">577</td>
+<td align="right">2499</td>
+<td align="right">709</td>
+</tr>
+<tr class="Two">
+<td>SUN ULTRA 450 (250 MHz)</td>
+<td align="right"><strong>4287</strong></td>
+<td align="right">13</td>
+<td align="right">281</td>
+<td align="right">1</td>
+<td align="right">514</td>
+<td align="right">2674</td>
+<td align="right">801</td>
+</tr>
+<tr class="One">
+<td>SUN ULTRA1 (200 MHz)</td>
+<td align="right"><strong>4565</strong></td>
+<td align="right">16</td>
+<td align="right">307</td>
+<td align="right">1</td>
+<td align="right">596</td>
+<td align="right">2803</td>
+<td align="right">836</td>
+</tr>
+<tr class="Two">
+<td>PENTIUM II (266 MHz)</td>
+<td align="right"><strong>5148</strong></td>
+<td align="right">17</td>
+<td align="right">409</td>
+<td align="right">1</td>
+<td align="right">874</td>
+<td align="right">2899</td>
+<td align="right">945</td>
+</tr>
+<tr class="One">
+<td>SGI PCH/10 (196 MHz)</td>
+<td align="right"><strong>5419</strong></td>
+<td align="right">21</td>
+<td align="right">349</td>
+<td align="right">1</td>
+<td align="right">594</td>
+<td align="right">3426</td>
+<td align="right">1019</td>
+</tr>
+<tr class="Two">
+<td>SUN ULTRA1 (170 MHz)</td>
+<td align="right"><strong>5462</strong></td>
+<td align="right">21</td>
+<td align="right">362</td>
+<td align="right">1</td>
+<td align="right">729</td>
+<td align="right">3310</td>
+<td align="right">1029</td>
+</tr>
+<tr class="One">
+<td>SGI PI2/10 (195 MHz)</td>
+<td align="right"><strong>5704</strong></td>
+<td align="right">18</td>
+<td align="right">395</td>
+<td align="right">1</td>
+<td align="right">537</td>
+<td align="right">3553</td>
+<td align="right">1185</td>
+</tr>
+<tr class="Two">
+<td>PC 200</td>
+<td align="right"><strong>7267</strong></td>
+<td align="right"> </td>
+<td align="right"> </td>
+<td align="right"> </td>
+<td align="right"> </td>
+<td align="right"> </td>
+<td align="right"> </td>
+</tr>
+<tr class="One">
+<td>IBM 580</td>
+<td align="right"><strong>7719</strong></td>
+<td align="right">41</td>
+<td align="right">618</td>
+<td align="right">2</td>
+<td align="right">1982</td>
+<td align="right">3838</td>
+<td align="right">1232</td>
+</tr>
+<tr class="Two">
+<td>HP C110</td>
+<td align="right"><strong>9691</strong></td>
+<td align="right">33</td>
+<td align="right">624</td>
+<td align="right">2</td>
+<td align="right">945</td>
+<td align="right">6085</td>
+<td align="right">1996</td>
+</tr>
+<tr class="One">
+<td>SGI PI2/8 (75 MHz)</td>
+<td align="right"><strong>9798</strong></td>
+<td align="right">38</td>
+<td align="right">690</td>
+<td align="right">2</td>
+<td align="right">1296</td>
+<td align="right">6032</td>
+<td align="right">1730</td>
+</tr>
+<tr class="Two">
+<td>SGI r4400 (250 MHz)</td>
+<td align="right"><strong>10311</strong></td>
+<td align="right">34</td>
+<td align="right">776</td>
+<td align="right">2</td>
+<td align="right">1302</td>
+<td align="right">6306</td>
+<td align="right">1882</td>
+</tr>
+<tr class="One">
+<td>IBM 950</td>
+<td align="right"><strong>11179</strong></td>
+<td align="right">58</td>
+<td align="right">836</td>
+<td align="right">3</td>
+<td align="right">3076</td>
+<td align="right">5479</td>
+<td align="right">1717</td>
+</tr>
+<tr class="Two">
+<td>SUN H20/100</td>
+<td align="right"><strong>13218</strong></td>
+<td align="right">52</td>
+<td align="right">973</td>
+<td align="right">3</td>
+<td align="right">1442</td>
+<td align="right">7978</td>
+<td align="right">2759</td>
+</tr>
+<tr class="One">
+<td>SUN S20/61</td>
+<td align="right"><strong>14222</strong></td>
+<td align="right">59</td>
+<td align="right">1070</td>
+<td align="right">3</td>
+<td align="right">1840</td>
+<td align="right">8427</td>
+<td align="right">2811</td>
+</tr>
+<tr class="Two">
+<td>SUN S20/51</td>
+<td align="right"><strong>20132</strong></td>
+<td align="right">73</td>
+<td align="right">1650</td>
+<td align="right">4</td>
+<td align="right">2660</td>
+<td align="right">11739</td>
+<td align="right">3992</td>
+</tr>
+</thead>
+</table>
+</div></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Mesh and boundary regions - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html" class="selected">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="concepts_bdregions.html">Mesh and boundary regions</a>  </div>
+
+  <hr />
+
+  <h1>Mesh and boundary regions</h1>
+
+<p>Mesh regions and boundary regions provide a functionality to identify parts of a mesh or parts of an analytically specified boundary, respectively. These structures are commonly used for the creation of boundary conditions.</p>
+
+<h2>Mesh regions</h2>
+
+<p>The structure <code>t_meshRegion</code> from <code>meshregion.f90</code> allows to identify parts of the mesh like vertices, edges, faces and elements. A mesh region is very often created to identify parts on the boundary where to impose boundary conditions. The following subroutines define the basic maintainance for mesh regions:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>mshreg_createFromNodalProp</td>
+  <td>Create a mesh region based on the nodal property</td>
+</tr>
+<tr>
+  <td>mshreg_createFromHitTest</td>
+  <td>Create a mesh region based on a "hit test" callback subroutine</td>
+</tr>
+<tr>
+  <td>mshreg_createFromExpression</td>
+  <td>Create a mesh region based on a "hit test" expression</td>
+</tr>
+<tr>
+  <td>mshreg_done</td>
+  <td>Destroys a mesh region after use</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Mesh regions based on nodal properties</h3>
+
+<p>Using the nodal property allows to quickly collect all vertices, edges and faces on a boundary component. Note that the nodal property of vertices/edges/faces is =0 for inner entities, while a value >0 identifies the boundary component the entity is associated to. A mesh region for boundary entities can quickly be created using <code>mshreg_createFromNodalProp</code>. The parameter <code>cidxCalc</code> specifies what to collect; a value <code>MSHREG_IDX_ALL</code> collects all entities, so vertices, edges and faces.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example collects all vertices, edges and faces on the complete boundary:</p>
+</blockquote>
+
+<pre><code>type(t_triangulation) :: rtriangulation
+type(t_meshRegion) :: rmeshRegion
+...
+call mshreg_createFromNodalProp(rmeshRegion, rtriangulation, MSHREG_IDX_ALL)
+...
+call msgreg_done (rmeshRegion)
+</code></pre>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example collects all vertices, edges and faces on the 2nd boundary component:</p>
+</blockquote>
+
+<pre><code>type(t_triangulation) :: rtriangulation
+type(t_meshRegion) :: rmeshRegion
+...
+call mshreg_createFromNodalProp(&amp;
+    rmeshRegion, rtriangulation, MSHREG_IDX_ALL, (/ 2 /))
+...
+call msgreg_done (rmeshRegion)
+</code></pre>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example collects only the vertices on the 1st boundary component:</p>
+</blockquote>
+
+<pre><code>type(t_triangulation) :: rtriangulation
+type(t_meshRegion) :: rmeshRegion
+...
+call mshreg_createFromNodalProp( &amp;
+    rmeshRegion, rtriangulation, MSHREG_IDX_VERTEX, (/ 1 /))
+...
+call msgreg_done (rmeshRegion)
+</code></pre>
+
+<h3>Mesh regions based on expression hit tests</h3>
+
+<p>Expressions provide a very flexible way to fetch entities from the mesh into a mesh region. The subroutine <code>mshreg_createFromExpression</code> provides this functionality. An expression must be specified, which has to return "1" if a point (identified by an x/y/z coordinate) should be put into the mesh region. Edges, faces and elements are identified via their midpoint. Via an additional parameter <code>bonlyBndry</code> it can be specified whether ot not only entities on the boundary should be fetched.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example collects all boundary vertices, edges and faces which have an X-coordinate &lt;=0 and an Y-coordinate &lt;= 0</p>
+</blockquote>
+
+<pre><code>type(t_triangulation) :: rtriangulation
+type(t_meshRegion) :: rmeshRegion
+...
+call mshreg_createFromExpression( &amp;
+    rmeshRegion, rtriangulation, MSHREG_IDX_ALL, .true., &amp;
+    "IF (X&lt;=0 AND Y&lt;=0; 1 ; 0)" )
+...
+call msgreg_done (rmeshRegion)
+</code></pre>
+
+<h3>Mesh regions based on general hit tests</h3>
+
+<p>For complicated hit tests, the subroutine <code>mshreg_createFromHitTest</code> provides a fast functionality to let a callback subroutine decide on whether a point is taken into a mesh region or not. The specified callback routine is called with the x/y/z coordinate of a set of points to check; edges, faces and elements are identified via their midpoint. The routine has to return whether for every point if it is "in" the mesh region or not. Via an additional parameter <code>bonlyBndry</code> it can be specified whether ot not only entities on the boundary should be fetched.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following 2D example collects all boundary vertices and edges which have a Y-coordinate &lt;=0 and an X-coordinate &lt;= 0.</p>
+</blockquote>
+
+<pre><code>subroutine fmshregHitTest(inumCells,Dcoords,Ihit,rcollection)
+
+integer, intent(in)                          :: inumCells
+real(DP), dimension(:,:), intent(in)         :: Dcoords
+integer, dimension(:), intent(out)           :: Ihit
+type(t_collection), intent(inout), optional  :: rcollection
+
+  integer :: i
+  real(DP) :: dx,dy
+
+  ! Check every point
+  do i = 1,inumCells
+    dx = Dcoords(1,i)
+    dy = Dcoords(1,i)
+    if ( (dx .le. 0.0_DP) .and. (dy .le. 0.0_DP)) then
+      Ihit(i) = 1
+    else
+      Ihit(i) = 0
+    end do
+  end do
+
+end subroutine
+
+  type(t_triangulation) :: rtriangulation
+  type(t_meshRegion) :: rmeshRegion
+  ...
+  call mshreg_createFromHitTest( &amp;
+     rmeshRegion, rtriangulation, MSHREG_IDX_ALL, .true., &amp;
+     fmshregHitTest )
+  ...
+  call msgreg_done (rmeshRegion)
+</code></pre>
+
+<h2>Boundary regions</h2>
+
+<p>The structure <code>t_boundaryRegion</code> from <code>boundary.f90</code> allows to identify regions on the analytical boundary via a start parameter value and an end parameter value. A boundary region is very often created to identify parts on the boundary where to impose boundary conditions. The structure has basically the following entries:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>(t_boundaryRegion)%iboundCompIdx</td>
+  <td>Boundary component</td>
+</tr>
+<tr>
+  <td>(t_boundaryRegion)%dminParam</td>
+  <td>Minimum parameter value</td>
+</tr>
+<tr>
+  <td>(t_boundaryRegion)%dmaxParam</td>
+  <td>Maximum parameter value</td>
+</tr>
+<tr>
+  <td>(t_boundaryRegion)%cparType</td>
+  <td>Type of parametrisation; 0-1 is the default</td>
+</tr>
+<tr>
+  <td>(t_boundaryRegion)%iproperties</td>
+  <td>Specifies whether start/endpoint are included or not. By default, the starting point is included, the endpoint not.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The structure can be set up manually or using the subroutines from <code>boundary.f90</code>. The following subroutines support boundary regions:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>boundary_createRegion</td>
+  <td>Creates a boundary region for a boundary component or a boundary segment</td>
+</tr>
+<tr>
+  <td>boundary_getRegionLength</td>
+  <td>Calculates the length of a boundary region</td>
+</tr>
+<tr>
+  <td>boundary_isInRegion</td>
+  <td>Checks if a point is in a boundary region</td>
+</tr>
+</tbody>
+</table>
+
+<p>Boundary regions do not have to be destroyed, they do not contain allocatable data.</p>
+
+<p>By default, a boundary region includes the starting point but excludes the endpoint. The variable <code>(t_boundaryRegion)%iproperties</code> decides on this. The following values are allowed:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Value</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>0</td>
+  <td>t_boundaryRegion describes (dminParam,dmaxParam)</td>
+</tr>
+<tr>
+  <td>BDR_PROP_WITHSTART</td>
+  <td>t_boundaryRegion describes [dminParam,dmaxParam)</td>
+</tr>
+<tr>
+  <td>BDR_PROP_WITHEND</td>
+  <td>t_boundaryRegion describes (dminParam,dmaxParam]</td>
+</tr>
+<tr>
+  <td>BDR_PROP_WITHSTART <br> + BDR_PROP_WITHEND</td>
+  <td>t_boundaryRegion describes [dminParam,dmaxParam]</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<p><strong>Example:</strong> The following piece of code creates a boundary region that covers the complete boundary component 1:</p>
+
+<pre><code>type(t_boundary) :: rboundary
+type(t_boundaryRegion) :: rregion
+...
+call boundary_createRegion (rboundary, 1, 0, rregion)
+</code></pre>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/bench1_region1.svg" title="Complete 1st boundary component" alt="Complete 1st boundary component" />
+</center></p>
+
+<hr />
+
+<p><strong>Example:</strong> The following piece of code creates a boundary region that covers the 3rd segment of boundary component 1 including the starting point but excluding the endpoint:</p>
+
+<pre><code>type(t_boundary) :: rboundary
+type(t_boundaryRegion) :: rregion
+...
+call boundary_createRegion (rboundary, 1, 3, rregion)
+</code></pre>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/bench1_region2.svg" title="3rd edge of 1st boundary component" alt="3rd edge of 1st boundary component" />
+</center></p>
+
+<hr />
+
+<p><strong>Example:</strong> The following piece of code creates a boundary region that covers the parameter set [1,3] on boundary component 1 including starting point and endpoint:</p>
+
+<pre><code>type(t_boundary) :: rboundary
+type(t_boundaryRegion) :: rregion
+...
+rregion%iboundCompIdx = 1
+rregion%dminParam = 1.0_DP
+rregion%dminParam = 3.0_DP
+rregion%iproperties = BDR_PROP_WITHSTART + BDR_PROP_WITHEND
+</code></pre>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/bench1_region3.svg" title="Specified parameter set [1,3" alt="Specified parameter set [1,3" />
+</center></p>
+
+<hr />
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

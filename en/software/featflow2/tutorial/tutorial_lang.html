@@ -1,0 +1,2375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Fortran 90/95 for C/C++ programmers - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html" class="selected">Tutorial</a><div class="submenu"><a href="tutorial_intro.html">Introduction</a><a href="tutorial_lang.html" class="selected">Fortran 90/95 for C/C++ programmers</a><a href="tutorial00.html">Tutorial00 - Hi FEAT</a><a href="tutorial01.html">Tutorial01</a><a href="tutorial_programming.html">FEAT2 programming techniques </a><a href="tutorial_l2proj.html">The L2 projection </a><a href="tutorial_poisson.html">The poisson equation </a><a href="tutorial_conv-diff.html">The convection-diffusion equation </a><a href="tutorial_lelast.html">Linear elasticity </a><a href="tutorial_stokes.html">The Stokes equations </a><a href="tutorial_navierstokes.html">The Navier-Stokes equations </a></div><a href="../featflow2_concepts.html">Concepts</a></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../tutorial.html">Tutorial</a> » <a href="tutorial_lang.html">Fortran 90/95 for C/C++ programmers</a>  </div>
+
+  <hr />
+
+  <!--
+Contents ||
+------------ |------------ | 
+1 | <a href="#Overview about Fortran 90/95 for C/C++ programmers">Overview about Fortran 90/95 for C/C++ programmers</a>
+1.1 | - <a href="#Differences between C/C++ and Fortran">Differences between C/C++ and Fortran </a>| 
+2| <a href="#Introduction into Fortran 90/95">Introduction into Fortran 90/95 </a> | 
+2.1 | - <a href="#Hello world">Hello world </a> | 
+2.2 | - <a href="#Language constructs">Language constructs </a> | 
+2.2.1 | - - <a href="#Variables">Variables </a> | 
+2.2.2 | - - <a href="#Constants">Constants </a> | 
+2.2.3 | - - <a href="#String handling">String handling </a> | 
+2.2.4 | - - <a href="#Structures">Structures </a> | 
+2.2.5 | - - <a href="#1D Arrays">Arrays </a> |
+2.2.6 | - - <a href="#Pointers">Pointers </a> |
+2.3 | - <a href="#Flow control commands">Flow control commands </a> |
+2.3.1 | - - <a href="#Conditions">Conditions </a> |
+2.3.2 | - - <a href="#Shorthand notation for IF clauses">Shorthand notation for IF clauses and SELECT-CASE commands</a> |
+2.3.3 | - - <a href="#DO-Loops">Loops </a> |
+2.4 | -  <a href="#Multi-file projects">Multi-file projects </a> |
+2.4.1 | - - <a href="#Modules">Modules </a> |
+2.4.2 | - - <a href="#Subroutines">Subroutines </a> |
+2.4.3 | - - <a href="#Functions">Functions </a> |
+2.5 | - <a href="#Special language constructs">Special language constructs </a> |
+2.5.1 | - - <a href="#The INTENT qualifier">The INTENT qualifier </a> |
+2.5.2 | - - <a href="#Passing strings as parameters">Passing strings as parameters </a> |
+2.5.3 | - - <a href="#Symbol overloading with Interfaces">Symbol overloading with Interfaces </a> |
+2.5.4 | - - <a href="#Predefined values in structures">Predefined values in structures </a> |
+2.5.5 | - - <a href="#Optional variables">Optional variables </a> |
+2.5.6 | - - <a href="#Passing subroutines as parameters">Passing subroutines as parameters </a> |
+3 | <a href="#Common Pitfalls">Common Pitfalls </a> |
+4 | <a href="#Links to the Fortran specification and language books">Links to the Fortran specification and language books </a> |
+-->
+
+<h1>Overview about Fortran 90/95 for C/C++ programmers <a id="Overview about Fortran 90/95 for C/C++ programmers"></a></h1>
+
+<p>Fortran 95 is a procedure- and structure-based programming language with some (few) OOP (Object Oriented Programming) paradigmas like static overloading of functions. There is, however, no real OOP realised in this language which drives programming more back to C programming than C++ programming. The language has a very strict type-checking style which gives a skilled C/C++ programmer headaches concerning the realisation of some modern programming concepts. There are, however, some very handy advantages which one does not want to miss if one is familiar with the language:</p>
+
+<ul>
+<li>The language is fast. Typically, Fortran code is at least 10-20 percent faster than usual C++ code due to advanced optimisation, which follows from the strict rules -- without any special optimization tricks like compiler pragmas, e.g.</li>
+<li>Array operations are straightforward and simple to write down; this reminds Fortran code more to MatLab code than standard C/C++ code.</li>
+<li>The language is highly portable and backward compatible. By the time, there are Fortran compilers available for small desktop machines as well as for high-performance Cluster systems, producing all nicely running code on the same code basis.</li>
+</ul>
+
+<p>The following sections contain a brief introduction into this language from the view of a C/C++ programmer and highlight some important differences between the languages. Beginners are strongly advised to study the language by one of the countless pages in the Internet concerning the Fortran language.</p>
+
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td><a href="tutorial_lang.html#Differences-between-C-and-Fortran">Differences between C/C++ and Fortran</a></td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><a href="tutorial_lang.html#Introduction-into-Fortran">Introduction into Fortran 90/95</a></td>
+</tr>
+<tr>
+  <td></td>
+  <td>2.1 <a href="tutorial_lang.html#Hello-world">Hello world</a></td>
+</tr>
+<tr>
+  <td></td>
+  <td>2.2 <a href="tutorial_lang.html#Language-constructs">Language constructs</a></td>
+</tr>
+<tr>
+  <td></td>
+  <td>2.3 <a href="tutorial_lang.html#Flow-control-commands">Flow control commands</a></td>
+</tr>
+<tr>
+  <td></td>
+  <td>2.4 <a href="tutorial_lang.html#Multi-file-projects">Multi-file projects</a></td>
+</tr>
+<tr>
+  <td></td>
+  <td>2.5 <a href="tutorial_lang.html#Special-language-constructs">Special language constructs</a></td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><a href="tutorial_lang.html#Common-Pitfalls">Common Pitfalls</a></td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><a href="tutorial_lang.html#Links-to-Fortran">Links to the Fortran specification and language books</a></td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="Differences-between-C-and-Fortran">Differences between C/C++ and Fortran</h1>
+
+<p>There are a number of differences between C/C++ and Fortran one has to take into account when learning the Fortran language. Some of them are mentioned already above. The following list contains a more detailed overview about points that may confuse a C/C++ programmer:</p>
+
+<ul>
+<li><p>There is no real OOP available as in C++. It is possible to use static overloading of routines, and it is even possible to overload standard operators (like +,*,/,...). However, dynamic overloading is not possible.</p></li>
+<li><p>Fortran is case insensitive. For examples, an identifier (for a variable, a subroutine or whatever) like "IVAR", "ivar", "iVar" or "Ivar" are all the same for a Fortran compiler.</p></li>
+<li><p>Pointers are always type-bound. Following the Fortran Standard, it is impossible to have a pointer without a type. Converting a pointer from one type to another is not possible. <br></p>
+
+<blockquote>
+  <p><strong>Remark:</strong> In Feat2, a special trick is used to circumvent this restriction using some special assumptions on the compiler which generally hold. This is, however, nonstandard.</p>
+</blockquote></li>
+<li><p>A pointer is not realised as an integer pointing to the memory. A pointer is a descriptor pointing either to an object or to an array with elements of a specific type. In the case of arrays, the pointer-descriptor contains additional information like the size of the array (more precisely: upper/lower bound, size, type).</p></li>
+<li><p>Pointers to functions or subroutines do not exist. It is possible to pass a function/subroutine as a parameter in another subroutine, but a pointer variable pointing to a subroutine is not possible in Fortran.</p></li>
+<li><p>There is no standard preprocessor available. <br></p>
+
+<blockquote>
+  <p><strong>Remark:</strong> In Feat2, some special tricks allow the use of a quite powerful preprocessor also for Fortran. This allows the definition of general classes like lists.</p>
+</blockquote></li>
+<li><p>It is not possible to have "circular dependencies" in the modules. Every module can have one or more parent modules (specified by the <code>use</code> statement), but a module must never depend directly or indirectly on itself.</p></li>
+<li><p>Names are restricted to 31 characters. Lines are restricted to 132 characters.</p></li>
+<li><p>There is at most one command per line (except special cases like the shorthand notation for the <code>IF</code> clause). Putting multiple commands to one line and seperating it with a ";" as in C/C++ is nonstandard Fortran and not supported by all compilers. However, Fortran ignores any indention by space characters similar to C/C++ - so authors can format code blocks arbitrarily.</p></li>
+<li><p>Strings always have fixed length. If necessary, strings are filled with spaces.</p></li>
+<li><p>Variables are always passed by reference. Even in the case that a constant is specified (as in <code>call foobar(5)</code>), a pointer to a constant "5" is passed.</p></li>
+<li><p>Fortran subroutines/functions are not allowed to be called recursively by default.</p></li>
+<li><p>In C/C++, subroutines do not exist. All named code blocks are defined as functions (probably with a <code>void</code> attribute) and can be called like intrinsic routines (e.g. <code>foobar(5)</code> or <code>a=foobar(5)</code>). Fortran strictly differs between functions and subroutines. Functions can be called similar to C/C++, while subroutines require an additional <code>CALL</code> command. (Thus, use <code>call foobar(5)</code> for subroutines and <code>a=foobar(5)</code> for functions.)</p></li>
+</ul>
+
+<h1 id="Introduction-into-Fortran">Introduction into Fortran 90/95</h1>
+
+<h2 id="Hello-world">Hello world</h2>
+
+<p>In Fortran 95, a "Hello World" program reads like this:</p>
+
+<pre><code>program HelloWorld
+  write (*,*) "Hello world."
+end program
+</code></pre>
+
+<p>The <code>write</code> command is a general command for output to any device. The parameter <code>(*,*)</code> tells the compiler to print the output to the terminal <code>stdout</code> (first star) with default printing format (second star). It is also possible to print multiple pieces of data, e.g., some strings, integers and floating point values:</p>
+
+<pre><code>program HelloWorld
+  write (*,*) "Hello world. This is Test", 1, ", data ", 0.0
+end program
+</code></pre>
+
+<p>If one wants to have a specifal format for the numbers, a detailed "format" string has to be specified according to the parameters, e.g.:</p>
+
+<pre><code>program HelloWorld
+  write (*,"(AIAE5.5") "Hello world. This is Test", 1, ", data ", 0.0
+end program
+</code></pre>
+
+<p>As can be seen already in this example, Fortran 90 is "block oriented" without separate commands marking the start/end of a block. So there is no equivalent to a "{...}" construct as it is known from C. Instead, most commands that allow a subblock of commands (like an <code>IF</code> clause, see below) have a specific syntax that describes where a block starts and where it ends. Usually, there is an "<code>END</code>" command that tells the compiler the end of the block.</p>
+
+<h3>Long commands spanning over multiple lines <a id="Long commands spanning over multiple lines"></a></h3>
+
+<p>In contrast to C/C++, Fortran is strongly line-oriented:</p>
+
+<ul>
+<li>There must be at most one command per line (except the shorthand notation of the <code>IF</code> clause, see below)</li>
+<li>A command must not exceed one line, and a line can have at most 132 characters.</li>
+</ul>
+
+<p>Long commands have to be split over multiple lines using the "&amp;" character -- i.e., at the end of the line, a "&amp;" character tells Fortran to continue reading the current command in the next line. Example:</p>
+
+<pre><code>program LongLineTest
+
+  write (*,*) "This is a very long line " // &amp;
+      " that is split over ", 4 &amp;
+      , " lines with some stra" &amp;
+      // "nge splitting"
+
+end program
+</code></pre>
+
+<p>The command is interpreted as being in one line, i.e.,</p>
+
+<pre><code>  write (*,*) "This is a very long line " //       " that is split over ", 4 ...
+</code></pre>
+
+<h2 id="Language-constructs">Language constructs</h2>
+
+<h3>Comments <a id="Comments"></a></h3>
+
+<p>In Fortran, the "!" character starts a comment. Comments always last until the end of the line. Every line of comment has to start with a new "!" character. This is very similar to the "//" comment mark in C. Example:</p>
+
+<pre><code>program HelloWorldComment
+  ! This is a comment
+  ! in two lines.
+  write (*,*) "Hello world."
+end program
+</code></pre>
+
+<h3>Variables <a id="Variables"></a></h3>
+
+<p>Variables must be defined in the beginning of a program/subroutine/function. Typical variables are integer variables, floating point variables, boolean variables, character variables and strings. Using the operator "=", values can be assigned to variables. The following instructive example demonstrates the definition.</p>
+
+<pre><code>program DefineVariables
+
+  integer :: i      ! Integer variable
+  real :: d         ! Floating point value
+  logical :: b      ! Boolean variable
+  character :: c    ! Character
+
+  character(len=10) :: sstring  ! String of length 10
+
+  i = 0
+  d = 0.0
+  b = .false.       ! Logical has values ".true." or ".false."
+  sstring = "Hello"
+
+  write (*,*) i, " ", d, " ", b, " ", sstring
+end program
+</code></pre>
+
+<p>As can be seen, a "::" has to be placed between the type and the variable name. There are a couple of rules concerning variables, the basic rules read:</p>
+
+<ul>
+<li><p>Strings must always have a specified length when being declared. Dynamic-length strings are not possible. Strings are always filled with spaces. So in the above example, the variable <code>sstring</code> will actually be assigned the value
+    sstring = "Hello     "</p></li>
+<li><p>A computer system usually supports different types of integer and floating point numbers, and Fortran has a special way how to choose between them. A special "type" of a number format can be chosen by adding a "(xxx)" term to the end of the type. The actual implementation is system-dependent, however, the following definitions hold for most computer systems:</p>
+
+<pre><code>  integer(4) :: i      ! 32 Bit integer
+  integer(8) :: j      ! 64 Bit integer
+  real(8) :: f         ! Single precision
+  real(16) :: d        ! Double precision
+</code></pre></li>
+</ul>
+
+<blockquote>
+  <p><strong>Feat2 extension:</strong> In the module <code>fsystem</code>, Feat2 defines a couple of system independent number formats. So, if <code>fsystem</code> is included, one can use the following declarations:</p>
+</blockquote>
+
+<pre><code>      use fsystem
+
+      ...
+      integer(I32) :: i      ! 32 Bit integer
+      integer(I64) :: j      ! 64 Bit integer
+      real(SP) :: f          ! Single precision
+      real(DP) :: d          ! Double precision
+      ...
+</code></pre>
+
+<ul>
+<li><p>Fortran provides a set of routines to convert a number into another format. For example, the following commands explicitely convert "i" into a double precision value:</p>
+
+<pre><code>integer :: i
+real(8) :: d
+
+i = 5
+d = real(i,8)
+</code></pre></li>
+</ul>
+
+<h3>Constants <a id="Constants"></a></h3>
+
+<p>Variables can be defined as constant variables using the <code>PARAMETER</code> attribute. This is similar top defining a constant in C/C++ with the <code>const</code> attribute. Example:</p>
+
+<pre><code>program ConstTest
+
+integer, parameter :: ncorners = 4
+real, parameter :: PI = 3.14
+
+  ...
+
+end program
+</code></pre>
+
+<h3>String handling <a id="String handling"></a></h3>
+
+<p>String handling in Fortran is much more tedious than in C/C++. As indicated above, strings in Fortran are realised as character blocks with fixed length. It is impossible with standard methods to realise dynamic strings (although there exist some libraries in the web which imitate such strings using dynamic memory allocation and character arrays). Let us assume, we define a string in the following way:</p>
+
+<pre><code>program StringDef
+
+  character(len=10) :: sstr
+  sstr = " Hallo"
+
+  ...
+</code></pre>
+
+<p>There are a couple of commands possible to be applied to a string, e.g.,</p>
+
+<table>
+<thead>
+<tr>
+  <th>Command</th>
+  <th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>LEN(sstr)</code></td>
+  <td>Returns the length of the string. The content is <code>" Hallo    "</code>, so <code>len(sstr)=10</code>.</td>
+</tr>
+<tr>
+  <td><code>LEN_TRIM(sstr)</code></td>
+  <td>Returns the length of the string without trailing spaces, so <code>len_trim(sstr)=6</code>.</td>
+</tr>
+<tr>
+  <td><code>ADJUSTR(sstr)</code></td>
+  <td>Returns the right-adjusted string <code>"     Hallo"</code></td>
+</tr>
+<tr>
+  <td><code>ADJUSTL(sstr)</code></td>
+  <td>Returns the left-adjusted string <code>"Hallo     "</code></td>
+</tr>
+<tr>
+  <td><code>TRIM(sstr)</code></td>
+  <td>Returns the (rear-)trimmed string <code>" Hallo"</code></td>
+</tr>
+<tr>
+  <td><code>INDEX(...)</code></td>
+  <td>Search for a character in a string (with <code>...</code> some parameters). Similar to <code>strstr</code> in C/C++</td>
+</tr>
+</tbody>
+</table>
+
+<p>Extracting a character from a string can be done using the "(n:n)" notation. Extraction of a substring can be done via the "(m:n)" notation, with m&lt;n. Example.</p>
+
+<pre><code>program StringCopy
+
+  character(len=20) :: sstr1, sstr2
+  character :: c
+
+  sstr1 = "This is a litte string"
+
+  c = sstr1(6:6)        ! Returns "i"
+
+  sstr2 = sstr1(:4)     ! Returns "This"
+  sstr2 = sstr1(11:15)  ! Returns "little"
+  sstr2 = sstr1(16:)    ! Returns " string"
+
+end program
+</code></pre>
+
+<p>Strings can be concatenated using the "//" operator. This is similar to a "+" operator in C++ for strings. However, care must be taken as strings have fixed length -- so spaces must be trimmed away from the string. Instructive example:</p>
+
+<pre><code>program StringCat
+
+  character(len=20) :: sstr1
+  character(len=10) :: sstr2
+
+  sstr1 = "This " // "is " // "a string"  
+                                  ! Gives "This is a string    "
+
+  sstr2 = "This"
+  sstr1 = sstr2 // "is a string"  
+                                  ! Gives "This      is a strin"
+
+  sstr2 = "This"
+  sstr1 = trim(sstr2) // "is a string"  
+                                  ! Gives "Thisis a string     "
+
+  sstr2 = "This"
+  sstr1 = trim(sstr2) // " " // "is a string"  
+                                  ! Gives "This is a string    "
+
+end program
+</code></pre>
+
+<h3>Structures <a id="Structures"></a></h3>
+
+<p>Additionally to the build-in types, one can define structures in Fortran 90 using the "type" command. Later on, a <code>type(...)</code> command can be use to declare a variable of this structure. This is rather similar to the <code>struct</code> statement of C/C++. Entries in a structure can be accessed using the "%" qualifier, which is similar to a "." in C/C++. An example reads as follows:</p>
+
+<pre><code>program HelloStructure
+
+  ! Define a structure
+  type Complex
+    real :: R
+    real :: I
+  end type
+
+  ! Declare a variable
+  type(Complex) :: myComplex
+
+  ! Set real/imaginary value
+  myComplex%R = 1.0
+  myComplex%I = 0.0
+
+end program
+</code></pre>
+
+<p>Structures can be embedded in other structures as can be seen below. Accessing substructures is possible using "%" as a "." in C/C++:</p>
+
+<pre><code>program HelloStructure2
+
+  ! Define a structure
+  type Complex
+    real :: R
+    real :: I
+  end type
+
+  ! Another structure
+  type TooComplex
+    type(Complex) :: complex1
+    type(Complex) :: complex2
+  end type
+
+  ! Declare a variable of type TooComplex
+  type(TooComplex) :: myComplex
+
+  ! Set real/imaginary value
+  myComplex%complex1%R = 1.0
+  myComplex%complex1%I = 0.0
+
+  myComplex%complex2%R = 2.0
+  myComplex%complex2%I = 10.0
+
+end program
+</code></pre>
+
+<h3>1D Arrays <a id="1D Arrays"></a></h3>
+
+<p>An array is defined by specifying the additional attribute "dimension(n)" in the definition of the variable, with <code>n</code> the size. The entries can be accessed with specifying the position using "(x)" in the notation. Similar to MatLab, ranges of entries are allowed. Using the "(:)" notation, parts of the array can be accessed. Examples:</p>
+
+<pre><code>program ArrayTest
+
+integer, dimension(10) :: Iarray    ! Array of 10 integers
+real, dimension(10)    :: Darray    ! Array of 10 floating point values
+
+  Iarray(:) = 0     ! Set the complete array to zero.
+  Iarray(5) = 1     ! Set entry 5 to 1
+
+  Darray(:3)  = 0.0  ! Set entry 1..3 to 0.0
+  Darray(4:6) = 1.0  ! Set entry 4..6 to 1.0
+  Darray(7:)  = 2.0  ! Set entry 7..10 to 2.0
+
+end program
+</code></pre>
+
+<blockquote>
+  <p><strong>Warning:</strong> In contrast to C/C++, arrays are "1-based" in Fortran -- so the lower bound is "1" and the upper bound "n" for arrays with length "n"!</p>
+</blockquote>
+
+<h3>Multidimensional arrays <a id="Multidimensional arrays"></a></h3>
+
+<p>Arrays can also be multidimensional in Fortran. The following example defines a 2-dimensional integer and a 3-dimensional floating point array with fixed size. Using the "(:)" notation of Fortran, parts of the array can be set to fixed numbers or copied.</p>
+
+<pre><code>program ArrayTest2
+
+integer, dimension(10,20) :: Iarray    ! Array of 20x10 integers
+real, dimension(10,20,30) :: Darray    ! Array of 30x20x10 floats
+
+  Iarray(:,:) = 0      ! Clear the array
+  Iarray(:,1) = 1      ! Set Iarray(1..10,1) = 1
+
+  ! Copy Iarray(1..10,1) to Iarray(1..10,2)
+  Iarray(:,2) = Iarray(:,1)
+
+  ! Overwrite Darray(1..5,10..15,20..30) with zero
+  Darray(:5, 10:15, 20:) = 0.0
+
+end program
+</code></pre>
+
+<p><strong>Remark:</strong> In contrast to C/C++, Fortran indexes arrays "column-wise" instead of "row-wise". A C/C++ array declared as</p>
+
+<pre><code>int myarray [10][20][30];
+</code></pre>
+
+<p>is declared in Fortran as</p>
+
+<pre><code>integer, dimension(30,20,10) :: myarray
+</code></pre>
+
+<p>As an example, let us assume, the array Iarray is initialised similar to C/C++ as follows:</p>
+
+<pre><code>integer, dimension(3,3) :: Iarray
+
+Iarray(1,1) = 1
+Iarray(1,2) = 2
+Iarray(1,3) = 3
+Iarray(2,1) = 4
+Iarray(2,2) = 5
+Iarray(2,3) = 6
+Iarray(3,1) = 7
+Iarray(3,2) = 8
+Iarray(3,3) = 9
+</code></pre>
+
+<p>then internally, the array is set up in memoy as</p>
+
+<pre><code>1,4,7,2,5,8,3,6,9
+</code></pre>
+
+<p>which is probably not what one wants to have. In Fortran, the first dimension is the most "inner" dimension concerning ordering the data in memory. An initialisation like</p>
+
+<pre><code>integer, dimension(3,3) :: Iarray
+
+Iarray(1,1) = 1
+Iarray(2,1) = 2
+Iarray(3,1) = 3
+Iarray(1,2) = 4
+Iarray(2,2) = 5
+Iarray(3,2) = 6
+Iarray(1,3) = 7
+Iarray(2,3) = 8
+Iarray(3,3) = 9
+</code></pre>
+
+<p>gives internally the sequence</p>
+
+<pre><code>1,2,3,4,5,6,7,8,9
+</code></pre>
+
+<h3>Determining the size of an array <a id="Determining the size of an array"></a></h3>
+
+<p>Using the <code>UBOUND</code>, <code>LBOUND</code> and <code>SIZE</code> commands allow to determine the size of an array component or the size of the array, respectively. Here an instructive example:</p>
+
+<pre><code>program sizetest
+
+  integer, dimension(10)    :: Iarray1D
+  integer, dimension(10,20) :: Iarray2D
+
+  write (*,*) lbound(Iarray1D,1)
+  write (*,*) ubound(Iarray1D,1)
+  write (*,*) size(Iarray1D)
+
+  write (*,*) lbound(Iarray2D,1)
+  write (*,*) ubound(Iarray2D,1)
+  write (*,*) lbound(Iarray2D,2)
+  write (*,*) ubound(Iarray2D,2)
+  write (*,*) size(Iarray2D)
+
+end program
+</code></pre>
+
+<p>The first three write commands return</p>
+
+<pre><code>1    ( = lower bound of Iarray1D(:) )
+10   ( = upper bound of Iarray1D(:) )
+10   ( = size of Iarray1D )
+</code></pre>
+
+<ul>
+<li><code>LBOUND</code> returns the lower bound which is always =1. (However we note here that it is possible to define arrays with a lower bound different than 1, but this will not be discussed here).</li>
+<li><code>UBOUND</code> returns the upper bound as defined in <code>DIMENSION(10)</code>, so 10. Both commands are called with "<code>...,1)</code>" which returns the lower/upper bound for the first and only dimension. </li>
+<li><code>SIZE</code> returns the total size, which is also =10 here.</li>
+</ul>
+
+<p>The next five lines return</p>
+
+<pre><code>1    ( = lower bound of Iarray2D(:,1) )
+10   ( = upper bound of Iarray2D(:,1) )
+1    ( = lower bound of Iarray2D(:,2) )
+20   ( = upper bound of Iarray2D(:,2) )
+200  ( = size of Iarray2D )
+</code></pre>
+
+<ul>
+<li><code>LBOUND(...,1)</code> and <code>UBOUND(...,1)</code> return the lower/upper bound for the 1st dimension, which are =1 and =10 here, respectively.</li>
+<li>Similarly, <code>LBOUND(...,2)</code> and <code>UBOUND(...,2)</code> return the lower/upper bound for the 2nd dimension, which are =1 and =20 here.</li>
+<li><code>SIZE</code> returns the total size which is =10*20=200 in this example.</li>
+</ul>
+
+<h3>Constant arrays <a id="Constant arrays"></a></h3>
+
+<p>Arrays can be defined constant as well. Constant arrays have to be initialised immediately using the <code>(/ ... /)</code> array constructor. Example:</p>
+
+<pre><code>program ConstTest2
+
+integer, dimension(5), parameter :: Ilist = (/ 1,2,3,4,5 /)
+real(DP), dimension(3), parameter :: Dlist = (/ 0.1, 0.2, 0.3 /)
+
+  ...
+
+end program
+</code></pre>
+
+<p>Multidimensional arrays are slightly more complicated in the initialisation, the <code>RESHAPE</code> command has to be used. The <code>RESHAPE</code> command reshapes a one-dimensional array to a multidimensional array using a row-wise ordering of the elements. Example:</p>
+
+<pre><code>program ConstTest2
+
+integer, dimension(5,2), parameter :: Ilist = &amp;
+    reshape ( (/ 1,2,3,4,5,6,7,8,9,10 /), (/5,2/) )
+
+  ...
+
+end program
+</code></pre>
+
+<p>In the above example, the array <code>Ilist</code> receives the values</p>
+
+<pre><code>Ilist(:,1) = 1,2,3,4,5
+Ilist(:,2) = 6,7,8,9,10
+</code></pre>
+
+<h3>Allocatable arrays <a id="Allocatable arrays"></a></h3>
+
+<p>Allocatable arrays are arrays with a-priori unknown length. They can dynamically be allocated during runtime. Such arrays are declared with <code>n=:</code> and an additional <code>allocatable</code> flag. Example:</p>
+
+<pre><code>program AllocateExample
+
+  integer, dimension(:), allocatable :: Iarray
+
+  allocate (Iarray(10))    ! Allocates an array with 10 entries
+  ...                      ! Do something with the array
+  deallocate (Iarray)      ! Release memory
+
+end program
+</code></pre>
+
+<p>The <code>allocate/deallocate</code> commands are equivalent to the <code>malloc/free</code> commands to C++.</p>
+
+<p>Allocatable arrays are by design "automatically released", i.e., the end of a command unit (main program/subroutine/function) automatically invokes a <code>deallocate</code> of the allocatable array. So the above example could be shorteded to</p>
+
+<pre><code>program AllocateExample
+
+  integer, dimension(:), allocatable :: Iarray
+
+  allocate (Iarray(10))    ! Allocates an array with 10 entries
+  ...                      ! Do something with the array
+
+end program
+</code></pre>
+
+<p>At the point where <code>end program</code> is reached, the <code>deallocate</code> is automatically invoked. So allocatable arrays are perfect for large temporary data inside of a subroutine.</p>
+
+<p>Of course, allocatable arrays can also be multidimensional; here an example:</p>
+
+<pre><code>program AllocateExample
+
+  integer, dimension(:,:), allocatable :: Iarray
+
+  allocate (Iarray(10,20))    ! Allocates 20x10 entries
+  ...                         ! Do something with the array
+
+end program
+</code></pre>
+
+<h3>Pointers to variables <a id="Pointers to variables"></a></h3>
+
+<p>Fortran 90 introduces the concept of pointers, which is in contrast to C++ more strict but also more powerful. Any variable can be defined to be a pointer to another variable of the same type. This includes pointers single values as well as pointers to arrays.</p>
+
+<p>To declare a variable as a pointer to another variable, the <code>pointer</code> qualifier must be specified. Every variable where the pointer may point to must be declared with a <code>target</code> quantifier. The "=>" operator is used to set a pointer to something. The nullify command or <code>null()</code> target can be used to clear the pointer. Here an instructive example:</p>
+
+<pre><code>program PointerDemo
+
+  integer, target :: i1    ! Can be a target of a pointer
+  integer         :: i2    ! Can NOT be a target of a pointer
+
+  integer, pointer :: p_i  ! Pointer top an integer
+
+  p_i =&gt; i1          ! p_i points to i1
+  p_i = 50           ! The same as i1=50
+
+  nullify (p_i)      ! Clear the pointer
+  p_i =&gt; null()      ! Identical to "nullify (p_i)"
+
+  p_i =&gt; i2          ! Compiler error. i2 is not "target"
+
+end program
+</code></pre>
+
+<h3>Pointer to arrays <a id="Pointer to arrays"></a></h3>
+
+<p>Pointers can also refer to arrays if they are defined in the same shape as the array they should point to.</p>
+
+<pre><code>program PointerDemoArray
+
+  ! Array with 10 integers
+  integer, dimension(10), target :: Iarray
+
+  ! Pointer to an integer array
+  integer, dimension(:), pointer :: p_I
+
+  p_I =&gt; Iarray      ! p_I points to Iarray
+  p_I(:) = 0         ! The same as "Iarray(:)=0"
+
+end program
+</code></pre>
+
+<p>Pointers to arrays automatically update their minimum/maximum bounds according to the target they point to. The corresponding bounds can be accessed using the <code>ubounds</code> routine, as can be seen in the following example with a multidimensional array.</p>
+
+<pre><code>program PointerDemoMulti
+
+  ! Array with 20x10 integers
+  integer, dimnension(10,20), target :: Iarray
+
+  ! Pointer to a 2D integer array
+  integer, dimension(:,:), pointer :: p_I
+
+  p_I =&gt; Iarray      ! p_I points to Iarray
+
+  ! Will give "10"
+  write (*,*) "Dimension 1 has ", ubound(p_I,1), " entries"
+
+  ! Will give "20"
+  write (*,*) "Dimension 2 has ", ubound(p_I,2), " entries"
+
+  ! Will give "1"
+  write (*,*) "Dimension 1 starts at", lbound(p_I,1)
+
+  ! Will give "1"
+  write (*,*) "Dimension 2 starts at ", lbound(p_I,2)
+
+  ! Will give "200"
+  write (*,*) "Array has size ", size(p_I)
+
+end program
+</code></pre>
+
+<h3>Allocating data with pointers <a id="Allocating data with pointers"></a></h3>
+
+<p>Using <code>allocate/deallocate</code>, it is also possible to allocate memory like <code>malloc/free</code> in C/C++. This is similar to the concept of allocatable arrays, however, memory is NOT automatically deallocated. Here an example for allocating a single integer:</p>
+
+<pre><code>program PointerDemo
+
+  integer, pointer :: p_i
+
+  allocate (p_i)   ! Allocates one integer
+  p_i = 5          ! Set the value
+  deallocate (p_i) ! Release memory
+
+end program
+</code></pre>
+
+<p>This concept is usually of more use for arrays,</p>
+
+<pre><code>program PointerDemo2
+
+  integer, dimension(:), pointer :: p_I
+
+  allocate (p_I(10))   ! Allocates 10 integers
+  ...                  ! Do something with p_I
+  deallocate (p_I)     ! Release memory
+
+end program
+</code></pre>
+
+<p>or complex structures:</p>
+
+<pre><code>program PointerDemo3
+
+  ! Declare a structure
+  type ProblemStructure
+    integer :: i
+    real(DP) :: d
+    character(len=100) :: s
+  end type
+
+  ! Define a pointer to the structure
+  type(ProblemStructure), pointer :: p_myProblem
+
+  ! Allocate the structure on the heap
+  allocate(p_myProblem)
+
+  ! Access variables
+  p_myProblem%i = 5
+  p_myProblem%d = 10.0
+  p_myProblem%s = "Hello there"
+
+  ! Release memory
+  deallocate(p_myProblem)
+
+end program
+</code></pre>
+
+<p>Note that there is no additional "->" operator as in C/C++. The "%" operator always refers to the content of the pointer -- or in other words, the compiler automatically determins whether to use "." or "->". Here a more complex example with an embedded pointer.</p>
+
+<pre><code>program PointerDemo3
+
+  ! Declare a structure
+  type ProblemStructure
+    integer, dimension(:), pointer :: p_Iarray
+  end type
+
+  ! Define a pointer to the structure
+  type(ProblemStructure), pointer :: p_myProblem
+
+  ! Allocate the structure on the heap
+  allocate(p_myProblem)
+
+  ! Allocate the subarray with 10 entries
+  allocate (p_myProblem%p_Iarray(10))
+
+  ! Set to zero
+  p_myProblem%p_Iarray(:) = 0.0
+
+  ! Release subarray
+  deallocate(p_myProblem%p_Iarray)
+
+  ! Release main structure
+  deallocate(p_myProblem)
+
+end program
+</code></pre>
+
+<blockquote>
+  <p><strong>Remark:</strong> The <code>deallocate</code> command automatically puts the pointer to <code>=&gt; null()</code>.</p>
+</blockquote>
+
+<h2 id="Flow-control-commands">Flow control commands</h2>
+
+<h3>Conditions <a id="Conditions"></a></h3>
+
+<p>Fortran defines the following condition operators which can be used, e.g., in <code>IF</code> commands. Most condition exists twice -- the ".xx." notation comes from Fortran 77 whereas the C-like notation has been introduced in Fortran 90.</p>
+
+<pre><code>Operation    | Condition in Fortran | in C/C++
+-------------|----------------------|---------
+less than    | .lt. , &lt;             | &lt;
+greater than | .gt. , &gt;             | &gt;
+less/equal   | .le. , &lt;=            | &lt;=
+greater/equal| .ge. , &gt;=            | &gt;=
+equal        | .eq. , ==            | ==
+not equal    | .ne. , /=            | !=
+logical and  | .and.                | &amp;&amp;
+logical or   | .or.                 | ||
+logical not  | .not.                | !
+equivalence  | .eqv.                | == (for bool variables)
+not equival. | .neqv.               | != (for bool variables)
+</code></pre>
+
+<p>Conditions are typically used in <code>IF</code> commands. The following instructive example demonstrates the typical syntax. Note that the condition is always enclosed by braces "(...)".</p>
+
+<pre><code>! Simple IF clause
+if (a == b) then
+  ...
+end if  
+
+! More complex expression
+if (((a == b) .or. (a == c)) .and. (a == d)) then
+  ...
+end if  
+
+! Complete IF-THEN-ELSE
+if (a == b) then
+  ...
+else
+  ...
+end if
+
+! IF-THEN-ELSEIF construct
+if (a == b) then
+  ...
+else if (b == c) then
+  ...
+else
+  ...
+end if
+
+! which is equivalent to
+if (a == b) then
+  ...
+else 
+  if (b == c) then
+    ...
+  else
+    ...
+  end if
+end if
+</code></pre>
+
+<p>As can be seen above, an <code>ELSE IF</code> is formed by placing <code>IF</code> into the same line as <code>ELSE</code>. A linebreak would start a new block.</p>
+
+<blockquote>
+  <p><strong>Remark:</strong> As noted above, the following statements are exactly identical:</p>
+</blockquote>
+
+<pre><code>if (a == b) ...
+if (a .eq. b) ...
+</code></pre>
+
+<blockquote>
+  <p>or</p>
+</blockquote>
+
+<pre><code>if (a &lt; b) ...
+if (a .lt. b) ...
+</code></pre>
+
+<h3>Shorthand notation for IF clauses <a id="Shorthand notation for IF clauses"></a></h3>
+
+<p>Sometimes, <code>IF</code> clauses have a very short reaction to a condition that fits into one line.  In this case, the "THEN" can be omitted if the command follows directly to the braces. Examples:</p>
+
+<pre><code>if (a &lt; b) c = 0
+if (a == b) write (*,*) "Error"
+</code></pre>
+
+<h3>SELECT-CASE commands <a id="SELECT-CASE commands"></a></h3>
+
+<p>The <code>select-case</code> construct is a handy notation for multiple <code>IF</code> clauses and similar to the <code>switch-case</code> in C/C++. However, in contrast to C/C++, the following rules hold:</p>
+
+<ul>
+<li>There is no "fall-through", i.e, wherever a block ends, the select case-statement is left. Or in the words of a C/C++ programmer, there is an automatic <code>break</code> insered at the end of each block.</li>
+<li>One can specify ranges of numbers, not only single values.</li>
+</ul>
+
+<p>Here an example:</p>
+
+<pre><code>program PointerDemo3
+integer :: i
+  ...
+  select case (i)
+  case (1)
+    write (*,*) "There is i=1"
+
+  case (2)
+    write (*,*) "There is i=2"
+
+  case (3:10)
+    write (*,*) "There is i between 3 and 10"
+
+  case (11:)
+    write (*,*) "There is i&gt;=11"
+
+  default
+    write (*,*) "There is i&lt;=0"
+
+  end select
+end program
+</code></pre>
+
+<h3>DO-Loops <a id="DO-Loops"></a></h3>
+
+<p>The most typical type of loop in Fortran 90 is the <code>DO</code> loop, which is closely releated to the <code>FOR</code> loop in C/C++:</p>
+
+<pre><code>program SmallLoop
+  integer :: i
+
+  do i = 1, 10
+    write (*,*) i
+  end do
+end program
+</code></pre>
+
+<p>The value of the counting variable will be <code>i=11</code> at the end. This loop is identical to the C/C++ <code>for</code> loop in the form</p>
+
+<pre><code>  int i;
+  for (i=1; i &lt;=10; i++)
+  {
+    printf ("%d\n", i);
+  }
+</code></pre>
+
+<p>Fortran does not allow private in-block variables (like <code>for (int i=...)</code>); all variables must be specified in the beginning of the block.</p>
+
+<p>A "striped" version that increments i in terms of 3 reads</p>
+
+<pre><code>program SmallLoopStriped
+  integer :: i
+
+  do i = 1, 11, 3
+    write (*,*) i
+  end do
+end program
+</code></pre>
+
+<p>The value of the counting variable will be <code>i=13</code> at the end. The last value written to the terminal is "10".</p>
+
+<p>A "backward headed" loop counting down from 10 to 1 reads:</p>
+
+<pre><code>program SmallLoopBackward
+  integer :: i
+
+  do i = 10, 1, -1
+    write (*,*) i
+  end do
+end program
+</code></pre>
+
+<p>The value of the counting variable will be <code>i=0</code> at the end.</p>
+
+<p>However, a special rules hold for such loops: <strong>The number of iterations must be available in advance.</strong>
+As a consequence, the upper/lower bound must not change inside of a loop. So a code like the following is NOT valid:</p>
+
+<pre><code>program SmallLoopWrong
+  integer :: i,j
+
+  j=10
+
+  do i = 1, j
+    write (*,*) i
+    if (i .eq. 10) then
+      j = 20              ! ERROR
+    end if
+  end do
+end program
+</code></pre>
+
+<h3>Conditional DO-WHILE loops <a id="Conditional DO-WHILE loops"></a></h3>
+
+<p>DO-Loops can depend on a condition and are named "DO-WHILE" loops in this case. This is very similar to an <code>IF</code> clause. An example reads as follows:</p>
+
+<pre><code>do while (i /= 10)
+  ...
+end do
+</code></pre>
+
+<h3>Infinite DO-loops <a id="Infinite DO-loops"></a></h3>
+
+<p>Fortran 90 also defines infinite loops for complex stopping criteria. Leaving a loop is possible using the "exit" command. Example:</p>
+
+<pre><code>do
+  if (i == 10) exit
+  ...
+end do
+</code></pre>
+
+<h3>Nested DO loops, skipping of iterations, exiting loops <a id="Nested DO loops, skipping of iterations, exiting loops"></a></h3>
+
+<p><code>DO</code> loops can be arbitrarily nested. Iterations can be skipped using the <code>cycle</code> command and left via the <code>exit</code> command. Loops can also be assigned a name, so an <code>exit/cycle</code> command can specify to jump out of an outer loop immediately. Examples:</p>
+
+<pre><code>! Nested loop
+do i=1,10
+  do j=1,10
+    ...
+  end do
+end do
+
+! Nested loop that skips i=5
+do i=1,10
+  if (i == 5) cycle
+  do j=1,10
+    ...
+  end do
+end do
+
+! Nested loop that leaves the complete block if (i=j=5)
+outerloop: do i=1,10      
+  do j=1,10
+    if ((i == 5) .and. (j == 5)) then
+      exit outerloop
+    end if
+  end do
+end do outerloop
+</code></pre>
+
+<p>As can be seen above, a named loop starts with a label in front of <code>do</code> (here <code>outerloop:</code>). The label must be releated at the <code>end do</code>.</p>
+
+<h2 id="Multi-file-projects">Multi-file projects</h2>
+
+<h3>Modules <a id="Modules"></a></h3>
+
+<p>For larger programs, Fortran allows the definition of so-called <em>modules</em>. A <em>module</em> is a separate program part that can be seen as a small, closed library. In contrast to C/C++, a there is no such a concept of <em>header</em> files; a module contains both, the declaration and the definition of structures, variables, subroutines and functions.</p>
+
+<p>The following example demonstrates the definition of a simple module "ComplexNumbers":</p>
+
+<pre><code>module ComplexNumbers
+
+implicit none
+private
+
+  type Complex
+    real :: R
+    real :: I
+  end type
+
+  public :: Complex
+
+end module
+</code></pre>
+
+<p>The module starts with the commands <code>IMPLICIT NONE</code> and <code>PRIVATE</code>. These commands are optional, however, strongly advised.</p>
+
+<ul>
+<li><p><code>IMPLICIT NONE</code> prevents all symbols to be undefined, which matches the behaviour of C++; without this command, one could use variables without declaring them. Fortran has special rules for choosing the type of a variable depending on the first letter in this case. This should be avoided in good programming style!</p></li>
+<li><p><code>PRIVATE</code> declares all symbols to be private and invisible. Without this command, all types, subroutines, functions, etc. would be public by default, which is a usually undesired behaviour in large modules.</p></li>
+</ul>
+
+<p>In a second step, a structure <code>Complex</code> is defined which is declared to be public in this module. A main program can include this module with the <code>USE</code> statement, which gives it access to the data in "ComplexNumbers" declared as <code>public</code>. The <code>USE</code> statement has a similar behaviour as the <code>include</code> statement in C/C++, however, it includes all public symbols and does not just copy a specified include file into the sourcecode as part of the preprocessor.</p>
+
+<pre><code>program HelloStructure
+
+use ComplexNumbers
+implicit none
+
+  ! Declare a variable
+  type(Complex) :: myComplex
+
+  ! Set real/imaginary value
+  myComplex%R = 1.0
+  myComplex%I = 0.0
+
+end program
+</code></pre>
+
+<p>As can be seen here, <code>IMPLICIT NONE</code> can (and should) also be specified in the main program.</p>
+
+<p>Modules can of course be used in other modules as well. Example:</p>
+
+<pre><code>module ComplexNumbers2D
+
+use ComplexNumbers
+
+implicit none
+private
+
+  type Complex2D
+    type(Complex) :: C1
+    type(Complex) :: C2
+  end type
+
+  public :: Complex2D
+
+end module
+</code></pre>
+
+<p>The <code>USE</code> statement in the beginning of the module "includes" the module "ComplexNumbers" into the module "ComplexNumbers2D", so the symbols defined there are available here as well. It has to be used before any <code>IMPLICIT</code> or <code>PRIVATE</code> statement.</p>
+
+<h3>Subroutines <a id="Subroutines"></a></h3>
+
+<p>The module concept allows to encapsule parts of the code in subroutines and offer them in a kind of library to other parts of the program. A simple extension of the above example reads as follows:</p>
+
+<pre><code>module ComplexNumbers
+
+implicit none
+private
+
+  type Complex
+    real :: R
+    real :: I
+  end type
+
+  public :: Complex
+  public :: Init
+
+contains
+
+  subroutine Init(c)
+  type(Complex), intent(inout) :: c
+    c%R = 0.0
+    c%I = 0.0
+  end subroutine
+
+end module
+</code></pre>
+
+<p>This module publishes the type "Complex" as well as a subroutine "init". The subroutine is declared after an initial <code>contains</code> statement that subdivides the module into a "header" part (with structures) and a "code" part (containing only subroutines and functions). The subroutine has one parameter "c" which is declared as <code>intent(inout)</code> -- which tells the compiler that the routine is allowed to modify the content of "c". Indeed, the subroutine overwrites the content with zero. A main program now can access all public routines/structures of the module. In particular, the subroutine can be used by "calling" it, i.e., there must be a <code>call</code> precede the subroutine name. This is different to C/C++ where subroutines can be used like any other qualifier. Example:</p>
+
+<pre><code>program HelloStructure2
+
+use ComplexNumbers
+
+  ! Declare a variable
+  type(Complex) :: myComplex
+
+  ! Initialise
+  call Init(myComplex)
+
+  ! Set real/imaginary value
+  myComplex%R = 1.0
+
+end program
+</code></pre>
+
+<p>All local variables used in a subroutine (and a function, see below) must be declared in the header of the subroutine. This reads as follows:</p>
+
+<pre><code>subroutine sum1to10 (isum)
+integer, intent(out) :: isum
+
+  ! local variables
+  integer :: i
+
+  isum = 0
+  do i = 1,10
+    isum = isum + i
+  end do
+end do
+</code></pre>
+
+<p>As indicated above, Fortran does not allow private in-block variables (like <code>for (int i=...)</code>); all variables must be specified in advance.</p>
+
+<blockquote>
+  <p><strong>WARNING: In contrast to C/C++, variables are ALWAYS PASSED BY REFERENCE.</strong> This is independent of whether a variable is a single integer, a complex structure or an array. So the use of the <code>intent</code> specifier (see below) is strongly advised to prevent mistakes in the code.</p>
+</blockquote>
+
+<p>Inside of a subroutine, the <code>RETURN</code> command can be used to immediately return to the caller. This is similar to the <code>return</code> command in C/C++. Example:</p>
+
+<pre><code>module ComplexNumbers
+
+implicit none
+private
+
+  type Complex
+    real :: R
+    real :: I
+  end type
+
+  public :: Complex
+  public :: Init
+
+contains
+
+  subroutine Init(c)
+  type(Complex), intent(inout) :: c
+    if ((c%R == 0.0) .and. (c%I == 0.0)) then
+      return
+    end if
+    c%R = 0.0
+    c%I = 0.0
+  end subroutine
+
+end module
+</code></pre>
+
+<h3>Functions <a id="Functions"></a></h3>
+
+<p>Similar to subroutines, it is possible to define functions in Fortran 90. Functions are parts of the code that <em>must</em> return a value given by a special return variable. There are two possibilities to define a function, either without or with specified return variable. Return variables can be declared, however, they must not contain an <code>INTENT</code> qualifier. If no return variable is declared, the name of the function defines the return variable. Here an example:</p>
+
+<pre><code>module ComplexNumbers
+
+implicit none
+private
+
+  ...
+
+  ! Publish functions
+  public :: RealPart
+  public :: ImaginaryPart
+
+contains
+
+  ...
+
+  ! Function without explicit return variable
+  !
+  real function RealPart (c)
+  type(Complex), intent(in) :: c
+    ! Return variable is function name
+    RealPart = c%R
+  end function
+
+  ! Function with explicit return variable. No INTENT for Im!
+  !
+  function ImaginaryPart (c) result (Im)
+  type(Complex), intent(in) :: c
+  real :: Im
+    ! Return variable is "Im"
+    Im = c%I
+  end function
+
+end module
+</code></pre>
+
+<p>The first function, <code>RealPart</code>, is written without explicit declaration of the return variable. This syntax is similar to C/C++. The key words <code>real</code> before <code>function</code> defines the return value. The name of the return value is the name of the function, so the assignment <code>RealPart = ...</code> sets the return value of the function, a real-typed value.</p>
+
+<p>The second function, <code>ImaginaryPart</code>, is written with explicit declaration of a return variable. The name of the return variable is defined as <code>Im</code> with the <code>result</code> qualifier. Note that the declaration of <code>Im</code> in the parameter list does not contain any <code>IMPLICIT</code> attribute - this is not allowed!</p>
+
+<p>Functions can be used in a main program similar to C/C++; example:</p>
+
+<pre><code>program HelloStructure3
+
+use ComplexNumbers
+
+  ! Declare a variable
+  type(Complex) :: myComplex
+
+  ...
+
+  ! Print real/imaginary part
+
+  write (*,*) "Real part     : ", RealPart(c)
+  write (*,*) "Imaginary part: ", ImaginaryPart(c)
+
+end program
+</code></pre>
+
+<p>However, in contrast to C/C++, the return value has to be used somewhere. Just calling the function and not using the return value is not allowed.</p>
+
+<h2 id="Special-language-constructs">Special language constructs</h2>
+
+<h3>Extended data types</h3>
+
+<p>Fortran 90 defines a set of basic data types:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>data type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>integer</td>
+  <td>Standard integer type</td>
+</tr>
+<tr>
+  <td>real</td>
+  <td>Standard float type</td>
+</tr>
+<tr>
+  <td>character</td>
+  <td>A character value</td>
+</tr>
+<tr>
+  <td>logical</td>
+  <td>A boolean value, only <code>.true.</code> or <code>.false.</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>For many purposes, these data types are not appropriate. The <code>real</code> data type, for example, corresponds to the <code>float</code> data type in C/C++, which is rarely used in scientific applications. It is more common to use the <code>double</code> data type in C/C++ which has a larger set of possible values.</p>
+
+<p>For this purpose, Fortran 90 introduces a machine-independent extensions to the above data types in terms of an accuracy modifier. The crucial commands in this context are <code>SELECTED_REAL_KIND</code> and <code>SELECTED_INT_KIND</code>. These commands return a modifier which can be specified in the declaration of a variable and which leads to a modified data type with at least the specified accuracy. Here an example:</p>
+
+<pre><code>integer, parameter :: DP = selected_real_kind(15,307)
+</code></pre>
+
+<p>This command initialises a constant <code>DP</code> with a value that identifies a floating point number type that is capable of</p>
+
+<ul>
+<li>Having an accuracy of (at least) 15 digits.</li>
+<li>Having an exponent up to (at least) E+307.</li>
+</ul>
+
+<p>The smallest possible floating point type that supports this accuracy is the "double precision" type. A variable in type "double precision" is then declared with this modifier specified in braces after the <code>real</code> type qualifier. The following example declares a double precision variable <code>dvalue</code>.</p>
+
+<pre><code>real(DP) :: dvalue
+</code></pre>
+
+<blockquote>
+  <p><strong>Remark:</strong> On most machines, there is <code>DP=8</code> chosen by the above <code>selected_real_kind</code> command, where the number "8" corresponds to the number of bytes, a double precision value needs. So on most machines, double precision variables are equivalently declared by</p>
+</blockquote>
+
+<pre><code>real(8) :: dvalue
+</code></pre>
+
+<blockquote>
+  <p>However, one should be careful with this assumption, as the number "8" is machine dependent. Using a constant <code>DP</code> declared using <code>selected_real_kind</code> offers a machine-independent way of declaring double precision variables.</p>
+</blockquote>
+
+<p>Having defined such a type qualifier, one can also define constant numbers in this data format by appending "<code>_DP</code>" to a number. This is very much like appending a type quantifier to a number in C/C++, e.g., like in a definition of a single precision / float variable "1.0f". Examples:</p>
+
+<pre><code>real(DP), parameter :: PI = 3.14159265358979_DP
+
+write (*,*) "ARCCOS(0) = ", acos(0.0_DP)
+</code></pre>
+
+<p>The first command declares a constant <code>PI</code> in double precision and assigns it a value in double precision. The second command calls the function "ACOS" with a value "0.0" in double precision.</p>
+
+<p>Using the <code>REAL(...)</code> function, one can typecast one type into another using the above type qualifier. For example, the following code casts an integer <code>i</code> into a double and prints it in a loop:</p>
+
+<pre><code>integer :: i
+
+do i=1,10
+  write (*,*) "Integer: ", i, ", double: ", real(i,DP)
+end do
+</code></pre>
+
+<p>A similar logic also holds for integer. The command</p>
+
+<pre><code>integer, parameter, public :: I32 = selected_int_kind(8)
+</code></pre>
+
+<p>defines a qualifier "I32" that identifies integers with a value set of (at least) $[-10^{8}, 10^{8}]$, which is fulfilled by a 32 bit integer. A 32 bit variable is then declared by</p>
+
+<pre><code>integer(I32) :: i
+</code></pre>
+
+<p>and a type cast of a real value into an integer is done using the function <code>INT(...)</code>, e.g.,</p>
+
+<pre><code>write (*,*) "Real: ", 5.0, ", Int: ", int(5.0,I32)
+</code></pre>
+
+<h3>The INTENT qualifier <a id="The INTENT qualifier"></a></h3>
+
+<p>Parameters in functions/subroutines should be declared with an <code>intent</code> qualifier. There are three possible qualifiers:</p>
+
+<ul>
+<li><code>intent(in)</code>: Variable can only be read</li>
+<li><code>intent(inout)</code>: Variable can be read and modified</li>
+<li><code>intent(out)</code>: Variable will be defined in the subroutine</li>
+</ul>
+
+<p>Parameters that are declared as <code>intent(in)</code> can only be read in the subroutine. This is similar to the <code>const</code> specifier in C/C++. However, there is an additional benefit: Parameters declared as <code>intent(in)</code> are allowed to be defined by a constant in the call. Here an example:</p>
+
+<pre><code>module intentmod
+
+implicit none
+private
+
+  public :: mysub
+
+contains
+
+  subroutine mysub(i,j)
+  integer, intent(in) :: i
+  integer, intent(inout) :: j
+    j = 5*i
+  end subroutine
+
+end module
+</code></pre>
+
+<p>A main program as this one</p>
+
+<pre><code>program test
+use intentmod
+implicit none
+
+  integer :: j
+
+  call mysub(5,j)
+
+end program
+</code></pre>
+
+<p>is ok. However, doing it like this</p>
+
+<pre><code>program test
+use intentmod
+implicit none
+
+  call mysub(5,10)
+
+end program
+</code></pre>
+
+<p>the compiler would complain as "10" is not a variable, and <code>mysub</code> probably wants to write to it -- and writing into a constant does not make sense.</p>
+
+<p>The <code>intent(out)</code> statement finally is good for making the compiler check that output variables are set. So for a subroutine like this one,</p>
+
+<pre><code>  subroutine mysub(i,j,k)
+  integer, intent(in) :: i
+  integer, intent(inout) :: j
+  integer, intent(out) :: k
+    j = 5*i
+  end subroutine
+</code></pre>
+
+<p>the compiler would complain that "k" is not set.</p>
+
+<blockquote>
+  <p><strong>WANRNING:</strong> <code>INTENT</code> should be used whereever possible. Assume that a subroutine is declared without the <code>INTENT</code> qualifier as follows:</p>
+</blockquote>
+
+<pre><code>module intentmod2
+
+implicit none
+private
+
+  public :: myerrsub
+
+contains
+
+  subroutine myerrsub(i,j)
+  integer :: i
+  integer :: j
+    j = 5*i
+  end subroutine
+
+end module
+</code></pre>
+
+<blockquote>
+  <p>Syntactically, this is completely ok. However, Having defined <code>myerrsub</code> like this, one could use the routine in an errorneous way as follows:</p>
+</blockquote>
+
+<pre><code>program test2
+use intentmod2
+
+  call myerrsub(5,10)
+
+end program
+</code></pre>
+
+<blockquote>
+  <p>The compiler would NOT complain and the program would run. However, it would overwrite an internally defined constant "10" which usually leads to <em>very</em> undesireable and unpredictable results.</p>
+</blockquote>
+
+<p><strong>Example:</strong> The following example compares the declaration of variables between Fortran and C/C++. Let a Fortran 90 subroutine be given as</p>
+
+<pre><code>subroutine doiteration(a, b, c)
+real, intent(in) :: a
+real, intent(inout) :: b
+real, intent(out) :: c
+real :: dtemp
+  ...
+end subroutine
+</code></pre>
+
+<p>The subroutine has two input, one output and one temp variable. A corresponding declaration in C/C++ would read</p>
+
+<pre><code>void doiteration(const float &amp; a, float &amp; b, float &amp; c) 
+{
+  float dtemp;
+  ...
+}
+</code></pre>
+
+<p>"INTENT(IN)" variables are translated to "const" variables, "INTENT(INOUT)" variables to "nothing". However, C/C++ does not have an explicit declaration of "out" variables (like, e.g., C#). One would just declare "c" as a reference and overwrite it, similar to "INTENT(INOUT)".</p>
+
+<p>The difference between "INTENT(OUT)" and "INTENT(INOUT)" can be seen if structures are involved. A Fortran 90 subroutine as follows</p>
+
+<pre><code>type Complex
+  real :: r = 0.0
+  real :: d = 0.0
+end type
+
+...
+
+subroutine add(a,b,c)
+type(Complex), intent(in) :: a
+type(Complex), intent(inout) :: b
+type(Complex), intent(out) :: c
+  ...
+end subroutine
+</code></pre>
+
+<p>would be translated in C/C++ as</p>
+
+<pre><code>struct Complex
+{
+  float r;
+  float i;
+};
+
+...
+
+void add(const Complex &amp; a, Complex &amp; b, Complex &amp; c) 
+{
+  c.r = 0.0
+  c.i = 0.0
+  ...
+}
+</code></pre>
+
+<p>Thus, "c" is initialised in the beginning of the subroutine.</p>
+
+<h3>Passing strings as parameters <a id="Passing strings as parameters"></a></h3>
+
+<p>For passing strings to subroutines, a special rule holds. Strings defined as parameter can be defined with unknown length, using the <code>(len=*)</code> attribute. The length is automatically adjusted to the length of  the string used in the call. Example:</p>
+
+<pre><code>program stringtest
+  character(len=10) :: str
+  str = "Hello"
+  call mystringsub (str)
+end program
+
+subroutine mystringsub(s)
+character(len=*), intent(in) :: s
+  write (*,*) len(s), " ", len_trim(s)
+end subroutine
+</code></pre>
+
+<p>This program prints</p>
+
+<pre><code>10 5
+</code></pre>
+
+<p>to the terminal -- 10 as a result of the <code>LEN</code> function (returning the length of s=str) and 5 as a result of the length of the word "Hello" in the string <code>str</code>.</p>
+
+<h3>Symbol overloading with Interfaces <a id="Symbol overloading with Interfaces"></a></h3>
+
+<p>In modules, subroutines can be statically overloaded similar C++. This is implemented by the <code>interface</code> command. Here an example:</p>
+
+<pre><code>module clearmodule
+
+implicit none
+private
+
+  interface ClearVariable
+    module procedure ClearInt
+    module procedure ClearReal
+  end interface
+
+  public :: ClearVariable
+
+contains
+
+  subroutine ClearInt (i)
+  integer, intent(out) :: i
+    i = 0
+  end subroutine
+
+  subroutine ClearReal (d)
+  real, intent(out) :: d
+    d = 0.0
+  end subroutine
+
+end module
+</code></pre>
+
+<p>The module publishes the symbol <code>ClearVariable</code> which is a synonym for <code>ClearInt</code> and <code>ClearReal</code>. On a call, the compiler automatically determins which routine to use. Example:</p>
+
+<pre><code>program ClearTest
+use clearmodule
+
+  integer :: i
+  real :: d
+
+  ClearVariable(i)    ! Calls ClearInt
+  ClearVariable(d)    ! Calls ClearReal
+end program
+</code></pre>
+
+<h3>Predefined values in structures <a id="Predefined values in structures"></a></h3>
+
+<p>During the definition of structures, it is possible to prescribe initial values for the variables. These values are realised in the moment, the structure is created -- either as a variable or as a result of an <code>INTENT(OUT)</code> in a subroutine. Example:</p>
+
+<pre><code>program StdInitVar
+
+  type Complex
+    real :: R = 5.0
+    real :: I = 10.0
+  end type
+
+  type(Complex) :: myC
+
+  write (*,*) myC%R, " ", myC%I
+
+end program
+</code></pre>
+
+<p>In the moment, the variable <code>myC</code> is created, it is initialised as prescribed in the <code>type</code> statement. As a consequence, the output of the routine will be</p>
+
+<pre><code>5.0 10.0
+</code></pre>
+
+<p>For an <code>INTENT(OUT)</code> statement in a subroutine, there is a special rule. <code>INTENT(OUT)</code> triggers the initialisation. So a very simple initialisation routine for complex numbers could be written as follows:</p>
+
+<pre><code>module complexnumbers
+
+implicit none
+private
+
+  type Complex
+    real :: R = 0.0
+    real :: I = 0.0
+  end type
+
+  public :: Complex
+  public :: Init
+
+contains
+
+  subroutine Init (c)
+  type(Complex), intent(out) :: c
+    ! nothing to do
+  end subroutine
+
+end module
+</code></pre>
+
+<p>Note that <code>Init</code> does not contain any statement. However, this is not completely true: <code>Init</code> contains the <code>INTENT(OUT)</code> statement in the definition of the variable "c". This will trigger initialisation as prescribed in the structure. So in a main program like the following,</p>
+
+<pre><code>program ctest
+
+  use complexnumbers
+
+  type(Complex) :: myC
+
+  myC%R = 5.0
+  myC%I = 10.0
+
+  Init(myC)
+
+  write (*,*) myC%R, " ", myC%I
+end program
+</code></pre>
+
+<p>the <code>Init</code> command overwrites <code>myC</code> with zero and the output will be</p>
+
+<pre><code>0.0 0.0
+</code></pre>
+
+<blockquote>
+  <p><strong>Remark:</strong> Pointers in structures can be predefined as pointing to <code>null()</code>; this reads as follows:</p>
+</blockquote>
+
+<pre><code>module list
+
+implicit none
+private
+
+  type ListEl
+    real :: d = 0.0
+    type(ListEl), pointer :: next =&gt; null()
+  end type
+
+  public :: ListEl
+
+end module    
+</code></pre>
+
+<h3>Optional variables <a id="Optional variables"></a></h3>
+
+<p>One very common feature of Fortran 90 is the possibility to define optional parameters in subroutines or functions. Optional parameters are declared using the <code>OPTIONAL</code> attribute in the declaration of a variable. Such variables must always be at the end of the parameter list of a subroutine. Whether or not an argument is present in the call of the subroutine can be checked with the command <code>PRESENT</code>. Here an example:</p>
+
+<pre><code>module optvarsmodule
+
+implicit none
+private
+
+  public :: mysub
+
+contains
+
+  subroutine mysub (dlen,dmult,dfinal)
+
+  real, intent(in)            :: dlen
+  real, intent(in), optional  :: dmult
+  real, intent(out), optional :: dfinal
+
+  ! local variables
+  real :: dtemp
+
+    if (present(dmult)) then
+      dtemp = dlen*dmult
+    else
+      dtemp = dlen
+    end if
+
+    write (*,*) dlen
+
+    if (present(dfinal)) then
+      dfinal = dlen
+    end if
+
+  end subroutine
+
+end module    
+</code></pre>
+
+<p>The routine <code>mysub</code> calculates and prints <code>dlen</code> or <code>dlen*dmult</code>, depending on whether <code>dmult</code> is given or not. The parameter list <code>(dlen,dmult,dfinal)</code>, starts with the non-optional parameter <code>dlen</code>, while the optional parameters <code>dmult</code> and <code>dfinal</code> are at the ent of the list. The calculated value is written to <code>dfinal</code> if specified. The routine can be called in a main program with or without the optional arguments:</p>
+
+<pre><code>program optvars1
+use optvarsmodule
+implicit none
+
+  real :: d
+
+  call mysub (5.0)
+  call mysub (5.0,10.0)
+  call mysub (5.0,10.0,d)
+
+  call mysub (5.0,d)
+  call mysub (5.0,dfinal = d)
+
+end 
+</code></pre>
+
+<ul>
+<li>The first call prints "5.0" to the terminal.</li>
+<li>The second call prints "50.0".</li>
+<li>The third call prints "50.0" and returns d=50.</li>
+<li>The 4th call prints "250.0" as there is still d=50.</li>
+<li>The last call prints "5.0" and returns d=5.</li>
+</ul>
+
+<p>The last call is a bit special. Optional parameters can be arbitrarily omitted in the parameter list. However, if optional parameters are omitted, one has to specify the actual parameter name for any additional optional parameter. In this case, the statement <code>dfinal =</code> specifies that "d" should be used as <code>dfinal</code>.</p>
+
+<blockquote>
+  <p><strong>Remark:</strong> This syntax sometimes leads to confusion. The following program prints "5.0" to the terminal and assigns "dfinal=5":</p>
+</blockquote>
+
+<pre><code>program optvars1
+use optvarsmodule
+implicit none
+  real :: dfinal
+  call mysub (5.0,dfinal=dfinal)
+end 
+</code></pre>
+
+<blockquote>
+  <p>This is exactly identical to</p>
+</blockquote>
+
+<pre><code>program optvars1
+use optvarsmodule
+implicit none
+  real :: d
+  call mysub (5.0,dfinal=d)
+end 
+</code></pre>
+
+<p>Optional variables can be passed to other subroutines if they are defined there as optional as well. Example:</p>
+
+<pre><code>module optvarsmodule2
+
+implicit none
+private
+
+  public :: mysub
+
+contains
+
+  subroutine mysub (dlen)
+  real, intent(in), optional  :: dlen
+    call mysub2(dlen)
+    write (*,*) "Here is mysub."
+  end subroutine
+
+  subroutine mysub2 (dlen)
+  real, intent(in), optional  :: dlen
+    if (present(dlen)) then
+      write (*,*) dlen
+    else
+      write (*,*) "-"
+    end if
+  end subroutine
+
+end module    
+
+program opttest2
+use optvarsmodule2
+implicit none
+  call mysub()
+  call mysub(2.0)
+end program
+</code></pre>
+
+<p>In this example, <code>mysub</code> can pass <code>dlen</code> to <code>mysub2</code>, independent of whether <code>dlen</code> is actually specified in the call to <code>mysub</code> or not. <code>mysub2</code> "inherits" the optional status of the variable <code>dlen</code>.</p>
+
+<h3>Passing subroutines as parameters <a id="Passing subroutines as parameters"></a></h3>
+
+<p>Fortran does not allow pointers to functions/subroutines like in C/C++. However, Fortran allows to pass a function/subroutine as parameter with a defined interface, such that it can be called in another subroutine. Here an example:</p>
+
+<pre><code>module stringmodule
+
+implicit none
+private
+
+  public :: submul2
+  public :: submul4
+  public :: multiply
+
+contains
+
+  subroutine submul2(i)
+  integer, intent(inout) :: i
+    i = 2*i
+  end subroutine
+
+  subroutine submul4(i)
+  integer, intent(inout) :: i
+    i = 4*i
+  end subroutine
+
+  subroutine multiply(i,sub)
+  integer, intent(inout) :: i
+
+  interface
+    subroutine sub(k)
+    integer, intent(inout) :: k
+    end subroutine
+  end interface
+
+    call sub(i)
+
+  end subroutine
+
+end module
+
+program stringtest
+use stringmodule
+implicit none
+  integer :: i
+  i = 1
+  call multiply(i,submul2)
+  call multiply(i,submul4)
+  write (*,*) i
+end program
+</code></pre>
+
+<p>The main program calls <code>multiply</code> twice, once with <code>submul2</code> as parameter and once with <code>submul4</code>. The routine <code>multiply</code> just calls this subroutine, which multiplies i by 2 and by 4. So the output of the main program will be "8".</p>
+
+<p>Inside of the subroutine <code>multiply</code>, an <code>interface</code> block introduces one or more function interfaces for the subroutine. By this block, the <code>multiply</code> "knowns" that <code>sub</code> is a subroutine with the specified parameters - and thus, it can be called in <code>call sub(...)</code>. The subroutines <code>submul2</code> and <code>submul4</code> match the interface in <code>multiply</code> and are therefore allowed to be passed as parameter.</p>
+
+<blockquote>
+  <p><strong>Remark:</strong> This functionality is typically used to design "callback" functionalities in Fortran. Subroutines in a Fortran library (kernel) usually defines interfaces for user-defined "callback" routines that provide additional information to the <code>worker</code> routine.</p>
+</blockquote>
+
+<h3>Recursive subroutines/functions <a id="Recursive subroutines"></a></h3>
+
+<p>Subroutines/functions in Fortran are not allowed to recursively call themself (directly or indirectly) by default. Instead, subroutines that should be used in a recursive way have to be marked with a <code>RECURSIVE</code> attribute. Without this attribute, the compiler usually does not guarantee that a recursive call leads to the desired result. Example:</p>
+
+<pre><code>recursive subroutine recsub(i)
+integer, intent(in) :: i
+  write (*,*) i
+  if (i &gt; 1) then
+    call recsub(i-1)
+  end if
+end subroutine
+</code></pre>
+
+<p>Recursive functions are possible as well. However, one needs the special function declaration style with a separate return parameter as the <code>function</code> keyword is only allowed to be preceded by one other keyword:</p>
+
+<pre><code>recursive function recfunc (i) result (myresult)
+integer, intent(in) :: i
+integer :: myresult
+  if (i &gt; 1) then
+    myresult = recfunc(i-1)
+  else
+    myresult = 1
+  end if
+end subroutine
+</code></pre>
+
+<p>A declaration in the style</p>
+
+<pre><code>recursive integer function recfunc (i)
+</code></pre>
+
+<p>is <strong>not</strong> valid Fortram 90/95 syntax and will be rejected by most compilers.</p>
+
+<h3>Embedded subroutines <a id="Embedded subroutines"></a></h3>
+
+<p>Fortran allows to define subroutines/functions to be embedded in other subroutines/functions. Such embedded subroutines have access to all variables of the outer block. Embedded subroutines are declared at the end of a subroutine/function after a <code>CONTAINS</code> statement, similar to modules. Example:</p>
+
+<pre><code>module multmodule
+
+implicit none
+private
+
+  public :: mysub
+
+contains
+
+  subroutine mysub (n)
+  integer, intent(in) :: n
+
+    integer :: i
+    integer :: iresult
+
+    iresult = 1
+    do i = 1,n
+      call mult_result (i)
+    end do
+
+    call div_result(5)
+
+    write (*,*) iresult
+
+  contains
+
+    subroutine mult_result (j)
+    integer, intent(in) :: j
+      iresult = iresult * j
+    end subroutine
+
+    subroutine div_result (j)
+    integer, intent(in) :: j
+      iresult = iresult / j
+    end subroutine
+
+  end subroutine
+
+end module    
+</code></pre>
+
+<p>The subroutine <code>mysub</code> "contains" the subroutines <code>mult_result</code> and <code>div_result</code>. <code>mult_result</code> and <code>div_result</code> are local subroutines, only assiciated to <code>mysub</code>, and have access to all variables of <code>mysub</code>. In particular, they are allowed to modify the variable <code>iresult</code>.</p>
+
+<p>This language construct also holds for the main program, so it is possible to write a main program with local subroutines attached:</p>
+
+<pre><code>program multtest
+
+implicit none
+
+  integer :: i
+  integer :: iresult
+
+  iresult = 1
+  do i = 1,n
+    call mult_result (i)
+  end do
+
+  call div_result(5)
+
+  write (*,*) iresult
+
+contains
+
+  subroutine mult_result (j)
+  integer, intent(in) :: j
+    iresult = iresult * j
+  end subroutine
+
+  subroutine div_result (j)
+  integer, intent(in) :: j
+    iresult = iresult / j
+  end subroutine
+
+end program
+</code></pre>
+
+<blockquote>
+  <p><strong>WARNING:</strong> Years of experience have shown that embedded subroutines should be avoided. There has been more than one compiler failing in a proper handling of this construct, and the usage quickly leads to confusion to the reader and hard problems in debugging mistakes. Avoid it!</p>
+</blockquote>
+
+<p>A better version of the above main program with additional subroutines reads as follows:</p>
+
+<pre><code>program multtest
+
+implicit none
+
+  integer :: i
+  integer :: iresult
+
+  iresult = 1
+  do i = 1,n
+    call mult_result (i,iresult)
+  end do
+
+  div_result(5)
+
+  write (*,*) iresult
+
+end program
+
+subroutine mult_result (j,iresult)
+integer, intent(in) :: j
+integer, intent(inout) :: iresult
+  iresult = iresult * j
+end subroutine
+
+subroutine div_result (j)
+integer, intent(in) :: j
+integer, intent(inout) :: iresult
+  iresult = iresult / j
+end subroutine
+</code></pre>
+
+<p>In this example, the routines are not included in a module (which would even enhance the structure of the code). Such "global" subroutines outside of modules are allowed by Fortran and accessible from everywhere.</p>
+
+<h1 id="Common-Pitfalls">Common Pitfalls</h1>
+
+<h3>PITFALL: Multiple commands in one line <a id="PITFALL: Multiple commands in one line"></a></h3>
+
+<p>Sometimes, there is Fortran code using mutiple commands in one line, e.g.</p>
+
+<pre><code>program linetest
+implicit none
+integer :: i,j,k
+
+  i = 5; j = 3; k = 2
+
+end program
+</code></pre>
+
+<p>The commands are separated by semicolons ";" and are that way nicely readable.</p>
+
+<blockquote>
+  <p><strong>WARNING:</strong> This construct is NONSTANDARD Fortran, and you cannot expect the code to be compiled on all compilers. Standard Fortran does not allow the ";" character, so avoid this under all circumstances!</p>
+</blockquote>
+
+<h3>PITFALL: Performance loss due to inefficient array access <a id="PITFALL: Performance loss due to inefficient array access"></a></h3>
+
+<p>If a loop modifies a multidimensional array, it should prefer the first component, not the last. This is a typical performance loss, as Fortran works column ordered, not row-ordered as in C/C++. A wrong access makes the CPU jump through the memory, leading to a slower program. So the following loop is fast:</p>
+
+<pre><code>do i=1,10
+  do k=1,1000
+     Iarray(k,i) = ...
+  end do
+end do
+</code></pre>
+
+<p>while this loop is slow:</p>
+
+<pre><code>do k=1,1000
+  do i=1,10
+     Iarray(k,i) = ...
+  end do
+end do
+</code></pre>
+
+<h3>PITFALL: Passing subarrays</h3>
+
+<p>In Fortran 90, it is possible to pass subarrays to subroutines. Here an example:</p>
+
+<pre><code>module subarraymod
+
+implicit none
+private
+
+  public :: printsubarray
+
+contains
+
+  subroutine printsubarray (Iarray)
+  integer, dimension(:), intent(in) :: Iarray
+
+    integer :: i
+
+    ! Print the array
+    do i=1,ubound(Iarray,1)
+      write (*,*) Iarray(i)
+    end do
+
+  end do
+
+end module
+
+
+program subarraytest
+
+use subarraymod
+implicit none
+
+  integer, dimension(4,3) :: Iarray2D
+
+  ! Define the array
+  Iarray2D = reshape ( (/ 1,2,3,4, 5,6,7,8, 9,10,11,12 /), (/4,3/) )
+
+  ! Print the second four numbers
+  call printsubarray (Iarray2D(:,2))
+
+end subroutine
+</code></pre>
+
+<p>The call to <code>printsubarray</code> prints the numbers "5,6,7,8" to the terminal. Internally, no memory is allocated. The definition <code>Iarray2D(:,2)</code> forms a pointer to a subarray of <code>Iarray2D</code> and passes it to <code>printsubarray</code>. This call is very fast.</p>
+
+<p>However, one can theoretically also pass a subarray:</p>
+
+<pre><code>program subarraytest
+
+use subarraymod
+implicit none
+
+  integer, dimension(4,3) :: Iarray2D
+
+  ! Define the array
+  Iarray2D = reshape ( (/ 1,2,3,4, 5,6,7,8, 9,10,11,12 /), (/4,3/) )
+
+  ! Print a subarray
+  call printsubarray (Iarray2D(2:3,2))
+
+end subroutine
+</code></pre>
+
+<p>THIS IS DANGEROUS!!! It is not possible in Fortran to define a pointer to a subarray. Such a call invokes a <em>pass by value</em>:</p>
+
+<p>Fortran creates a local copy of <code>Iarray2D(2:3,2)</code> on the stack. This is costly and may lead to a <code>stack overflow error</code> if the stack is not large enough. Furthermore, if the parameter is not declared as <code>INTENT(IN)</code> but as <code>INTENT(INOUT)</code>, Fortran creates a local copy, calls the subroutine and copies the values back to the original array after the subroutine is finished. AVOID THIS!</p>
+
+<h3>PITFALL: Implicit publishing of symbols <a id="PITFALL: Implicit publishing of symbols"></a></h3>
+
+<p>The <code>PRIVATE</code> statement in front of a module has an extended meaning in the context of using a module in another module. In the following example:</p>
+
+<pre><code>module ComplexNumbers
+
+implicit none
+private
+
+  type Complex2D
+    real :: R
+    real :: I
+  end type
+
+  public :: Complex
+
+end module
+
+
+module ComplexNumbers2D
+
+use ComplexNumbers
+
+implicit none
+
+  type Complex2D
+    type(Complex) :: C1
+    type(Complex) :: C2
+  end type
+
+end module
+</code></pre>
+
+<p>the symbol <code>Complex2D</code> from <code>ComplexNumbers2D</code> <em>and</em> the symbol <code>Complex</code> from <code>ComplexNumbers</code> would be published by <code>ComplexNumbers2D</code>. For the main program, it would be enough to include 
+"ComplexNumbers2D" only:</p>
+
+<pre><code>program ComplexTest
+
+use ComplexNumbers2D
+implicit none
+
+type(Complex) :: myC
+type(Complex2D) :: myC2d
+  ...
+</code></pre>
+
+<p>There have already been compilers seen on the market that really got into trouble with such "implicit publishing" (e.g. due to exorbitant large compiling time), so a <code>PRIVATE</code> statement in front of a module is strongly advised.</p>
+
+<h3>PITFALL: Overlapping arrays</h3>
+
+<p>One very cruel pitfall when dealing with Fortran 90 is an array overlap in a subroutine. In Fortran, <strong>overlapping arrays in parameters are not allowed</strong>. This mistake is <em>not</em> detected by the compiler and will usually give strange results, depending on how much the compiler tries to optimise the code.</p>
+
+<p>Here an example for such overlapping arrays. The routine <code>CopyVector</code> should copy the array <code>Iarray1</code> to the array <code>Iarray2</code>:</p>
+
+<pre><code>module shifttest
+implicit none
+private
+
+  public :: CopyVector
+
+contains
+
+  subroutine CopyVector (Iarray1, Iarray2)
+  integer, dimension(:), intent(in) :: Iarray1
+  integer, dimension(:), intent(inout) :: Iarray2
+    integer :: i
+
+    do i=ubound(Iarray1,1),1,-1
+      Iarray2(i) = Iarray1(i)
+    end do
+  end subroutine
+
+end module
+
+program test
+use shifttest
+implicit none
+integer, dimension(:), pointer :: Iarray
+
+  allocate(Iarray(10))
+  Iarray = (/ 1,2,3,4,5,6,7,8,9,10 /)
+  call CopyVector (Iarray(1:7),Iarray(4:10))
+
+  write(*,*) Iarray
+  deallocate(Iarray)
+
+end program
+</code></pre>
+
+<p>In the main program, an array <code>Iarray</code> is allocated, initialised and passed to the routine <code>CopyVector</code>. The two parameters in this call overlap <em>which is not allowed by the Fortran Standard</em>. The loop in <code>CopyVector</code> is applied backwards, so one would expect <code>CopyVector</code> to copy the subarray (1:7) successfully to (4:10). However, this is not always the case.</p>
+
+<p>The following test was done with the Intel Fortran compiler 13. At first, the program is compiled without any optimisation:</p>
+
+<pre><code>&gt; ifort -O0 -o test test.f90
+&gt; ./test
+        1           2           3           1           2
+        3           4           5           6           7
+</code></pre>
+
+<p>As one can see, the subarray is successfully copied. However, the output looks different if the code is compiled in "optimised" mode:</p>
+
+<pre><code>&gt; ifort -fast -o test test.f90
+&gt; ./test
+       1           2           3           1           2
+       3           1           2           3           1
+</code></pre>
+
+<p>The result is a completely destroyed array.</p>
+
+<blockquote>
+  <p><strong>What happens here?:</strong> In Fortran, overlapping arrays are not allowed. The routine <code>CopyVector</code> assumes that <code>Iarray1</code> and <code>Iarray2</code> are independent. Therefore, there is no real reason why the loop should go backwards. The compiler takes advantages of the fact and <em>converts the loop to a forward loop</em>: <code>do i = 1,ubound(Iarray1,1)</code>. But in this form, the loop fails.</p>
+</blockquote>
+
+<p>One should note that this rule does not apply for C/C++. A C/C++ compiler would never convert a backward loop into a forward loop as it cannot assume independence of the parameters. For such reasons, the Fortran compiler generates faster code if being compiled in optimised mode. A disadvantage is this pitfall, a user has to know to avoid it.</p>
+
+<h3>PITFALL: INTENT-attribute on pointer variables <a id="PITFALL: INTENT-attribute on pointer variables"></a></h3>
+
+<p>There is one exception concerning the use of the <code>INTENT</code> attribute: <strong>Pointers passed to a subroutine or a function cannot be modified with an <code>INTENT</code> attribute!</strong> (Although most compilers would not complain about it).</p>
+
+<p>So, the following code is wrong and will not compile on all machines:</p>
+
+<pre><code>subroutine mysub (p_Iarray)
+integer, dimension(:), pointer, intent(in) :: p_Iarray
+  ! Gives an error              ^^^^^^^^^^
+  ...
+end subroutine
+</code></pre>
+
+<p>Instead, the routine has to be declared <em>without</em> <code>INTENT</code>:</p>
+
+<pre><code>subroutine mysub (p_Iarray)
+integer, dimension(:), pointer :: p_Iarray
+  ...
+end subroutine
+</code></pre>
+
+<p>The reason is simple: <em>The subroutine is allowed to modify the pointer</em>. This is similar to the declaration of return values for functions which are also not allowed to be modified by an <code>INTENT</code> attribute. For example, the following code is valid Fortran code and returns a pointer to a newly allocated array:</p>
+
+<pre><code>subroutine mysub (p_Iarray)
+integer, dimension(:), pointer :: p_Iarray
+  allocate (p_Iarray(100))
+end subroutine
+</code></pre>
+
+<p>For parameters declared as pointers, the calling routine <em>must</em> specify a pointer (which is then allowed to be changed inside of the subroutine). Passing an array is not allowed. Example:</p>
+
+<pre><code>program PointerArrayTest
+implicit none
+  integer, dimension(:), pointer :: p_Iarr
+  integer, dimension(100)        :: IarrayFix
+
+  call mysub(p_Iarr)       ! Is ok
+  call mysub(IarrayFix)    ! Will give a compiler error!
+
+end program
+
+subroutine mysub (p_Iarray)
+integer, dimension(:), pointer :: p_Iarray
+  allocate (p_Iarray(100))
+end subroutine
+</code></pre>
+
+<h1 id="Links-to-Fortran">Links to the Fortran specification and language books</h1>
+
+<p>The following links provide direct access to some information about the Fortran 90/95 language which a new Fortran user is adviced to read:</p>
+
+<ul>
+<li><p><a href="http://www.fortran.com/f95_std.pdf">The Fortran 95 standard (as a working draft)</a>. Provides a complete overview about the language. A must-to-have for skilled programmers.</p></li>
+<li><p><a href="http://www.cs.rpi.edu/~szymansk/OOF90/bugs.html">Fortran pitfalls</a>. Important language constructs which one has to know to avoid strange mistakes.</p></li>
+<li><p><a href="http://de.wikibooks.org/wiki/Fortran:_Fortran_95">Fortran 95 WIKI books</a> A German introduction to Fortran 95.</p></li>
+</ul>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+  src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

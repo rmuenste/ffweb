@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The domain - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html" class="selected">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="tutorial_conceptdomain.html">The domain</a>  </div>
+
+  <hr />
+
+  <h1>The domain</h1>
+
+<p>FEAT2 has a build-in support for analytical descriptions of domains, in particular in 2D. Such analytical descriptions are necessary if parts of the boundary are not given by line but by curves. The analytical description ensures that during the refinement of a mesh, new vertices are generated at the correct place. If the mesh is more and more refined, it converges to the analytical description of the boundary.</p>
+
+<p>A domain is described by the structure <code>t_boundary</code> and has the following properties:</p>
+
+<ul>
+<li>It can be imported from a <code>.PRM</code> file.</li>
+<li>It consists of a number of "boundary components".
+
+<ul>
+<li>Each "boundary component" represents an "outer wall" of the domain.</li>
+<li>The domain must be simply connected.</li>
+<li>"Outer" boundary components (outer walls) are oriented counterclockwise.</li>
+<li>"Inner" boudary components (holes) are oriented clockwise</li>
+</ul></li>
+<li>Each boundary component consists of a set of boundary segments, e.g.
+
+<ul>
+<li>Lines</li>
+<li>Circles or arcs</li>
+<li>Splines</li>
+<li>Analytical descriptions entered via a formula</li>
+</ul></li>
+<li>Points on the 2D boundary are identified by a tuple <code>(ibct,dlambda)</code> with 
+
+<ul>
+<li><code>ibct</code> defining the boundary component and </li>
+<li><code>dlambda</code> defining a parameter value.</li>
+</ul></li>
+<li>The following important routines can be used with such a tuple:
+
+<ul>
+<li><code>boundary_getCoords</code>: Convert a parameter value to the (x/y) coordinate</li>
+<li><code>boundary_getNormal2D</code>: Calculate the normal vector in the point.</li>
+</ul></li>
+</ul>
+
+<p><strong>Example:</strong> The following picture shows the very common <em>Flow-Around-Cylinder</em> domain. This domain is of length 2.2, height 0.41 with a circle with radius 0.05 at position (0.2,0.2).</p>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/bench1domaindef.svg" title="Flow-around-cylinder domain" alt="Flow-around-cylinder domain" />
+</center></p>
+
+<p>The domain has two "boundary components", i.e., "outer walls". The first is the outer box that defines a channel. The second is the inner circle which represents an obstacle/hole. The outer box is oriented counterclockwise while the inner circle is oriented clockwise:</p>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/bench1bdcomp.svg" title="Flow-around-cylinder boundary components" alt="Flow-around-cylinder boundary components" />
+</center></p>
+
+<p>The outer box has 4 boundary segments, marked as (1,1..4) in the following picture. The circle consists only of one boundary segment (marked as (2,1)) describing it completely:</p>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/bench1bdsegments.svg" title="Flow-around-cylinder boundary segments" alt="Flow-around-cylinder boundary segments" />
+</center></p>
+
+<h2>Parametrisation</h2>
+
+<p>There are two types of parametrisations available:</p>
+
+<h3>0-1 parametrisation (default)</h3>
+
+<p>This is the default parametrisation and has the following properties:</p>
+
+<ul>
+<li>Integer parameter values <code>dlambda = 0.0, 1.0, 2.0, ...</code> identify the endpoints of the boundary segments. Numbers inbetween define the ratio in which the boundary segment is divided.</li>
+<li>As a consequence, e.g., "half" numbers <code>dlambda = 0.5, 1.5, 2.5, ...</code> identify the midpoints of the segments.</li>
+<li>The maximum possible parameter value on a boundary component coincides with the maximum number of segments.</li>
+</ul>
+
+<p>The following picture demonstrates this approach based on the above example. The corners of the box as well as the start/endpoint of the bow describing the circle have integer parameter values. The highest parameter value (4.0 for the box and 1.0 for the circle) close the domain and coincides with the point with parameter value 0.0.</p>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/bench1param01.svg" title="Flow-around-cylinder 0-1 parametrisation" alt="Flow-around-cylinder 0-1 parametrisation" />
+</center></p>
+
+<h3>Arc length parametrisation</h3>
+
+<p>This alternative parametrisation works based on the arc length:</p>
+
+<ul>
+<li>The parameter value <code>dlambda</code> defines the distance from the starting point of a boundary component.</li>
+<li>The maximum possible parameter value is the length of the boundary component.</li>
+</ul>
+
+<p>In the following picture, this approach is shown. The parameter values of the endpoints of the segments are calculated by the sum of the lengths of the segments.</p>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/bench1paramarclen.svg" title="Flow-around-cylinder length parametrisation" alt="Flow-around-cylinder length parametrisation" />
+</center></p>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

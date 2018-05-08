@@ -1,0 +1,562 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Filter techniques - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html" class="selected">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="concepts_filters.html">Filter techniques</a>  </div>
+
+  <hr />
+
+  <h1>Filter techniques</h1>
+
+<p>The linear solver library is designed as a black box library. Once <code>linsol_solveAdaptively</code> or <code>linsol_precondDefect</code> is called, the solver does not interact with the main program until a solution is computed or the solver broke down for any reason. Hereby, the basic solution process is based on a system matrix and a right-hand side vector.</p>
+
+<p>Filters provide a flexible way to impose additional restrictions on the matrix which would otherwise be hard to be implemented. They are mainly designed for imposing some integral-mean-value condition into a vector, but their use is also rather advantageous for the implementation of boundary conditions in multigrid-based solvers. In particular, the implementation of Dirichlet boundary conditions is completely handled via vector filters.</p>
+
+<dl>
+<dt><strong>What is a vector filter?</strong></dt>
+<dd>A vector filter is a numerical algorithm that forces a solution, right-hand side, defect or correction vector into a proper subspace of a finite element space. As a special property, vector filters can be specified in iterative solvers to modify the iteration.</dd>
+
+<dt><strong>What is a matrix filter?</strong></dt>
+<dd>A <em>matrix filter</em> is actually not a filter. It is a matrix modification routine that prepares a matrix to work with a specific vector filter. Matrix filters always belong to vector filters.</dd>
+</dl>
+
+<h2>Involved modules</h2>
+
+<p>The following modules are involved in the use of filters:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Module</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>vectorfilters.f90</td>
+  <td>Implementation of vector filters</td>
+</tr>
+<tr>
+  <td>matrixfilters.f90</td>
+  <td>Implementation of matrix filters</td>
+</tr>
+<tr>
+  <td>filtersupport.f90</td>
+  <td>Support structures for filters being used in linear solvers</td>
+</tr>
+<tr>
+  <td>linearsolver.f90</td>
+  <td>The linear solver library uses filters during the solution process</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Examples</h2>
+
+<p>In the following, we give a fundamental example that demonstrate the use of vector filters.</p>
+
+<h3>Example: The integral-mean-value filter</h3>
+
+<p>We consider the pure Neumann Poisson problem 
+$$ \begin{align}
+     -\Delta u &amp;= f \qquad\text{in $\Omega$}&#92;&#92;
+     \partial_n u &amp;= 0\qquad\text{on $\partial\Omega$}
+   \end{align}$$ 
+on a domain $\Omega\subset\mathbb{R}^d$ for a proper right­-hand side $f$ which fulfils the (necessary) compatibility condition $$\int&#95;{\Omega}f=0.$$ The solution $u$ is to be found in
+  $$ u \in L^2_0(\Omega) := \left&#92;{ v\in L_2(\Omega)\,\bigg|\, \int_\Omega v = 0 \right&#92;} \subset L_2(\Omega). $$</p>
+
+<p>Let $V_h\subset H^1(\Omega)$ be a finite element subspace. The discrete counterpart to this problem is: Find $u_h\in V_h^0 := V_h\cap L^2_0$, such that
+  $$ a(u_h,v_h) = (\nabla u_h, \nabla v_h) = (f, v_h) \qquad\forall\,v_h\in H^1(\Omega) $$
+The corresponding discrete matrix-vector system takes the usual form
+  $$ A \vec u = \vec f $$
+for the system matrix $A$, the vector of degrees of freedom $\vec u$ corresponding to $u_h$ and the vector of right-hand side entries $\vec f$.</p>
+
+<p>The additional restriction $u_h\in L^2_0$ drives the problem definite. However, the implementation of this condition into the corresponding system matrix is not straightforward as the condition $\int&#95;{\Omega} u_h=0$ is an algebraic side condition through the complete domain. 
+One method to circumvent this difficulty is the use of a so-called "integral mean value = zero" filter which is applied during an iteration.</p>
+
+<p>A "defect vector filter" $F: \mathbb{R}^n \to \mathbb{R}^n$ in an iterative linear solver can be understood as an additional preconditioner. A very simple iterative solver is the preconditioned defect correction loop with a preconditioner $C:\mathbb{R}^n \to \mathbb{R}^n$:</p>
+
+<p>$$\vec u_{n+1} = \vec u_n + C^{-1} F \underbrace{(\vec f - A \vec u_n)}_{:=\vec d_n} $$
+The idea is as follows:</p>
+
+<ul>
+<li><p>Let $\int&#95;{\Omega} u_0=0$. For example, set $\vec u_0=0$.</p></li>
+<li><p>Let $F d_n$ denote the continuous counterpart to $F\vec d_n$. The "defect filter" $F$ modifies the defect $\vec d_n$ to ensure $$\int_\Omega F d_n = 0$$ (which does not necessarily hold for $d_n$ in all cases). This assures the above "compatibility condition" for $Fd_n$ which is the right-hand side for the preconditioner: $$ C \vec y_n = F \vec d_n $$</p></li>
+<li><p>The preconditioner $C^{-1}$ is assumed to be an approximation to $A^{-1}$ producing a correction $y_n\in V_h^0$.</p></li>
+<li><p>As a consequence, there is $\int_\Omega u_{n+1}=0$, and thus, there is $u_n\in V_h^0$ for all $n\in\mathbb{N}$.</p></li>
+</ul>
+
+<h3>Example: The boundary-condition filter</h3>
+
+<p>We consider the pure homogeneous Poisson problem 
+$$ \begin{align}
+     -\Delta u &amp;= f &#92;&#92;
+      u_{|\partial\Omega} &amp;= 0
+   \end{align}$$ 
+on a domain $\Omega\subset\mathbb{R}^d$ for a proper right­hand side $f$ and a function $g:\partial\Omega\to\mathbb{R}$ an appropriate boundary function. The corresponding discrete problem reads: Find $u_h\in V_h$, with $V_h=H^1_0(\Omega)$, such that
+$$ a(u_h,v_h) = (\nabla u_h, \nabla v_h) = (f,v_h) \qquad\forall\, v_h\in V_h.$$</p>
+
+<p>We consider two meshes $\Omega_h$ and $\Omega_{2h}$ as approximations to the domain $\Omega$. On each of these meshes, there exist a corresponding linear system, solution and right-hand side vector:
+$$\begin{alignat}{3}
+    A_{h} \vec u_h &amp;= f_h &amp;\qquad&amp;\text{for mesh size $h$}&#92;&#92;
+    A_{2h} \vec u_{2h} &amp;= f_{2h} &amp;\qquad&amp;\text{for mesh size $2h$}
+  \end{alignat}$$
+A two-grid algorithm applies a defect correction using a solution of the coarse grid problem. Here some notations:</p>
+
+<dl>
+<dt>Prolongation</dt>
+<dd>Let $P:\vec u_{2h} \mapsto \vec u_h$ be a prolongation operator that maps a solution from the coarse to the fine grid b a proper interpolation. I.e., if there is $u_h=u_{2h}$ in $V_h$, $P$ maps the degrees of freedom $\vec u_{2h}$ to those of $\vec u_h$.</dd>
+
+<dt>Restriction</dt>
+<dd>Let $R:\vec f_h \mapsto \vec f_{2h}$ be a restriction operator which maps right-hand side vectors from the fine mesh to those on the coarse mesh. Such an operator can be realised as the adjoint of the prolongation $P$.</dd>
+</dl>
+
+<p>A coarse grid correction in a two-grid algorithm is a defect correction step with the preconditioner $C^{-1}$ being the solution of a coarse grid problem:
+$$\vec u_{n+1} = \vec u_{n} + \underbrace{PA_{2h}^{-1}R}&#95;{C^{-1}} \underbrace{(\vec f - A_h \vec u_n)}&#95;{\vec d_h}$$</p>
+
+<p>The restriction operator maps the defect vector to the coarse mesh, $R: \vec d_h\mapsto \vec d_{2h}$. The problem is that $\vec d_{2h}$ is not homogeneous in general:</p>
+
+<blockquote>
+  <p>The degrees of freedom in $\vec d_{2h}$ corresponding to the boundary should be zero, as $\vec d_{2h}$ serves as the right-hand side for $A_{2h}^{-1}$ which solves a homogeneous boundary problem on the coarse mesh.</p>
+</blockquote>
+
+<p>A simple restriction does not fulfil this; it just does a weighted mean of the DOFs and thus, $\vec d_{2h}$ does not have "homogeneous boundary conditions".</p>
+
+<p>The trick at this point is to introduce a special "boundary condition defect filter" after the restriction, which we call $F$ here:
+$$\vec u_{n+1} = \vec u_{n} + PA_{2h}^{-1}FR (\vec f - A_h \vec u_n)$$
+The filter has to ensure that $F \vec d_{2h}$ fulfils "homogeneous boundary conditions", i.e., $$F d_{2h} \in V_{2h}$$ (with $F d_{2h}$ denoting the continuous counterpart of $F \vec d_{2h}$). This trick gracefully improves the performance of a multilevel-based algorithm.</p>
+
+<h2>Filter targets and types</h2>
+
+<p>Consider a general linear equation $$Ax=b$$ and a preconditioned defect correction loop $$x_{n+1}=x_n + C^{-1} (b-Ax).$$ This setting covers most iterative algorithms. There are four types of vectors, filters can possibly be applied to:</p>
+
+<ul>
+<li>Right-hand side vectors (e.g., $b$)</li>
+<li>Solution vectors (e.g., $x$ with $Ax=b$)</li>
+<li>Defect vectors (e.g., $d_n:=(b-Ax_n)$)</li>
+<li>Correction vectors (e.g., $y_n:=C^{-1} d_n$, to be used in a correction $x_{n+1} = x_n + y_n$)</li>
+</ul>
+
+<p>The linear solver library is implemented in a <em>preconditioning style</em>, i.e., all solvers are preconditioners and all vectors to be preconditioned are defect vectors. Hence, filters in the linear solver are always <em>defect filters</em>. Right-hand side and solution filters are, however, used to prepare a linear system for being solved.</p>
+
+<p>The most important filters provided in the FEAT2 library are:</p>
+
+<dl>
+<dt>Boundary-condition filter</dt>
+<dd>
+<p>Used for the implementation of boundary conditions.</p>
+
+<table>
+<thead>
+<tr>
+  <th>Target</th>
+  <th>Filter</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Solution</td>
+  <td>vecfil_discreteBCsol</td>
+  <td>Imposes boundary conditions into the solution</td>
+</tr>
+<tr>
+  <td>RHS</td>
+  <td>vecfil_discreteBCrhs</td>
+  <td>Imposes boundary conditions into the RHS</td>
+</tr>
+<tr>
+  <td>Defect</td>
+  <td>vecfil_discreteBCdef</td>
+  <td>Forces DOFs on the boundary to zero</td>
+</tr>
+<tr>
+  <td>Correction</td>
+  <td>vecfil_discreteBCdef</td>
+  <td>Forces DOFs on the boundary to zero</td>
+</tr>
+</tbody>
+</table>
+</dd>
+
+<dt>Integral-mean-value-zero filter</dt>
+<dd>
+<p>Used for imposing $\int_\Omega v_h=0$ for a finite element function $v_h$.</p>
+
+<table>
+<thead>
+<tr>
+  <th>Target</th>
+  <th>Filter</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Solution</td>
+  <td>vecfil_subvectorToL20</td>
+  <td>Normalise a FEM function to be in the space $L^2_0$.</td>
+</tr>
+<tr>
+  <td>RHS</td>
+  <td>vecfil_subvectorToL20</td>
+  <td>Normalise a FEM function to be in the space $L^2_0$.</td>
+</tr>
+<tr>
+  <td>Defect</td>
+  <td>vecfil_subvectorToL20</td>
+  <td>Normalise a FEM function to be in the space $L^2_0$.</td>
+</tr>
+<tr>
+  <td>Correction</td>
+  <td>vecfil_subvectorToL20</td>
+  <td>Normalise a FEM function to be in the space $L^2_0$.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+
+<dt>$l_1$-zero filter</dt>
+<dd>
+<p>Used as a fast, approximative alternative to the "Integral-mean-value-zero filter". Equivalent for some finite elements.</p>
+
+<table>
+<thead>
+<tr>
+  <th>Target</th>
+  <th>Filter</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Solution</td>
+  <td>vecfil_subvectorSmallL1To0</td>
+  <td>Normalise a vector to be $||.||_{l_1}=0$</td>
+</tr>
+<tr>
+  <td>RHS</td>
+  <td>vecfil_subvectorSmallL1To0</td>
+  <td>Normalise a vector to be $||.||_{l_1}=0$</td>
+</tr>
+<tr>
+  <td>Defect</td>
+  <td>vecfil_subvectorSmallL1To0</td>
+  <td>Normalise a vector to be $||.||_{l_1}=0$</td>
+</tr>
+<tr>
+  <td>Correction</td>
+  <td>vecfil_subvectorSmallL1To0</td>
+  <td>Normalise a vector to be $||.||_{l_1}=0$</td>
+</tr>
+</tbody>
+</table>
+</dd>
+
+<dt>Overwrite-entry-by-zero filter</dt>
+<dd>
+<p>Used for imposing $\int_\Omega v_h=0$ for a finite element function $v_h$. Lumped mass-matrix approach.</p>
+
+<table>
+<thead>
+<tr>
+  <th>Target</th>
+  <th>Filter</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Solution</td>
+  <td>vecfil_solL1To0ByLMass</td>
+  <td>Normalise the DOFs of a FEM solution $u_h$ such that $\int_{\Omega} u_h = 0$ by using a lumped mass matrix</td>
+</tr>
+<tr>
+  <td>RHS</td>
+  <td>vecfil_rhsL1To0ByLmass</td>
+  <td>Normalise the DOFs of a  FEM RHS function $f_h$ such that  $\int_{\Omega} f_h = 0$ by using a lumped mass matrix</td>
+</tr>
+<tr>
+  <td>Defect</td>
+  <td>vecfil_oneEntryZero</td>
+  <td>Replace one entry(row) of a subvector with zero.</td>
+</tr>
+<tr>
+  <td>Correction</td>
+  <td>vecfil_oneEntryZero</td>
+  <td>Replace one entry(row) of a subvector with zero.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+
+<h2>Matrix filters</h2>
+
+<p>Matrix filters are actually not really filters. Routines of this type are matrix modification routines that change the properties of a matrix according to the need of a vector filter. A simple example for this is the boundary condition filter:</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The routines <code>vecfil_discreteBCsol</code> and <code>vecfil_discreteBCrhs</code> implement Dirichlet boundary conditions into a solution and defect vector. This is done by overwriting the DOFs on the boundary by the values described by the boundary conditions. The corresponding "matrix filter",
+  <code>matfil_discreteBC</code> replaces the rows corresponding to the DOFs on the boundary by unit vectors. As a consequence, the matrix is the identity operator for boundary DOFs and the solution vector already shows the correct values.</p>
+</blockquote>
+
+<p>Routines for "filtering" of a matrix are found in <code>matrixfilters.f90</code>.</p>
+
+<h2>Filter chains</h2>
+
+<p>A <strong>filter chain</strong> is a set of vector filters to be applied to defect and/or correction vectors during a linear solver. Many iterative solution algorithms support filter chains, while direct solvers like UMFPACK do not. Thus, if the filtering technique should be used, the user has to take care only to choose those solvers for the solution of linear systems that support filter chains.</p>
+
+<p>The filter chain is set up as an array of structures of type <code>t_filterChain</code>. The array is passed to the initialisation routine of a linear solver, which then applies it to its intermediate vectors.</p>
+
+<p>The user can theoretically add all types of filters (for solution, RHS, defect, correction) to a filter chain. If a filter chain is applied to a vector, FEAT2 automatically decides on the type of the vector which filters of a filter chain are applied to the vector: Defect filters are applied only to defect vectors, correction filters are only applied to correction vectors, etc. If a filter does not match the type of the vector it should be applied to, it is not applied.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example demonstrates how to set up a filter chain that contains a Dirichlet boundary condition filter vor defect vectors, which is the host common type of usage:</p>
+</blockquote>
+
+<pre><code>type(t_discreteBC), target :: rdiscreteBC
+type(t_linsolNode), pointer :: p_rsolver
+
+integer :: nfilters
+type(t_filterChain), dimension(1), target :: RmyFilters
+...
+call filter_clearFilterChain (RmyFilters,nfilters)
+call filter_newFilterDiscBCDef (RmyFilters,nfilters,rdiscreteBC)
+
+call linsol_initBiCGStab (p_rsolver,RfilterChain = RmyFilters)
+...
+</code></pre>
+
+<p>At first, an array <code>RmyFilters</code> is declared which takes hold of all filters. With <code>filter_clearFilterChain</code>, the filter chain is initialised. <code>filter_newFilterDiscBCDef</code> adds a filter for implementing Dirichlet boundary conditions into defect vectors. The filter chain <code>RmyFilters</code> is then passed as parameter to <code>linsol_initBiCGStab</code> which will apply it to its defect vectors.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example demonstrates how to set up a filter chain that filters defect vectors to integral mean value zero, used for pure Neumann problems with the Poisson equation</p>
+</blockquote>
+
+<pre><code>type(t_discreteBC), target :: rdiscreteBC
+type(t_linsolNode), pointer :: p_rsolver
+
+integer :: nfilters
+type(t_filterChain), dimension(1), target :: RmyFilters
+...
+call filter_clearFilterChain (RmyFilters,nfilters)
+call filter_newFilterToL20 (RmyFilters,nfilters,1)
+
+call linsol_initBiCGStab (p_rsolver,RfilterChain = RmyFilters)
+...
+</code></pre>
+
+<p>Similar as above, an array <code>RmyFilters</code> is set up, but this time with an integral mean value filter. The filter is passed to BiCGStab and will ensure a zero integral mean value for defect vectors during the iteration. If the initial solution and the right-hand side passed to the solver have both integral mean value zero, the final solution will fulfil this as well.</p>
+
+<h2>Using filters</h2>
+
+<p>How and where filters are used depends on the type of the filter. The following list gives an overview about the usage of each of the filters.</p>
+
+<dl>
+<dt>Dirichlet boundary-condition filter</dt>
+<dd>
+<p>This filter has to be used whereever boundary conditions come into play:</p>
+
+<ul>
+<li><strong>vecfil_discreteBCsol</strong>: To be used to make sure, Dirichlet boundary conditions are imposed into a solution vector.</li>
+<li><strong>vecfil_discreteBCrhs</strong>: To be used to filter a right-hand side vector in advance of solving a linear system.</li>
+<li><strong>matfil_discreteBC</strong>: To be used to filter a matrix in advance of solving a linear system.</li>
+<li><strong>vecfil_discreteBCdef</strong>: To be used to filter a defect vector, e.g., in a nonlinear loop.</li>
+<li>The linear solver should apply a <em>filter chain</em> to apply <code>vecfil_discreteBCdef</code> internally on defect vectors.</li>
+</ul>
+
+<p>The following example demonstrates how to prepare a linear system for Dirichlet boundary conditions:</p>
+
+<pre><code>! Solution/RHS/Matrix/boundary conditions
+type(t_vectorBlock) :: rx, rrhs
+type(t_matrixBlock) :: rmatrix
+type(t_discreteBC), target :: rdiscreteBC
+
+! Linear solver
+type(t_linsolNode), pointer :: p_rsolver
+
+... (assemble matrix, RHS, prepare BC)
+
+! Clear solution
+call lsysbl_clearVector (rx)
+
+! Implement BC into RHS, solution, matrix
+call matfil_discreteBC (rmatSystem,rdiscreteBC)
+call vecfil_discreteBCrhs (rvecRhs,rdiscreteBC)
+call vecfil_discreteBCsol (rvecSol,rdiscreteBC)
+
+! Create a solver
+call linsol_initUmfpack4 (p_rsolver)
+
+! Attach the system matrix to the solver.
+call linsol_setMatrix(p_rsolver, rmatSystem)
+
+... (solve the system)
+</code></pre>
+
+<p>If an iterative solution algorithm is to be used, it is advisable to additionally set up a filter chain containing the defect filter. This is demonstrated in the following code:</p>
+
+<pre><code>! Solution/RHS/Matrix/boundary conditions
+type(t_vectorBlock) :: rvecSol, rvecRhs
+type(t_matrixBlock) :: rmatrix
+type(t_discreteBC), target :: rdiscreteBC
+
+! Linear solver
+type(t_linsolNode), pointer :: p_rsolver
+
+! Filter chain
+integer :: nfilters
+type(t_filterChain), dimension(1), target :: RmyFilters
+
+... (assemble matrix, RHS, prepare BC)
+
+! Clear solution
+call lsysbl_clearVector (rvecSol)
+
+! Implement BC into RHS, solution, matrix
+call matfil_discreteBC (rmatSystem,rdiscreteBC)
+call vecfil_discreteBCrhs (rvecRhs,rdiscreteBC)
+call vecfil_discreteBCsol (rvecSol,rdiscreteBC)
+
+! Set up a filter chain for filtering the defect
+call filter_clearFilterChain (RmyFilters,nfilters)
+call filter_newFilterDiscBCDef (RmyFilters,nfilters,rdiscreteBC)
+
+! Create a solver
+call linsol_initBiCGStab (p_rsolver,RfilterChain = RmyFilters)
+
+! Attach the system matrix to the solver.
+call linsol_setMatrix(p_rsolver, rmatSystem)
+
+... (solve the system)
+</code></pre>
+</dd>
+
+<dt>Zero-integral-mean-value filter</dt>
+<dd>
+<p>This filter has to be used to filter solution, defect and right-hand side to integral mean value zero:</p>
+
+<ul>
+<li><strong>vecfil_subvectorToL20</strong>: To be used to make sure, a vector has integral mean value zero</li>
+<li>The linear solver shall apply a <em>filter chain</em> to apply <code>vecfil_subvectorToL20</code> internally on defect vectors.</li>
+</ul>
+
+<p>The following example demonstrates how to prepare a linear solver for a pure Neumann Poisson problem:</p>
+
+<pre><code>! Solution/RHS/Matrix/boundary conditions
+type(t_vectorBlock) :: rvecSol, rvecRhs
+type(t_matrixBlock) :: rmatrix
+
+! Linear solver
+type(t_linsolNode), pointer :: p_rsolver
+
+! Filter chain
+integer :: nfilters
+type(t_filterChain), dimension(1), target :: RmyFilters
+
+... (assemble matrix, RHS)
+
+! Clear solution
+call lsysbl_clearVector (rvecSol)
+
+! Implement zero integral mean value into RHS, solution, matrix
+call vecfil_subvectorToL20 (rvecRhs,1)
+call vecfil_subvectorToL20 (rvecSol,1)
+
+! Set up a filter chain for filtering the defect
+call filter_clearFilterChain (RmyFilters,nfilters)
+call filter_newFilterToL20 (RmyFilters,nfilters,1)
+
+! Create a solver
+call linsol_initBiCGStab (p_rsolver,RfilterChain = RmyFilters)
+
+! Attach the system matrix to the solver.
+call linsol_setMatrix(p_rsolver, rmatSystem)
+
+... (solve the system)
+</code></pre>
+</dd>
+</dl>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+// for correct syntax see http://docs.mathjax.org/en/latest/start.html
+// note that when editing this page these parenthesis need to be
+// escaped with 4 backslashes such that 2 of them end up on the
+// generated web page!
+MathJax.Hub.Config({
+tex2jax: {
+    inlineMath:  [ ['$','$'], ['\\(','\\)'] ]
+}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

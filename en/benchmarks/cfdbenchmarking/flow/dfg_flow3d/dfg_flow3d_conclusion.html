@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Conclusions and Bibliography - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../../index.html">Home</a>
+  <a href="../../../../contact.html">Contact</a><a href="../../../../software.html">Software</a><div class="submenu"><a href="../../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../../software/featflow.html">FEATFLOW</a><a href="../../../../software/featflow2.html">FEATFLOW2</a><a href="../../../../software/parpp3d.html">parPP3D</a><a href="../../../../software/documentation.html">Documentation</a></div><a href="../../../../team.html">Team</a><a href="../../../../links.html">Links</a><div class="submenu"><a href="../../../../links/websites.html">Websites</a><a href="../../../../links/software_links.html">Software</a></div><a href="../../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../../flow.html" class="selected">Flow around a Cylinder</a><div class="submenu"><a href="../dfg_benchmark1_re20.html">DFG benchmark 2D-1 (RE20, laminar)</a><a href="../dfg_benchmark2_re100.html">DFG benchmark 2D-2 (RE100, periodic)</a><a href="../dfg_benchmark3_re100.html">DFG benchmark 2D-3 (RE100, fixed time interval)</a><a href="../dfg_flow3d.html" class="selected">3D laminar case (Re=20 and Re=100)</a><div class="submenu"><a href="dfg_flow3d_configuration.html">Benchmark configuration</a><a href="dfg_flow3d_software.html">Used CFD Software Packages</a><a href="dfg_flow3d_results.html">Results</a><a href="dfg_flow3d_conclusion.html" class="selected">Conclusions and Bibliography</a><a href="dfg_flow3d_reference.html">Reference Values</a></div></div><a href="../../bubble.html">Rising Bubble</a><a href="../../fsi_benchmark.html">FSI Benchmark</a><a href="../../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../../publications.html">Publications</a><a href="../../../../services.html">Services</a><div class="submenu"><a href="../../../../services/cdrom.html">CD-ROM</a><a href="../../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../../news.html">News</a><a href="../../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../../index.html">Home</a> » <a href="../../../../benchmarks.html">Benchmarks</a> » <a href="../../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../../flow.html">Flow around a Cylinder</a> » <a href="../dfg_flow3d.html">3D laminar case (Re=20 and Re=100)</a> » <a href="dfg_flow3d_conclusion.html">Conclusions and Bibliography</a>  </div>
+
+  <hr />
+
+  <h3>Conclusions</h3>
+
+<p>The results obtained by this benchmark computations definitively replace the existing reference results for the second test case. 
+<span class="sc">FeatFlow</span> results at mesh level 3 could be already considered as mesh independent results and regarding the results obtained at mesh level 4, we can conclude that fully converged solution of the second benchmark test is achieved, which has been the primary goal of the study. Moreover, we got an insight to answers of our questions in the beginning of the study with the obtained results. </p>
+
+<ol>
+  <li>We have observed that multigrid techniques slightly increase the performance of the segregated solvers in the solution of viscous Burger's equation due to the chosen small time steps. However, in the case of coupled solvers or  the solution of the pressure-Poisson problem,  there is a drastic difference between the performance of conventional (single grid) iterative methods and multigrid techniques. Consequently, it seems to be impossible to obtain efficient solvers for laminar incompressible flow problems unless suitable multigrid techniques are employed.</li>
+  <li>Fully coupled implicit solvers (CFX) offer the advantage of using larger time step sizes, however, to be able to reach the desired accuracy, they require more nonlinear iterations. Thus, the overall computational cost has not been changed significantly. In the light of our calculations, there is not much difference between these two approaches in the solution of unsteady incompressible laminar flows; however, this question requires further investigation.</li>
+  <li>Using higher order discretization schemes in space leads to denser linear system of equations which can be solved more efficiently on state of the art computers. And since, <span class="sc">FeatFlow</span> is more accurate and efficient in the test cases (see <a href="dfg_flow3d_results.html#trioErr">here</a>), we can conclude that it pays to use higher order discretization in space and time.</li>
+</ol>
+
+<p>Regarding the comparison of the software tools, the most prominent conclusion can be drawn from the <a href="dfg_flow3d_results.html#trioErr">table listing the relative errors</a>: FF calculation at level 2 on 4 nodes has a similar accuracy as other codes at level 4 on 24 nodes. While FF requires ≈5 hours of computation for these calculations, CFX and OF require much more.</p>
+
+<p>As a conclusion, in the <span class="math">Re=20</span> case, we succeeded to obtain fully converged results with all three softwares, and although the second benchmark test was particularly challenging, a reliable reference solution has been obtained. Regarding the computational performance of the employed software packages, this benchmark should be considered as still open and a motivation for CFD software developers to join. All data files and the corresponding plots of the results obtained through this study can be downloaded from the <a href="../../../../benchmarks.html">website</a>.</p>
+
+
+<h3>Acknowledgements</h3>
+
+<p>The authors like to thank the <em>German Research Foundation (DFG)</em> for partially supporting the work under grants <em>Sonderforschungsbereich SFB708 (TP B7)</em> and <em>SPP1423 (Tu102/32-1)</em>, and Sulzer Innotec, Sulzer Markets and Technology AG for supporting Evren Bayraktar with a doctoral scholarship.</p>
+
+<p>The support by the <em>LiDOng</em> team at the ITMC at TU Dortmund is gratefully acknowledged.</p>
+
+<h3>Bibliography</h3>
+
+<table>
+<tbody>
+  <tr id="Turek1996">
+    <td>[1]</td>
+    <td>M. Schäfer and S. Turek, <i>Benchmark computations of laminar flow around a cylinder</i> (With support by F. Durst, E. Krause and R. Rannacher).<br />
+In E. Hirschel, editor, Flow Simulation with High-Performance Computers II. DFG priority research program results 1993-1995, number 52 in Notes Numer. Fluid Mech., pp.547-566. Vieweg, Weisbaden, 1996.
+</td>
+  </tr>
+  <tr id="Braack2006">
+    <td>[2]</td>
+    <td>M. Braack and T. Richter, <i>Solutions of 3D Navier-Stokes benchmark problems with Adaptive Finite Elements</i>.
+Computers and Fluids, 2006, <b>35(4)</b>, pp.372-392.</td>
+  </tr>
+  <tr id="John2002">
+    <td>[3]</td>
+    <td>V. John, <i>Higher order finite element methods and multigrid solvers in a benchmark problem for 3D Navier-Stokes equations</i>, Int. J. Numer. Math. Fluids, 2002, <b>40</b>, pp.755-798.</td>
+  </tr>
+  <tr id="John2006">
+    <td>[4]</td>
+    <td>V. John, <i>On the efficiency of linearization schemes and coupled multigrid methods in the simulation of a 3D flow around a cylinder</i>, Int. J. Numer. Math. Fluids, 2006, <b>50</b>, pp. 845-862.</td>
+  </tr>
+  <tr id="Peric">
+    <td>[5]</td>
+    <td>J.H. Ferziger and M. Peric, <i>Computational Methods for Fluid Dynamics</i>, 3rd ed. Springer, 2002.</td>
+  </tr>
+  <tr id="OFmanual">
+    <td>[6]</td>
+    <td><a href="http://www.openfoam.com/docs/">OpenFOAM User's guide (version 1.6)</a>, 2009.</td>
+  </tr>
+  <tr id="CFXmanual">
+    <td>[7]</td>
+    <td><a href="http://www.ansys.com/cfx">ANSYS CFX-Solver</a>, Release 10.0:Theory.</td>
+  </tr>
+</tbody>
+</table>
+
+<hr />
+
+<ul><li><a href="dfg_flow3d_conclusion.html">Conclusions and Bibliography</a><ul><li><a href="dfg_flow3d_configuration.html">Benchmark configuration</a></li><li><a href="dfg_flow3d_software.html">Used CFD Software Packages</a></li><li><a href="dfg_flow3d_results.html">Results</a></li><li class="selected"><a href="dfg_flow3d_conclusion.html">Conclusions and Bibliography</a></li><li><a href="dfg_flow3d_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

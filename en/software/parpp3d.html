@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parPP3D - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->
+  <link media="screen, projection" rel="stylesheet" href="../../media/css/featflow.css" />
+<script type="text/javascript" src="../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../media/js/show_pic.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="../../media/js/example.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../index.html">Home</a>
+  <a href="../contact.html">Contact</a><a href="../software.html" class="selected">Software</a><div class="submenu"><a href="feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="featflow.html">FEATFLOW</a><a href="featflow2.html">FEATFLOW2</a><a href="parpp3d.html" class="selected">parPP3D</a><a href="documentation.html">Documentation</a></div><a href="../team.html">Team</a><a href="../links.html">Links</a><div class="submenu"><a href="../links/websites.html">Websites</a><a href="../links/software_links.html">Software</a></div><a href="../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../publications.html">Publications</a><a href="../services.html">Services</a><div class="submenu"><a href="../services/cdrom.html">CD-ROM</a><a href="../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../news.html">News</a><a href="../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../index.html">Home</a> » <a href="../software.html">Software</a> » <a href="parpp3d.html">parPP3D</a>  </div>
+
+  <hr />
+
+  <h2>parpp3d++  -  a parallel C++ version of PP3D</h2>
+   <div id="curve_chart"></div>
+<h3>What is parpp3d++?</h3>
+<p>parpp3d++ is a parallel 3D code for the solution of incompressible nonstationary Navier--Stokes equations. It is an adaptation, i.e. parallel implementation, of the existing sequential solver pp3d from the FEATFLOW package and, as such, applies the same numerical methods. See  <a href="http://www.mathematik.uni-dortmund.de/lsiii/very_new/php/showpdffile.php?Turek1999h">[1]</a>, <a href="http://www.mathematik.uni-dortmund.de/lsiii/very_new/php/showpdffile.php?Buijssen2002">[2]</a> for mathematical details.</p>
+<p>parpp3d++ is not capable of solving 2D flow problems. According efforts are not ventured either on the basis of the FEAT package. It will not be before the completion of the currently developed, new FEA<strong>S</strong>TFLOW package that parallel 2D simulations will be potentiated. For details about its release date see <a href="../news.html">News</a>.</p>
+<h3>Supported platforms</h3>
+<p>parpp3d++ has been successfully compiled, deployed and tested in almost every UNIX environment. It does not run, though, on Windows® 95/98/ME/NT/2K/XP, MacOS® nor OS/2®. Considering the fact that the aim of parpp3d++ is High Performance Computing, especially using the tremendous computing power of multi-processor workstations, clusters or supercomputers, this restriction to UNIX flavours is quite a matter of course. Thus, to run parpp3d++, you need to have a UNIX system.</p>
+<h3>Where to get?</h3>
+<p>Well, right here:</p>
+<dl> <dt>source code: </dt><dd> <a href="../../media/download/parpp3d__-official-v1.0.5.tar.gz">parpp3d++-official-v1.0.5.tar.gz</a></dd> <br /> <dt>user guide: </dt><dd> <a href="../../media/download/parpp3d__-v1.1.pdf">PDF</a> / <a href="../../media/download/parpp3d__-v1.1.ps.gz">Postscript</a>. </dd> </dl>
+
+<h3>Utilities</h3>
+<p>In order to reduce the overhead for exporting the visualisation output files the data is not collected by one processor and then exported.  Instead, every process saves his chunk of calculated data to disk.  Using the command line tools mergegmvfiles and mergeavsfiles these  files can be recombined to a single file in a post-processing step. The files are self-contained, just use an arbitrary up-to-date C++  compiler to turn them into binaries. A '<code>mergegmvfiles -h</code>' or  '<code>mergegmvfiles --usage</code>' will tell you which syntax is expected.</p>
+<dl> <dt>source code: </dt><dd><a href="../../media/download/parpp3d__-utils-v1.3.0.tar.gz">parpp3d++-utils-v1.3.0.tar.gz</a></dd> </dl></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+<!--Div that will hold the pie chart-->
+
+</body>
+
+</html>

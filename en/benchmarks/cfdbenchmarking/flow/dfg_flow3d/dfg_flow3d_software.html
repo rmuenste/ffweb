@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Used CFD Software Packages - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../../index.html">Home</a>
+  <a href="../../../../contact.html">Contact</a><a href="../../../../software.html">Software</a><div class="submenu"><a href="../../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../../software/featflow.html">FEATFLOW</a><a href="../../../../software/featflow2.html">FEATFLOW2</a><a href="../../../../software/parpp3d.html">parPP3D</a><a href="../../../../software/documentation.html">Documentation</a></div><a href="../../../../team.html">Team</a><a href="../../../../links.html">Links</a><div class="submenu"><a href="../../../../links/websites.html">Websites</a><a href="../../../../links/software_links.html">Software</a></div><a href="../../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../../flow.html" class="selected">Flow around a Cylinder</a><div class="submenu"><a href="../dfg_benchmark1_re20.html">DFG benchmark 2D-1 (RE20, laminar)</a><a href="../dfg_benchmark2_re100.html">DFG benchmark 2D-2 (RE100, periodic)</a><a href="../dfg_benchmark3_re100.html">DFG benchmark 2D-3 (RE100, fixed time interval)</a><a href="../dfg_flow3d.html" class="selected">3D laminar case (Re=20 and Re=100)</a><div class="submenu"><a href="dfg_flow3d_configuration.html">Benchmark configuration</a><a href="dfg_flow3d_software.html" class="selected">Used CFD Software Packages</a><a href="dfg_flow3d_results.html">Results</a><a href="dfg_flow3d_conclusion.html">Conclusions and Bibliography</a><a href="dfg_flow3d_reference.html">Reference Values</a></div></div><a href="../../bubble.html">Rising Bubble</a><a href="../../fsi_benchmark.html">FSI Benchmark</a><a href="../../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../../publications.html">Publications</a><a href="../../../../services.html">Services</a><div class="submenu"><a href="../../../../services/cdrom.html">CD-ROM</a><a href="../../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../../news.html">News</a><a href="../../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../../index.html">Home</a> » <a href="../../../../benchmarks.html">Benchmarks</a> » <a href="../../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../../flow.html">Flow around a Cylinder</a> » <a href="../dfg_flow3d.html">3D laminar case (Re=20 and Re=100)</a> » <a href="dfg_flow3d_software.html">Used CFD Software Packages</a>  </div>
+
+  <hr />
+
+  <h3>Used CFD Software packages</h3>
+
+<p>We studied the benchmark problems with three software packages: open-source software package OpenFOAM (OF), commercial code ANSYS-CFX (CFX), and our in-house code <span class="sc">FeatFlow</span>.
+Each software adopts a different approach to the discretization of the Navier-Stokes equations.
+The first adopts a conventional Finite Volume Method (FVM), ANSYS-CFX is developed on an element based FVM (ebFVM) and the last adopts a high order Galerkin Finite Element approach. Their approaches to the discretization of Navier-Stokes equations are one of the main differences between the codes. Moreover, their solution approach to the resulting linear and non-linear systems of equations after discretization is another distinction which influences the computational performance rather than the accuracy of the results. Nevertheless, in the case of our in-house code, the space discretization method is also effective regarding the performance of the solvers, the finite element spaces were chosen such that the linear solvers would be the most efficient.</p>
+
+<table id="solverParametersOF">
+<caption>Discretization schemes and solver parameters for OF.</caption>
+<thead>
+  <tr>
+    <th>Type</th>
+    <th>Parameters</th>
+    <th>Value</th>
+    <th>Description></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Times schemes</td>
+    <td>ddtSchemes</td>
+    <td>CrankNicholson 0.5</td>
+    <td>Euler blended (0.5) Crank-Nicholson, improved stability.</td>
+  </tr>
+  <tr>
+    <td><Interpolation schemes/td>
+    <td>interpolation-Schemes</td>
+    <td>linear</td>
+    <td>Linear interpolation (central differencing).</td>
+  </tr>
+  <tr>
+    <td>Surface normal gradient schemes</td>
+    <td>snGradSchemes</td>
+    <td>corrected</td>
+    <td>Explicit non-orthogonal correction.</td>
+  </tr>
+  <tr>
+    <td>Gradient schemes<br />Divergence schemes</td>
+    <td>gradSchemes<br />divSchemes</td>
+    <td>Gauss linear</td>
+    <td>Second order, Gaussian integration.</td>
+  </tr>
+  <tr>
+    <td>Laplacian schemes</td>
+    <td>laplacianSchemes</td>
+    <td>Gauss linear corrected</td>
+    <td>Unbounded, second order, conservative.</td>
+  </tr>
+  <tr>
+    <td>solvers p</td>
+    <td>solver<br />smoother<br />tolerance</td>
+    <td>GAMG Gauss-Seidel<br /><span class="math">10<sup>-7</sup></span></td>
+    <td>Geometric-Algebraic Multigrid with Gauss-Seidel smoother. Convergence criteria.</td>
+  </tr>
+  <tr>
+    <td>solvers U</td>
+    <td>Solver<br />preconditioner<br />tolerance<br /></td>
+    <td>PBICG<br />DILU<br /><span class="math">10<sup>-6</sup></span></td>
+    <td>Preconditioned bi-conjugate gradient solver with diagonal based incomplete LU preconditioner.</td>
+  </tr>
+</tbody>
+</table>
+
+<p>OpenFOAM achieves the spatial discretization by using FVM on block structured meshes with Gaussian integration and linear interpolation. From the  available techniques, temporal discretization is obtained with equidistant implicit Euler blended Crank-Nicolson time stepping scheme (blending factor = 0.5). Later, pressure and momentum equations are decoupled by using the <a href="dfg_flow3d_conclusion.html#Peric">PISO algorithm</a>. For the solution of the  momentum equation, PBiCG is employed. PBiCG is a preconditioned bi-conjugate gradient solver for asymmetric lduMatrices using a run-time selectable preconditioner. DILU preconditioner which is a simplified diagonal-based incomplete LU preconditioner for asymmetric matrices was chosen. Then, the pressure equation is solved by using a Geometric-Algebraic Multigrid solver with a Gauss-Seidel type smoother. The details of the chosen discretization schemes and solver tolerances are presented in the table <a href="dfg_flow3d_software.html#solverParametersOF">above</a>.</p>
+
+<p>CFX employs an element based Finite Volume approach to discretize in space and high resolution scheme is chosen for the stabilization of the convective term. Time discretization is achieved by Second Order Backward Euler scheme. Tri-linear finite element based functions are used as interpolation scheme. ANSYS CFX uses a coupled solver, which solves the hydrodynamic equations (for <span class="math">u</span>, <span class="math">v</span>, <span class="math">w</span>, <span class="math">p</span>) as a single system. First, non-linear equations are linearized (coefficient iteration), then these linear equations are solved by an Algebraic Multigrid (AMG) solver. The chosen discretization schemes and solver parameters are given in the table <a href="dfg_flow3d_software.html#solverParametersCFX">below</a>.</p>
+
+<table id="solverParametersCFX">
+<caption>Discretization schemes and solver parameters for CFX.</caption>
+<thead>
+  <tr>
+    <th>Setting</th>
+    <th>Value</th>
+    <th>Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Transient scheme</td>
+    <td>Second Order Backward Euler Scheme</td>
+    <td>Second order, unbounded, implicit, conservative time stepping.</td>
+  </tr>
+  <tr>
+    <td>Interpolation scheme<br />Pressure interpolation<br />Velocity interpolation<br />Shape function</td>
+    <td>FE shape functions<br />Linear-Linear<br />Trilinear<br />Parametric</td>
+    <td>True tri-linear interpolation for velocity and linear-linear interpolation for pressure.</td>
+  </tr>
+  <tr>
+    <td>Advection scheme</td>
+    <td>High resolution</td>
+    <td>Numerical advection scheme with a calculated blending factor.</td>
+  </tr>
+  <tr>
+    <td style="width: 10em;">Convergence criteria<br />Residual type<br />Residual target</td>
+    <td><br />MAX<br />5×10<sup>-5</sup></td>
+    <td>Maximum value of normalized residuals. For details see the <a href="dfg_flow3d_conclusion.html#CFXmanual">CFX manual</a>.</td>
+  </tr>
+</tbody>
+</table>
+
+<p>Our in-house developed open source fluid dynamics software package <span class="sc">FeatFlow</span> (here: module <strong>PP3D</strong>) is a transient 3D Finite Element based code parallelized on the basis of domain decomposition techniques. Velocity and pressure are discretized with the high order Q2/P1 element pair and their solution is obtained via a discrete projection method. Since this pair of elements is quite stable even in case of moderate Reynolds number flows, no additional stabilization of the advection is required which is very distinctive regarding the other software packages which employ certain stabilization schemes. The discretization in time is achieved by the second order Crank-Nicholson method which provides efficient and accurate marching in time together with the implemented adaptive time-step-control. The adopted discrete projection approach gives rise to a subsequent solution of the so called Burgers equations and the Pressure-Poisson equation, which is solved in order to enforce the incompressibility constraint. Both of these equations are solved with geometric multigrid solvers: here, SSOR/SOR and UMFPACK/SOR are employed as the solver/smoother pairs for velocity and pressure, respectively.</p>
+
+<hr />
+
+<ul><li><a href="dfg_flow3d_software.html">Used CFD Software Packages</a><ul><li><a href="dfg_flow3d_configuration.html">Benchmark configuration</a></li><li class="selected"><a href="dfg_flow3d_software.html">Used CFD Software Packages</a></li><li><a href="dfg_flow3d_results.html">Results</a></li><li><a href="dfg_flow3d_conclusion.html">Conclusions and Bibliography</a></li><li><a href="dfg_flow3d_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

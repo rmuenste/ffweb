@@ -1,0 +1,835 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Scalar assembly - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html" class="selected">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="concept_stdassembly.html">Scalar assembly</a>  </div>
+
+  <hr />
+
+  <h1>The scalar assembly</h1>
+
+<p>The "scalar" assembly is the "original" way for assembling finite element matrices in FEAT2. It is fast, comfortable and designed to assemble "scalar" matrices, i.e., matrices for operators $A_h : V_h to W_h$ between two finite element spaces $V_h$ and $W_h$. "Block" matrices are assembled by assembling all scalar submatrices, one after the other. There exist assembly routines for domain integrals and boundary integrals, so this type of assembly can be used to assemble weak forms as well as, e.g., inhomogeneous Neumann boundary conditions.</p>
+
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td><a href="concept_stdassembly.html#Involved-modules">Involved modules</a></td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><a href="concept_stdassembly.html#Nomenclature">Nomenclature</a></td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><a href="concept_stdassembly.html#Derivative-quantifiers">Derivative quantifiers</a></td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><a href="concept_stdassembly.html#Assembling-linear-forms">Assembling linear forms</a></td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><a href="concept_stdassembly.html#Assembling-trilinear-forms">Assembling trilinear forms</a></td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><a href="concept_stdassembly.html#Advanced-assembly">Advanced assembly</a></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="Involved-modules">Involved modules</h2>
+
+<p>The design of the "scalar" assembly focuses on the weak form. There exist special structures that express a linear, bilinear or even trilinear form, the three most common types of operators. There are five main modules involved in this approach:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Module</th>
+  <th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>scalarpde.f90</td>
+  <td>Contains structures that describe linear, bilinear and trilinear forms</td>
+</tr>
+<tr>
+  <td>linearformevaluation.f90</td>
+  <td>Contains subroutines to assembles linear forms. Domain integration and boundary integration</td>
+</tr>
+<tr>
+  <td>bilinearformevaluation.f90</td>
+  <td>Contains subroutines to assemble bilinear forms</td>
+</tr>
+<tr>
+  <td>trilinearformevaluation.f90</td>
+  <td>Contains subroutines to assemble trilinear forms</td>
+</tr>
+<tr>
+  <td>stdoperators.f90</td>
+  <td>Support module. Uses the above modules to realise standard operators, e.g., Mass and Laplace operators.</td>
+</tr>
+<tr>
+  <td>derivatives.f90</td>
+  <td>Definition of derivatives of basis functions</td>
+</tr>
+<tr>
+  <td>collection.f90</td>
+  <td>Collection structure, used to pass parameters to callback functions</td>
+</tr>
+<tr>
+  <td>feevaluation.f90</td>
+  <td>Evaluation of finite element functions in cubature points.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="Nomenclature">Nomenclature</h2>
+
+<p>The nomenclature is as follows:</p>
+
+<ul>
+<li><strong>Linear form:</strong>  A "linear form" is the integral on the right-hand side of an equation. Linear forms assemble <em>right-hand side vectors</em>. Example:</li>
+</ul>
+
+<p>$$F(v_h) := int_{Omega} f v_h $$</p>
+
+<ul>
+<li><p><strong>Bilinear form:</strong> A "bilinear form" describes a set of domain integrals on the left-hand side of an equation. Bilinear forms assemble <em>matrices</em>. A bilinear form may have constant coefficients (e.g., Laplace, Mass) or nonconstant coefficients (e.g., anisotropic difusion).</p>
+
+<ul>
+<li>Example for a bilinear form: $$a(v_h,w_h) = int_{Omega} v_h w_h $$</li>
+<li>Example for a bilinear form, with $g:Omegatomathbb{R}$ an additional function: $$b(v_h,w_h) = int_{Omega} g v_h w_h $$</li>
+</ul></li>
+<li><p><strong>Trilinear form:</strong> A "trilinear form" is a special type of bilinear form, where the coefficient in front of the bilinear form is expessed as a nonconstant finite element function. Example:</p></li>
+</ul>
+
+<p>$$n(u_h,v_h,w_h) = int_{Omega} u_h v_h w_h $$</p>
+
+<h2 id="Derivative-quantifiers">Derivative quantifiers (derivative.f90)</h2>
+
+<p>The module <code>derivatives.f90</code> declares a set of quantifiers to configure derivatives of basis functions. The following table gives an overview about these quantifiers. The operators $partial_{x_1}$, $partial_{x_2}$ and $partial_{x_3}$ refer to a derivative in x, y or z direction, respectively.</p>
+
+<table>
+<thead>
+<tr>
+  <th>Id</th>
+  <th>Dimension</th>
+  <th>Type of derivative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>DER_FUNC</td>
+  <td>1D, 2D, 3D</td>
+  <td>Function value, no derivative</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>DER_DERIVX_1D</td>
+  <td>1D</td>
+  <td>Identifies $partial_{x}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVXX_1D</td>
+  <td></td>
+  <td>Identifies $partial^2_{xx}$</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>DER_DERIVX_2D</td>
+  <td>2D</td>
+  <td>Identifies $partial_{x_1}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVY_2D</td>
+  <td></td>
+  <td>Identifies $partial_{x_2}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVXX_2D</td>
+  <td></td>
+  <td>Identifies $partial^2_{x_1x_1}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVYY_2D</td>
+  <td></td>
+  <td>Identifies $partial^2_{x_2x_2}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVXY_2D</td>
+  <td></td>
+  <td>Identifies $partial^2_{x_1x_2}$</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>DER_DERIVX_3D</td>
+  <td>3D</td>
+  <td>Identifies $partial_{x_1}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVY_3D</td>
+  <td></td>
+  <td>Identifies $partial_{x_2}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVZ_3D</td>
+  <td></td>
+  <td>Identifies $partial_{x_3}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVXX_2D</td>
+  <td></td>
+  <td>Identifies $partial^2_{x_1x_1}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVYY_2D</td>
+  <td></td>
+  <td>Identifies $partial^2_{x_2x_2}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVZZ_2D</td>
+  <td></td>
+  <td>Identifies $partial^2_{x_3}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVXY_2D</td>
+  <td></td>
+  <td>Identifies $partial^2_{x_1x_2}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVXZ_2D</td>
+  <td></td>
+  <td>Identifies $partial^2_{x_1x_3}$</td>
+</tr>
+<tr>
+  <td>DER_DERIVYZ_2D</td>
+  <td></td>
+  <td>Identifies $partial^2_{x_2x_3}$</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="Assembling-linear-forms">Assembling linear forms (right-hand side vectors)</h2>
+
+<h3>Domain integration</h3>
+
+<p>A "linear form for domain integration" has the following rather general shape:</p>
+
+<p>$$F(v_h) := int_{Omega}  f v_h  +  g_1 partial_{x_1} v_h  +  g_2 partial_{x_2} v_h  +  ... $$</p>
+
+<p>The sum below the integral contains combinations of theoretically arbitrary functions $f$ and $g_i$, i=1,2,..., multiplied with a test function $v_h$ and/or its derivatives. There can be up to <code>SCPDE_NNAB=21</code> many elements in this sum. This type of linear form is the most commonly used type of integration used for right-hand side assembly.</p>
+
+<p>For the scalar assembly of this domain integral, this linear form must be mapped by the application to the structure <code>t_linform</code> from <code>scalarpde.f90</code> as follows:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>(t_linearForm)%itermCount</td>
+  <td>Number of terms in the linear form</td>
+</tr>
+<tr>
+  <td>(t_linearForm)%Idescriptors(1)</td>
+  <td>Derivative quantifier for the test function, 1st term</td>
+</tr>
+<tr>
+  <td>(t_linearForm)%Idescriptors(2)</td>
+  <td>Derivative quantifier for the test function, 2nd term</td>
+</tr>
+<tr>
+  <td>(t_linearForm)%Idescriptors(3)</td>
+  <td>Derivative quantifier for the test function, 3rd term</td>
+</tr>
+<tr>
+  <td>...</td>
+  <td>...</td>
+</tr>
+</tbody>
+</table>
+
+<p>The descriptors <code>Idescriptors(:)</code> take one of the values <code>DER_xxxx</code> and identify which derivative to apply to the test function in the linear form.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following code identifies the linear form $F(v_h) := int_{Omega}  f v_h $:</p>
+</blockquote>
+
+<pre><code>type(t_linform) :: rlinform
+...
+rlinform%itermCount = 1
+rlinform%Idescriptors(1) = DER_FUNC
+</code></pre>
+
+<blockquote>
+  <p><strong>Example:</strong> The following code identifies the linear form $$F(v_h) := int_{Omega}  f partial_{x_1} v_h $$ in 2D:</p>
+</blockquote>
+
+<pre><code>type(t_linform) :: rlinform
+...
+rlinform%itermCount = 1
+rlinform%Idescriptors(1) = DER_DERIVX_2D
+</code></pre>
+
+<blockquote>
+  <p><strong>Example:</strong> The following code identifies the linear form $$F(v_h) := int_{Omega}  g_1 partial_{x_1} v_h + g_2 partial_{x_2} v_h + g_3  partial_{x_3} v_h $$ in 3D:</p>
+</blockquote>
+
+<pre><code>type(t_linform) :: rlinform
+...
+rlinform%itermCount = 3
+rlinform%Idescriptors(1) = DER_DERIVX_3D
+rlinform%Idescriptors(2) = DER_DERIVY_3D
+rlinform%Idescriptors(3) = DER_DERIVZ_3D
+</code></pre>
+
+<p>To invoke the actual assembly, the subroutine <code>linf_buildVectorScalar</code> from <code>linearformevaluation.f90</code> has to be called. This subroutine expects on the one hand the <code>t_linform</code> structure configuring the linear form, on the other hand a special callback routine that calculates the values of all the functions $f$, $g_1$, $g_2$,... in the cubature points. The vector where the data should be calculated to has to be created in advance.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following piece of code demonstrates how to assemble the linear form $$F(v_h) := int_{Omega}  f v_h $$ for a function $$f(x)=32x_1x_2$$ in 2D:</p>
+</blockquote>
+
+<pre><code>subroutine frhs (&amp;
+  ..., nelements, npointsPerElement, Dpoints, ..., Dcoefficients...)
+  ...
+
+  do iel = 1,nelements
+    do ipt = 1,npointsPerElement
+      dx = Dpoints(1,ipt,iel)
+      dy = Dpoints(2,ipt,iel)
+
+      Dcoefficients(1,ipt,iel) = 32.0 * dx * dy
+    end do
+  end do
+
+end subroutine
+
+...
+  type(t_linform) :: rlinform
+  type(t_vectorScalar) :: rrhs
+
+  ...
+  rlinform%itermCount = 1
+  rlinform%Idescriptors(1) = DER_FUNC
+
+  call linf_buildVectorScalar (&amp;
+      rlinform, .false., rrhs, fcoeff_buildVectorSc_sim = frhs)
+...
+</code></pre>
+
+<p>This example demonstrates a special design approach of the complete FEAT2 library. The callback function <code>frhs</code> introduced above has to calculate the values of the function $f$ <em>simultaneously in all cubature points on all given elements</em>. This is a difference to many other finite element codes which call such callback functions for each cubature point or for each element separately. The kernel internally divides the set of all elements into smaller chunks of elements and invokes the callback routine for the corresponding element/point-sets. The loops inside of the callback routine are usually perfectly parallisable which is the heart of efficiency in the FEAT2 package.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example demonstrates how to assemble the linear form $$F(v_h) := int_{Omega} g_1 partial_{x_1} v_h + g_2  partial_{x_2} v_h + g_3 partial_{x_3} v_h $$ in 3D for functions
+  $$  g_1(x) = x_1^2,quad  g_2(x) = x_2^2,quad  g_3(x) = x_3^2  $$</p>
+</blockquote>
+
+<pre><code>subroutine frhs (&amp;
+  ..., nelements, npointsPerElement, Dpoints, ..., Dcoefficients...)
+  ...
+
+  do iel = 1,nelements
+    do ipt = 1,npointsPerElement
+      dx = Dpoints(1,ipt,iel)
+      dy = Dpoints(2,ipt,iel)
+      dz = Dpoints(3,ipt,iel)
+
+      Dcoefficients(1,ipt,iel) = dx**2
+      Dcoefficients(2,ipt,iel) = dy**2
+      Dcoefficients(3,ipt,iel) = dz**2
+    end do
+  end do
+
+end subroutine
+
+...
+  type(t_linform) :: rlinform
+  type(t_vectorScalar) :: rrhs
+
+  ...
+  rlinform%itermCount = 3
+  rlinform%Idescriptors(1) = DER_DERIVX_3D
+  rlinform%Idescriptors(2) = DER_DERIVY_3D
+  rlinform%Idescriptors(3) = DER_DERIVZ_3D
+
+  call linf_buildVectorScalar (&amp;
+      rlinform, .false., rrhs, fcoeff_buildVectorSc_sim = frhs)
+...
+</code></pre>
+
+<p>As can be seen, the array <code>Dcoefficients</code> is filled with the values for $g_1$, $g_2$ and $g_3$ in all cubature points on all elements. <code>Dcoefficients(1,:,:)</code> corresponds to <code>Idescriptors(1)</code> (so $g_1$), <code>Dcoefficients(2,:,:)</code> to <code>Idescriptors(2)</code> (so $g_2$) and <code>Dcoefficients(3,:,:)</code> to <code>Idescriptors(3)</code> (so $g_3$).</p>
+
+<h2 id="Assembling-bilinear-forms">Assembling bilinear forms</h2>
+
+<p>Bilinear forms are designed for the assembly of linear operators. They can be assembled with constant and nonconstant coefficients. COnstant coefficients are used, e.g., for operators like Laplace and Mass while nonconstant coefficients allow to impose nonlinearities. Note that the situation where a nonconstant coefficient is given by a finite element function is a special case which can more easily be addressed with trilinear forms, see below.</p>
+
+<h3>Domain integration</h3>
+
+<p>A "bilinear form for domain integration" has the following rather general shape:</p>
+
+<p>$$a(v_h,w_h) := int_{Omega}  g_1 v_h w_h + g_2 partial_{x_1} v_h w_h + g_3 partial_{x_1} v_h w_h +  g_4 partial_{x_1} v_h partial_{x_1} w_h + ... $$</p>
+
+<p>The sum below the integral contains combinations of trial functions $v_h$ and test functions $w_h$, multiplied by coefficients $g_i$, i=1,2,... .
+If all $g_i$ are constants, the bilinear form is termed "bilinear form with constant coefficients", otherwise "with nonconstant coefficients". There can be up to <code>SCPDE_NNAB=21</code> many elements in this sum.</p>
+
+<p>For the scalar assembly of this domain integral, this bilinear form must be mapped by the application to the structure <code>t_bilinearForm</code> from <code>scalarpde.f90</code>. The structure and setup is similar to a linear form:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>(t_bilinearForm)%itermCount</td>
+  <td>Number of terms in the linear form</td>
+</tr>
+<tr>
+  <td>(t_bilinearForm)%ballCoeffConstant</td>
+  <td>.true. if the bilinear form has constant coefficients</td>
+</tr>
+<tr>
+  <td>(t_bilinearForm)%Dcoefficients(:)</td>
+  <td>Constant coefficients</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>(t_bilinearForm)%Idescriptors(1,1)</td>
+  <td>Derivative quantifier for the trial function, 1st term</td>
+</tr>
+<tr>
+  <td>(t_bilinearForm)%Idescriptors(2,1)</td>
+  <td>Derivative quantifier for the test function, 1st term</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>(t_bilinearForm)%Idescriptors(1,2)</td>
+  <td>Derivative quantifier for the trial function, 2nd term</td>
+</tr>
+<tr>
+  <td>(t_bilinearForm)%Idescriptors(2,2)</td>
+  <td>Derivative quantifier for the test function, 2nd term</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>(t_bilinearForm)%Idescriptors(1,3)</td>
+  <td>Derivative quantifier for the trial function, 3rd term</td>
+</tr>
+<tr>
+  <td>(t_bilinearForm)%Idescriptors(2,3)</td>
+  <td>Derivative quantifier for the test function, 3rd term</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>...</td>
+  <td>...</td>
+</tr>
+</tbody>
+</table>
+
+<p>The descriptors <code>Idescriptors(:,:)</code> take one of the values <code>DER_xxxx</code> and identify which derivative to apply to the trial and test functions in the bilinear form. <code>Idescriptors(1,:)</code> refers to the trial function, <code>Idescriptors(2,:)</code> to the test function.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following code sets up a structure for the bilinear form $$a(v_h,w_h) := int_{Omega}  v_h w_h$$ which is used to assemble mass matrices. This bilinear form has one term with constant coefficient 1.0:</p>
+</blockquote>
+
+<pre><code>type(t_bilinearForm) :: rform
+...
+rform%itermCount = 1
+rform%ballCoeffConstant = .true.
+
+rform%Dcoefficients(1) = 1.0
+rform%Idescriptors(1,1) = DER_FUNC
+rform%Idescriptors(2,1) = DER_FUNC
+</code></pre>
+
+<blockquote>
+  <p><strong>Example:</strong> The following code sets up a structure for the bilinear form $$a(v_h,w_h) := int_{Omega}  partial_{x_1}v_h partial_{x_1}w_h + partial_{x_2}v_h partial_{x_2}w_h$$ which is used to assemble a Laplace matrix in 2D. This bilinear form has two term with constant coefficient 1.0:</p>
+</blockquote>
+
+<pre><code>type(t_bilinearForm) :: rform
+...
+rform%itermCount = 2
+rform%ballCoeffConstant = .true.
+
+rform%Dcoefficients(1) = 1.0
+rform%Idescriptors(1,1) = DER_DERIVX_2D
+rform%Idescriptors(2,1) = DER_DERIVX_2D
+
+rform%Dcoefficients(2) = 1.0
+rform%Idescriptors(1,2) = DER_DERIVY_2D
+rform%Idescriptors(2,2) = DER_DERIVY_2D
+</code></pre>
+
+<blockquote>
+  <p><strong>Example:</strong> The following code sets up a structure for the bilinear form $$a(v_h,w_h) := int_{Omega}  2 partial_{x_1}v_h w_h + 1 partial_{x_2}v_h w_h$$ which corresponds to the operator $begin{pmatrix} 2 &#92; 1 end{pmatrix} nabla u$ in 2D.</p>
+</blockquote>
+
+<pre><code>type(t_bilinearForm) :: rform
+...
+rform%itermCount = 2
+rform%ballCoeffConstant = .true.
+
+rform%Dcoefficients(1) = 2.0
+rform%Idescriptors(1,1) = DER_DERIVX_2D
+rform%Idescriptors(2,1) = DER_FUNC
+
+rform%Dcoefficients(2) = 1.0
+rform%Idescriptors(1,2) = DER_DERIVY_2D
+rform%Idescriptors(2,2) = DER_FUNC
+</code></pre>
+
+<p><strong>Assembly with constant coefficients:</strong> For the actual assembly, the subroutine <code>bilf_buildMatrixScalar</code> from the module <code>bilinearformevaluation.f90</code> has to be invoked. The routine accepts the configured <code>t_bilinearForm</code> structure and the matrix to be build. <strong>Remark:</strong> For sparse matrices (e.g. in CSR format), the sparsity pattern / matrix structure has to be calculated in advance before calculating the content. Furthermore, memory for the content has to be allocated in advance as well.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following code calculates a mass matrix in CSR format, based on a discretisation structure <code>rspatialDiscr</code> that describes the underlying finite element space $V_h$:</p>
+</blockquote>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscr
+type(t_matrixScalar) :: rmatrix
+type(t_bilinearForm) :: rform
+
+...
+! Create the matrix structure, allocate memory for the entries
+call bilf_createMatrixStructure (rspatialDiscr,LSYSSC_MATRIX9,rmatrix)
+call lsyssc_allocEmptyMatrix (rmatrix,.true.)
+
+...
+! Set up the bilinear form
+rform%itermCount = 1
+rform%ballCoeffConstant = .true.
+
+rform%Dcoefficients(1) = 1.0
+rform%Idescriptors(1,1) = DER_FUNC
+rform%Idescriptors(2,1) = DER_FUNC
+
+! Assemble the matrix entries
+call bilf_buildMatrixScalar (rform, .false., rmatrix)
+</code></pre>
+
+<p><strong>Assembly with nonconstant coefficients:</strong> For nonlinear equations, it is often necessary to assemble an operator with a nonconstant coefficient $g_i$. Similar to a linear form, nonconstant coefficients are realised by a callback function. The callback function returns for every cubature point on a set of elements the coefficients in front of all terms in the bilinear form. Nonconstant coefficients are activated by</p>
+
+<pre><code>rform%ballCoeffConstant = .false.
+</code></pre>
+
+<p>in the setup of the bilinear form. The coefficients <code>Dcoefficients(:,:,:)</code> are not used in this case.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example demonstrates how to set up the matrix for the bilinear form of the operator $begin{pmatrix} 2 &#92; 1 end{pmatrix} nabla u$ in 2D. The coefficients "2" and "1" only hold for all coordinates $x=(x_1,x_2)$ with $x_1 > 0$ and $x_2 > 0$:</p>
+</blockquote>
+
+<pre><code>subroutine fcoeff (...,nelements,npointsPerElement,Dpoints,&amp;
+    ..., Dcoefficients, ...)
+
+  ...
+  integer :: ipt,iel
+  real(DP) :: dx,dy
+
+  ! Loop over the points and elements, set up the coefficients
+  do iel = 1,nelements
+    do ipt = 1,npointsPerElement
+
+      dx = Dpoints(1,ipt,iel)
+      dy = Dpoints(2,ipt,iel)
+
+      if ((dx .gt. 0.0_DP) .and. (dy .gt. 0.0_DP)) then
+        Dcoefficients(1,ipt,iel) = 2.0_DP
+        Dcoefficients(2,ipt,iel) = 1.0_DP
+      else
+        Dcoefficients(1,ipt,iel) = 0.0_DP
+        Dcoefficients(2,ipt,iel) = 0.0_DP
+      end if
+
+    end do
+  end do
+
+end subroutine
+
+...
+
+  type(t_matrixScalar) :: rmatrix
+  type(t_bilinearForm) :: rform
+
+  ...
+  ! Set up a bilinear form. Nonconstant coefficients.
+  rform%itermCount = 2
+  rform%ballCoeffConstant = .false.
+
+  rform%Idescriptors(1,1) = DER_DERIVX_2D
+  rform%Idescriptors(2,1) = DER_FUNC
+
+  rform%Idescriptors(1,1) = DER_DERIVY_2D
+  rform%Idescriptors(2,1) = DER_FUNC
+
+  ! Assemble the matrix
+  call bilf_buildMatrixScalar (rform, .false., rmatrix, &amp;
+      fcoeff_buildMatrixSc_sim = fcoeff)
+</code></pre>
+
+<p>As can be seen from the example, the additional coefficient function <code>fcoeff</code> returns the coefficients for all the terms in the bilinear form. It has to be specified in <code>bilf_buildMatrixScalar</code> in accordance to <code>ballCoeffConstant = .false.</code>, which activates nonconstant coefficients. The coefficient array <code>Dcoefficients</code> is not used in this case.</p>
+
+<h2 id="Assembling-trilinear-forms">Assembling trilinear forms</h2>
+
+<p>Trilinear forms are rather similar to bilinear forms. A trilinear form can be seen as a bilinear form with a nonconstant coefficient, given by a finite element function. FEAT2 automatically evaluates the the additional finite element function in all cubature points and multiplies the values with the trial and test functions. Additional constant or nonconstant coefficients can be specified as well. The assembly routines for trilinear forms can be found in the module <code>trilinearform.f90</code>.</p>
+
+<h3>Domain integration</h3>
+
+<p>A "trililinear form for domain integration" has the following shape:</p>
+
+<p>$$b(u_h,v_h,w_h) := int_{Omega}  g_1 u_h v_h w_h + g_2 partial_{x_1} u_h v_h w_h + g_3 u_h partial_{x_1} v_h w_h +  g_4 partial_{x_1} u_h partial_{x_1} v_h w_h + ... $$</p>
+
+<p>The sum below the integral contains combinations of the finite element function $u_h$, trial function $v_h$ and test function $w_h$, multiplied by coefficients $g_i$, i=1,2,... . Similar to the bilinear form, if all $g_i$ are constants, the trilinear form is termed "trilinear form with constant coefficients", otherwise "with nonconstant coefficients". There can be up to <code>SCPDE_NNAB=21</code> many elements in this sum.</p>
+
+<p>For the scalar assembly of this domain integral, this trilinear form must be mapped by the application to the structure <code>t_trilinearForm</code> from <code>scalarpde.f90</code>. The structure and setup is similar to a linear form:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>(t_trilinearForm)%itermCount</td>
+  <td>Number of terms in the linear form</td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%ballCoeffConstant</td>
+  <td>.true. if the bilinear form has constant coefficients</td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Dcoefficients</td>
+  <td>Constant coefficients</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Idescriptors(1,1)</td>
+  <td>Derivative quantifier for the FE function $u_h$, 1st term</td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Idescriptors(2,1)</td>
+  <td>Derivative quantifier for the trial function, 1st term</td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Idescriptors(3,1)</td>
+  <td>Derivative quantifier for the test function, 1st term</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Idescriptors(1,2)</td>
+  <td>Derivative quantifier for the FE function $u_h$, 2nd term</td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Idescriptors(2,2)</td>
+  <td>Derivative quantifier for the trial function, 2nd term</td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Idescriptors(3,2)</td>
+  <td>Derivative quantifier for the test function, 2nd term</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Idescriptors(1,3)</td>
+  <td>Derivative quantifier for the FE function $u_h$, 3rd term</td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Idescriptors(2,3)</td>
+  <td>Derivative quantifier for the trial function, 3rd term</td>
+</tr>
+<tr>
+  <td>(t_trilinearForm)%Idescriptors(3,3)</td>
+  <td>Derivative quantifier for the test function, 3rd term</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>...</td>
+  <td>...</td>
+</tr>
+</tbody>
+</table>
+
+<p>The descriptors <code>Idescriptors(:,:)</code> take one of the values <code>DER_xxxx</code> and identify which derivative to apply to the function $u_h$, the trial functions and the test functions in the trilinear form. <code>Idescriptors(1,:)</code> refers to the finite element function $u_h$, <code>Idescriptors(2,:)</code> refers to the trial function, <code>Idescriptors(3,:)</code> to the test function.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following code assembles the trilinear form $$b(u_h,v_h,w_h) := int_{Omega}  u_h v_h w_h$$ which is used to assemble mass matrices. This trilinear form has one term with constant coefficient 1.0. The finite element function $u_h$ is specified by the structure <code>rvectorUh</code>:</p>
+</blockquote>
+
+<pre><code>type(t_matrixScalar) :: rmatrix
+type(t_vectorScalar) :: rvectorUh
+type(t_trilinearForm) :: rform
+...
+rform%itermCount = 1
+rform%ballCoeffConstant = .true.
+
+rform%Dcoefficients(1) = 1.0
+rform%Idescriptors(1,1) = DER_FUNC
+rform%Idescriptors(2,1) = DER_FUNC
+rform%Idescriptors(3,1) = DER_FUNC
+
+call trilf_buildMatrixScalar (rform,.false.,rmatrix,rvectorUh)
+</code></pre>
+
+<blockquote>
+  <p><strong>Example:</strong> The following code assembles the trilinear form $$b(u_h,v_h,w_h) := int_{Omega}  u_h partial_{x_1} v_h w_h.$$ This trilinear form has one term with constant coefficient 1.0. The finite element function $u_h$ is specified by the structure <code>rvectorUh</code> which is passed as additional parameter in the call to <code>trilf_buildMatrixScalar</code>:</p>
+</blockquote>
+
+<pre><code>type(t_matrixScalar) :: rmatrix
+type(t_vectorScalar) :: rvectorUh
+type(t_trilinearForm) :: rform
+...
+rform%itermCount = 1
+rform%ballCoeffConstant = .true.
+
+rform%Dcoefficients(1) = 1.0
+rform%Idescriptors(1,1) = DER_FUNC
+rform%Idescriptors(2,1) = DER_DERIVX_2D
+rform%Idescriptors(3,1) = DER_FUNC
+
+call trilf_buildMatrixScalar (rform,.false.,rmatrix,rvectorUh)
+</code></pre>
+
+<p><strong>Nonconstant coefficients:</strong> Nonconstant coefficients are specified by setting</p>
+
+<pre><code>rform%ballCoeffConstant = .false.
+</code></pre>
+
+<p>and specifying an appropriate callback function in the call to <code>trilf_buildMatrixScalar</code>, similar to the bilinear form. The coefficient array <code>Dcoefficients(:)</code> is not used in this case.</p>
+
+<h2 id="Advanced-assembly">Advanced assembly</h2>
+
+<h3>Passing parameters</h3>
+
+<p>For the assembly of the right-hand side as well as for the assembly of bilinear/triliear forms with nonconstant coefficients, callback functions are used. Usually, these callback functions are parametrised, i.e., parameters have to be passed to these functions. For this purpose, the usual "collection strategy" of the FEAT2 package is used. The assembly routine accepts an optional parameter <code>rcollection</code> of type <code>t_collection</code> which is passed to the callback function:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Type of data</th>
+  <th>passed via</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Double precision data can be passed via</td>
+  <td><code>(t_collection)%DquickAccess(:)</code></td>
+</tr>
+<tr>
+  <td>Integers can be passed via</td>
+  <td><code>(t_collection)%IquickAccess(:)</code></td>
+</tr>
+<tr>
+  <td>Strings can be passed via</td>
+  <td><code>(t_collection)%SquickAccess(:)</code></td>
+</tr>
+<tr>
+  <td>Block vectors can be passed via</td>
+  <td><code>(t_collection)%p_rvectorQuickAccessX</code><br> with N=1,2,...</td>
+</tr>
+<tr>
+  <td>Parsers can be passed via</td>
+  <td><code>(t_collection)%p_rfparserQuickAccessN</code><br> with N=1,2,...</td>
+</tr>
+<tr>
+  <td>Parameter lists can be passed via</td>
+  <td><code>(t_collection)%p_rparlistQuickAccessN</code><br>with N=1,2,...</td>
+</tr>
+<tr>
+  <td>Complex parameters can be specified via</td>
+  <td>named items in the collection.</td>
+</tr>
+</tbody>
+</table>
+
+<p>etc. Using only the quick access arrays, the collection does not even have to be initialised.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example shows how to pass variables <code>dradius</code> and <code>itype</code> to the callback routine:</p>
+</blockquote>
+
+<pre><code>subroutine frhs (..., Dcoefficients, rcollection)
+  ...
+  real(DP) :: dradius
+  integer :: itype
+
+  ! Get parameters

@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The mesh - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html" class="selected">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="tutorial_conceptmesh.html">The mesh</a>  </div>
+
+  <hr />
+
+  <h1>The mesh</h1>
+
+<p>In FEAT2, a mesh is a set of cells on top of a set of vertices. The following figure visualises a simple mesh in 2D. It contains 16 cells and 25 vertices.</p>
+
+<p><center><img src="../../../../media/featflow2/tutorial_graphics/quadmesh4x4.svg" title="A simple 2D mesh" alt="A simple 2D mesh" /></center></p>
+
+<p>The FEAT2 representation of a mesh is carried out with the structure <code>t_triangulation</code>. From within this structure, all necessary information about the mesh can be accessed.</p>
+
+<h2>Dimension variables</h2>
+
+<p>The following table depicts the most important variables describing dimensions of the mesh:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>ndim</td>
+  <td>Dimension. 1=1D, 2=2D, 3=3D</td>
+</tr>
+<tr>
+  <td>NVT</td>
+  <td>Total number of vertices (1D, 2D, 3D)</td>
+</tr>
+<tr>
+  <td>NMT</td>
+  <td>Total number of edges (2D, 3D)</td>
+</tr>
+<tr>
+  <td>NAT</td>
+  <td>Total number of faces (3D)</td>
+</tr>
+<tr>
+  <td>NEL</td>
+  <td>Total number of cells/elements (1D, 2D, 3D)</td>
+</tr>
+<tr>
+  <td></td>
+  <td>--------</td>
+</tr>
+<tr>
+  <td>NVBD</td>
+  <td>Total number of vertices on the boundary (1D, 2D, 3D)</td>
+</tr>
+<tr>
+  <td>NMBD</td>
+  <td>Total number of edges on the boundary (2D, 3D)</td>
+</tr>
+<tr>
+  <td></td>
+  <td>--------</td>
+</tr>
+<tr>
+  <td>NNVE</td>
+  <td>Maximum number of vertices per element (1D, 2D, 3D). 3 for 2D triangles, 4 for 2D quads or 3D tetrahedrons, 12 for 3D hexas</td>
+</tr>
+<tr>
+  <td>NNEE</td>
+  <td>Maximum number of edges per element (2D, 3D). 3 for 2D triangles, 4 for 2D quads or 3D tetrahedrons, 12 for 3D hexas</td>
+</tr>
+<tr>
+  <td>NNAE</td>
+  <td>Maximum number of faces per element (3D); ne hexa has e.g. 6 areas</td>
+</tr>
+<tr>
+  <td>NNVA</td>
+  <td>Maximum number of vertices per face (3D). 3 for 3D tetraheral meshes, 4 for 3D hexahedral meshes</td>
+</tr>
+<tr>
+  <td>NNelAtVertex</td>
+  <td>Maximum number of elements adjacent to a vertex</td>
+</tr>
+<tr>
+  <td>NNelAtEdge</td>
+  <td>Maximum number of elements adjacent to an edge</td>
+</tr>
+<tr>
+  <td></td>
+  <td>--------</td>
+</tr>
+<tr>
+  <td>InelOfType</td>
+  <td>Number of elements with a defined number of vertices per element.<br>InelOfType(TRIA_NVELINE1D) = number of lines in the mesh (1D).<br>InelOfType(TRIA_NVETRI2D)  = number of triangles in the mesh (2D).<br>InelOfType(TRIA_NVEQUAD2D) = number of quads in the mesh (2D).<br>InelOfType(TRIA_NVEPYR3D)  = number of pyramides in the mesh (3D).<br>InelOfType(TRIA_NVEPRIS3D) = number of prisms in the mesh (3D).<br>InelOfType(TRIA_NVETET3D)  = number of tetrahedra in the mesh (3D).<br>InelOfType(TRIA_NVEHEXA3D) = number of hexahedra in the mesh (3D).</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Structural arrays</h2>
+
+<p>The structure furthermode contains a set of handles which point to different arrays encapsuling mesh information. Pointer to such arrays can be obtained using the usual storage management routines. For example, a pointer <code>p_DvertexCoords</code> to an array <code>DvertexCoords</code> can be obtained from the handle <code>h_DvertexCoords</code> in the structure using the following command:</p>
+
+<p><center><code>call storage_getbase_double2d (rtriangulation%h_DvertexCoords, p_DvertexCoords)</code></center></p>
+
+<p>provided that <code>rtriangulation</code> is the name of the <code>t_triangulation</code> structure. The following sections describe the basic arrays inside of the triangulation.</p>
+
+<hr />
+
+<h3>DvertexCoords: Vertex coordinates</h3>
+
+<p>The array <code>DvertexCoords(:,:)</code> contains for every vertex the (x,y) coordinates:</p>
+
+<ul>
+<li><code>DvertexCoords(1,i)</code> = x-coordinate of vertex i</li>
+<li><code>DvertexCoords(2,i)</code> = y-coordinate of vertex i</li>
+<li><code>DvertexCoords(3,i)</code> = z-coordinate of vertex i</li>
+</ul>
+
+<p><strong>Example:</strong> In the above mesh there are 25 vertices with an (x,y)-coordinate associated to each.</p>
+
+<p><center><img src="../../../../media/featflow2/tutorial_graphics/quadmesh4x4vertices.svg" title="A simple 2D mesh" alt="A simple 2D mesh" /></center></p>
+
+<p>The array is defined as</p>
+
+<p><center><code>real(DP), dimension(2,25) :: DvertexCoords</code></center></p>
+
+<hr />
+
+<h3>IverticesAtElement: Vertices on each cell</h3>
+
+<p>The array <code>IverticesAtElement(:,i)</code> contains for element i the associated vertices.</p>
+
+<p><center><img src="../../../../media/featflow2/tutorial_graphics/quadmesh4x4vertsatcell.svg" title="Vertices at a cell" alt="Vertices at a cell" /></center></p>
+
+<p>For example, for the above mesh there is</p>
+
+<p><center><code>IverticesAtElement(:,6) = (/ 7, 8, 13, 12/)</code></center></p>
+
+<p><strong>Special case: 2D mesh</strong></p>
+
+<ul>
+<li>The vertices are stored in counterclockwise order.</li>
+</ul>
+
+<p><strong>Remarks:</strong></p>
+
+<ul>
+<li><p>For mixed meshes, not all positions in <code>IverticesAtElement</code> are used. Unused vertex numbers are filled with zero. For example, a if triangles and quadrilaterals are mixed in a mesh, there is</p>
+
+<ul>
+<li><code>IverticesAtElement(:,i) = (/ ..., ..., ..., .../)</code> <br>if cell i is a quad (all positions used)</li>
+<li><code>IverticesAtElement(:,i) = (/ ..., ..., ...,  0 /)</code> <br>if cell i is a triangle (last entry zero)</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3>IedgesAtElement: Edges on each cell</h3>
+
+<p>The array <code>IedgesAtElement(:,i)</code> contains for element i the associated edges.</p>
+
+<p><center><img src="../../../../media/featflow2/tutorial_graphics/quadmesh4x4edgesatcell.svg" title="A simple 2D mesh" alt="A simple 2D mesh" /></center></p>
+
+<p>For example, for the above mesh there is</p>
+
+<p><center><code>IedgesAtElement(:,6) = (/ 7, 17, 18, 15/)</code></center></p>
+
+<p><strong>Special case: 2D mesh</strong></p>
+
+<ul>
+<li>The edges are stored in counterclockwise order.</li>
+<li><code>IedgesAtElement(i,j)</code> is always the edge following vertex <code>IverticesAtElement(i,j)</code> on element j.</li>
+</ul>
+
+<p><strong>Remarks:</strong></p>
+
+<ul>
+<li><p>For mixed meshes, not all positions in <code>IedgesAtElement</code> are used. Unused vertex numbers are filled with zero. For example, a if triangles and quadrilaterals are mixed in a mesh, there is</p>
+
+<ul>
+<li><code>IegdesAtElement(:,i) = (/ ..., ..., ..., .../)</code> <br>if cell i is a quad (all positions used)</li>
+<li><code>IedgesAtElement(:,i) = (/ ..., ..., ...,  0 /)</code> <br>if cell i is a triangle (last entry zero)</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3>IfacesAtElement: Faces on each cell</h3>
+
+<p>The array <code>IfacesAtElement(:,i)</code> contains for element i the associated faces.</p>
+
+<p><strong>Remarks:</strong></p>
+
+<ul>
+<li><p>For mixed meshes, not all positions in <code>IfacesAtElement</code> are used. Unused vertex numbers are filled with zero. For example, a if tetras and hexas are mixed in a mesh, there is</p>
+
+<ul>
+<li><code>IfacesAtElement(:,i) = (/ ..., ..., ..., ..., ..., ..., ..., .../)</code> <br>if cell i is a hex (all positions used)</li>
+<li><code>IfacesAtElement(:,i) = (/ ..., ..., ...,  ..., 0, 0, 0, 0 /)</code> <br>if cell i is a tetra (last entries zero)</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3>IneighboursAtElement: Element neighbours</h3>
+
+<p>The array <code>IneighboursAtElement(:,i)</code> contains for element i the neighbouring elements:</p>
+
+<ul>
+<li>2D: Neighbours associated via the edges</li>
+<li>3D: Neighbours associated via the faces.</li>
+</ul>
+
+<p><center><img src="../../../../media/featflow2/tutorial_graphics/quadmesh4x4neighboursatcell.svg" title="Neighbours of a cell" alt="Neighbours of a cell" /></center></p>
+
+<p>For example, for the above mesh there is</p>
+
+<p><center><code>IneighboursAtElement(:,6) = (/ 2, 7, 10, 5/)</code></center></p>
+
+<p><strong>Special case: 2D mesh</strong></p>
+
+<ul>
+<li>The elements are stored in counterclockwise order.</li>
+<li><code>IneighboursAtElement(i,j)</code> is always the element associated to element j via edge <code>IedgesAtElement(i,j)</code>.</li>
+</ul>
+
+<p><strong>Special case: 3D mesh</strong></p>
+
+<ul>
+<li><code>IneighboursAtElement(i,j)</code> is always the element associated to element j via face <code>IfacesAtElement(i,j)</code>.</li>
+</ul>
+
+<p><strong>Remarks:</strong></p>
+
+<ul>
+<li><p>For mixed meshes, not all positions in <code>IedgesAtElement</code> are used. Unused vertex numbers are filled with zero. For example, a if triangles and quadrilaterals are mixed in a mesh, there is</p>
+
+<ul>
+<li><p><code>IneighboursAtElement(:,i) = (/ ..., ..., ..., .../)</code> <br>
+if cell i is a hex (all positions used)</p></li>
+<li><p><code>IneighboursAtElement(:,i) = (/ ..., ..., ...,  0 /)</code> <br>
+if cell i is a tetra (last entry zero)</p></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h3>IelementsAtEdge: Elements on an edge (only 2D)</h3>
+
+<p>The array <code>IelementsAtEdge(1:2,i)</code> contains for a 2D mesh for edge i the associated elements.</p>
+
+<p><center><img src="../../../../media/featflow2/tutorial_graphics/quadmesh4x4cellsatedge.svg" title="Cells on a 2D edge" alt="Cells on a 2D edge" /></center></p>
+
+<p>In the above example, there is for edge i</p>
+
+<ul>
+<li><code>IelementsAtEdge(:,i) = (/ 6, 7 /)</code></li>
+</ul>
+
+<hr />
+
+<h3>IverticesAtEdge: Vertices on an edge</h3>
+
+<p>The array <code>IverticesAtEdge(1:2,i)</code> contains for edge i the associated vertices.</p>
+
+<p><center><img src="../../../../media/featflow2/tutorial_graphics/quadmesh4x4verticesatedge.svg" title="Vertices on an edge" alt="Vertices on an edge" /></center></p>
+
+<p>In the above example, there is for edge 18</p>
+
+<ul>
+<li><code>IelementsAtEdge(:,18) = (/ 13, 12 /)</code></li>
+</ul>
+
+<hr />
+
+<h3>InodalProperty</h3>
+
+<p>The nodal property array defines for every vertex, every edge and every face whether it is on the boudary or not. There is:</p>
+
+<ul>
+<li><code>InodalProperty(...) = 0</code> if the vertex/edge/face is in the domain</li>
+<li><code>InodalProperty(...) = k &gt; 0</code> if the vertex/edge/face is on the boundary on boundary component <code>k</code>.</li>
+</ul>
+
+<p>The array is organised as follows:</p>
+
+<ul>
+<li><code>InodalProperty (1:NVT)</code> = nodal property for the vertices.</li>
+<li><code>InodalProperty (NVT+1:NVT+NMT)</code> = nodal property for the edges (2D, 3D).</li>
+<li><code>InodalProperty (NVT+NMT+1:NVT+NMT+NAT)</code> = nodal property for the faces (3D).</li>
+</ul>
+
+<p><center><img src="../../../../media/featflow2/tutorial_graphics/quadmesh4x4verticesatboundary.svg" title="Vertices on an edge" alt="Vertices on an edge" /></center></p>
+
+<p>In this example, there is <code>InodalProperty(i)=1</code> for the boudary vertices</p>
+
+<p><center>i=1,2,3,4,5,10,15,20,25,24,23,22,21,16,11,6.</center></p>
+
+<p>For all other vertices j&lt;>i, there is InodalProperty(j)=0.</p>
+
+<hr />
+
+<h3>DelementVolume</h3>
+
+<ul>
+<li><code>DelementVolume(i)</code> is the volume of cell i.</li>
+<li><code>DelementVolume(NEL+1)</code> is the volume of the complete domain.</li>
+</ul>
+
+<hr />
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MIT Benchmark - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../index.html">Home</a>
+  <a href="../../contact.html">Contact</a><a href="../../software.html">Software</a><div class="submenu"><a href="../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../software/featflow.html">FEATFLOW</a><a href="../../software/featflow2.html">FEATFLOW2</a><a href="../../software/parpp3d.html">parPP3D</a><a href="../../software/documentation.html">Documentation</a></div><a href="../../team.html">Team</a><a href="../../links.html">Links</a><div class="submenu"><a href="../../links/websites.html">Websites</a><a href="../../links/software_links.html">Software</a></div><a href="../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="flow.html">Flow around a Cylinder</a><a href="bubble.html">Rising Bubble</a><a href="fsi_benchmark.html">FSI Benchmark</a><a href="mit_benchmark.html" class="selected">MIT Benchmark</a><div class="submenu"><a href="mit_benchmark/mit_intro.html">Introduction</a><a href="mit_benchmark/mit_geoconf.html">Geometry and Configuration</a><a href="mit_benchmark/mit_step.html">Time Step and Mesh Information</a><a href="mit_benchmark/mit_result.html">Results and Discussion</a><a href="mit_benchmark/mit_references.html">References</a></div></div></div><a href="../../publications.html">Publications</a><a href="../../services.html">Services</a><div class="submenu"><a href="../../services/cdrom.html">CD-ROM</a><a href="../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../news.html">News</a><a href="../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../index.html">Home</a> » <a href="../../benchmarks.html">Benchmarks</a> » <a href="../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="mit_benchmark.html">MIT Benchmark</a>  </div>
+
+  <hr />
+
+  <h2>MIT Benchmark</h2>
+ 
+<h4>Introduction</h4>
+<p>The <a href="mit_benchmark/mit_references.html#christon1">MIT Benchmark 2001 [1]</a> describes heat driven
+ cavity flow in a 8:1 rectangular domain at near-critical Rayleigh
+ number. This was for special session entitled 'Computational Predictability of Natural Convection Flows in Enclosures' which was held at the First MIT Conference on Computational Fluid and Solid Mechanics. The primary objectives according to <a href="mit_benchmark/mit_references.html#christon1">[1]</a> are to identify the correct time-dependent solution for the 8:1 differentially-heated cavity with Ra=3.4×10<sup>5</sup> and Pr=0.71, to determine the critical Rayleigh number for the corresponding configuration, and to identify which methods can reliably provide these results. 
+ <p class="Space5"><a href="mit_benchmark/mit_intro.html">» Continue reading...</a></p>
+ <h4>Geometry and configuration</h4>
+ <p>The geometry of the problem is very simple but leads nevertheless to complex multiscale phenomena. The velocity vector at the upper and bottom wall is zero which describes a non-slip condition. The left wall is heated while the right wall is cooled by a prescribed non-dimensional temperature of -0.5 and 0.5. Gravity is applied downwards. The top and bottom of the walls are insulated, which means that homogeneous Neumann boundary conditions for the temperature are set and hence no heat is going outside of the wall.</p>
+ <p class="Space5"><a href="mit_benchmark/mit_geoconf.html">» Continue reading...</a></p>
+
+ <h4>Time step and mesh information</h4>
+ <p>The time step is chosen so that there are enough data points in one oscillation of the resulting variables to graphically postprocess all quantities and so that smaller time steps do not significantly improve the solutions with respect to the quantitative measurements. After comparison with the results from Davis <a href="mit_benchmark/mit_references.html#davis">[3]</a>, Gresho <a href="mit_benchmark/mit_references.html#gresho">[4]</a>, Turek <a href="mit_benchmark/mit_references.html#turek">[5]</a> and Le Quéré  <a href="mit_benchmark/mit_references.html#lequere">[6]</a> we choose approximately 34 time steps in one oscillation which corresponds to <span class="math">ΔT=0.1</span> as time step size. But before, we need to simulate the problem for a very long time (up to time t=1500) until we find a steady oscillation. To do this, we simulate by using a larger time step (<span class="math">ΔT=0.5</span>) and a coarser mesh (2 times refinement from the above coarse mesh). The steady oscillation can be seen from the figure below. Then, starting from the last solution at time <span class="math">t=1500</span>, computation for different meshes with a smaller time step (<span class="math">ΔT=0.1</span>) is undergo for another 100 time unit.</p>
+ <p class="Space5"><a href="mit_benchmark/mit_step.html">» Continue reading...</a></p>
+
+
+ <h4>Results and discussion</h4>
+ <p>Several comparisons have been made to see the difference from the other references. In <a href="mit_benchmark/mit_references.html#gresho">[4]</a> it is mentioned that the <span class="math">Q<sub>2</sub>P<sub>1</sub></span> element with coarse mesh (27 x 121) performs poorly in the sense that the results show too low amplitudes for velocity and temperature at point 1 (0.00542 and 0.00442). In contrast, we observe good results even with the level 2 mesh (16 x 88). They also calculated Nusselt numbers which are slightly different from the reference, see Le Quéré <a href="mit_benchmark.html#unknown">[6]</a></a>. In fact, we produce the same results (2R, 3R, 4R), but only as soon as we introduce local refinement near the wall, the Nusselt number improves strongly even with the level 2 mesh. It is obvious that the Nusselt number calculated on level 3 and 4 (3R and 4R) can be improved by using the level 2 mesh with local refinement (2R_a1 and 2R_a5).</p>
+ <p class="Space5"><a href="mit_benchmark/mit_result.html">» Continue reading...</a></p>
+
+ <h4>References</h4>
+<p>For a complete list of references and the files to download, <a href="mit_benchmark/mit_references.html">continue reading here</a>.</p>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

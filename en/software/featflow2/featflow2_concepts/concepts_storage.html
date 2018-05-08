@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Storage management - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html" class="selected">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="concepts_storage.html">Storage management</a>  </div>
+
+  <hr />
+
+  <h1>Storage management</h1>
+
+<p>FEAT2 has an in-build storage management that identifies memory blocks via handles. Such handles are usually stored in structures instead of pointers to the actual memory. There are a couple of advantages in using this technique:</p>
+
+<ul>
+<li>A handle is always of type integer. Therefore, structures containing handles to identify memory block simplify, the actual structure of the memory does not have to be declared.</li>
+<li>A handle can be "shared" between different structures (just as a pointer as well). However, memory reallocation is more transparent. A reallocation does not change the handle, only the address that is associated to that handle.</li>
+<li>The total memory of the program can be measured.</li>
+<li>If memory allocation fails, the program can (theoretically) savely be aborted.</li>
+<li>Memory can be accessed on external devices as well (e.g., on graphics cards) where no pointer exists.</li>
+<li>Memory allocation can be tracked, memory holes can be found more easily.</li>
+</ul>
+
+<p>The storage management is handled via the module <code>storage.f90</code>. The module has to be initialised at the beginning of the program via <code>storage_init</code>. At the end, <code>storage_done</code> has to be called which releases all allocated memory.</p>
+
+<h2>Allocation/use/deallocation of local memory</h2>
+
+<p>Allocation/use and deallocation of memory is always done in a very structured manner.</p>
+
+<ul>
+<li>Allocation of memory is done via <code>storage_new</code>. This returns a handle to the memory.</li>
+<li>With the handle, a pointer to the memory can be obtained via <code>storage_getbase_XXXX</code> (with XXXX depending on the type of the memory object).</li>
+<li>If the memory is not needed anymore, it can be released via <code>storage_free</code>.</li>
+</ul>
+
+<p>Here an example. We allocate a 1D array of 10 integers, initialise by zero, print the array and release it.</p>
+
+<pre><code>integer :: ihandle
+integer, dimension(:), pointer :: p_Idata
+
+...
+
+! Allocate
+call storage_new ("mysubroutine", "myarray", 10, &amp;
+    ST_INT, ihandle, ST_NEWBLOCK_ZERO)
+
+! Get the memory block
+call storage_getbase_int (ihandle, p_Idata)
+
+! Print
+write (*,*) p_Idata
+
+! Release
+call storage_free (ihandle)
+</code></pre>
+
+<p>A second example allocates a 2D double precision array with 2x20 entries, initialise by zero, print the array and release it.</p>
+
+<pre><code>integer :: ihandle
+integer, dimension(:,:), pointer :: p_Ddata
+
+...
+
+! Allocate
+call storage_new ("mysubroutine", "myarray", (/10,2/), &amp;
+    ST_DOUBLE, ihandle, ST_NEWBLOCK_ZERO)
+
+! Get the memory block
+call storage_getbase_double2d (ihandle, p_Ddata)
+
+! Print
+write (*,*) p_Ddata
+
+! Release
+call storage_free (ihandle)
+</code></pre>
+
+<h2>Data types</h2>
+
+<p>The storage management supports a lot of different data/handle types, identified by a set of constants:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Constant</th>
+  <th>Data type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>ST_SINGLE</td>
+  <td>Single precision array</td>
+</tr>
+<tr>
+  <td>ST_DOUBLE</td>
+  <td>Double precision array</td>
+</tr>
+<tr>
+  <td>ST_QUAD</td>
+  <td>Quadrupel precision array</td>
+</tr>
+<tr>
+  <td>ST_SINGLE_COMPLEX</td>
+  <td>Single precision complex array</td>
+</tr>
+<tr>
+  <td>ST_DOUBLE_COMPLEX</td>
+  <td>Double precision complex array</td>
+</tr>
+<tr>
+  <td>ST_QUAD_COMPLEX</td>
+  <td>Quadrupel precision complex array</td>
+</tr>
+<tr>
+  <td>ST_LOGICAL</td>
+  <td>Bool array</td>
+</tr>
+<tr>
+  <td>ST_CHAR</td>
+  <td>Character array</td>
+</tr>
+<tr>
+  <td>ST_INT</td>
+  <td>Standard integer array</td>
+</tr>
+<tr>
+  <td>ST_INT8</td>
+  <td>8-bit integer array</td>
+</tr>
+<tr>
+  <td>ST_INT16</td>
+  <td>16-bit integer array</td>
+</tr>
+<tr>
+  <td>ST_INT32</td>
+  <td>32-bit integer array</td>
+</tr>
+<tr>
+  <td>ST_INT64</td>
+  <td>64-bit integer array</td>
+</tr>
+</tbody>
+</table>
+
+<p>These constants can be specified in the <code>storage_new</code> command as type for the array.
+For example, the following call allocates a double precision array of size <code>isize</code> and returns a handle <code>ihandle</code> to it.</p>
+
+<pre><code>call storage_new (..., ..., isize, ST_DOUBLE, ihandle, ...)
+</code></pre>
+
+<p>The additional constant <code>ST_NOHANDLE</code> is used to identify a non-associated handle. <code>storage_new</code> returns <code>ST_NOHANDLE</code> if the allocation fails.</p>
+
+<h2>Supported array formats</h2>
+
+<p>The storage management supports three types of data arrays: 1D, 2D and 3D arrays. For each type of data and dimension, there exist a separate <code>storage_new</code> routine for creation and a <code>storage_getbase_XXXX</code> routine to retrieve the pointer behind the handle.</p>
+
+<p>The creation of the array is always done with <code>storage_new</code>, which has a different syntax depending on whether a 1D, 2D or 3D array is created:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Dim</th>
+  <th>Creation of the array</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1D</td>
+  <td><code>call storage_new ( ..., isize, ST_DOUBLE, ihandle, ...)</code></td>
+</tr>
+<tr>
+  <td>2D</td>
+  <td><code>call storage_new (..., (/ isize1, isize2 /), ST_DOUBLE, ihandle, ...)</code></td>
+</tr>
+<tr>
+  <td>2D</td>
+  <td><code>call storage_new (..., (/ isize1, isize2, isize3 /), ST_DOUBLE, ihandle, ...)</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>For retrieving the pointer, one uses the appropriate <code>storage_getbase_XXXXyD</code> routine:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Dim</th>
+  <th>Type</th>
+  <th>Retrieving the pointer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1D</td>
+  <td>integer</td>
+  <td><code>integer, dimension(:), pointer :: p_Idata</code><br> <code>call storage_getbase_int (ihandle,p_Idata)</code></td>
+</tr>
+<tr>
+  <td>2D</td>
+  <td>integer</td>
+  <td><code>integer, dimension(:,:), pointer :: p_Idata</code><br> <code>call storage_getbase_int2D (ihandle,p_Idata)</code></td>
+</tr>
+<tr>
+  <td>3D</td>
+  <td>integer</td>
+  <td><code>integer, dimension(:,:,:), pointer :: p_Idata</code><br> <code>call storage_getbase_int3D (ihandle,p_Idata)</code></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>1D</td>
+  <td>double</td>
+  <td><code>real(DP), dimension(:), pointer :: p_Ddata</code><br> <code>call storage_getbase_double (ihandle,p_Ddata)</code></td>
+</tr>
+<tr>
+  <td>2D</td>
+  <td>double</td>
+  <td><code>real(DP), dimension(:,:), pointer :: p_Ddata</code><br> <code>call storage_getbase_double2D (ihandle,p_Ddata)</code></td>
+</tr>
+<tr>
+  <td>3D</td>
+  <td>double</td>
+  <td><code>real(DP), dimension(:,:,:), pointer :: p_Ddata</code><br> <code>call storage_getbase_double3D (ihandle,p_Ddata)</code></td>
+</tr>
+<tr>
+  <td>...</td>
+  <td>...</td>
+  <td>...</td>
+</tr>
+</tbody>
+</table>
+
+<p>Destruction of an array is always done with <code>storage_free</code>.</p>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

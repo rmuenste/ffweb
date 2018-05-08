@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Basics - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../../index.html">Home</a>
+  <a href="../../../../contact.html">Contact</a><a href="../../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../featflow.html">FEATFLOW</a><a href="../../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../../tutorial.html" class="selected">Tutorial</a><div class="submenu"><a href="../tutorial_intro.html">Introduction</a><a href="../tutorial_lang.html">Fortran 90/95 for C/C++ programmers</a><a href="../tutorial00.html">Tutorial00 - Hi FEAT</a><a href="../tutorial01.html" class="selected">Tutorial01</a><div class="submenu"><a href="tutorial001.html" class="selected">Basics</a></div><a href="../tutorial_programming.html">FEAT2 programming techniques </a><a href="../tutorial_l2proj.html">The L2 projection </a><a href="../tutorial_poisson.html">The poisson equation </a><a href="../tutorial_conv-diff.html">The convection-diffusion equation </a><a href="../tutorial_lelast.html">Linear elasticity </a><a href="../tutorial_stokes.html">The Stokes equations </a><a href="../tutorial_navierstokes.html">The Navier-Stokes equations </a></div><a href="../../featflow2_concepts.html">Concepts</a></div><a href="../../../parpp3d.html">parPP3D</a><a href="../../../documentation.html">Documentation</a></div><a href="../../../../team.html">Team</a><a href="../../../../links.html">Links</a><div class="submenu"><a href="../../../../links/websites.html">Websites</a><a href="../../../../links/software_links.html">Software</a></div><a href="../../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../../publications.html">Publications</a><a href="../../../../services.html">Services</a><div class="submenu"><a href="../../../../services/cdrom.html">CD-ROM</a><a href="../../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../../news.html">News</a><a href="../../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../../index.html">Home</a> » <a href="../../../../software.html">Software</a> » <a href="../../../featflow2.html">FEATFLOW2</a> » <a href="../../tutorial.html">Tutorial</a> » <a href="../tutorial01.html">Tutorial01</a> » <a href="tutorial001.html">Basics</a>  </div>
+
+  <hr />
+
+  <table>
+<thead>
+<tr>
+  <th>Contents</th>
+  <th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td><a href="tutorial001.html#The very basic Hello World example"> The very basic "Hello World" example</a></td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><a href="tutorial001.html#Basic terminal output">Basic terminal output </a></td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><a href="tutorial001.html#String manipulation routines">String manipulation routines </a></td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><a href="tutorial001.html#Environment variables">Environment variables </a></td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><a href="tutorial001.html#Command line parameters">Command line parameters </a></td>
+</tr>
+</tbody>
+</table>
+
+<h1>The very basic "Hello World" example <a id="The very basic Hello World example"></a></h1>
+
+<p><strong>Releated source code files:</strong></p>
+
+<ul>
+<li><code>tutorial001a.f90</code></li>
+</ul>
+
+<p>The very basic "Hello world" example reads in the Feat2 package as follows:</p>
+
+<pre><code>program tutorial001a
+
+  use fsystem
+  use genoutput
+  implicit none
+
+  ! Initialisation
+  call system_init()
+  call output_init("")
+
+  ! Print a message
+  call output_line ("Hello world. This is FEAT-2. Tutorial 001a.")
+
+  ! Cleanup
+  call output_done()
+
+end program
+</code></pre>
+
+<p>In the very beginning, the modules "fsystem" and "genoutput" are included and initialised:</p>
+
+<pre><code>  use fsystem
+  use genoutput
+</code></pre>
+
+<p>The module <code>fsystem</code> contains basic system-wide definitions and specifications. It has to be initialised with <code>call system_init()</code> in the very beginning of every program.</p>
+
+<p>Similarly, the module <code>genoutput</code> (abbrev. for "general output") provides basic output routines for printing text to the terminal. It has to be initialised by one of the <code>output_init</code> routines - for very basic use, a simple <code>call output_init("")</code> is enough.</p>
+
+<p>Afterwards, the command</p>
+
+<pre><code>  call output_line ("Hello world. This is FEAT-2. Tutorial 001a.")
+</code></pre>
+
+<p>prints a message to the terminal. The command <code>output_line</code> the basic text output command for messages to the terminal and a replacement for <code>print</code> and <code>write (*,*)</code>. Without any parameters, it just prints the text message to the terminal. However, it provides additional output features like printing the text to a log file, adding a time stamp to the text, preventing line breaks etc. We come to this in a later tutorial.</p>
+
+<p>The final call</p>
+
+<pre><code>  call output_done()
+</code></pre>
+
+<p>cleans up the output subsystem. Afterwards, the program is finished.</p>
+
+<p>Note that there is currently no cleanup command like <code>system_done</code>. This is currently not necessary but might change in the future.</p>
+
+<h1>Basic terminal output  <a id="Basic terminal output"></a></h1>
+
+<p><strong>Releated source code files:</strong></p>
+
+<ul>
+<li>tutorial001b.f90</li>
+</ul>
+
+<p>To print data to the terminal, there exist a large variety of printing and formatting commands. The output routines in <code>genoutput</code> contains basic printing capabilities, while the system module <code>fsystem.f90</code> provides a lot of string manipulation routines for formatting of integer and real values. These can be combined with standard string manipulation routines like <code>TRIM</code> and <code>ADJUSTL</code> to provide structured output to the terminal.</p>
+
+<h3>Line breaks and separator lines</h3>
+
+<p>Some very commonly used routines from the <code>genoutput</code> module read as follows:</p>
+
+<ul>
+<li><code>output_lbrk()</code> - prints an empty line to the terminal</li>
+<li><code>output_separator (...)</code> - prints a separator line to the terminal. The parameter defines the type of the separator line, e.g.
+** <code>OU_SEP_STAR</code> - a line containing stars
+** <code>OU_SEP_MINUS</code> - a line made of "-" signs</li>
+</ul>
+
+<p>So a piece of code</p>
+
+<pre><code>call output_lbrk()
+call output_separator (OU_SEP_STAR)
+call output_line ("This is FEAT-2. Tutorial 001b.")    
+call output_separator (OU_SEP_MINUS)
+</code></pre>
+
+<p>prints the output</p>
+
+<pre><code>**************************************************************
+This is FEAT-2. Tutorial 001b.
+--------------------------------------------------------------
+</code></pre>
+
+<h3>Data formatting</h3>
+
+<p>For formatting strings, a couple of <code>sys_sXXXX</code> routines from the module <code>fsystem</code> provides basic functionality. These routines allow to directly convert integers, reals, double precision values and logical data into strings with a specified number of digits. The following routines are commonly used:</p>
+
+<ul>
+<li><code>sys_si(n,digits )</code> - Convert an integer to a string, right-adjusted, filled with <code>digits</code> spaces.</li>
+<li><code>sys_siL(n,digits)</code> - Left-adjusted version</li>
+<li><code>sys_sd(n,digits)</code> - Convert an double to a string with <code>digits</code> digits, right-adjusted.</li>
+<li><code>sys_sdL(n,digits)</code> - Left-adjusted version</li>
+<li><code>sys_sd(n,digits)</code> - Convert an double to a string in scientific notation with <code>digits</code> digits, right-adjusted.</li>
+<li><code>sys_sdL(n,digits)</code> - Left-adjusted version</li>
+<li><code>sys_sl(digits)</code> - Convert a logical to a string, right-adjusted</li>
+</ul>
+
+<p>These routines usually have to be combined with <code>TRIM</code> and <code>//</code> for concatenation of strings and can this way be used to properly format tables of data during terminal output. So a code like</p>
+
+<pre><code>call output_line (trim(sys_si(0,3)) // "|" // trim(sys_sdEL(2.0_DP ** 0,10)) // "|" )
+call output_line (trim(sys_si(1,3)) // "|" // trim(sys_sdEL(2.0_DP ** 1,10)) // "|" )
+call output_line (trim(sys_si(4,3)) // "|" // trim(sys_sdEL(2.0_DP ** 4,10)) // "|" )
+</code></pre>
+
+<p>gives output of the following form:</p>
+
+<pre><code>  0|1.0000000000E+00|
+  1|2.0000000000E+00|
+  4|1.6000000000E+01|
+</code></pre>
+
+<p>A more extended example for output can be found in <code>tutorial001b.f90</code>,</p>
+
+<pre><code>! Print a message
+call output_lbrk()
+call output_separator (OU_SEP_STAR)
+call output_line ("This is FEAT-2. Tutorial 001b.")    
+call output_separator (OU_SEP_MINUS)
+
+call output_line ("Let us print a table -- right-adjusted.")
+call output_lbrk()
+call output_line ("  n          x^n")
+call output_line ("-----------------")
+call output_line (sys_si(0,3) // "|" // sys_sd(2.0_DP ** 0,10) // "|")
+call output_line (sys_si(1,3) // "|" // sys_sd(2.0_DP ** 1,10) // "|")
+call output_line (sys_si(4,3) // "|" // sys_sd(2.0_DP ** 4,10) // "|")
+call output_lbrk()
+
+call output_separator (OU_SEP_MINUS)
+call output_line ("Let us print a table -- left-adjusted.")
+call output_lbrk()
+call output_line ("  n          x^n")
+call output_line ("-----------------")
+call output_line (sys_siL(0,3) // "|" // sys_sdL(2.0_DP ** 0,10) // "|")
+call output_line (sys_siL(1,3) // "|" // sys_sdL(2.0_DP ** 1,10) // "|")
+call output_line (sys_siL(4,3) // "|" // sys_sdL(2.0_DP ** 4,10) // "|")
+call output_lbrk()
+
+call output_separator (OU_SEP_MINUS)
+call output_line ("Let us print a table -- nicely adjusted.")
+call output_lbrk()
+call output_line ("  n              x^n")
+call output_line ("---------------------")
+call output_line (trim(sys_si(0,3)) // "|" // sys_adjustr(sys_sdL(2.0_DP ** 0,10),16) // "|" )
+call output_line (trim(sys_si(1,3)) // "|" // sys_adjustr(sys_sdL(2.0_DP ** 1,10),16) // "|" )
+call output_line (trim(sys_si(4,3)) // "|" // sys_adjustr(sys_sdL(2.0_DP ** 4,10),16) // "|" )
+call output_lbrk()
+
+call output_separator (OU_SEP_MINUS)
+call output_line ("Let us print a table -- scientific.")
+call output_lbrk()
+call output_line ("  n              x^n")
+call output_line ("---------------------")
+call output_line (trim(sys_si(0,3)) // "|" // trim(sys_sdEL(2.0_DP ** 0,10)) // "|" )
+call output_line (trim(sys_si(1,3)) // "|" // trim(sys_sdEL(2.0_DP ** 1,10)) // "|" )
+call output_line (trim(sys_si(4,3)) // "|" // trim(sys_sdEL(2.0_DP ** 4,10)) // "|" )
+call output_lbrk()
+</code></pre>
+
+<h3>Output without line breaks</h3>
+
+<p>The above example also demonstrates an additional feature of the <code>genoutput</code> subsystem. The routine <code>output_line</code> provides an additional optional parameter <code>bnolinebreak</code> that can be used to prevent a like break during the output. Thus, a code like</p>
+
+<pre><code>call output_line ( "This is", bnolinebreak=.true. )
+call output_line ( "a piece", bnolinebreak=.true. )
+call output_line ( "of code" )
+</code></pre>
+
+<p>will produce an output</p>
+
+<pre><code>This is a piece of code
+</code></pre>
+
+<p>in one line, applying a like break only at the end.</p>
+
+<h1>String manipulation routines <a id="String manipulation routines"></a></h1>
+
+<p><strong>Releated source code files:</strong></p>
+
+<ul>
+<li>tutorial001c.f90</li>
+</ul>
+
+<p>The module <code>fsystem</code> provides extended capacibilities for string manipulation. At first, there are routines that provide converting strings to uppercase, lower case, replacing characters and removing quotes around a string. A straightforward example can be found in <code>tutorial001c.f90</code> which reads as follows:</p>
+
+<pre><code>! =================================
+! Conversion to upper case / lower case
+! =================================
+call output_line ("'This is a test' =&gt; " // sys_upcase ("'This is a test'") )
+call output_line ("'This is a test' =&gt; " // sys_lowcase("'This is a test'") )
+
+! =================================
+! Character replacement
+! =================================
+call output_line ("'This is a test' =&gt; " // sys_charreplace("'This is a test'"," ","-") )
+
+! =================================
+! Dequoting. Partial output without line break
+! =================================
+sstring = "'This is a test'"
+call output_line ( trim(sstring) // " =&gt;", bnolinebreak=.true. )
+call sys_dequote ( sstring )
+call output_line ( " " // trim(sstring) )
+</code></pre>
+
+<p>The routines <code>sys_upcase</code> and <code>sys_lowcase</code> provide the basic functionality for converting strings to upper or lower case. These routines also exist in a "subroutine" implementation which can be invoked by a call,</p>
+
+<ul>
+<li><code>call sys_toupper(...)</code></li>
+<li><code>call sys_tolower(...)</code></li>
+</ul>
+
+<p>This variant is usually a bit faster as it avoids temporary memory on the stack.</p>
+
+<p>The subroutine <code>sys_dequote</code> can be used to "dequote" a string, i.e., to remove quotes around it. It replaces the original string. <code>sys_charreplace</code> on the other side replaces one character by another and returns the modified string; in the example, all space characters " " are replaced by commas ",".</p>
+
+<h2>String tokenizing</h2>
+
+<p><strong>Releated source code files:</strong></p>
+
+<ul>
+<li>tutorial001d.f90</li>
+</ul>
+
+<p>One feature of the string manipulation routines in the module <code>fsystem</code> is the ability to tokenise strings. This is a very important feature for reading data from data files. An example can be found in <code>tutorial001d.f90</code>:</p>
+
+<pre><code>sstring = "0.1 0.2 'This is a test' 0.3"
+...
+
+call sys_countTokens (sstring,ntokens," ")
+call output_line ("Number of tokens: " // trim(sys_siL(ntokens,10)) )
+
+istart = 1
+itoken = 0
+
+do while (istart .ne. 0)
+  itoken = itoken + 1
+  call sys_getNextToken (sstring,stoken,istart)
+  call output_line ("Token " // trim(sys_siL(itoken,10)) // ": " // trim(stoken) )
+end do
+</code></pre>
+
+<p>The routine <code>sys_countTokens</code> counts the number of tokens in a string <code>sstring</code> where the separator is specified here as a space character " ". The tokens themself can be extracted using the routine <code>sys_getNextToken</code>. For the first call, <code>sys_getNextToken</code> has to be called with <code>istart=1</code>. <code>sys_getNextToken</code> extracts the token and writes it to <code>stoken</code>. <code>istart</code> always points to the index of the current token in the string and will be set to 0 if the last token is reached.</p>
+
+<p>By default, the routine <code>sys_getNextToken</code> recognizes strings in quotes like <code>'This is a test'</code> and returns them as one token. This can be prevented by the additional optional modified <code>bquoting</code>.</p>
+
+<h1>Environment variables <a id="Environment variables"></a></h1>
+
+<p><strong>Related source files:</strong></p>
+
+<ul>
+<li>tutorial001e.f90</li>
+</ul>
+
+<p>The system library <code>fsystem</code> provides the ability to work with environment variables (such as the <code>PATH</code> variable). Environment variables can be extracted using the function <code>sys_getenv_string</code> as it can be seen in the example <code>tutorial001e.f90</code>:</p>
+
+<pre><code>character(LEN=2048) :: sresult
+...
+
+if (.not. sys_getenv_string("PATH", sresult)) then
+  call output_line ("Cannot get the PATH variable..")
+else
+  call output_line ("$PATH = " // trim(sresult))
+end if
+</code></pre>
+
+<p>The first parameter defines the name of the variable to be returned (here <code>PATH</code>), the second receives the result. The return code tells whether the variable exist or not.</p>
+
+<p><strong>Note 1:</strong> Environment variables come in very handy in the benchmark subsystem of the Feat2 library. This is described in another tutorial.</p>
+
+<p><strong>Note 2:</strong> Defining environment variables is of course system dependent and usually done via the command line. On Linux/Unix systems with tghe <code>bash</code> command line interpreter, an environment variable is defined by</p>
+
+<pre><code>MYVAR=some_data
+export MYVAR
+</code></pre>
+
+<p>For <code>tcsh</code> based command line interpreters, the command</p>
+
+<pre><code>setenv MYVAR some_data
+</code></pre>
+
+<p>is used instead. On Windows-based sytems, one uses the command</p>
+
+<pre><code>set MYVAR=some_data
+</code></pre>
+
+<p>or defines the value using the environment settings of the Windows system itself.</p>
+
+<h1>Command line parameters <a id="Command line parameters"></a></h1>
+
+<p><strong>Related source files:</strong></p>
+
+<ul>
+<li>tutorial001f.f90</li>
+</ul>
+
+<p>Using the routines <code>sys_ncommandLineArgs</code> and <code>sys_getcommandLineArg</code> from the <code>fsystem</code> library allows to work with command line parameters. The commands for extracting this information from the call to a program is system dependend and encapsuled in these routines. A very simple example how to work with command line parameters can be found in <code>tutorial001f.f90</code>:</p>
+
+<pre><code>nargc = sys_ncommandLineArgs()
+...
+
+do iarg=1,nargc
+  call sys_getcommandLineArg(iarg,sargv)
+  ...
+end do
+</code></pre>
+
+<p>The routine <code>sys_ncommandLineArgs()</code> returns the number of command line arguments and <code>sys_getcommandLineArg</code> the corresponding argument. Thus, if the application is invoked via</p>
+
+<pre><code>./myapp param1 param2 param3
+</code></pre>
+
+<p>there is</p>
+
+<ul>
+<li><code>nargc = sys_ncommandLineArgs()</code> => <code>nargc=3</code></li>
+<li><code>call sys_getcommandLineArg(1,sargv)</code> => <code>sargv="param1"</code></li>
+<li><code>call sys_getcommandLineArg(2,sargv)</code> => <code>sargv="param2"</code></li>
+<li><code>call sys_getcommandLineArg(3,sargv)</code> => <code>sargv="param3"</code></li>
+</ul>
+
+<h3>Parsing command line parameters</h3>
+
+<p>The module <code>fsystem</code> also provides parsing capabilities for command line parameters using the routine <code>sys_parseCommandLineArg</code>. A call of the form</p>
+
+<pre><code>call sys_parseCommandLineArg ("--file=myfile.txt",soption,svalue)
+</code></pre>
+
+<p>returns</p>
+
+<ul>
+<li><code>soption</code> = "file"</li>
+<li><code>svalue</code> = "myfile.txt`</li>
+</ul>
+
+<p>which is the most commonly used way how to use this technique. <code>sys_parseCommandLineArg</code> however provides some additional features that also detect the type of the command line parameter (returned in an optional variable <code>iformat</code>). A more detailed overview can be found in the file <code>tutorial001f.f90</code>.</p>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>CSM tests - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../../index.html">Home</a>
+  <a href="../../../../contact.html">Contact</a><a href="../../../../software.html">Software</a><div class="submenu"><a href="../../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../../software/featflow.html">FEATFLOW</a><a href="../../../../software/featflow2.html">FEATFLOW2</a><a href="../../../../software/parpp3d.html">parPP3D</a><a href="../../../../software/documentation.html">Documentation</a></div><a href="../../../../team.html">Team</a><a href="../../../../links.html">Links</a><div class="submenu"><a href="../../../../links/websites.html">Websites</a><a href="../../../../links/software_links.html">Software</a></div><a href="../../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../../flow.html">Flow around a Cylinder</a><a href="../../bubble.html">Rising Bubble</a><a href="../../fsi_benchmark.html" class="selected">FSI Benchmark</a><div class="submenu"><a href="../fsi_definitions.html">Definitions</a><a href="../fsi_quantities.html">Quantities for Comparison</a><a href="../fsi_tests.html" class="selected">Partial computational Tests</a><div class="submenu"><a href="fsi_cfd_tests.html">CFD tests</a><a href="fsi_csm_tests.html" class="selected">CSM tests</a><a href="fsi_fsi_tests.html">FSI tests</a></div><a href="../fsi_bibliography.html">Bibliography</a><a href="../fsi_reference.html">Reference Values</a></div><a href="../../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../../publications.html">Publications</a><a href="../../../../services.html">Services</a><div class="submenu"><a href="../../../../services/cdrom.html">CD-ROM</a><a href="../../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../../news.html">News</a><a href="../../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../../index.html">Home</a> » <a href="../../../../benchmarks.html">Benchmarks</a> » <a href="../../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../../fsi_benchmark.html">FSI Benchmark</a> » <a href="../fsi_tests.html">Partial computational Tests</a> » <a href="fsi_csm_tests.html">CSM tests</a>  </div>
+
+  <hr />
+
+  <h2>CSM tests</h2>
+
+<p>The structural tests are computed only for the elastic beam (without
+the surrounding fluid) adding the gravitational force <emph>only</emph>(!)
+on the structural part,
+<span class="math"><img class="latex" alt="$\vec{g}=(0,g)$" title="$\vec{g}=(0,g)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAAOCAYAAACLroQjAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABo0lEQVRIx72W/W3CQAzFf0YMEDFCukHKCIyQlg1gA1BHoBvQjtBuABvwsUGzQVE2eP3HkU5HQqKSYClK7s5nP9892zFJPFrMLJVUDGQ7kVQCjG4o5WaWDOB8NVRgLq8VbpOEmaXAMlLKgELSssfAcrd5rm4QyIECSIGP6tTv9LORtEZS7QNsmtb++wBf0fgUfCfAric/CyBrpKWkdc90zIBDNA79lcDUb/Ne2QPzceRsBpydkkh6DxMVeGsx+hvuiaSyXckUuEQ6F6dn0fGwavFKKsxsNg64/ynp2cdLYFtzsvfc5pOfaCV1xapsmL+qtm14w2q5iRYz4DhwRyiBSTSX+HybdMI7DiizDuhHXLV6oGUM+lhToSddKNkFbxjcJeg9i4g+fdHy4Hl2dnvnsI/6d1Hh8JwqGlpDK17gUpXOHFj5+wTkfbcB97ONxlngdwOkYduIW0ewdhOv3+yibuMPkDwiuA76eQedK7yej8nIzBZmNutAhT5kbWarO/vlTbw+t5NUjrxCpf5rNAdehiqPDmIfN/CGIGYNudSGdyrpG+AP9UxCppXGwJsAAAAASUVORK5CYII=" /></span> [
+<span class="math"><img class="latex" alt="$\frac{\textrm{m}\nop}{\textrm{s}^2}$" title="$\frac{\textrm{m}\nop}{\textrm{s}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAOCAYAAAAWo42rAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAApElEQVQoz42Q4QnCUBCDv5MOUBzhjVAc4bmBM3QXu4EjSEdwBt1AR1A3iH/S8hAOPTgIR17yEiQBDMAdqN5Tg4+SQBImX4F+we1dEhuakfQmG78qjXUBXl94CBN/TgB/MVPFiKhADxRJ05q6XddVjS+S6JKAN6sW4LGmTlQLMC7dhm22wNN2k5Vmq/WS9gAHH0d/PHNgMKjAnBE7oEbEzjbnrMcPmbCZWunL5CMAAAAASUVORK5CYII=" /></span> ].
+ The CSM3 test is computed as a
+time dependent case starting from the undeformed configuration while
+the tests CSM1 and CSM2 are the steady state solutions.</p>
+<p>
+<table class="Basic">
+<caption>Parameter settings for the CSM tests</caption>
+<thead>
+<tr>
+  <th>par. dim. </th><th> CSM1 </th><th> CSM2 </th><th> CSM3 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\varrho^s$" title="$\varrho^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAMCAYAAAC0qUeeAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAo0lEQVQoz32Q0Q2DMBBD30UMwAyMULUTlG4AYoOs0Bk6UxkBukEZIWID96NXhKoESydFPseyzyRRgpk1QAssAIFjnIAbUANTOHCtgRW4+4dztVtGIAEX4AlMQOPrWdKIZ45A9HcNvCXxPz/xvBHfnFlxMLOtraMFxlyPyp3SjhuAa0n88oKdl+slraUrdbl8uamAwcxWz52OXM0L9TvuIWnJiT9B93N3DQM1JQAAAABJRU5ErkJggg==" /></span>
+  [
+  <span class="math"><img class="latex" alt="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" title="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAATCAYAAAAao7T0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABnElEQVRIx8WW7W3CMBCGn0MdwGKEjJAyQtggXYFuEGbICMzQbgAbtLBBs0ELG7z9c65cKyRAiWrJyvl8H6/t+4hJYophZgVQSnq9WGcqMA5oL+nxUvnZHxytzKw0s9bMqjNiX9fYnN0IJACPkg7AJ1COyLc+g68bM6vMbOOHCgBIwp+qjnTCK4AGqP0bsv0a2OR6yf7W9VaZzY3TL5k8NbAC1ONsn9AB2PY4rHKjGZgQvwm/cb3yl3wioEyhTME47+gnq+NpfX08c6sfbqcG9kCRgNwAbQpoCMwqvwk3Xvlpa6dboDr3VD0gmwjA7fzc6sNA3IUe3skBn4BYP3ZXxv8OWJjZ3NdvcWMIzAmY9wA8jWSObsjOdiy133t4c6AbMizJLpnAM7AE1pE3GzB6SJ/Ka0EnqbtDZY62dg7oZ1QeVMqD0TMh1pk2ZsM9ph+0Sf1N2ptGmiiSOjPbSlqOBfCtjkrgxWMC4MnXAEtJa7+VhZl1XnP41Q7uOb3AhZ4qvh/Sm031FF6LmLxrXxAPwbtyARQZXf7Lz9W14xtK+RY8ir520AAAAABJRU5ErkJggg==" /></span>
+  ] </td><td> 1   </td><td> 1 </td><td> 1</td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\nu^s$" title="$\nu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAJCAYAAAAGuM1UAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVQY04XPYQ3CUAxG0fOmYBLIJBAkbA7mAQdMFBKYBJAAFoaD8oO+ZCHLaNI0bb+2tyUi7FkppUOPFzT+2xEDWtybP9tbvDHl0KnJxqWUsvyIrzigS39ExCx/qIV1/qz52itSj3l1YMJ5C7MODLglypjb583HEmHJOGLcQlnhfvlT3O6JI8IHLl9l8TbtJ/8AAAAASUVORK5CYII=" /></span>  </td><td> 0.4 </td><td> 0.4 </td><td> 0.4 </td>
+</tr>
+<tr>
+  <td>
+  <span class="math"><img class="latex" alt="$\mu^s$" title="$\mu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAMCAYAAAC5tzfZAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAn0lEQVQoz5WQUQ3DMAxEn6MBCIZCmAohYVAuwzAIwzAILYQUwkphZXD7caWoWtXU0ik+xyefbZI4CzPrgAQsAIG2uAMZiEAJDVMisAIPF/ah+nyaWar46AKAzjFLmpCE7zUDseLfLd8jVBaipNV5AqYjy5u9fVMGxjNRBj5VfQCKmQ3/RDd/e7e1Nb28thxNi34VWhF8n8KFCH7/9xXRD+u/XTeYMU8uAAAAAElFTkSuQmCC" /></span>
+  [
+  <span class="math"><img class="latex" alt="$10^6 \frac{\textrm{kg}\nop}{\textrm{ms}^2}$" title="$10^6 \frac{\textrm{kg}\nop}{\textrm{ms}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAATCAYAAAATSBSOAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABzklEQVRIx8WW/U3zMBDGfxd1gKgjhA0CbJBu0MIGYYNUTIDKBrABb7tBYQIIGzQjoG7w8M9ZskIITUt4LVmxz3e55z5tk8SYw8wyIJe0GSw7NjgHWEs6Hyo3OUFhDmS+nUp67GH/OEbH5EhgKXAraREBPURu5cs7SXszq4B3YAHUwD9J+8CfRILzrnwxs8rM5v5N/ejKzwszK4HpAcAqYCdp6cAy4EzSc/B8DCyMOVACAlJJhAnU0ToFtr4ugYeIvovl2hPYBvlYB1ABhRfMF7lE0qYrX9qhcqsu3OK3Fv2nag3zAXhxGsDMQ3rdmRqRFWpZVQZPRbQdUERWB6/nfZ77xptVkHOvrts8fQWRdtD2gS7p/sQO8+yRCPn6OqRa9x2Jnjq9L4w6oT2t4n3Sw/vWQZsCTZ8CSXbsjHJwKcmSHiXvcWi9jTSSmpFukdz1bhwkEzMrgFApt2a29d4DsPD+1ACXbtUow50Rqrv5s7t14COhCDfFr4Pz8KyBm+B93wPMJC2dZ+p3biHp3oGt3WuppBlD+9OBPawOPbN1y9T+nTuQEsi++08yYg71tZzGHw0NsPr1J9MPeZN6oTVA1lrnQGFmF057+q+PzWPHJz3YyDpMXqmeAAAAAElFTkSuQmCC" /></span>
+  ] </td><td> 0.5 </td><td> 2.0 </td><td> 0.5</td>
+</tr>
+<tr style="border-top: 2px solid black;">
+  <td>
+  <span class="math"><img class="latex" alt="$\varrho^f$" title="$\varrho^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAtUlEQVQoz42R4Q2CQAyFv5obgBkcgegEMgKEDWAWR2AW2cDoBjACYYPnnx45jco1adLrXV77vTNJ7IWZlUALFEjaTWAAjkBxyFSvgFLSmjvhFuvcCc94DslFByzA2RVHvzoB903BR3ZA53UBTCnw23refCQPSmByV4YoFDOYWQXMydoVMEqagf6TKbjikvRa4PLLhBAdMLPagRtJ6z/n6py/2BiA1sxW51j21M0hm6R3deCv8QIBfrSwSvr55QAAAABJRU5ErkJggg==" /></span>
+  [
+  <span class="math"><img class="latex" alt="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" title="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAATCAYAAAAao7T0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABnElEQVRIx8WW7W3CMBCGn0MdwGKEjJAyQtggXYFuEGbICMzQbgAbtLBBs0ELG7z9c65cKyRAiWrJyvl8H6/t+4hJYophZgVQSnq9WGcqMA5oL+nxUvnZHxytzKw0s9bMqjNiX9fYnN0IJACPkg7AJ1COyLc+g68bM6vMbOOHCgBIwp+qjnTCK4AGqP0bsv0a2OR6yf7W9VaZzY3TL5k8NbAC1ONsn9AB2PY4rHKjGZgQvwm/cb3yl3wioEyhTME47+gnq+NpfX08c6sfbqcG9kCRgNwAbQpoCMwqvwk3Xvlpa6dboDr3VD0gmwjA7fzc6sNA3IUe3skBn4BYP3ZXxv8OWJjZ3NdvcWMIzAmY9wA8jWSObsjOdiy133t4c6AbMizJLpnAM7AE1pE3GzB6SJ/Ka0EnqbtDZY62dg7oZ1QeVMqD0TMh1pk2ZsM9ph+0Sf1N2ptGmiiSOjPbSlqOBfCtjkrgxWMC4MnXAEtJa7+VhZl1XnP41Q7uOb3AhZ4qvh/Sm031FF6LmLxrXxAPwbtyARQZXf7Lz9W14xtK+RY8ir520AAAAABJRU5ErkJggg==" />/span>
+  ] </td><td> 1 </td><td> 1 </td><td> 1 </td>
+</tr>
+<tr>
+  <td>
+  <span class="math"><img class="latex" alt="$\nu^f$" title="$\nu^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAYAAACksgdhAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAmElEQVQoz5WQ0Q3CMAxE33WCzJARKkbICJUYgQ3KLJ2hI8AGqGzADGUD84GDDB8oiWTJTuy888nMaDmSRuAIJMysKYAFyEAaOigFGM3s2UO61LyHdK/14JezpP2ncZWUvTwAt8+jozOwBSkZeEQTotQqrwDXADoDJ0lZ0gJsX3r9pxUonk/A/NcUb9zDwNTg5HsfH0gt9r8AyQDF6cbu3kYAAAAASUVORK5CYII=" /></span>
+  [
+  <span class="math"><img class="latex" alt="$10^{-3} \frac{\textrm{m}^2}{\textrm{s}\nop}$" title="$10^{-3} \frac{\textrm{m}^2}{\textrm{s}\nop}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAATCAYAAADrqO95AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABjElEQVRIx82W4W3CMBCFv0MMEBgh3QDoBA0bwAp0A6qOQDdghAo2KCOUbtBsUMgGr3/OlWURILSUnGTldImd53fvzjZJtNXMrAAyIJf0AtBpMdgBgKQ1MA7xblsBS/pw4DlQhnjnyizNzGxgZgtPb9P5OVAAT1cHbGYZMHSmvoDBBWBXLodVTD1eeJPgR7EcmAMTf2bpN6eGz10msQHw6ewVwDLyF8fWM1+w75N6kqpol1tJw4ixlaRxSLdXcGqboL+k2h8lTeO1gQdJVfKfH79O3GHXihl0FrYJM3tvMecyO4sytU/eb0/5h8YxDY+AXRLb+c/PsQ2wC+wC00SfmZkV7ueJX6v3Y23tULqrmvihzFXAOgIfvyuBuyjUq/EbAa5c2+kmqj/oIBcfr8ck8X4g1o+b+C8OBbt0dE6cNFnSV0tP582s60URRP5sZm+SguamZjZ3Vu/jwrnZHaPNt7WmRXeL21nfW2cRrpNNiu6/Lfd+PYraYasBl350l8Ci9ZIACjMbOeDXuo++Aa4dXcxAOxo+AAAAAElFTkSuQmCC" /></span>
+  ] </td><td>1 </td><td> 1 </td><td>1 </td>
+</tr>
+<tr style="border-top: 2px solid black;">
+  <td>
+  <span class="math"><img class="latex" alt="$\bar{U}$" title="$\bar{U}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAnUlEQVQY04WQUQ0CMRBE356CBgknoUHCSbgEB0gAL1gAByCB4OBOAqmD4Wd7WUoTJmnazk6nO2uSqDCzIw0kXbZ6FP+Fi2dg8XWS1PJXIBMKCzDXe+C3x4P3moAReHQ+L/Uw+D4Bq6QSVWaWgWcrPgC3jute0qvnfO+IU28aAlITLANT5KrzCuxCr8mFX4FNEmY2AmcfXwHekn4yfAAZLmSPbZz5XgAAAABJRU5ErkJggg==" /></span>
+  [
+  <span class="math"><img class="latex" alt="$\frac{\textrm{m}\nop}{\textrm{s}\nop}$" title="$\frac{\textrm{m}\nop}{\textrm{s}\nop}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAOCAYAAAAWo42rAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAjElEQVQoz63R4QnCQAwF4O9KBxBH6AhHR+guzqIbOILoKo6gI6gbxB9e5VqQ9ocPkjx44SUhkHHDUOJY8X1EiAifxBWbkX/FijcKIuJlAV01usNzxnNESGXEIhJWda52bKzE/xvbycIpZWzxwBARh1+OHXbocZko44vK9bnUAedaa2eOQ0qpxx2nWngDxBtN67+aTpAAAAAASUVORK5CYII=" /></span>
+  ] </td><td> 0 </td><td> 0 </td><td> 0 </td>
+</tr>
+<tr>
+  <td>
+  <span class="math"><img class="latex" alt="$g$" title="$g$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAJCAYAAAD+WDajAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAe0lEQVQY003PUQ3CUBBE0bMNAqqhEkhwUAnFQiVgCgtYAAdUAuBg+Ohr8jbZ7Ezux8xWElBVZ8x44QwanPBMcvg75t6sHXxjPMwXU9Mj3kkM9vkk2Zpe8egzF9zafWJJssN+j7wkhqpaq2ru3tmS/ODUCkxVteCCa8v2B5mjSgQ4Xeg+AAAAAElFTkSuQmCC" /></span>
+  [
+  <span class="math"><img class="latex" alt="$\frac{\textrm{m}\nop}{\textrm{s}^2}$" title="$\frac{\textrm{m}\nop}{\textrm{s}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAOCAYAAAAWo42rAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAApElEQVQoz42Q4QnCUBCDv5MOUBzhjVAc4bmBM3QXu4EjSEdwBt1AR1A3iH/S8hAOPTgIR17yEiQBDMAdqN5Tg4+SQBImX4F+we1dEhuakfQmG78qjXUBXl94CBN/TgB/MVPFiKhADxRJ05q6XddVjS+S6JKAN6sW4LGmTlQLMC7dhm22wNN2k5Vmq/WS9gAHH0d/PHNgMKjAnBE7oEbEzjbnrMcPmbCZWunL5CMAAAAASUVORK5CYII=" /></span>
+  ] </td><td> 2 </td><td> 2 </td><td> 2 </td>
+</tr>
+<tr>
+  <th>par. non-dim. </th><th> CSM1 </th><th> CSM2 </th><th> CSM3 </th>
+</tr>
+<tr>
+  <td>
+  <span class="math"><img class="latex" alt="$\beta=\frac{\varrho^s}{\varrho^f}$" title="$\beta=\frac{\varrho^s}{\varrho^f}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAYAAAD/Rn+7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABc0lEQVRIx82W4W3CQAyFv4cywIkRMkJEN2CE0hW6Aagj0A1ggwo2gBFaNoANQNng9UcvKFwTQVUgWLJyd7ES28/2O9nmkUTSMC5z2/MejycHoIhPeg+QsVxSiOsADIE1UAKoS4glTYEPYADsbK9Tm6ylBgLQBw62lzdy7hnY295IGkRYfzmI7aPG9Iba/qv+/poKLIAiXaeaZjDYLmsR7m6I8A4YSsqBle1Nk1GWQLuWNAaeIsyjBmgC8Hbm53vb72dstrbn56LIErhLSVXWXqtspjbA5Ep1uIjjZNaWwZP6S2pkmp5dqfb8F81iJAXwmfieN9XgfyG2rQvHz883YlTjSC3VPgcWt+rgMxnOgXHaxRugiB0VgL7tUUfzewJsJQXbZVZL/bILmotkUG/GEphXZ72W+rsXzQXgpXaDOZnF1WUhbxonN3buSHPxqKg5vWqlujs2wkU010R195KLaK7xNnMnuYjmOr2wSlpImsUmbZVvw/Yfhqp7mmsAAAAASUVORK5CYII=" /></span>
+  </td><td> 1 </td><td> 1 </td><td> 1 </td>
+</tr>
+<tr>
+  <td>
+  <span class="math"><img class="latex" alt="$\nu^s$" title="$\nu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAJCAYAAAAGuM1UAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVQY04XPYQ3CUAxG0fOmYBLIJBAkbA7mAQdMFBKYBJAAFoaD8oO+ZCHLaNI0bb+2tyUi7FkppUOPFzT+2xEDWtybP9tbvDHl0KnJxqWUsvyIrzigS39ExCx/qIV1/qz52itSj3l1YMJ5C7MODLglypjb583HEmHJOGLcQlnhfvlT3O6JI8IHLl9l8TbtJ/8AAAAASUVORK5CYII=" /></span>
+  </td><td> 0.4 </td><td> 0.4 </td><td> 0.4 </td>
+</tr>
+<tr>
+  <td>
+  <span class="math"><img class="latex" alt="$\textrm{E}^s$" title="$\textrm{E}^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAKCAYAAACE2W/HAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAApUlEQVQoz42RYQ0CMQxG37sgAA2Hg8PCcAAWhgYknAQ8IAEJIAEsIKH86RFyWQ6WfNna7ctrOyOCf5baAwV4AnTqoJ7VUEe1pkb1pZb0DsAOWAM3ktgDAawjgkmZr/m4ZHwGymqpvIh4qlPY536PiGuTCOyB4Zs+15xYk3AEDvwop0UsE3He96f/peHkXW0Zuz++cNtKrtQhewI4qY88b3JIl5bxDUlUfEktj+fhAAAAAElFTkSuQmCC" /></span>
+  [
+  <span class="math"><img class="latex" alt="$\frac{\textrm{kg}\nop}{\textrm{ms}^2}$" title="$\frac{\textrm{kg}\nop}{\textrm{ms}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABIUlEQVQ4y7WU4W2DQAyFP0cMgDrCdQOUEegGYYWMwAoV3SAjtOkGtBNUsEEZoWKD1x81EblAFGhr6cTDYMt+z2ckMT5AAHax/5Yz7YRmTbIN0/bFCkuufTSzyuGjpN7MSqAFCqABXiT1p4CZNmugBPYRlwfHxyWc1UA6PEf+EsiBbCoumWgteBUBOADvZlZI6oAH4B7ozQxJ7VnwzbL/VJU5TqdaTRaI9QZszezO3z8uugLEH5l52euCzXJvOUh62vwiUeacv7owiziLhWtH6neL1JxROAD7YRYBMuDThzH32Rpw5T9lw7AC5ShRAxyB+nQD3JnGG2PAwM6D9k729a1xdmEvrZNUODfV7NZwAlOXuQNChDMgN7Ot+57/Zc5i+watQImfvSRgggAAAABJRU5ErkJggg==" /></span>
+  ] </td><td> 1.4 × 10<sup>6</sup> </td><td> 5.6 × 10<sup>6</sup> </td><td> 1.4 × 10<sup>6</sup> </td>
+</tr>
+<tr style="border-top: 2px solid black;">
+  <td>
+  <span class="math"><img class="latex" alt="$\Re=\frac{\bar{U} d}{\nu^f}$" title="$\Re=\frac{\bar{U} d}{\nu^f}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAATCAYAAAA9DTUcAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABrklEQVRIx92X/W3bQAzFf8/wAAK6gbKB2m7gbiC0GygbuOgEgb2BMkLtDawV0g2qDfKxwesf5QXCOZEDA6nkEjhAxzvpSL5HHiXbzFEkFcBqoOpt/xp9Z67OnCML/iNZzJRijaRHSatEOUk7Sc0r+1tJzZyRubXdAdh+Ag62b0f2d0tJFXANNMAWuAc+AAXQnkq6d5IvwE2me8jQWAFl6D/Z7okCUAAGCttJV4WuTLp/NYDHbL7KbCsDqfTc2n49ZwaIVBMg02fzMqjGwKZDPNfATlKxHEnCGtjb3me6Mg77DNxkh6T74ccJY+9tb0fW2zgrBTbPlQ5ogmpXwBNwRLM6IG2BTQZ1laCNeZ3vmXrkyHQR6U7SnaT1IILfBon3HOF3KMtn3+LLsVIXVW6btRTdG9qQs2lmW290enP0nZFq1vxdfl4vgd8Z9eop6BS2rHP9IiKZbtYm5inp9pLWwFfbPXAtaSOpjgTtJrpQvw9YcNmNZlDsqJIuZmzwLpVnSWU4kKTIHbmErrkb0KodoHK4qP8ZSXe2P0anfLKKnirNUzpSAX3Q7OdLlHpJ/gCGYw55hzXjpAAAAABJRU5ErkJggg==" /></span>
+  </td><td> 0 </td><td> 0 </td><td> 0 </td>
+</tr>
+<tr>
+  <td>
+  <span class="math"><img class="latex" alt="$\bar{U}$" title="$\bar{U}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAnUlEQVQY04WQUQ0CMRBE356CBgknoUHCSbgEB0gAL1gAByCB4OBOAqmD4Wd7WUoTJmnazk6nO2uSqDCzIw0kXbZ6FP+Fi2dg8XWS1PJXIBMKCzDXe+C3x4P3moAReHQ+L/Uw+D4Bq6QSVWaWgWcrPgC3jute0qvnfO+IU28aAlITLANT5KrzCuxCr8mFX4FNEmY2AmcfXwHekn4yfAAZLmSPbZz5XgAAAABJRU5ErkJggg==" /></span>
+  </td><td> 0 </td><td> 0 </td><td> 0 </td>
+</tr>
+<tr>
+  <td>
+  <span class="math"><img class="latex" alt="$g$" title="$g$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAJCAYAAAD+WDajAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAe0lEQVQY003PUQ3CUBBE0bMNAqqhEkhwUAnFQiVgCgtYAAdUAuBg+Ohr8jbZ7Ezux8xWElBVZ8x44QwanPBMcvg75t6sHXxjPMwXU9Mj3kkM9vkk2Zpe8egzF9zafWJJssN+j7wkhqpaq2ru3tmS/ODUCkxVteCCa8v2B5mjSgQ4Xeg+AAAAAElFTkSuQmCC" /></span>
+  </td><td> 2 </td><td> 2 </td><td> 2 </td>
+</tr>
+</tbody>
+</table>
+</p>
+<!--
+\begin{table}[!h]
+  \centerline{
+    \begin{tabular}{|l|r|r|r|}
+      \hline
+      par. dim. & CSM1 & CSM2 & CSM3 \\ \hline
+      $\varrho^s$ [$10^3 \frac{\textrm{kg}}{\textrm{m}^3}$]
+      & $1$   & $1$ & $1$   \\
+      $\nu^s$  & 0.4 & 0.4 & 0.4 \\
+      $\mu^s$ [$10^6 \frac{\textrm{kg}}{\textrm{ms}^2}$]
+      & $0.5$ & $2.0$ & $0.5$ \\ \hline
+      $\varrho^f$  [$10^3 \frac{\textrm{kg}}{\textrm{m}^3}$]
+      & $1$ & $1$ & $1$ \\
+      $\nu^f$  [$10^{-3} \frac{\textrm{m}^2}{\textrm{s}}$]
+      &$1$ & $1$ &$1$ \\
+      \hline
+      $\bar{U}$ [$\frac{\textrm{m}}{\textrm{s}}$]
+      & 0 & 0 & 0 \\
+      $g$ [$\frac{\textrm{m}}{\textrm{s}^2}$]
+      & 2 & 2 & 2 \\
+      \hline
+      \hline
+      par. non-dim. & CSM1 & CSM2 & CSM3 \\\hline
+      $\beta=\frac{\varrho^s}{\varrho^f}$
+      & $1$ & $1$ & $1$ \\
+      $\nu^s$ & 0.4 & 0.4 & 0.4 \\
+      $\textrm{E}^s$ [$\frac{\textrm{kg}}{\textrm{ms}^2}$]
+      & $1.4\e{6}$ & $5.6\e{6}$ & $1.4\e{6}$ \\
+      \hline
+      $\Re=\frac{\bar{U} d}{\nu^f}$
+      & 0 & 0 & 0 \\
+      $\bar{U}$ & 0 & 0 & 0 \\
+      $g$     & 2 & 2 & 2 \\
+      \hline
+    \end{tabular}
+  }
+  \caption{Parameter settings for the CSM tests}
+\end{table}
+-->
+
+<p>
+<table class="Basic">
+<caption>Results for CSM1</caption>
+<thead>
+<tr>
+  <th>level </th><th> nel </th><th> ndof</th><th> ux of A [ × 10<sup>-3</sup>] </th><th> uy of A [  × 10<sup>-3</sup> ]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td> 2+0 </td><td>    320 </td><td>     6468 </td><td> -7.17301 </td><td> -66.0263 </td>
+</tr>
+<tr>
+  <td> 3+0 </td><td>   1280 </td><td>    25092 </td><td> -7.18372 </td><td> -66.0817 </td>
+</tr>
+<tr>
+  <td> 4+0 </td><td>   5120 </td><td>    98820 </td><td> -7.18656 </td><td> -66.0965 </td>
+</tr>
+<tr>
+  <td> 4+1 </td><td>   6260 </td><td>   120512 </td><td> -7.18738 </td><td> -66.1008 </td>
+</tr>
+<tr>
+  <td> 4+2 </td><td>   8552 </td><td>   164092 </td><td> -7.18766 </td><td> -66.1023 </td>
+</tr>
+<tr>
+  <td> 4+3 </td><td>  13148 </td><td>   251448 </td><td> -7.18777 </td><td> -66.1029 </td>
+</tr>
+<tr>
+  <td> 5+0 </td><td>  20480 </td><td>   392196 </td><td> -7.18739 </td><td> -66.1009 </td>
+</tr>
+<tr>
+  <td> 5+1 </td><td>  22772 </td><td>   435776 </td><td> -7.18767 </td><td> -66.1023 </td>
+</tr>
+</tbody>
+</table>
+</p>
+<!--
+\begin{table}[h]
+  \centerline{
+    \begin{tabular}{|l|r|r|r|r|}
+      \hline
+      level & nel & ndof& ux of A [$\e{-3}$] & uy of A
+      [$\e{-3}$] \\ \hline
+      $2+0$ & $   320$ & $    6468$ & $-7.17301$ & $-66.0263$\\
+      $3+0$ & $  1280$ & $   25092$ & $-7.18372$ & $-66.0817$ \\
+      $4+0$ & $  5120$ & $   98820$ & $-7.18656$ & $-66.0965$ \\
+      $4+1$ & $  6260$ & $  120512$ & $-7.18738$ & $-66.1008$ \\
+      $4+2$ & $  8552$ & $  164092$ & $-7.18766$ & $-66.1023$ \\
+      $4+3$ & $ 13148$ & $  251448$ & $-7.18777$ & $-66.1029$ \\
+      $5+0$ & $ 20480$ & $  392196$ & $-7.18739$ & $-66.1009$ \\
+      $5+1$ & $ 22772$ & $  435776$ & $-7.18767$ & $-66.1023$ \\
+      \hline
+      \hline
+      \textbf{ref.}&&& $-7.187$ & $-66.10$ \\
+      \hline
+    \end{tabular}
+  }
+  \caption{Results for \textbf{CSM1}}
+\end{table}
+-->
+<p>
+<table class="Basic">
+<caption>Results for CSM2</caption>
+<thead>
+<tr>
+  <th>level </th><th> nel </th><th> ndof</th><th> ux of A [ × 10<sup>-3</sup>] </th><th> uy of A [  × 10<sup>-3</sup> ]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td> 2+0 </td><td>    320 </td><td>     6468 </td><td> -0.468011 </td><td> -16.9536 </td>
+</tr>
+<tr>
+  <td> 3+0 </td><td>   1280 </td><td>    25092 </td><td> -0.468734 </td><td> -16.9684 </td>
+</tr>
+<tr>
+  <td> 4+0 </td><td>   5120 </td><td>    98820 </td><td> -0.468925 </td><td> -16.9723 </td>
+</tr>
+<tr>
+  <td> 4+1 </td><td>   6260 </td><td>   120512 </td><td> -0.468980 </td><td> -16.9735 </td>
+</tr>
+<tr>
+  <td> 4+2 </td><td>   8552 </td><td>   164092 </td><td> -0.468999 </td><td> -16.9739 </td>
+</tr>
+<tr>
+  <td> 4+3 </td><td>  13148 </td><td>   251448 </td><td> -0.469006 </td><td> -16.9740 </td>
+</tr>
+<tr>
+  <td> 5+0 </td><td>  20480 </td><td>   392196 </td><td> -0.468981 </td><td> -16.9735 </td>
+</tr>
+<tr>
+  <td> 5+1 </td><td>  22772 </td><td>   435776 </td><td> -0.469000 </td><td> -16.9739 </td>
+</tr>
+</tbody>
+</table>
+</p>
+<!--
+\begin{table}[h]
+  \centerline{
+    \begin{tabular}{|l|r|r|r|r|}
+      \hline
+      level & nel & ndof& ux of A [$\e{-3}$] & uy of A
+      [$\e{-3}$] \\ \hline
+      $2+0$ & $   320$ & $    6468$ & $-0.468011$ & $-16.9536$ \\
+      $3+0$ & $  1280$ & $   25092$ & $-0.468734$ & $-16.9684$ \\
+      $4+0$ & $  5120$ & $   98820$ & $-0.468925$ & $-16.9723$ \\
+      $4+1$ & $  6260$ & $  120512$ & $-0.468980$ & $-16.9735$ \\
+      $4+2$ & $  8552$ & $  164092$ & $-0.468999$ & $-16.9739$ \\
+      $4+3$ & $ 13148$ & $  251448$ & $-0.469006$ & $-16.9740$ \\
+      $5+0$ & $ 20480$ & $  392196$ & $-0.468981$ & $-16.9735$ \\
+      $5+1$ & $ 22772$ & $  435776$ & $-0.469000$ & $-16.9739$ \\
+      \hline
+      \hline
+      \textbf{ref} &&& $-0.4690$ & $-16.97$ \\
+      \hline
+    \end{tabular}
+  }
+  \caption{Results for \textbf{CSM2}}
+\end{table}
+-->
+
+<p>
+<center><b>CMS3</b>: The displacement of the point A</center>
+<img src="../../../../../media/fsi/csm1b_svk_4_0_3_ux.png" title="Displacement ux" alt="Displacement ux" /><br />
+<img src="../../../../../media/fsi/csm1b_svk_4_0_3_uy.png" title="Displacement uy" alt="Displacement uy" /><br />
+<img src="../../../../../media/fsi/csm1b_svk_4_0_3_ux_zoom.png" title="Displacement ux zoom" alt="Displacement ux zoom" /><br />
+<img src="../../../../../media/fsi/csm1b_svk_4_0_3_uy_zoom.png" title="Displacement uy zoom" alt="Displacement uy zoom" />
+</p>
+
+<p>
+<table class="Basic">
+<caption>Results for <b>CSM3</b> with timesteps <span class="math"><img class="latex" alt="$\Delta t=0.02, 0.01, 0.005$" title="$\Delta t=0.02, 0.01, 0.005$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAMCAYAAACqTLVoAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACV0lEQVRYw+2Y/XEaMRDFf8u4gIvTAekAJx3gDkhSQUgHMK4gY3cALUAH0EEwHXAdBF8HL//sZYSi+4A58IzxzmjsWz32aSXtaiWTRCxmNgMWktZUiJn1gUzSlg7F7Y6AHOgDc0nFsVgzGwIDh34BppLyc/MGmJGk5YV9ruubAWM3swV+SNoi6aABmU/cc9wX4WbAqA5zSgt5fSyrY7H+/yToGwG7c/MGXGNAHiAX8blF38R1B2NKEfT976pugYFdWwePWPz/Nh7wUo6pLRYYAoomQyk7XfJGulYboEOfa+2EARG2myi9DIKUPgUWwDLGAN/985uZbcJjwMwy4KEh6/2R9JTQfwb2kW7vDuZtsZLWZnYXYak5AjrhTWDbSFfc/QY7H81sBBTAPTCTlN9UjUrS1sxyM5uEi+X68vyfJ35X+OY5RbKErqjQ12Kj2mQK/LwE7yv63GRnVgaAme09uO96QeQOEwXdFHjwqA7l3o+IrqUAbhNOF6dizWzsBe38kryv4HOtnSj75cDAzLJekLaTWQDYJFL6EFhXVKmZmT02tEnFZGwSutuK1NqI9ZvAvmHxO+c9Urriruwzs4GZvURZ+t8HwLihSDkooMqK2ivergvBXVS8PUdj6R+BHQbf43Ks3pedg7euCEzxduxzsq/iVrSShHmRsGuxU5eSvgZ3yhWQn+EdYOAZJvf7e3h2LYDfZU1ShfUaJfapkPQhsEPpT1e80fvDI/DkE72u4u2Yu824CuAT8EtSYamHoGuQYx5q3gJvlfR4l6uW3pVGf2UR+xZ56+QvjrCEBxufZZEAAAAASUVORK5CYII=" /></span></caption>
+<thead>
+<tr>
+  <th>level </th><th> nel </th><th> ndof</th><th> ux of A [ × 10<sup>-3</sup>] </th><th> uy of A [ × 10<sup>-3</sup>]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td> 2+0 </td><td>    320 </td><td>     6468 </td><td> -14.384 ± 14.389 [1.0956] </td><td> -64.271 ± 64.595 [1.0956] </td>
+</tr>
+<tr>
+  <td> 3+0 </td><td>   1280 </td><td>    25092 </td><td> -14.402 ± 14.406 [1.0956] </td><td> -64.352 ± 64.679 [1.0956] </td>
+</tr>
+<tr>
+  <td> 4+0 </td><td>   5120 </td><td>    98820 </td><td> -14.404 ± 14.408 [1.0956] </td><td> -64.371 ± 64.695 [1.0956] </td>
+</tr>
+
+<tr style="border-top: 2px solid black;">
+  <td> 2+0 </td><td>    320 </td><td>     6468 </td><td> -14.632 ± 14.636 [1.0978] </td><td> -64.744 ± 64.907 [1.0978] </td>
+</tr>
+<tr>
+  <td> 3+0 </td><td>   1280 </td><td>    25092 </td><td> -14.645 ± 14.650 [1.0978] </td><td> -64.765 ± 64.946 [1.0978] </td>
+</tr>
+<tr>
+  <td> 4+0 </td><td>   5120 </td><td>    98820 </td><td> -14.645 ± 14.650 [1.0978] </td><td> -64.766 ± 64.948 [1.0978] </td>
+</tr>
+
+<tr style="border-top: 2px solid black;">
+  <td> 2+0 </td><td>    320 </td><td>     6468 </td><td> -14.279 ± 14.280 [1.0995] </td><td> -63.541 ± 65.094 [1.0995] </td>
+</tr>
+<tr>
+  <td> 3+0 </td><td>   1280 </td><td>    25092 </td><td> -14.299 ± 14.299 [1.0995] </td><td> -63.594 ± 65.154 [1.0995] </td>
+</tr>
+<tr>
+  <td> 4+0 </td><td>   5120 </td><td>    98820 </td><td> -14.305 ± 14.305 [1.0995] </td><td> -63.607 ± 65.160 [1.0995] </td>
+</tr>
+
+</tbody>
+</table>
+</p>
+
+<!--
+\begin{table}[h!]
+  \centerline{
+    \begin{tabular}{|l|r|r|r|r|}
+      \hline
+      level & nel & ndof& ux of A [$\e{-3}$] & uy of A
+      [$\e{-3}$] \\ \hline
+      $2+0$ & $   320$ & $    6468$ &
+      $-14.384 \pm 14.389 [1.0956]$ & $-64.271 \pm 64.595 [1.0956]$ \\
+      $3+0$ & $  1280$ & $   25092$ &
+      $-14.402 \pm 14.406 [1.0956]$ & $-64.352 \pm 64.679 [1.0956]$ \\
+      $4+0$ & $  5120$ & $   98820$ &
+      $-14.404 \pm 14.408 [1.0956]$ & $-64.371 \pm 64.695 [1.0956]$ \\
+      \hline
+      \hline
+      level & nel & ndof& ux of A [$\e{-3}$] & uy of A
+      [$\e{-3}$] \\ \hline
+      $2+0$ & $   320$ & $    6468$ &
+      $-14.632 \pm 14.636 [1.0978]$ & $-64.744 \pm 64.907 [1.0978]$ \\
+      $3+0$ & $  1280$ & $   25092$ &
+      $-14.645 \pm 14.650 [1.0978]$ & $-64.765 \pm 64.946 [1.0978]$ \\
+      $4+0$ & $  5120$ & $   98820$ &
+      $-14.645 \pm 14.650 [1.0978]$ & $-64.766 \pm 64.948 [1.0978]$ \\
+      \hline
+      \hline
+      level & nel & ndof& ux of A [$\e{-3}$] & uy of A
+      [$\e{-3}$] \\ \hline
+      $2+0$ & $   320$ & $    6468$ &
+      $-14.279 \pm 14.280 [1.0995]$ & $-63.541 \pm 65.094 [1.0995]$ \\
+      $3+0$ & $  1280$ & $   25092$ &
+      $-14.299 \pm 14.299 [1.0995]$ & $-63.594 \pm 65.154 [1.0995]$ \\
+      $4+0$ & $  5120$ & $   98820$ &
+      $-14.305 \pm 14.305 [1.0995]$ & $-63.607 \pm 65.160 [1.0995]$ \\
+      \hline
+      \hline
+      \textbf{ref} &&&
+      $-14.305 \pm 14.305 [1.0995]$ & $-63.607 \pm 65.160 [1.0995]$ \\
+      \hline
+    \end{tabular}
+  }
+  \caption{Results for \textbf{CSM3} with timesteps $\Delta
+  t=0.02, 0.01, 0.005$}
+\end{table}
+-->
+
+
+<hr />
+
+<ul><li><a href="fsi_csm_tests.html">CSM tests</a><ul><li><a href="../fsi_definitions.html">Definitions</a></li><li><a href="../fsi_quantities.html">Quantities for Comparison</a></li><li><a href="../fsi_tests.html">Partial computational Tests</a><ul><li><a href="fsi_cfd_tests.html">CFD tests</a></li><li><a href="fsi_csm_tests.html">CSM tests</a></li><li><a href="fsi_fsi_tests.html">FSI tests</a></li></ul></li><li><a href="../fsi_bibliography.html">Bibliography</a></li><li><a href="../fsi_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

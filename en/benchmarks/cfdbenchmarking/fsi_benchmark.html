@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>FSI Benchmark - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../index.html">Home</a>
+  <a href="../../contact.html">Contact</a><a href="../../software.html">Software</a><div class="submenu"><a href="../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../software/featflow.html">FEATFLOW</a><a href="../../software/featflow2.html">FEATFLOW2</a><a href="../../software/parpp3d.html">parPP3D</a><a href="../../software/documentation.html">Documentation</a></div><a href="../../team.html">Team</a><a href="../../links.html">Links</a><div class="submenu"><a href="../../links/websites.html">Websites</a><a href="../../links/software_links.html">Software</a></div><a href="../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="flow.html">Flow around a Cylinder</a><a href="bubble.html">Rising Bubble</a><a href="fsi_benchmark.html" class="selected">FSI Benchmark</a><div class="submenu"><a href="fsi_benchmark/fsi_definitions.html">Definitions</a><a href="fsi_benchmark/fsi_quantities.html">Quantities for Comparison</a><a href="fsi_benchmark/fsi_tests.html">Partial computational Tests</a><a href="fsi_benchmark/fsi_bibliography.html">Bibliography</a><a href="fsi_benchmark/fsi_reference.html">Reference Values</a></div><a href="mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../publications.html">Publications</a><a href="../../services.html">Services</a><div class="submenu"><a href="../../services/cdrom.html">CD-ROM</a><a href="../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../news.html">News</a><a href="../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../index.html">Home</a> » <a href="../../benchmarks.html">Benchmarks</a> » <a href="../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="fsi_benchmark.html">FSI Benchmark</a>  </div>
+
+  <hr />
+
+  <h2>Numerical Benchmarking of fluid-structure Interaction between an elastic Object and laminar incompressible Flow</h2>
+
+<h3>Abstract</h3>
+
+<p>We describe new benchmark settings for the rigorous evaluation of different methods for fluid-structure interaction problems. The configurations consist of laminar imcompressible channel flow around an elastic object which results in self-induced oscillations of the structure. Moreover, characteristic flow quantities and corresponding plots are provided for a quantitative comparison.</p>
+
+<h3>Introduction</h3>
+
+<p>The main purpose of this benchmark proposal is to
+describe specific configurations which shall help in future to test
+and to compare different numerical methods and code implementations
+for the fluid-structure interaction (FSI) problem. In particular, the
+various coupling mechanisms, ranging from partitioned, weakly coupled
+approaches to fully coupled, monolithic schemes are of high interest.
+Moreover, it shall be possible to examine the quality of different
+discretization schemes (FEM, FV, FD, LBM, resp., beam, shell, volume
+elements), and the robustness and numerical efficiency of the
+integrated solver components shall be a further aspect. This new
+benchmark is based on the older successful <emph>flow around cylinder</emph>
+setting developed in <a href="fsi_benchmark/fsi_bibliography.html#TurekSchaefer1996">[TurekSchaefer1996]</a> for incompressible
+laminar flow and on the setup in <a href="fsi_benchmark/fsi_bibliography.html#Wall98">[Wall98]</a>. Similar to these older
+configurations we consider the fluid to be incompressible and in the
+laminar regime. The structure is allowed to be compressible, and the
+deformations of the structure should be significant. The overall setup
+of the interaction problem is such that the solid object with elastic
+part is submerged in a channel flow. Then, self induced oscillations
+in the fluid and the deformable part of the structure are obtained so
+that characteristic physical quantities and plots for the
+time-dependent results can be provided.</p>
+
+<hr />
+
+<ul><li><a href="fsi_benchmark.html">FSI Benchmark</a><ul><li><a href="fsi_benchmark/fsi_definitions.html">Definitions</a></li><li><a href="fsi_benchmark/fsi_quantities.html">Quantities for Comparison</a></li><li><a href="fsi_benchmark/fsi_tests.html">Partial computational Tests</a><ul><li><a href="fsi_benchmark/fsi_tests/fsi_cfd_tests.html">CFD tests</a></li><li><a href="fsi_benchmark/fsi_tests/fsi_csm_tests.html">CSM tests</a></li><li><a href="fsi_benchmark/fsi_tests/fsi_fsi_tests.html">FSI tests</a></li></ul></li><li><a href="fsi_benchmark/fsi_bibliography.html">Bibliography</a></li><li><a href="fsi_benchmark/fsi_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

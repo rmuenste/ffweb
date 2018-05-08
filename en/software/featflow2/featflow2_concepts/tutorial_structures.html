@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Basic structures - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html" class="selected">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="tutorial_structures.html">Basic structures</a>  </div>
+
+  <hr />
+
+  <h1>Basic data types, constants, structures</h1>
+
+<p>FEAT2 provides a set of data types, constants and basic structures. The following list contains an overview about these data types, constants and the most important high-level structures which are necessary for the discretisation.</p>
+
+<h2>Data types (fsystem.f90)</h2>
+
+<p>Fortran 90 defines a set of standard data types:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>data type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>integer</td>
+  <td>Standard integer type</td>
+</tr>
+<tr>
+  <td>real</td>
+  <td>Standard float type</td>
+</tr>
+<tr>
+  <td>complex</td>
+  <td>Standard complex type</td>
+</tr>
+<tr>
+  <td>character</td>
+  <td>A character value</td>
+</tr>
+<tr>
+  <td>logical</td>
+  <td>A boolean value, only <code>.true.</code> or <code>.false.</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>The module <code>fsystem.f90</code> declares a set of additional data types which are frequently used throughout the whole FEAT2 library and in the applications. The following table contains a brief overview about these types:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>data type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>integer(I8)</td>
+  <td>8-bit integer</td>
+</tr>
+<tr>
+  <td>integer(I16)</td>
+  <td>16-bit integer</td>
+</tr>
+<tr>
+  <td>integer(I32)</td>
+  <td>32-bit integer</td>
+</tr>
+<tr>
+  <td>integer(I64)</td>
+  <td>64-bit integer</td>
+</tr>
+<tr>
+  <td>real(SP)</td>
+  <td>Single precision, corresponds to <code>float</code> in C/C++</td>
+</tr>
+<tr>
+  <td>real(DP)</td>
+  <td>Double precision,  corresponds to <code>double</code> in C/C++</td>
+</tr>
+<tr>
+  <td>real(QP)</td>
+  <td>Quad precision,  corresponds to <code>long double</code> in C/C++</td>
+</tr>
+<tr>
+  <td>complex(SP)</td>
+  <td>Single precision complex, corresponds to <code>float complex</code> in C/C++</td>
+</tr>
+<tr>
+  <td>complex(DP)</td>
+  <td>Double precision complex,  corresponds to <code>double complex</code> in C/C++</td>
+</tr>
+<tr>
+  <td>complex(QP)</td>
+  <td>Quad precision complex,  corresponds to <code>long double complex</code> in C/C++</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Constants (fsystem.f90)</h2>
+
+<p>The module <code>fsystem.f90</code> defines a set of constants for all relevant data types that describe the set of possible values:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>SYS_EPSREAL_SP</td>
+  <td>Minimal difference to unity for real values</td>
+</tr>
+<tr>
+  <td>SYS_EPSREAL_DP</td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_EPSREAL_QP</td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_MINREAL_SP</td>
+  <td>Minimal positive values for real variables</td>
+</tr>
+<tr>
+  <td>SYS_MINREAL_DP</td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_MINREAL_QP</td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_MAXREAL_SP</td>
+  <td>Maximal values for real variables</td>
+</tr>
+<tr>
+  <td>SYS_MAXREAL_DP</td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_MAXREAL_QP</td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_MAXINT</td>
+  <td>Maximal values for integer variables</td>
+</tr>
+<tr>
+  <td>SYS_MAXI8</td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_MAXI16</td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_MAXI32</td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_MAXI64</td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+
+<p>Of mathematical importance are furthermore the following constants:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>SYS_PI</td>
+  <td>Mathematical constant Pi; double precision</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_INFINITY_SP</td>
+  <td>Internal constant for infinity</td>
+</tr>
+<tr>
+  <td>SYS_INFINITY_DP</td>
+  <td></td>
+</tr>
+<tr>
+  <td>SYS_INFINITY_QP</td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+
+<p>For string handling, <code>fsystem.f90</code> defines a set of default string length constants:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Declaration</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>character(LEN=SYS_STRLEN)</td>
+  <td>Declares a string with standard string length</td>
+</tr>
+<tr>
+  <td>character(LEN=SYS_NAMELEN)</td>
+  <td>Declares a string used for identifiers, names, etc.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Mesh and domain</h2>
+
+<ol>
+<li><p><strong>t_triangulation</strong> (<code>triangulation.f90</code>)</p>
+
+<ul>
+<li>Encapsules a mesh in 1D, 2D and/or 3D</li>
+<li>Simple meshes can be created using the routines in <code>meshgeneration.f90</code>, e.g.
+
+<ul>
+<li><code>meshgen_rectangular2DQuadMesh</code>: Creates a regular 2D mesh with quadrilaterals.</li>
+</ul></li>
+<li>Extended meshes can be imported from <code>.TRI</code> files.<br><br></li>
+</ul></li>
+<li><p><strong>t_boundary</strong> (<code>boundary.f90</code>)</p>
+
+<ul>
+<li>Encapsules analytical descriptions of complex boundaries</li>
+<li>Currently used only in 2D</li>
+<li>Used to adapt a mesh to the boundary during refinement</li>
+<li>Cal be imported from <code>.PRM</code> files<br><br></li>
+</ul></li>
+<li><p><strong>t_meshregion</strong> (<code>meshregion.f90</code>)</p>
+
+<ul>
+<li>Encapsules parts of a mesh, e.g., a set of cells or vertices</li>
+<li>Used to collect boundary vertices during the generation of boundary conditions<br><br></li>
+</ul></li>
+<li><p><strong>t_boudaryRegion</strong> (<code>boundary.f90</code>)</p>
+
+<ul>
+<li>Encapsules parts of a domain, e.g., boundary segments</li>
+<li>Used to in the definition of boundary conditions to mark parts of the boundary</li>
+</ul></li>
+</ol>
+
+<h2>Discretisation</h2>
+
+<ol>
+<li><p><strong>t_scalarDiscretisation</strong> (<code>spatialdiscretisation.f90</code>)</p>
+
+<ul>
+<li>Encapsules a finite element space $V_h$ over a mesh, e.g., $Q_1$</li>
+<li>Contains links to a mesh, transformation formula and (possibly) a description of the boundary<br><br></li>
+</ul></li>
+<li><p><strong>t_blockDiscretisation</strong> (<code>spatialdiscretisation.f90</code>)</p>
+
+<ul>
+<li>Encapsules tensor products of finite element spaces, e.g., $X_h = V_h \times V_h$ with $V_h$ a finite element space like $Q_1$</li>
+<li>Contains links to an underlying mesh and (possibly) a description of the boundary</li>
+<li>Realised as a list of <code>t_scalarDiscretisation</code> structures, one for each FE space.</li>
+<li>Access to the subspaces is possible via <code>(t_blockDiscretisation)%RspatialDiscr(:)</code></li>
+</ul></li>
+</ol>
+
+<p>All equations are realised based on <code>t_blockDiscretisation</code>. A Poisson equation for example is described by a <code>t_blockDiscretisation</code> structure with only one block, which results in a <code>1x1</code> block matrix in the linear system of equations.</p>
+
+<h2>Matrices/Vectors</h2>
+
+<p>Corresponding to <code>t_scalarDiscretisation</code> and <code>t_blockDiscretisation</code>, there exist "scalar" and "block" versions of matrices and vectors:</p>
+
+<ol>
+<li><p><strong>t_vectorScalar</strong> (<code>linearsystemscalar.f90</code>)</p>
+
+<ul>
+<li>Encapsules the degrees of freedom (DOFs) of a finite element space $V_h$</li>
+<li>Contains links to a <code>t_scalarDiscretisation</code> structure describing the finite element space $V_h$</li>
+<li>Linear algebra on  such vectors is provided by the routines in <code>linearsystemscalar.f90</code><br><br></li>
+</ul></li>
+<li><p><strong>t_matrixScalar</strong> (<code>linearsystemscalar.f90</code>)</p>
+
+<ul>
+<li>Describes a discrete operator $A_h : V_h \to W_h$ for $V_h$ and $W_h$ finite element spaces</li>
+<li>Contains links to the finite element trial space V_h and to the finite element test space $W_h$<br><br></li>
+</ul></li>
+<li><p><strong>t_vectorBlock</strong> (<code>linearsystemblock.f90</code>)</p>
+
+<ul>
+<li>Encapsules the degrees of freedom (DOFs) of a tensor product space X_h, e.g., $X_h = V_h \times V_h$</li>
+<li>Realised as a list of <code>t_vectorScalar</code> structures, i.e., as a list of "scalar" vectors. Every scalar subvector is a "block" in the block vector.</li>
+<li>Access to the blocks is possible via <code>(t_vectorBlock)%RvectorBlock(:)</code></li>
+<li>Linear algebra on  such vectors is provided by the routines in <code>linearsystemblock.f90</code><br><br></li>
+</ul></li>
+<li><p><strong>t_matrixBlock</strong> (<code>linearsystemblock.f90</code>)</p>
+
+<ul>
+<li>Describes an operator $A_h : X_h \to Y_h$ between finite element tensor product spaces $X_h$ and $Y_h$</li>
+<li>Contains links to the underlying trial space $X_h$ and test space $Y_h$</li>
+<li>The block matrix is realised as 2D array of "scalar matrices" <code>t_matrixScalar</code>, one submatrix for every combination of the finite element spaces in $X_h$ and $Y_h$.</li>
+<li>Access to the submatrices is possible via <code>(t_matrixBlock)%RmatrixBlock(:,:)</code></li>
+</ul></li>
+</ol>
+
+<h2>Cubature</h2>
+
+<p>Cubature formulas are defined as constants <code>CUB_xxxx</code> declared in <code>cubature.f90</code>. For every type of cell (triangle, quad, hex,...), there exist a set of cubature formulas. To simplify working with them, a special cubature structure is provided to the assembly routines:</p>
+
+<ol>
+<li><p><strong>t_scalarCubatureInfo</strong> (<code>spatialdiscretisation.f90</code>)</p>
+
+<ul>
+<li>Encapsules all cubature formulas to be used during an assembly. (-> Triangle-Formulas for triangles, Quad-formulas for quads,...)</li>
+<li>Provides the use of "automatic" cubature formulas which automatically adapt themself depending on the cell type.<br>
+<strong>Example:</strong> A <code>t_scalarCubatureInfo</code> is typically set up with the cubature formula <code>CUB_GEN_AUTO_G3</code> (see <code>cubature.f90</code>) which means:
+
+<ul>
+<li>Use 3x3 Gauss formula for quads in 2D</li>
+<li>Use 3-point Gauss formula for triangles in 2D</li>
+<li>Use 3x3x3 gauss formula for hexas in 3D</li>
+<li>...</li>
+</ul></li>
+<li>Currently, there is no "block" variant available. In "block assembly" routines (which assemble a complete matrix), the same cubature formula is used for all blocks.</li>
+</ul></li>
+</ol>
+
+<h2>Boundary conditions</h2>
+
+<ol>
+<li><strong>t_discreteBC</strong> (<code>discretebc.f90</code>)
+
+<ul>
+<li>Encapsules a discrete version of the boundary conditions of the system</li>
+<li>Typically used for Dirichlet boundary conditions</li>
+</ul></li>
+</ol>
+
+<h2>Linear solver</h2>
+
+<ol>
+<li><p><strong>t_linsolNode</strong> (<code>linearsolver.f90</code>)</p>
+
+<ul>
+<li>Encapsules a linear solver</li>
+<li>The solver can be simple (Gauss elimination) or very complex (multigrid with smoothers, etc.)</li>
+</ul></li>
+</ol>
+
+<h2>Postprocessing</h2>
+
+<ol>
+<li><p><strong>t_ucdExport</strong> (<code>ucd.f90</code>)</p>
+
+<ul>
+<li>Provides an export structure for writing <code>.VTK</code> files which can be postprocessed with "Paraview"</li>
+<li>Created based on a mesh. Finite element solution vectors can be attached. At the end, a postprocessing file can be written.</li>
+</ul></li>
+</ol>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+// for correct syntax see http://docs.mathjax.org/en/latest/start.html
+// note that when editing this page these parenthesis need to be
+// escaped with 4 backslashes such that 2 of them end up on the
+// generated web page!
+MathJax.Hub.Config({
+tex2jax: {
+    inlineMath:  [ ['$','$'], ['\\(','\\)'] ]
+}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

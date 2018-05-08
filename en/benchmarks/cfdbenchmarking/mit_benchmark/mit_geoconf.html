@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Geometry and Configuration - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html">Software</a><div class="submenu"><a href="../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../software/featflow.html">FEATFLOW</a><a href="../../../software/featflow2.html">FEATFLOW2</a><a href="../../../software/parpp3d.html">parPP3D</a><a href="../../../software/documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../flow.html">Flow around a Cylinder</a><a href="../bubble.html">Rising Bubble</a><a href="../fsi_benchmark.html">FSI Benchmark</a><a href="../mit_benchmark.html" class="selected">MIT Benchmark</a><div class="submenu"><a href="mit_intro.html">Introduction</a><a href="mit_geoconf.html" class="selected">Geometry and Configuration</a><a href="mit_step.html">Time Step and Mesh Information</a><a href="mit_result.html">Results and Discussion</a><a href="mit_references.html">References</a></div></div></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../benchmarks.html">Benchmarks</a> » <a href="../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../mit_benchmark.html">MIT Benchmark</a> » <a href="mit_geoconf.html">Geometry and Configuration</a>  </div>
+
+  <hr />
+
+  <h2>MIT Benchmark</h2>
+<h4>Geometry and configuration</h4>
+<center><p><img src="../../../../media/mit/geom.png" title="Geometry and coarse mesh" alt="Geometry and coarse mesh" width="200" /></p>
+ <p>Geometry and coarse mesh</p>
+</center>
+ <p class="Space10">The geometry of the problem is very simple but leads nevertheless to complex multiscale phenomena. The velocity vector at the upper and bottom wall is zero which describes a non-slip condition. The left wall is heated while the right wall is cooled by a prescribed non-dimensional temperature of -0.5 and 0.5. Gravity is applied downwards. The top and bottom of the walls are insulated, which means that homogeneous Neumann boundary conditions for the temperature are set and hence no heat is going outside of the wall. The initial condition is the zero vector for all variables. Basically, relevant physical variables which are to be computed are: 
+<ol style="margin-left: 3em;">
+  <li>The x-velocity at point 1 </li>
+  <li>The temperature at point 1</li>
+  <li>The Nusselt number along both sides of the wall in an integral valued function, <div class="equation"><img class="latex" alt="\begin{displaymath} Nu(t)=\frac1H \int_0^H |\pp{\Theta}{x}|_{x=0, W}\,dx \end{displaymath}" title="\begin{displaymath} Nu(t)=\frac1H \int_0^H |\pp{\Theta}{x}|_{x=0, W}\,dx \end{displaymath}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALcAAAAiBAMAAADv61VcAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMAdonvIhBmVM0yRN2rmbublxQ7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAC9klEQVRIx7WWT0gUcRTHv7s7f9xZd9SLG0pkQvbvshTUdaIOSoZT0cEMHC1XLYTtsIoHa+kQeBsVWqKCCcJEpDYovUrQRSI8KR0ChS6BxWJJGIX9fvPbPzMyk806Ptjlvd/+9jNv3u993wzgwcKnuVfYK+NW+PiewYXlkXnmPR/yg5csemIXZCXKYskQkogNartjD24UXfk8Ioio7BYMLt2h4M4uMy/Bu8DXK9d1Flw9F38LVGh+wb9Yi98zlv35/eS9tE9wPmdZ3Q/582bqSiLuE1zMWlY3EUn+AoJ+ZR6dt4gpjstY9bHmkWoLPItleO0WjnxU28rTdSPvderFAilYCJBLHaZ9ToL/NJpcj8tvL0tq0hFOWYJ/WWAdgROFjS0Iumw7DkeeC1zI9xZ3QAU7mEqQUgouqax5gnP5PhIrqsOscGPAG3ANzvBTnuCB/PELUlwABpRW1GF8Vge55qXGxsaD9t38phd4rE/PHJshKQuYFSBe07vxEeIiYBHGlmlm+cSchVe1VTBneFDrhDFFT68Ft0TSxlggcDpRnVUXzO6QufCAeO/VD+qAijZ1BjBvXUPoEDCCOI6aE9W5LPLiDvBxrADd+ESfAH1oAkYZnGZVG04bg4iIKt3jYCHNDS6OJC7W1MQSIJQZ6YWk0kxfD6dypB6tc+BJg1yYXkIU0WFIzvOiJFATLg0lC4H6hKeOCW9u6Winc2ioNtPUm7IBouaXVf/Cb2Nq1vTu2isxjd5iEONo5mZZQslQ0kWEPG3OjE0LG5DZnRyxw2+iuRDcrjV5gUlFVmQqRBd7aB6BNfM0qpjAvlrgZIV/drYUFJNTPA3cygZMbBeoaYn2ejCZWA/X2zQPLSXYTOF/2NW9iG95mZRvbcB99qJif1pW6ZjLy6R821d4FAXm0d9fWp8Afa8b3R18FRKTfaUWbpBL64/IoAibMinfzvxR+uZY8VVBi1gO2qiBuF0m5ZryGDY4Mqpvb7d87h1sZfHVJoko6254/ttfWSfCjk2d1DcAAAAASUVORK5CYII=" /></div></ol><p>where <span class="math"><img class="latex" alt="$H \mand W$" title="$H \mand W$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADsAAAAKBAMAAAD4LTuIAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMAZqtEzd0iELuJMu+ZdlQt/4hFAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA0klEQVQY02NgwAAvC5B5jJ8MTAKRBVgWMDDw/Cy4r8bmAWSxfWfgEECW5gAKsn9n4F/AABJmdGDgT0CXZvjG8NqAGWQL0wSG1SBRK0kGk8uPGLjuPQFJ/2Jf+oAPJMx9ULAJRG/jecCpwGFQCrabIY6P4wLYynwGBkcQnffoAu8FJgMhiLSjOdMsEM1whYHhO5Bi9+IFST+ASnca8JwDu6SXgTkASPE18NwDSacysIKkNRg4QaIMuX8SROJAuvUe6y3xeqrGdfmJGpB7jYHRAEgBAKRIOAARdBFRAAAAAElFTkSuQmCC" /></span> are the height and the width of the domain.</li>
+</ol>
+ Comparison between all contributor's datas is made using the above computed datas.</p>
+
+<p class="Space10">» Continue to <a href="mit_step.html">Time Step and Mesh Information</a></p>
+<p class="Space5">» Return to the <a href="../mit_benchmark.html">MIT benchmark page</a>.</p></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Verification - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="http://www.featflow.de/album/" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html">Software</a><div class="submenu"><a href="../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../software/featflow.html">FEATFLOW</a><a href="../../../software/featflow2.html">FEATFLOW2</a><a href="../../../software/parpp3d.html">parPP3D</a><a href="../../../software/documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../flow.html">Flow around a Cylinder</a><a href="../bubble.html" class="selected">Rising Bubble</a><div class="submenu"><a href="bubble_configurations.html">Geometry and flow configurations</a><a href="bubble_verification.html" class="selected">Verification</a><a href="bubble_participate.html">Participate</a><a href="bubble_reference.html">Reference data</a></div><a href="../fsi_benchmark.html">FSI Benchmark</a><a href="../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../index.html">Home</a> » <a href="../../../benchmarks.html">Benchmarks</a> » <a href="../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../bubble.html">Rising Bubble</a> » <a href="bubble_verification.html">Verification</a>  </div>
+
+  <hr />
+
+  <h2>Bubble Benchmark</h2>
+
+<ul class="List">
+<li><a href="../bubble.html">Rising Bubble</a></li>
+<li><a href="bubble_configurations.html">Geometry and flow configurations</a></li>
+<li class="Selected"><a href="bubble_verification.html">Verification</a></li>
+<li><a href="bubble_participate.html">Participate</a></li>
+<li><a href="bubble_reference.html">Reference data</a></li>
+</ul>
+<hr />
+
+<h2 id="SECTION00013000000000000000"> Verification of the results by the picture norm:</h2>
+<p>To visually verify the results the following approximate bubble shapes can be used. (The raw data for the bubble shapes can be obtained from the <a href="bubble_reference.html">Reference data</a> page.)</p>
+<div class="Gallery">
+<ul>
+<li>Bubble shapes at the final time (<span class="math">t=3</span>)</li>
+<li><a title="Bubble shapes at the final time (t=3) for test case 1 (TP2D (solid red), FreeLIFE (dotted green), and MooNMD (dashed blue))" onclick="return showPic(this, 'placeholder', 'desc')" href="../../../../media/bubble/img27.png">Test case 1</a></li>
+<li><a title="Bubble shapes at the final time (t=3) for test case 2 (TP2D (solid red), FreeLIFE (dotted green), and MooNMD (dashed blue))" onclick="return showPic(this, 'placeholder', 'desc')" href="../../../../media/bubble/img28.png">Test case 2</a></li>
+</ul>
+<div class="picture"><img id="placeholder" src="../../../../media/bubble/img27.png" alt="" />
+<p class="caption"><a id="desc" href="../../../../media/bubble/img27.png">Bubble shapes at the final time (<span class="math">t=3</span>) for test case 1<br />(TP2D (solid red), FreeLIFE (dotted green), and MooNMD (dashed blue))</a></p>
+</div>
+</div>
+<h2><a name="SECTION00014000000000000000"> Verification of the results by quantitative data:</a></h2>
+<p>Since mere visual inspection is not really enough to say anything about the accuracy of the simulations the following benchmark quantities have been defined and computed.</p>
+<h4>Center of Mass</h4>
+<p>The centroid or center of mass of the bubble is defined by
+
+<div id="seq1" class="displaymath">
+<img class="latex" alt="\begin{displaymath}\mathbf{X}_c= (x_c,y_c)= \frac{\int_{\Omega_2} \mathbf{x}\ dx}{\int_{\Omega_2} 1\ dx}\end{displaymath}" title="\begin{displaymath}\mathbf{X}_c= (x_c,y_c)= \frac{\int_{\Omega_2} \mathbf{x}\ dx}{\int_{\Omega_2} 1\ dx}\end{displaymath}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAmBAMAAADU5X+kAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMAMpnvzau7iUQQZt1UdiLPSK9RAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACfklEQVRIx62Wz2vTYBjHv1lnk7RJFkSLQg/F8w49eNlFU1DBk7sonkb+hN7sCmKQDecYGBjDgWgjFMbGYD0I4kXaHhyTFXvwMMQfZcwdnGJVGCjIfJOlzdskhfY17+Ht8/7o533e932e9xuAocxPI7KifYwMxemBrg1WlpQJdO2xsuR8oOsDK2vE6ljlP/HnNvx1jtucm2Jhxatd89m+XRfFtiBoeRZWUu2aixOkUn4Lk+CbTHscMz0X/5IqofEWRlU2Fr7NudE69aZq32vya7qEKgvrQKzgwLHeVmI/yc944+nm2rYZOrnl7+idlhI0xFoDxk+gZ7WnVReziGEheNgnL+ZOHPZeZy0wiacbRgE7WOOMYCbhwUTCFxmTgTkJ6pJEPcPJmG4pwUwCf5jypW7QeYVebRncFVwyv4Sd9bUX7oK3SCEc2UC6MOue7Urrs/PKAA/J6G0Kfzlkjyj98KWbCmPGPSFpSV1xWQOVc79MPwtdB5K46WONHfUrZOn8Hb1njzxh5Tr/PI1s+B5DS8pOKmHdO3DJ4rbaEuYbOEseJk6zx/SBdnj3vLF0NL5Px3pGKq5vKbqC68DuqzwZE6whtKNBN5zAkYijkv0SqGRsxBxCO/gFKhofO3WhRliKlrLH0v20Q3Jjud1XZzrc+xCPz9Hqox3SxrHDisb63lPa4T6LcpOV5WmHy3pfVr1MYdYOh8VbJS9T2LXDYX03Z6lMYdYOxyyjSGXKsNqh7NwzPVYdL2t2pjBpBx5BqdiW8Klg38X2uzTJFCZWCjPAhWi+mepYBLJCIwIU0Q7ZSFhn4v+PItoBtck/wW4Efi0Dp/TRq8pqdB+tezf8Pf8ACze9OPGpyYoAAAAASUVORK5CYII=" /></div>
+
+where <span class="math">Ω<sub>2</sub></span> denotes the region that the bubble occupies.</p>
+<div class="Gallery">
+<ul>
+<li>Center of Mass for all groups</li>
+<li><a title="Center of Mass for all groups (test case 1)" onclick="return showPic(this, 'placeholder2', 'desc2')" href="../../../../media/bubble/img31.png">Test Case 1</a></li>
+<li><a title="Center of Mass for all groups (test case 2)" onclick="return showPic(this, 'placeholder2', 'desc2')" href="../../../../media/bubble/img32.png">Test Case 2</a></li>
+</ul>
+<div class="picture"><img id="placeholder2" src="../../../../media/bubble/img31.png" alt="" />
+<p class="caption"><a id="desc2" href="../../../../media/bubble/img31.png">Center of Mass for all groups (test case 1)</a></p>
+</div>
+</div>
+
+<h4>Circularity</h4>
+<p class="Space5"> The "degree of circularity" in <span class="math"><img class="latex" alt="$\mathbb{R}^2$" title="$\mathbb{R}^2$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAALBAMAAABSacpvAAAAKlBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmU0mKAAAADXRSTlMAVM12iatmRJkiEDLd3TiKRAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAE9JREFUCNdjYAABRokCMM1QzKnAIGTkGsbAwN7AwMzMYJ7AsIIBxDAw4EzYAGJ0CsxRAkqxhlqBNTAzlztAGSxToAwuawEQQ8jIoEQNSAMAGmQKiJ/CpsIAAAAASUVORK5CYII=" /></span> can be defined as
+<div class="displaymath">
+<img class="latex" alt="\begin{displaymath}\slashed{c} = \frac{P_a}{P_b} =     \frac{\textrm{perimeter of area-equivalent circle}}         {\textrm{perimeter of bubble}} =     \frac{\pi d_a}{P_b}\,.\end{displaymath}" title="\begin{displaymath}\slashed{c} = \frac{P_a}{P_b} =     \frac{\textrm{perimeter of area-equivalent circle}}         {\textrm{perimeter of bubble}} =     \frac{\pi d_a}{P_b}\,.\end{displaymath}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUIAAAAgCAMAAABQOIFLAAAAQlBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACGKEuzAAAAFXRSTlMAMpkQiXYiZlREhaXBzdPfyavvu92eC0OxAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAD9ElEQVRo3u1ZbbujKAzlnbAzzCxq//9f3SSAOr1WxXJ7987TfLHEEwKnJGAQ4i2fK/amrE2m1SzCplru2RivLg7yg7cw2QPXf5ps4HfE35pGpxk+hMZJBb3JoN8bmNH+IoUfvVl74PrOxLZQ6GLT6GBkHmWPFa3THkfW9wwe2+K6kcImsBCJ4Go3kMOkABT+q2DBaIwJH2X0IkQbQnL4SpRXEJN3K9S8QIKVQo5jnmWQ3nBoIYCxRVP+UtZIBR4khR8MIMgbTEnoSVUszTI7wlFAEtl1dmfAOx4gu+Dmgn+UZOIQp8g9A06vicLBAvgDE0NTHpEEHIYRJonAQ8IfYsTnpOsrhSStUTksaJ1HPf+3gxMK2DoUbNHw/FmjB5zqIIVBkwSZMEqkfrZGzeJIjIFd5/U44ZKwdYBhaRb89ipx2LfPCbvktvNhfwZuqPObNmMIYHlePEJbJhidKK9oHmvU/AcIjLNKIa5bWvoEKNiiYTBrPLE+ytkDmw7ahdkaNcWYMSsK2TabkIulWfCPQk1ypnY3DIrURGHxcI5CtbTuKcyvcB5yjcq/1B8U6pipIUDGFk2KMRXNJoXK+8WaKFEzV4gh17m9otCvm2b3PKDyhkTZx/j2VEh/gvdpN5Bx23ET5apNCssr1MAatexv0xzItH8pmwEZWzUMZo0byEQKSntDpdBNsFijZvFJoyDXSw9hpnBpFvyDaEw5yCmxTw62+NjOds7ekiz5yj3eUowKnIiDAcD8jZlHxogZO0pM8s7fcKvhV8IpzNwLqsYIpnFJJpD3ToCQIAMYWzQFzB1JEwDXm1a4YY3kibaKpGdr8p2hdRTsum4nrHbZRW0W/KNNGHLOxkSLeURu8XFwqKWcEvRuIL9cohRfJht86IPPD23D/C++Kdzkw7on+gvTV8wGhqT/T1/CSrzlOfnnRwg5novsfsGcQ31raZ6i+Ylb0taL251sm9/+KmmZ4uoLBONYv2PxmcT8KzSt33cgf9xRf/MB/S3XROJpRv/rA3zLQKYi2Vb7Xv+pQt/AfvdQeLHy33BEfuKO4L6QWtv52VbOP1NrfcTF/qHwYuW/YSk9cUdw/11U2+VpO1P4iIuDG4uelf+GwZ67I3gxhRe5OFH5b/kW7HpHUGtE9QZgrhmV51E5X7yGizOV//PS946A686EqjcA6zY+D8r54jVc1Mp/p0Ng3zuC2t1sX9vleVjOfwkXtfKvXFcKu9wRnKKwYwXlIhe18h/7nLW63hHk7ihU6w1AbZfnUTn/Sips5WKp/Kc+GaXrHQF2B7m7cgMwt/PzsJzfFsZPchG8UKFXIH9zucqFBS/eFHbl4uq58CtvPD5L/gOfwUSk8q+Q6gAAAABJRU5ErkJggg==" /></div>
+
+<p class="Space5">Here, <span class="math">P<sub>a</sub></span> denotes the perimeter or circumference of a circle with diameter <span class="math">d<sub>a</sub></span> which has an area equal to that of a bubble with perimeter <span class="math">P<sub>b</sub></span>. For a perfectly circular bubble or drop the circularity will be equal to unity and decrease as the bubble is deformed.</p>
+<div class="Gallery">
+<ul>
+<li>Circularity for all groups </li>
+<li><a title="Circularity for all groups (test case 1)" onclick="return showPic(this, 'placeholder3', 'desc3')" href="../../../../media/bubble/img38.png">Test Case 1</a></li>
+<li><a title="Circularity for all groups (test case 2)" onclick="return showPic(this, 'placeholder3', 'desc3')" href="../../../../media/bubble/c2_circ.png">Test Case 2</a></li>
+</ul>
+<div class="picture"><img id="placeholder3" src="../../../../media/bubble/img38.png" alt="" />
+<p class="caption"><a id="desc3" href="../../../../media/bubble/img38.png">Circularity for all groups (test case 1)</a></p>
+</div>
+</div>
+
+<h4>Rise Velocity</h4>
+<p class="Space5">The mean velocity with which a bubble is rising or moving is a particularly interesting quantity since it does not only measure how the interface tracking algorithm behaves but also the quality of the overall solution. The mean bubble velocity is defined as
+
+<div id="seq2" class="displaymath">
+<img class="latex" alt="\begin{displaymath}\mathbf{U}_c = \frac{\int_{\Omega_2} \mathbf{u}\ dx}{\int_{\Omega_2} 1\ dx} \end{displaymath}" title="\begin{displaymath}\mathbf{U}_c = \frac{\int_{\Omega_2} \mathbf{u}\ dx}{\int_{\Omega_2} 1\ dx} \end{displaymath}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAmBAMAAAC2ZpGLAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMARJndu2aJMhBUdqsize/qBfC9AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAByUlEQVQ4y2NgwAYYwxoYiAe8XAdIUF2CIcL6AbfqSRgiPBdwq16GIcK1ALdqVbh37Q/4JwDplbEFlYnSODzjCWfFH+AHqmYL6GcQkGXDYbY5murzDdIMDFm4XPIDTXUsQyoDw3Vcqj/wLBSDxM/8A/UJoDCymT7jAyd2xTwGzUAMZnZrxb9kYGCaubQyNXIGdtXsDrIMDG+IjUpOhT4GhgeMszBlhP4rMii7oqYpNgEuAdaAQhYsBv0HBmcBikgLE0PBArYehkNEqeYQYKh14L3BE4FXdVtaWhpSFJzdQpTZ+ACm6v84AQODPQMDSwM2l2AF8xcwCDEwRi4gziWMLpsWMBxhQE27ohn4tKBH24U1+FSzSRagJhREKoCmXLwJBc6Kh4TAWTyquRLgTH6I6lV4VDMFoKrmmnqdfZrgHhyqWSagqk7l+MDIeCEBh2rmAhTVPD8YNzCw4YwR/gYUJusFtgAGXpyJiZ/hlGAGQjWnAvPJyn6GCThUH+YwYDgMien1iUBSc1b4tNCZuErpEsYLDHxEF8qTOB4w8DFIEpfSBBIZFjKEsgs4EKOYw0GBnYsh4wCPAlFmNzKwX2G423CUlMqH5zaGSwABgodtG3uhoAAAAABJRU5ErkJggg==" /></div>
+where <span class="math"><i>Ω<sub>2</sub></i></span> again denotes the region that the bubble occupies.</p>
+
+<div class="Gallery">
+<ul>
+<li>Rise velocity for all groups</li>
+<li><a title="Rise velocity for all groups (test case 1)" onclick="return showPic(this, 'placeholder4', 'desc4')" href="../../../../media/bubble/img42.png">Test case 1</a></li>
+<li><a title="Rise velocity for all groups (test case 2)" onclick="return showPic(this, 'placeholder4', 'desc4')" href="../../../../media/bubble/img43.png">Test case 2</a></li>
+</ul>
+<div class="picture"><img id="placeholder4" src="../../../../media/bubble/img42.png" alt="" />
+<p class="caption"><a id="desc4" href="../../../../media/bubble/img42.png">Rise velocity for all groups (test case 1)</a></p>
+</div>
+</div>
+
+<p class="Space20">Continue reading:</p>
+<ul class="List">
+<li><a href="bubble_participate.html">Participate</a></li>
+</ul>
+<p> </p></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

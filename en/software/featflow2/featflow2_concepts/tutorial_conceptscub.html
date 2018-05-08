@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Cubature rules - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html" class="selected">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="tutorial_conceptscub.html">Cubature rules</a>  </div>
+
+  <hr />
+
+  <h1>Cubature</h1>
+
+<p>All assembly routines in FEAT2 have a build-in logic to choose a proper cubature formula, which is usually a strong Gauss Formula. In many cases however, the Gauss formula is much to strong, so a lot of computational time can be saved by choosing an appropriate cubature formula for the specific situation and finite element space.</p>
+
+<h2>Basic cubature formulas</h2>
+
+<p>The basic cubature support is realised in the module <code>cubature.f90</code> which provides a list of IDs for all implemented cubature formulas. The following tables contain a brief overview about IDs which are commonly used:</p>
+
+<p><strong>1D cubature formulas:</strong></p>
+
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>cell type</th>
+  <th>degree</th>
+  <th>#cub.pts</th>
+  <th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>CUB_G1_1D</td>
+  <td>interval</td>
+  <td>2</td>
+  <td>1</td>
+  <td>Gauss 1-pt / Midpoint rule</td>
+</tr>
+<tr>
+  <td>CUB_TRZ_1D</td>
+  <td></td>
+  <td>2</td>
+  <td>2</td>
+  <td>Trapezoidal rule</td>
+</tr>
+<tr>
+  <td>CUB_G2_1D</td>
+  <td></td>
+  <td>4</td>
+  <td>2</td>
+  <td>Gauss 2-pt</td>
+</tr>
+<tr>
+  <td>CUB_G3_1D</td>
+  <td></td>
+  <td>6</td>
+  <td>3</td>
+  <td>Gauss 3-pt</td>
+</tr>
+<tr>
+  <td>CUB_G4_1D</td>
+  <td></td>
+  <td>8</td>
+  <td>4</td>
+  <td>Gauss 4-pt</td>
+</tr>
+<tr>
+  <td>CUB_G5_1D</td>
+  <td></td>
+  <td>10</td>
+  <td>5</td>
+  <td>Gauss 5-pt</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>2D cubature formulas:</strong></p>
+
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>cell type</th>
+  <th>degree</th>
+  <th>#cub.pts</th>
+  <th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>CUB_G1_T</td>
+  <td>triangle</td>
+  <td>2</td>
+  <td>1</td>
+  <td>Gauss 1-pt</td>
+</tr>
+<tr>
+  <td>CUB_TRZ_T</td>
+  <td></td>
+  <td>2</td>
+  <td>3</td>
+  <td>Trapezoidal rule</td>
+</tr>
+<tr>
+  <td>CUB_G3_T</td>
+  <td></td>
+  <td>3</td>
+  <td>3</td>
+  <td>Gauss 3-pt</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>CUB_G1_2D</td>
+  <td>quad</td>
+  <td>2</td>
+  <td>1</td>
+  <td>Gauss 1-pt</td>
+</tr>
+<tr>
+  <td>CUB_TRZ_2D</td>
+  <td></td>
+  <td>2</td>
+  <td>4</td>
+  <td>Trapezoidal rule</td>
+</tr>
+<tr>
+  <td>CUB_MID_2D</td>
+  <td></td>
+  <td>2</td>
+  <td>4</td>
+  <td>(Edge) Midpoint rule</td>
+</tr>
+<tr>
+  <td>CUB_G2_2D</td>
+  <td></td>
+  <td>4</td>
+  <td>4</td>
+  <td>Gauss 2x2</td>
+</tr>
+<tr>
+  <td>CUB_G3_2D</td>
+  <td></td>
+  <td>6</td>
+  <td>9</td>
+  <td>Gauss 3x3</td>
+</tr>
+<tr>
+  <td>CUB_G4_2D</td>
+  <td></td>
+  <td>8</td>
+  <td>16</td>
+  <td>Gauss 4x4</td>
+</tr>
+<tr>
+  <td>CUB_G5_2D</td>
+  <td></td>
+  <td>10</td>
+  <td>25</td>
+  <td>Gauss 5x5</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>3D cubature formulas:</strong></p>
+
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>cell type</th>
+  <th>degree</th>
+  <th>#cub.pts</th>
+  <th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>CUB_G1_3D_T</td>
+  <td>tetra</td>
+  <td>2</td>
+  <td>1</td>
+  <td>Gauss 1-pt</td>
+</tr>
+<tr>
+  <td>CUB_TRZ_3D_T</td>
+  <td></td>
+  <td>2</td>
+  <td>4</td>
+  <td>Trapezoidal rule</td>
+</tr>
+<tr>
+  <td>CUB_S2_3D_T</td>
+  <td></td>
+  <td>2</td>
+  <td>4</td>
+  <td>Stroud 4-pt</td>
+</tr>
+<tr>
+  <td>CUB_S3_3D_T</td>
+  <td></td>
+  <td>3</td>
+  <td>10</td>
+  <td>Stroud 10-pt</td>
+</tr>
+<tr>
+  <td>CUB_S5_3D_T</td>
+  <td></td>
+  <td>5</td>
+  <td>15</td>
+  <td>Stroud 15-pt</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>CUB_G1_3D</td>
+  <td>hex</td>
+  <td>2</td>
+  <td>1</td>
+  <td>Gauss 1-pt</td>
+</tr>
+<tr>
+  <td>CUB_MIDAREA_3D</td>
+  <td></td>
+  <td>2</td>
+  <td>6</td>
+  <td>(Face) Midpoint rule</td>
+</tr>
+<tr>
+  <td>CUB_TRZ_3D</td>
+  <td></td>
+  <td>2</td>
+  <td>8</td>
+  <td>Trapezoidal rule</td>
+</tr>
+<tr>
+  <td>CUB_G2_3D</td>
+  <td></td>
+  <td>4</td>
+  <td>8</td>
+  <td>Gauss 2x2x2</td>
+</tr>
+<tr>
+  <td>CUB_G3_3D</td>
+  <td></td>
+  <td>6</td>
+  <td>27</td>
+  <td>Gauss 3x2x3</td>
+</tr>
+<tr>
+  <td>CUB_G4_3D</td>
+  <td></td>
+  <td>8</td>
+  <td>64</td>
+  <td>Gauss 4x4x4</td>
+</tr>
+<tr>
+  <td>CUB_G5_3D</td>
+  <td></td>
+  <td>10</td>
+  <td>125</td>
+  <td>Gauss 5x5x5</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Automatic cubature formulas</h2>
+
+<p>Additionally to the above specific cubature formulas, there exist a number of "automatic" cubature rules. These cubature rules are chosen automatically depening on the underlying finite element space and the object which is to be assembled. The set of automatic cubature rules is restricted to those cubature rules which are element and dimension independent. The following list gives an overview about the corresponding IDs and formulas:</p>
+
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>CUB_GEN_AUTO_G1</td>
+  <td>1-point Gauss formula</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO_G2</td>
+  <td>2-point Gauss formula</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO_G3</td>
+  <td>3-point Gauss formula</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO_G4</td>
+  <td>4-point Gauss formula</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO_G5</td>
+  <td>5-point Gauss formula</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO_G6</td>
+  <td>6-point Gauss formula</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO_TRZ</td>
+  <td>Trapezoidal rule</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO_MID</td>
+  <td>Midpoint rule</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO_SIMPSON</td>
+  <td>Simpson rule</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO_LUMPMASS</td>
+  <td>Cubature rule that lumps a mass matrix (if available)</td>
+</tr>
+<tr>
+  <td>CUB_GEN_AUTO</td>
+  <td>General automatic cubature formula, chosen depending on the dimension and type of operator to be assembled. This is the default.</td>
+</tr>
+</tbody>
+</table>
+
+<p>For most cases, the user will specify one of the above automatic cubature formulas for the assembly. This gives a large simplification in particular for conformal meshes, where different cubature rules have to be chosen depending on the type of the underlying cell. Automatic cubature formulas choose the corresponding cubature rule automatically depending on the cell type.</p>
+
+<h2>Using cubature formulas in the assembly</h2>
+
+<p>To enforce a specific cubature rule during the assembly of a right-hand side or a matrix, a structure of type <code>t_scalarCubatureInfo</code> from the module <code>spatialdiscretsation.f90</code> can be specified to any assembly routine. This structure defines for every utilised finite element space a corresponding cubature formula. For creating the structure, the routine <code>spdiscr_createDefCubStructure</code> is used, which sets up a cubature structure depending on a finite element space, a mesh and (possibly) the type of the operator to be assembled. Any of the above cubature IDs can be specified here. The structure can be destroyed using <code>spdiscr_releaseCubStructure</code>.</p>
+
+<p>The following example demonstrates this approach. It creates a cubature structure for the Gauss 3-pt rule and passes this to the assembly routine for right-hand side vectors. At the end, the structure is released:</p>
+
+<pre><code>type(t_spatialDiscr) :: rdiscr
+type(t_vectorScalar) :: rrhs
+type(t_scalarCubatureInfo) :: rcubature
+
+...
+! Define the cubature rule
+call spdiscr_createDefCubStructure (rdiscr,rcubature,CUB_GEN_AUTO_G3)
+
+! Assemble the vector
+call linf_buildVectorScalar (...,rrhs,rcubatureInfo = rcubature,...)
+
+! Release the cubature structure
+call spdiscr_releaseCubStructure (rcubatureInfo)
+</code></pre>
+
+<p>As can be seen from the example, the structure <code>rcubature</code> is specified as additional (optional) parameter <code>rcubatureInfo</code> in the call to the assembly routine <code>linf_buildVectorScalar</code>. The cubature formula <code>CUB_GEN_AUTO_G3</code> tells <code>linf_buildVectorScalar</code> to automatically choose an appropriate 3-point Gauss formula (3x3 for quads in 2D, 3x3x3 for hexas in 3D) for the cubature.</p>
+
+<h2>Summed cubature rules</h2>
+
+<p>The routine <code>spdiscr_createDefCubStructure</code> accepts an optional parameter <code>nlevels</code> which allows to specify "summed cubature formulas". For a summed cubature formula, the element on which the cubature is applied is regularly refined into subelements, and the actual cubature formula is aplied piecewise. For example, in 1D:</p>
+
+<ul>
+<li><code>nlevels=0</code> results in the original cubature rule.</li>
+<li><code>nlevels=1</code> results in a sum about 2 intervals.</li>
+<li><code>nlevels=2</code> results in a sum about 4 intervals.</li>
+<li><code>nlevels=4</code> results in a sum about 8 intervals.</li>
+</ul>
+
+<p>etc. Similarly in 2D with quadrilateral elements,</p>
+
+<ul>
+<li><code>nlevels=0</code> results in the original cubature rule.</li>
+<li><code>nlevels=1</code> results in a sum about 4 subelements in each element.</li>
+<li><code>nlevels=2</code> results in a sum about 16 subelements in each element.</li>
+<li><code>nlevels=3</code> results in a sum about 64 subelements in each element.</li>
+</ul>
+
+<p>etc. This technique can be used to improve integrals in cells with large gradients, e.g., in the region of shocks.</p>
+
+<p>The level parameter is directly specified in the call to <code>spdiscr_createDefCubStructure</code>. The following example demonstrates how to set p a right-hand side vector with a summed Gauss 3-point rule where each element is refined 4 times:</p>
+
+<pre><code>type(t_spatialDiscr) :: rdiscr
+type(t_vectorScalar) :: rrhs
+type(t_scalarCubatureInfo) :: rcubature
+
+...
+! Define the summed G3 cubature rule, 4 levels of refinement
+call spdiscr_createDefCubStructure (rdiscr,rcubature,CUB_GEN_AUTO_G3,4)
+
+! Assemble the vector
+call linf_buildVectorScalar (...,rrhs,rcubatureInfo = rcubature,...)
+
+! Release the cubature structure
+call spdiscr_releaseCubStructure (rcubatureInfo)
+</code></pre>
+
+<p>The following picture demonstrates a summed 2x2 Gauss formula for level <code>nlevels=2</code>. Every cell is locally refined two times, thus containing 16 subelements. The Gauss formula is applied on each of the subelements, resulting in 64 cubature points in total on each element.</p>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/summedcubature.svg" title="A summed cubature rule" alt="A summed cubature rule" />
+</center></p>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

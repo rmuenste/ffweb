@@ -1,0 +1,650 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Results - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../../index.html">Home</a>
+  <a href="../../../../contact.html">Contact</a><a href="../../../../software.html">Software</a><div class="submenu"><a href="../../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../../software/featflow.html">FEATFLOW</a><a href="../../../../software/featflow2.html">FEATFLOW2</a><a href="../../../../software/parpp3d.html">parPP3D</a><a href="../../../../software/documentation.html">Documentation</a></div><a href="../../../../team.html">Team</a><a href="../../../../links.html">Links</a><div class="submenu"><a href="../../../../links/websites.html">Websites</a><a href="../../../../links/software_links.html">Software</a></div><a href="../../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../../flow.html" class="selected">Flow around a Cylinder</a><div class="submenu"><a href="../dfg_benchmark1_re20.html">DFG benchmark 2D-1 (RE20, laminar)</a><a href="../dfg_benchmark2_re100.html">DFG benchmark 2D-2 (RE100, periodic)</a><a href="../dfg_benchmark3_re100.html">DFG benchmark 2D-3 (RE100, fixed time interval)</a><a href="../dfg_flow3d.html" class="selected">3D laminar case (Re=20 and Re=100)</a><div class="submenu"><a href="dfg_flow3d_configuration.html">Benchmark configuration</a><a href="dfg_flow3d_software.html">Used CFD Software Packages</a><a href="dfg_flow3d_results.html" class="selected">Results</a><a href="dfg_flow3d_conclusion.html">Conclusions and Bibliography</a><a href="dfg_flow3d_reference.html">Reference Values</a></div></div><a href="../../bubble.html">Rising Bubble</a><a href="../../fsi_benchmark.html">FSI Benchmark</a><a href="../../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../../publications.html">Publications</a><a href="../../../../services.html">Services</a><div class="submenu"><a href="../../../../services/cdrom.html">CD-ROM</a><a href="../../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../../news.html">News</a><a href="../../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../../index.html">Home</a> » <a href="../../../../benchmarks.html">Benchmarks</a> » <a href="../../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../../flow.html">Flow around a Cylinder</a> » <a href="../dfg_flow3d.html">3D laminar case (Re=20 and Re=100)</a> » <a href="dfg_flow3d_results.html">Results</a>  </div>
+
+  <hr />
+
+  <h3>Results</h3>
+
+<p>The benchmark problems studied with all the codes, and while the problems were being studied, the question was not: <em>"Is the software tool capable of solving the problem?"</em> but <em>"How accurate and efficient is the given software tool?"</em>. Therefore, to show the accuracy of the employed CFD softwares, the benchmark problem at <span class="math">Re=20</span> is firstly studied. The results for this case obtained for 4 different mesh levels are given <a href="dfg_flow3d_results.html#resultsRe20">here</a>.</p>
+
+<table id="resultsRe20" class="plain">
+<caption>Results for steady test case (<span class="math">Re=20</span>), reference values: <span class="math">c<sub>D</sub> = 6.18533</span> and <span class="math">c<sub>L</sub> = 0.009401</span> <a href="dfg_flow3d_conclusion.html#Braack2006">[2]</a>.</caption>
+<thead>
+  <tr>
+    <th># of Cells</th>
+    <th>Software</th>
+    <th><span class="math">c<sub>D</sub></span></th>
+    <th><span class="math">c<sub>L</sub></span></th>
+    <th>%Err <span class="math">c<sub>D</sub></span></th>
+    <th>%Err <span class="math">c<sub>L</sub></span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;">L1</td>
+    <td style="text-align: left;">CFX</td>
+    <td style="text-align: center;">6.06750</td>
+    <td style="text-align: center;">0.01255</td>
+    <td style="text-align: center;">1.91</td>
+    <td style="text-align: center;">33</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">6144</td>
+    <td style="text-align: left;">OF</td>
+    <td style="text-align: center;">6.13408</td>
+    <td style="text-align: center;">0.01734</td>
+    <td style="text-align: center;">0.83</td>
+    <td style="text-align: center;">84</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"><span class="sc">FeatFlow</span></td>
+    <td style="text-align: center;">6.13973</td>
+    <td style="text-align: center;">0.00956</td>
+    <td style="text-align: center;">0.74</td>
+    <td style="text-align: center;">1.8</td>
+  </tr>
+</tbody>
+<tbody style="background: #eef;">
+  <tr>
+    <td style="text-align: left;">L2</td>
+    <td style="text-align: left;">CFX</td>
+    <td style="text-align: center;">6.13453</td>
+    <td style="text-align: center;">0.00817</td>
+    <td style="text-align: center;">0.82</td>
+    <td style="text-align: center;">14</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">49152</td>
+    <td style="text-align: left;">OF</td>
+    <td style="text-align: center;">6.19702</td>
+    <td style="text-align: center;">0.01099</td>
+    <td style="text-align: center;">0.19</td>
+    <td style="text-align: center;">17</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"><span class="sc">FeatFlow</span></td>
+    <td style="text-align: center;">6.17433</td>
+    <td style="text-align: center;">0.009381</td>
+    <td style="text-align: center;">0.18</td>
+    <td style="text-align: center;">0.21</td>
+  </tr>
+</tbody>
+<tbody>
+  <tr>
+    <td style="text-align: left;">L3</td>
+    <td style="text-align: left;">CFX</td>
+    <td style="text-align: center;">6.17481</td>
+    <td style="text-align: center;">0.00928</td>
+    <td style="text-align: center;">0.17</td>
+    <td style="text-align: center;">1.3</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">393216</td>
+    <td style="text-align: left;">OF</td>
+    <td style="text-align: center;">6.19362</td>
+    <td style="text-align: center;">0.01001</td>
+    <td style="text-align: center;">0.13</td>
+    <td style="text-align: center;">6.5</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"><span class="sc">FeatFlow</span></td>
+    <td style="text-align: center;">6.18260</td>
+    <td style="text-align: center;">0.009387</td>
+    <td style="text-align: center;">0.04</td>
+    <td style="text-align: center;">0.15</td>
+  </tr>
+</tbody>
+<tbody style="background: #eef;">
+  <tr>
+    <td style="text-align: left;">L4</td>
+    <td style="text-align: left;">CFX</td>
+    <td style="text-align: center;">6.18287</td>
+    <td style="text-align: center;">0.009387</td>
+    <td style="text-align: center;">0.04</td>
+    <td style="text-align: center;">0.15</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">3145728</td>
+    <td style="text-align: left;">OF</td>
+    <td style="text-align: center;">6.18931</td>
+    <td style="text-align: center;">0.00973</td>
+    <td style="text-align: center;">0.06</td>
+    <td style="text-align: center;">3.5</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"><span class="sc">FeatFlow</span></td>
+    <td style="text-align: center;">6.18465</td>
+    <td style="text-align: center;">0.009397</td>
+    <td style="text-align: center;">0.01</td>
+    <td style="text-align: center;">0.05</td>
+  </tr>
+</tbody>
+</table>
+
+<p>The qualitative results were indistinguishable even for the coarsest level calculations for the <span class="math">Re=20</span> test case.</p>
+
+<p>The expected agreement of the results for the first benchmark test motivated us to go on with the second benchmark problem which is the challenging part of our benchmarking studies.
+The second benchmark problem has a fixed simulation time, <span class="math">T=8</span> s, whereas the first benchmark problem is simulated towards the steady state solution. 
+There is no precise unique definition of the stopping criteria for all the softwares for the first case. 
+Therefore, while the software tools are compared with respect to their accuracy in both cases, their computational performance has been tested in the later case, as well. 
+The coarse grid computations were performed sequentially and fine grid ones were done in parallel, based on domain decomposition method. 
+Both sequential and  parallel computations were performed on identical compute nodes: Dual-core AMD Opteron™ Processor 250 2.4 GHz with 8 GB total memory. 
+To decrease the latency time due to memory bandwidth limitation each partition is submitted to one node. 
+The nodes were interconnected via 1GHz ethernet connection, regarding the number of nodes it is a sufficiently fast connection. 
+However, it has to be mentioned that the performance of the software packages will increase for higher number of partitions by using infiniband connected nodes.</p>
+
+<p>In the second benchmark test, the flow is simulated for 8 seconds, a half period of the imposed inflow condition. 
+The simulations start with zero inflow and zero initial condition at <span class="math">t=0</span> s and finish at <span class="math">t=8</span> s with zero inflow again, see <a href="dfg_flow3d_configuration.html#parabolicProfileT">(3)</a>. 
+Due to the transient inflow condition, adaptive time stepping technique is a good candidate for this problem. 
+However, in preliminary studies with this technique, numerical oscillations are observed in the results which are obtained by CFX and OpenFOAM. 
+The oscillations were nor visible in qualitative results neither in the drag coefficient results. 
+However, when the results of a sensitive variable such as <span class="math">c<sub>L</sub></span> are plotted, the numerical oscillations appear.
+The results are obtained on a mesh with 393216 cells by OpenFOAM for two different values of maximum Courant numbers, maxCo, and with different tolerance values of linear solvers. Tolerance values of the velocity solver, uTol, are set to 10<sup>-5</sup> or 10<sup>-6</sup> and tolerance values of the pressure solver, <span class="math">pTol</span>, are set to 10<sup>-6</sup> or 10<sup>-7</sup>.</p>
+
+<p>Therefore, a fixed time step size is used in the simulations although it leads to excess of computational costs. 
+The benchmark calculations are performed on several levels of refined meshes to obtain mesh independent results and to show convergence of the solvers with respect to the mesh size. 
+The chosen time step sizes are maximum values for which the solution is independent of the chosen time step size. 
+The comparison criteria are maximum drag coefficient and minimum lift coefficient. 
+Since the lift coefficient is more sensitive than the drag coefficient, the lift coefficient results are more representative in accuracy.  
+When all the results are considered, it is clear that <span class="sc">FeatFlow</span> has the best convergence behavior, namely showing quadratic convergence, with respect to the mesh size. 
+This result was foreseen by the authors due to the employed quadratic finite element functions. 
+And converged results with respect to mesh size are already obtained on the 3rd level mesh by <span class="sc">FeatFlow</span>. 
+In <a href="dfg_flow3d_results.html#featflowRe100">the plot</a>, it is clearly shown that level 3 and level 4 results are identical and consequently the finest level results are considered as the reference through this study. 
+Moreover, it is worth to mention that these results are the closest to one reported by <a href="dfg_flow3d_conclusion.html#John2006">John</a>.</p>
+
+<p id="featflowRe100" class="center">
+<img src="../../../../../media/dfg_flow3d/Fd_Q2P1_paper.png" title="Results for the second benachmark: drag coefficient." alt="Results for the second benachmark: drag coefficient." style="max-width: 90%;" /><br />
+<img src="../../../../../media/dfg_flow3d/Fl_Q2P1_paper.png" title="Results for the second benachmark: lift coefficient." alt="Results for the second benachmark: lift coefficient." style="max-width: 90%;" /></p>
+
+<p id="zoomfeatflowRe100" class="center">
+<img src="../../../../../media/dfg_flow3d/zoom_Fd_Q2P1_paper.png" title="A closer look at the drag coefficient." alt="A closer look at the drag coefficient." style="max-width: 90%;" /><br />
+<img src="../../../../../media/dfg_flow3d/zoom_Fl_Q2P1_paper.png" title="A close look kat the lift coefficient." alt="A close look kat the lift coefficient." style="max-width: 90%;" /></p>
+
+<p>The old results for <span class="math">c<sub>Dmax</sub></span> and <span class="math">c<sub>Lmin</sub></span> had been given within the intervals, <span class="math">[3.2000,3.3000]</span> and <span class="math">[0.0020,0.0040]</span> respectively, by <a href="dfg_flow3d_conclusion.html#Turek1996">Turek et al.</a>, and  <span class="math">c<sub>Dmax</sub></span> has been determined as 3.2968 by <a href="dfg_flow3d_conclusion.html#John2006">John</a>. These old results are not sufficient and accurate enough to establish an inclusive benchmark study. Besides, to evaluate the results of benchmark calculations with respect to only <span class="math">c<sub>Dmax</sub></span> and <span class="math">c<sub>Lmin</sub></span> is not much elucidating on the accuracy of the results. Hence, additional to the comparison of <span class="math">c<sub>Dmax</sub></span> and <span class="math">c<sub>Lmin</sub></span> values, we also compare the solution regarding <span class="math">L<sub>2Err</sub></span> and <span class="math">L_<sub>∞</sub>Err</span> which denotes the <span class="math">L<sub>2</sub></span> <em>norm</em> of the error normalized by <span class="math">L<sub>2</sub></span> <em>norm</em> of the reference solution and the <span class="math">L<sub>∞</sub></span> <em>norm</em> of error, respectively, are obtained through the following calculation steps:</p>
+
+<ul>
+  <li>An equidistant discrete time step is specified for which <span class="math">L<sub>2</sub>Err</span> is independent of the step size.</li>
+  <li>The reference solution and the other solutions are interpolated (linear interpolation) to the specified discrete time step.</li>
+  <li><span class="math">L<sub>2</sub></span> <em>norm</em> and <span class="math">L<sub>∞</sub></span> <em>norm</em> of the differences between reference solution and other solutions are calculated.</li>
+</ul>
+
+<p>Results of the benchmark calculations for <span class="sc">FeatFlow</span> are plotted <a href="dfg_flow3d_results.html#featflowRe100">here</a>. Values of the comparison criteria, <span class="math">L<sub>2</sub>Err</span>, <span class="math">L<sub>∞</sub>Err</span> and relative errors due to the comparison criteria  are given <a href="dfg_flow3d_results.html#FFresults">here</a> and <a href="dfg_flow3d_results.html#CFXErr">here</a>.</p>
+
+<p>The finest level results are presented in the table <a href="dfg_flow3d_results.html#finestLevelResults">below</a>; the second <a href="dfg_flow3d_results.html#trioErr">table</a> compares the relative errors. It is obvious that the results are in agreement. An interesting finding is that the <span class="sc">FeatFlow</span> results at level 2  are as accurate as results of CFX or OpenFOAM  at the finest level.</p>
+
+<h4><span class="sc">FeatFlow</span></h4>
+
+<table id="FFresults">
+<caption><span class="sc">FeatFlow</span> results.</caption>
+<thead>
+  <tr>
+    <th style="text-align: center;">Case</th>
+    <th style="text-align: center;"># of Cells</th>
+    <th style="text-align: center;"><span class="math">c<sub>Dmax</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>Lmax</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>Lmin</sub></span></th>
+    <th style="text-align: center;">Tstep (s)</th>
+    <th style="text-align: center;"><span title="clock time × number of nodes">Time (s)</span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;">FFL1</td>
+    <td style="text-align: right;">6144</td>
+    <td style="text-align: right;">3.2207</td>
+    <td style="text-align: right;">0.0027</td>
+    <td style="text-align: right;">-0.0095</td>
+    <td style="text-align: right;">0.010</td>
+    <td style="text-align: right;">3220 × 2</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">FFL2</td>
+    <td style="text-align: right;">49152</td>
+    <td style="text-align: right;">3.2877</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.010892</td>
+    <td style="text-align: right;">0.010</td>
+    <td style="text-align: right;">17300 × 4</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">FFL3</td>
+    <td style="text-align: right;">393216</td>
+    <td style="text-align: right;">3.2963</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.010992</td>
+    <td style="text-align: right;">0.010</td>
+    <td style="text-align: right;">35550 × 24</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">FFL4</td>
+    <td style="text-align: right;">3145728</td>
+    <td style="text-align: right;">3.2978</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.010999</td>
+    <td style="text-align: right;">0.005</td>
+    <td style="text-align: right;">214473 × 48</td>
+  </tr>
+</tbody>
+</table>
+
+<table id="FFErr">
+<caption>Error calculations for <span class="sc">FeatFlow</span> results.</caption>
+<thead>
+  <tr>
+    <th style="text-align: center;"></th>
+    <th style="text-align: center; background: #b3c9ff;" colspan="2">%Err</th>
+    <th style="text-align: center;" colspan="2">%<span class="math">L<sub>2</sub></span>Err</th>
+    <th style="text-align: center; background: #b3c9ff;" colspan="2">%<span class="math">L<sub>∞</sub></span>Err</th>
+  </tr>
+  <tr>
+    <th style="text-align: center;">Case</th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>Dmax</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>Lmin</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>D</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>L</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>D</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>L</sub></span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;">FFL1</td>
+    <td style="text-align: right;">2.34</td>
+    <td style="text-align: right;">13.6</td>
+    <td style="text-align: right;">2.09</td>
+    <td style="text-align: right;">13.8</td>
+    <td style="text-align: right;">7.71</td>
+    <td style="text-align: right;">0.152</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">FFL2</td>
+    <td style="text-align: right;">0.31</td>
+    <td style="text-align: right;">0.91</td>
+    <td style="text-align: right;">0.29</td>
+    <td style="text-align: right;">1.05</td>
+    <td style="text-align: right;">1.01</td>
+    <td style="text-align: right;">0.013</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">FFL3</td>
+    <td style="text-align: right;">0.05</td>
+    <td style="text-align: right;">0.09</td>
+    <td style="text-align: right;">0.06</td>
+    <td style="text-align: right;">0.28</td>
+    <td style="text-align: right;">0.23</td>
+    <td style="text-align: right;">0.003</td>
+  </tr>
+</tbody>
+</table>
+
+<h4>OpenFoam</h4>
+
+<table id="OFresults">
+<caption>OpenFoam results.</caption>
+<thead>
+  <tr>
+    <th style="text-align: center;">Case</th>
+    <th style="text-align: center;"># of Cells</th>
+    <th style="text-align: center;"><span class="math">c<sub>Dmax</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>Lmax</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>Lmin</sub></span></th>
+    <th style="text-align: center;">Tstep (s)</th>
+    <th style="text-align: center;"><span title="clock time × number of nodes">Time (s)</span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;">OFL2</td>
+    <td style="text-align: right;">49152</td>
+    <td style="text-align: right;">3.33963</td>
+    <td style="text-align: right;">0.0029</td>
+    <td style="text-align: right;">-0.0128</td>
+    <td style="text-align: right;">0.0025</td>
+    <td style="text-align: right;">4850</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">OFL3</td>
+    <td style="text-align: right;">393216</td>
+    <td style="text-align: right;">3.3233</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.0118</td>
+    <td style="text-align: right;">0.0010</td>
+    <td style="text-align: right;">76300 × 4</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">OFL4</td>
+    <td style="text-align: right;">3145728</td>
+    <td style="text-align: right;">3.3038</td>
+    <td style="text-align: right;">0.0012</td>
+    <td style="text-align: right;">-0.0112</td>
+    <td style="text-align: right;">0.005</td>
+    <td style="text-align: right;">593500 × 24</td>
+  </tr>
+</tbody>
+</table>
+
+<table id="OFErr">
+<caption>Error calculations for OpenFoam results.</caption>
+<thead>
+  <tr>
+    <th style="text-align: center;"></th>
+    <th style="text-align: center; background: #b3c9ff;" colspan="2">%Err</th>
+    <th style="text-align: center;" colspan="2">%<span class="math">L<sub>2</sub></span>Err</th>
+    <th style="text-align: center; background: #b3c9ff;" colspan="2">%<span class="math">L<sub>∞</sub></span>Err</th>
+  </tr>
+  <tr>
+    <th style="text-align: center;">Case</th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>Dmax</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>Lmin</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>D</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>L</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>D</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>L</sub></span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;">OFL2</td>
+    <td style="text-align: right;">3.0</td>
+    <td style="text-align: right;">16</td>
+    <td style="text-align: right;">2.61</td>
+    <td style="text-align: right;">14.5</td>
+    <td style="text-align: right;">10.0</td>
+    <td style="text-align: right;">0.21</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">OFL3</td>
+    <td style="text-align: right;">0.8</td>
+    <td style="text-align: right;">7.3</td>
+    <td style="text-align: right;">0.67</td>
+    <td style="text-align: right;">5.91</td>
+    <td style="text-align: right;">2.56</td>
+    <td style="text-align: right;">0.08</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">OFL4</td>
+    <td style="text-align: right;">0.2</td>
+    <td style="text-align: right;">1.8</td>
+    <td style="text-align: right;">0.16</td>
+    <td style="text-align: right;">1.47</td>
+    <td style="text-align: right;">0.61</td>
+    <td style="text-align: right;">0.02</td>
+  </tr>
+</tbody>
+</table>
+
+<h4>CFX</h4>
+
+<table id="CFXresults">
+<caption>CFX results.</caption>
+<thead>
+  <tr>
+    <th style="text-align: center;">Case</th>
+    <th style="text-align: center;"># of Cells</th>
+    <th style="text-align: center;"><span class="math">c<sub>Dmax</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>Lmax</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>Lmin</sub></span></th>
+    <th style="text-align: center;">Tstep (s)</th>
+    <th style="text-align: center;"><span title="clock time × number of nodes">Time (s)</span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;">CFXL2</td>
+    <td style="text-align: right;">49152</td>
+    <td style="text-align: right;">3.3336</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.0106</td>
+    <td style="text-align: right;">0.010</td>
+    <td style="text-align: right;">22320</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">CFXL3</td>
+    <td style="text-align: right;">393216</td>
+    <td style="text-align: right;">3.3334</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.0118</td>
+    <td style="text-align: right;">0.005</td>
+    <td style="text-align: right;">61530 × 4</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">CFXL4</td>
+    <td style="text-align: right;">3145728</td>
+    <td style="text-align: right;">3.3084</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.0113</td>
+    <td style="text-align: right;">0.005</td>
+    <td style="text-align: right;">115300 × 24</td>
+  </tr>
+</tbody>
+</table>
+
+<table id="CFXErr">
+<caption>Error calculations for CFX results.</caption>
+<thead>
+  <tr>
+    <th style="text-align: center;"></th>
+    <th style="text-align: center; background: #b3c9ff;" colspan="2">%Err</th>
+    <th style="text-align: center;" colspan="2">%<span class="math">L<sub>2</sub></span>Err</th>
+    <th style="text-align: center; background: #b3c9ff;" colspan="2">%<span class="math">L<sub>∞</sub></span>Err</th>
+  </tr>
+  <tr>
+    <th style="text-align: center;">Case</th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>Dmax</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>Lmin</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>D</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>L</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>D</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>L</sub></span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;">CFXL2</td>
+    <td style="text-align: right;">1.1</td>
+    <td style="text-align: right;">3.63</td>
+    <td style="text-align: right;">1.52</td>
+    <td style="text-align: right;">7.81</td>
+    <td style="text-align: right;">5.31</td>
+    <td style="text-align: right;">0.10</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">CFXL3</td>
+    <td style="text-align: right;">1.1</td>
+    <td style="text-align: right;">7.27</td>
+    <td style="text-align: right;">0.98</td>
+    <td style="text-align: right;">6.31</td>
+    <td style="text-align: right;">3.75</td>
+    <td style="text-align: right;">0.10</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">CFXL4</td>
+    <td style="text-align: right;">0.3</td>
+    <td style="text-align: right;">2.73</td>
+    <td style="text-align: right;">0.29</td>
+    <td style="text-align: right;">2.24</td>
+    <td style="text-align: right;">1.20</td>
+    <td style="text-align: right;">0.03</td>
+  </tr>
+</tbody>
+</table>
+
+<h4>Comparison of the results</h4>
+
+<table id="finestLevelResults">
+<caption>The finest level results and <span class="sc">FeatFlow</span> results at level 2.</caption>
+<thead>
+  <tr>
+    <th style="text-align: center;">Case</th>
+    <th style="text-align: center;"># of Cells</th>
+    <th style="text-align: center;"><span class="math">c<sub>Dmax</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>Lmax</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>Lmin</sub></span></th>
+    <th style="text-align: center;">Tstep (s)</th>
+    <th style="text-align: center;"><span title="clock time × number of nodes">Time (s)</span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;">FFL2</td>
+    <td style="text-align: right;">49152</td>
+    <td style="text-align: right;">3.2877</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.010892</td>
+    <td style="text-align: right;">0.010</td>
+    <td style="text-align: right;">17300 × 4</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">FFL4</td>
+    <td style="text-align: right;">3145728</td>
+    <td style="text-align: right;">3.2978</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.010999</td>
+    <td style="text-align: right;">0.005</td>
+    <td style="text-align: right;">214473 × 48</td>
+  </tr>  <tr>
+    <td style="text-align: left;">OFL4</td>
+    <td style="text-align: right;">3145728</td>
+    <td style="text-align: right;">3.3038</td>
+    <td style="text-align: right;">0.0012</td>
+    <td style="text-align: right;">-0.0112</td>
+    <td style="text-align: right;">0.005</td>
+    <td style="text-align: right;">593500 × 24</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">CFXL4</td>
+    <td style="text-align: right;">3145728</td>
+    <td style="text-align: right;">3.3084</td>
+    <td style="text-align: right;">0.0028</td>
+    <td style="text-align: right;">-0.0113</td>
+    <td style="text-align: right;">0.005</td>
+    <td style="text-align: right;">115300 × 24</td>
+  </tr>
+</tbody>
+</table>
+
+<table id="trioErr">
+<caption>Comparison of <span class="sc">FeatFlow</span> results at level 2 with OpenFoam and CFX at level 4.</caption>
+<thead>
+  <tr>
+    <th style="text-align: center;"></th>
+    <th style="text-align: center; background: #b3c9ff;" colspan="2">%Err</th>
+    <th style="text-align: center;" colspan="2">%<span class="math">L<sub>2</sub></span>Err</th>
+    <th style="text-align: center; background: #b3c9ff;" colspan="2">%<span class="math">L<sub>∞</sub></span>Err</th>
+  </tr>
+  <tr>
+    <th style="text-align: center;">Case</th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>Dmax</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>Lmin</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>D</sub></span></th>
+    <th style="text-align: center;"><span class="math">c<sub>L</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>D</sub></span></th>
+    <th style="text-align: center; background: #b3c9ff;"><span class="math">c<sub>L</sub></span></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;">FFL2</td>
+    <td style="text-align: right;">0.31</td>
+    <td style="text-align: right;">0.91</td>
+    <td style="text-align: right;">0.29</td>
+    <td style="text-align: right;">1.05</td>
+    <td style="text-align: right;">1.01</td>
+    <td style="text-align: right;">0.013</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">OFL4</td>
+    <td style="text-align: right;">0.2</td>
+    <td style="text-align: right;">1.8</td>
+    <td style="text-align: right;">0.16</td>
+    <td style="text-align: right;">1.47</td>
+    <td style="text-align: right;">0.61</td>
+    <td style="text-align: right;">0.02</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">CFXL4</td>
+    <td style="text-align: right;">0.3</td>
+    <td style="text-align: right;">2.73</td>
+    <td style="text-align: right;">0.29</td>
+    <td style="text-align: right;">2.24</td>
+    <td style="text-align: right;">1.20</td>
+    <td style="text-align: right;">0.03</td>
+  </tr>
+</tbody>
+</table>
+
+
+<hr />
+
+<ul><li><a href="dfg_flow3d_results.html">Results</a><ul><li><a href="dfg_flow3d_configuration.html">Benchmark configuration</a></li><li><a href="dfg_flow3d_software.html">Used CFD Software Packages</a></li><li class="selected"><a href="dfg_flow3d_results.html">Results</a></li><li><a href="dfg_flow3d_conclusion.html">Conclusions and Bibliography</a></li><li><a href="dfg_flow3d_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

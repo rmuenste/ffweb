@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>CFD tests - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../../index.html">Home</a>
+  <a href="../../../../contact.html">Contact</a><a href="../../../../software.html">Software</a><div class="submenu"><a href="../../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../../software/featflow.html">FEATFLOW</a><a href="../../../../software/featflow2.html">FEATFLOW2</a><a href="../../../../software/parpp3d.html">parPP3D</a><a href="../../../../software/documentation.html">Documentation</a></div><a href="../../../../team.html">Team</a><a href="../../../../links.html">Links</a><div class="submenu"><a href="../../../../links/websites.html">Websites</a><a href="../../../../links/software_links.html">Software</a></div><a href="../../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../../flow.html">Flow around a Cylinder</a><a href="../../bubble.html">Rising Bubble</a><a href="../../fsi_benchmark.html" class="selected">FSI Benchmark</a><div class="submenu"><a href="../fsi_definitions.html">Definitions</a><a href="../fsi_quantities.html">Quantities for Comparison</a><a href="../fsi_tests.html" class="selected">Partial computational Tests</a><div class="submenu"><a href="fsi_cfd_tests.html" class="selected">CFD tests</a><a href="fsi_csm_tests.html">CSM tests</a><a href="fsi_fsi_tests.html">FSI tests</a></div><a href="../fsi_bibliography.html">Bibliography</a><a href="../fsi_reference.html">Reference Values</a></div><a href="../../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../../publications.html">Publications</a><a href="../../../../services.html">Services</a><div class="submenu"><a href="../../../../services/cdrom.html">CD-ROM</a><a href="../../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../../news.html">News</a><a href="../../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../../index.html">Home</a> » <a href="../../../../benchmarks.html">Benchmarks</a> » <a href="../../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../../fsi_benchmark.html">FSI Benchmark</a> » <a href="../fsi_tests.html">Partial computational Tests</a> » <a href="fsi_cfd_tests.html">CFD tests</a>  </div>
+
+  <hr />
+
+  <h2>CFD tests</h2>
+
+<p>Taking the flag as a rigid object, we perform 3 subtests focusing on the fluid dynamics
+part of the problem. The flag can be made almost rigid by setting the structural
+parameters to large values
+(<span class="math"><img class="latex" alt="$\varrho^s=10^6\frac{\textrm{kg}\nop}{\textrm{m}^3}$" title="$\varrho^s=10^6\frac{\textrm{kg}\nop}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAAATCAYAAADLRLCEAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACQUlEQVRYw+WY/ZHaMBDFf3vjAjyUAB0QroKYDnCuA+gA5irIcB0c6SBHB5AKAnSAOwjjDl7+WTEax3yYgUwgmvEgLdJKenr71rJJ4tGKmbWBrqR5o3GPCIYDspb0qcmY5E432gXa3mxJmtV02zX1m9whECnwKimPgDnWf+rVr5JKMxsDGyAH1sB3SeVJMDz2MqAAkLS80QYH1fj2uQc+dxuY+aK/+P+Z24sjfsfANjDHfXYkvZnZ6A9GSTr4+GI+/Dc91veSx/0OAVX9A+uongILrw+B98i+PeB7EcbFvoGxH3C3OubpBB1LYAL0gd61GSFpXhfvVeo7I3p+squK/RCjw/MO/HAbvpcceKnOk0QOhi46z47mKhKpdV2IhPg9sedfkt4a4tSrEcAd0Ja0NLOtmQ2Alm+sCnIBdLy5AeZR2EwkbXzt3+LxSQQEkuZmtvTNd4DZiZMNzLl2SWtsZbBfAG4oS2dYy9s/65gxinJy+x9IGqWfehWg8gwxVkPxnu7BcFWOFTlzBM9OczcIkxUwqthaxzJHxFY7c+1D99eN1zcO6hxU/BaZ40RWqcsm20o2WV9xvhTIQtYJ9sQFBhekZyA/pNI3eL/IgKDor2a2iIQ6d8ErwrqumMVKM1u5/32YGDBoeqF5kIsckgo/gH4Q0BczK/0Edn+LFTe+t3xEmpN7G6AvaeJh0jOzwl8j9szIKhScep6+6xsr8NnDYX97PXWTTTxGl48WCpcw/OlB9SA1syy8llfq3f/u484l5TcSFSjHFh2kNgAAAABJRU5ErkJggg==" /></span>,
+<span class="math"><img class="latex" alt="$\mu^s=10^{12}\frac{\textrm{kg}}{\textrm{ms}^2}$" title="$\mu^s=10^{12}\frac{\textrm{kg}}{\textrm{ms}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAAATCAYAAAA+ujs0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACd0lEQVRYw+2Y4W3bMBCFvzMygOARlA0UdwN5AzvdIN5AQSYI7A3kTtDaG8iZILE3sDZooA2uf44FwbKxpNhuU5cAIZIS78h3d+9EiqpyqUVEUiBT1XXnuZcMnIG3VdWbrvMGH3zTmYiUIpIF4xOrpYjkB8S89tF99ZGBU9WdiDQBaDmQqupCRHbACrhpYYS5NR9VtRGRAtgBU2ALfFPVphNwxgU5UNuCNyfyoEnIN6Z7YrpTYOlvIALmBnDrS4GXFnoLYK+qS0/ntYE/c+OhooPVFr6yZ9JmTpdqcu8ADeUDW6+dAFXwfm4EH8pMgLKF7srJ9XUDhTlLFps3aGGNBGiAe2AMjE4QcuuYVUPuMk8bmUccipBbVZ2FMiLfuVoCT57ssYXp55iMqyDGKxeGIlLZROfyzvqbNwB+OIDRd1VddMB0FCHvV1tPbXyWmf5GVWvbeAU0IjKzUJ39xmA1cG3dHbD2QvfeODQBvnhY/MJxOfDoL9rjkmULr3FeecySRMYaNx7wWQyMvmVjnj20/nPU4wzVxAFlltzw50sDDCNgNj2Tj74jcc1jHhcCNTZ37yL4FKEaC7Ohy+49uFTeAVxuRktVdeEySAkUXkbZG3dMjp1BD2S4WFbdB5lye841md4MyF0WVtWfHjdy/1HWL22sPkc8+iQPPIhI5SWhqZF1DXwKSfpcP9peFq4BxKz41Oe8doEXArk7QQys83Ihm89EZC8iudXSa8+9b3J7Fh5oK+P+lZNXuPi9hGrnziRyKtkGp6Q7SwRROQNVXZzq7PkXXw689TtTq+rUuGz+T96O9OSpxJJRDaRBOwNyEXGJ8ev/i8wjlx9fRzMdbh1AigAAAABJRU5ErkJggg==" /></span>) or completely rigid by considering the
+flow domain only with fixed boundary conditions on the flag interface.</p>
+<p>
+<table class="Basic">
+<caption>Parameter settings for the CFD tests</caption>
+<thead>
+<tr>
+  <th>dimensional parameter</th>
+  <th>CFD1</th>
+  <th>CFD2</th>
+  <th>CFD3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>
+    <span class="math"><img class="latex" alt="$\varrho^f$" title="$\varrho^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAtUlEQVQoz42R4Q2CQAyFv5obgBkcgegEMgKEDWAWR2AW2cDoBjACYYPnnx45jco1adLrXV77vTNJ7IWZlUALFEjaTWAAjkBxyFSvgFLSmjvhFuvcCc94DslFByzA2RVHvzoB903BR3ZA53UBTCnw23refCQPSmByV4YoFDOYWQXMydoVMEqagf6TKbjikvRa4PLLhBAdMLPagRtJ6z/n6py/2BiA1sxW51j21M0hm6R3deCv8QIBfrSwSvr55QAAAABJRU5ErkJggg==" /></span>
+    [
+    <span class="math"><img class="latex" alt="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" title="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAATCAYAAAAao7T0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABnElEQVRIx8WW7W3CMBCGn0MdwGKEjJAyQtggXYFuEGbICMzQbgAbtLBBs0ELG7z9c65cKyRAiWrJyvl8H6/t+4hJYophZgVQSnq9WGcqMA5oL+nxUvnZHxytzKw0s9bMqjNiX9fYnN0IJACPkg7AJ1COyLc+g68bM6vMbOOHCgBIwp+qjnTCK4AGqP0bsv0a2OR6yf7W9VaZzY3TL5k8NbAC1ONsn9AB2PY4rHKjGZgQvwm/cb3yl3wioEyhTME47+gnq+NpfX08c6sfbqcG9kCRgNwAbQpoCMwqvwk3Xvlpa6dboDr3VD0gmwjA7fzc6sNA3IUe3skBn4BYP3ZXxv8OWJjZ3NdvcWMIzAmY9wA8jWSObsjOdiy133t4c6AbMizJLpnAM7AE1pE3GzB6SJ/Ka0EnqbtDZY62dg7oZ1QeVMqD0TMh1pk2ZsM9ph+0Sf1N2ptGmiiSOjPbSlqOBfCtjkrgxWMC4MnXAEtJa7+VhZl1XnP41Q7uOb3AhZ4qvh/Sm031FF6LmLxrXxAPwbtyARQZXf7Lz9W14xtK+RY8ir520AAAAABJRU5ErkJggg==" />/span>
+    ]
+  </td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+</tr>
+<tr>
+  <td>
+    <span class="math"><img class="latex" alt="$\nu^f$" title="$\nu^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAYAAACksgdhAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAmElEQVQoz5WQ0Q3CMAxE33WCzJARKkbICJUYgQ3KLJ2hI8AGqGzADGUD84GDDB8oiWTJTuy888nMaDmSRuAIJMysKYAFyEAaOigFGM3s2UO61LyHdK/14JezpP2ncZWUvTwAt8+jozOwBSkZeEQTotQqrwDXADoDJ0lZ0gJsX3r9pxUonk/A/NcUb9zDwNTg5HsfH0gt9r8AyQDF6cbu3kYAAAAASUVORK5CYII=" /></span>
+    [
+    <span class="math"><img class="latex" alt="$10^{-3} \frac{\textrm{m}^2}{\textrm{s}\nop}$" title="$10^{-3} \frac{\textrm{m}^2}{\textrm{s}\nop}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAATCAYAAADrqO95AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABjElEQVRIx82W4W3CMBCFv0MMEBgh3QDoBA0bwAp0A6qOQDdghAo2KCOUbtBsUMgGr3/OlWURILSUnGTldImd53fvzjZJtNXMrAAyIJf0AtBpMdgBgKQ1MA7xblsBS/pw4DlQhnjnyizNzGxgZgtPb9P5OVAAT1cHbGYZMHSmvoDBBWBXLodVTD1eeJPgR7EcmAMTf2bpN6eGz10msQHw6ewVwDLyF8fWM1+w75N6kqpol1tJw4ixlaRxSLdXcGqboL+k2h8lTeO1gQdJVfKfH79O3GHXihl0FrYJM3tvMecyO4sytU/eb0/5h8YxDY+AXRLb+c/PsQ2wC+wC00SfmZkV7ueJX6v3Y23tULqrmvihzFXAOgIfvyuBuyjUq/EbAa5c2+kmqj/oIBcfr8ck8X4g1o+b+C8OBbt0dE6cNFnSV0tP582s60URRP5sZm+SguamZjZ3Vu/jwrnZHaPNt7WmRXeL21nfW2cRrpNNiu6/Lfd+PYraYasBl350l8Ci9ZIACjMbOeDXuo++Aa4dXcxAOxo+AAAAAElFTkSuQmCC" /></span>
+    ]
+  </td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+</tr>
+<tr style="border-top: 2x solid black;">
+  <td><span class="math"><img class="latex" alt="$U$" title="$U$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAJCAYAAADkZNYtAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAj0lEQVQY023Q4W3CUAwE4M9MEHWEjBB1BEZA6iZlqHYDGKFiAxgBZYPrnxf0SGLJsn3vfPI9SeCEe8vvJFb4Dybdwx2nZe7w1/IBqmrAiKttzEtzaPWIR5K5Z1XVhL81+Qu/O6qfSW57ypcd8vA2NRPBsDI24dhji/IDH92tQyO+Ga4kqmrEuX3fjGeSjYd/3dlakzd/vbMAAAAASUVORK5CYII=" /></span>
+  [<span class="math"><img class="latex" alt="$\frac{m}{s}$" title="$\frac{m}{s}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAOCAYAAAAWo42rAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAjElEQVQoz63S0Q2CYAwE4O8nDkAcQTcgjoAzOYuzwAjKCIxg2KA+WBKMGHnwni7N9dpcW3BAiyM6NF4Ykg8R0VdZfEBE9BgXHGpZgCsOK7xLYT077iNiXOET2oiYSnb+RMEm5WbHykb8X7j7WLqU+VJvwa85Njhn0LfV0aWUOkO+pPj0dXQ+CdwX9/YE7Y88kPO+kXkAAAAASUVORK5CYII=" /></span>]</td>
+  <td>0.2</td>
+  <td>1</td>
+  <td>2</td>
+</tr>
+</tbody>
+</table>
+</p>
+<p>
+<table class="Basic">
+<caption>Parameter settings for the CFD tests</caption>
+<thead>
+<tr>
+  <th>non-dimensional parameter</th>
+  <th>CFD1</th>
+  <th>CFD2</th>
+  <th>CFD3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>
+    <span class="math"><img class="latex" alt="$\Re=\frac{\bar{U} d}{\nu^f}$" title="$\Re=\frac{\bar{U} d}{\nu^f}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAATCAYAAAA9DTUcAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABrklEQVRIx92X/W3bQAzFf8/wAAK6gbKB2m7gbiC0GygbuOgEgb2BMkLtDawV0g2qDfKxwesf5QXCOZEDA6nkEjhAxzvpSL5HHiXbzFEkFcBqoOpt/xp9Z67OnCML/iNZzJRijaRHSatEOUk7Sc0r+1tJzZyRubXdAdh+Ag62b0f2d0tJFXANNMAWuAc+AAXQnkq6d5IvwE2me8jQWAFl6D/Z7okCUAAGCttJV4WuTLp/NYDHbL7KbCsDqfTc2n49ZwaIVBMg02fzMqjGwKZDPNfATlKxHEnCGtjb3me6Mg77DNxkh6T74ccJY+9tb0fW2zgrBTbPlQ5ogmpXwBNwRLM6IG2BTQZ1laCNeZ3vmXrkyHQR6U7SnaT1IILfBon3HOF3KMtn3+LLsVIXVW6btRTdG9qQs2lmW290enP0nZFq1vxdfl4vgd8Z9eop6BS2rHP9IiKZbtYm5inp9pLWwFfbPXAtaSOpjgTtJrpQvw9YcNmNZlDsqJIuZmzwLpVnSWU4kKTIHbmErrkb0KodoHK4qP8ZSXe2P0anfLKKnirNUzpSAX3Q7OdLlHpJ/gCGYw55hzXjpAAAAABJRU5ErkJggg==" /></span>
+  </td>
+  <td>20</td>
+  <td>100</td>
+  <td>200</td>
+</tr>
+<tr>
+  <td>
+    <span class="math"><img class="latex" alt="$\bar{U}$" title="$\bar{U}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAnUlEQVQY04WQUQ0CMRBE356CBgknoUHCSbgEB0gAL1gAByCB4OBOAqmD4Wd7WUoTJmnazk6nO2uSqDCzIw0kXbZ6FP+Fi2dg8XWS1PJXIBMKCzDXe+C3x4P3moAReHQ+L/Uw+D4Bq6QSVWaWgWcrPgC3jute0qvnfO+IU28aAlITLANT5KrzCuxCr8mFX4FNEmY2AmcfXwHekn4yfAAZLmSPbZz5XgAAAABJRU5ErkJggg==" /></span>
+    [<span class="math"><img class="latex" alt="$\frac{\textrm{m}\nop}{\textrm{s}\nop}$" title="$\frac{\textrm{m}\nop}{\textrm{s}\nop}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAOCAYAAAAWo42rAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAjElEQVQoz63R4QnCQAwF4O9KBxBH6AhHR+guzqIbOILoKo6gI6gbxB9e5VqQ9ocPkjx44SUhkHHDUOJY8X1EiAifxBWbkX/FijcKIuJlAV01usNzxnNESGXEIhJWda52bKzE/xvbycIpZWzxwBARh1+OHXbocZko44vK9bnUAedaa2eOQ0qpxx2nWngDxBtN67+aTpAAAAAASUVORK5CYII=" /></span>]
+  </td>
+  <td>0.2</td>
+  <td>1</td>
+  <td>2</td>
+</tr>
+</tbody>
+</table>
+</p>
+<!--
+\begin{table}[!h]
+  \centerline{
+    \begin{tabular}{|l|r|r|r|}
+      \hline
+      dimensional parameter & CFD1 & CFD2 & CFD3 \\ \hline
+      $\varrho^f$  [$10^3 \frac{\textrm{kg}}{\textrm{m}^3}$]
+      & $1$ & $1$ & $1$ \\
+      $\nu^f$  [$10^{-3} \frac{\textrm{m}^2}{\textrm{s}}$]
+      &$1$ & $1$ & $1$ \\
+      \hline
+      $\bar{U}$ [$\frac{\textrm{m}}{\textrm{s}}$]
+      & 0.2 & 1 & 2 \\
+      \hline
+      \hline
+      non-dimensional parameter & CFD1 & CFD2 & CFD3 \\\hline
+      $\Re=\frac{\bar{U} d}{\nu^f}$
+      & 20 & 100 & 200 \\
+      $\bar{U}$ & 0.2 & 1 & 2 \\
+      \hline
+    \end{tabular}
+  }
+  \caption{Parameter settings for the CFD tests}
+\end{table}
+-->
+
+<p>
+<table class="Basic">
+<caption>Results for <b>CFD1</b></caption>
+<thead>
+<tr>
+  <th>level</th>
+  <th>nel</th>
+  <th>ndof</th>
+  <th>drag</th>
+  <th>lift</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0+0 </td><td>    144 </td><td>     3032 </td><td>  1.41635 × 10<sup>+01</sup> </td><td>  1.15592 × 10<sup>+00</sup> </td>
+</tr>
+<tr>
+<td>1+0 </td><td>    576 </td><td>    11536 </td><td>  1.42236 × 10<sup>+01</sup> </td><td>  1.11747 × 10<sup>+00</sup> </td>
+</tr>
+<tr>
+<td>2+0 </td><td>   2304 </td><td>    44960 </td><td>  1.42730 × 10<sup>+01</sup> </td><td>  1.11692 × 10<sup>+00</sup> </td>
+</tr>
+<tr>
+<td>3+0 </td><td>   9216 </td><td>   177472 </td><td>  1.42880 × 10<sup>+01</sup> </td><td>  1.11852 × 10<sup>+00</sup> </td>
+</tr>
+<tr>
+<td>4+0 </td><td>  36864 </td><td>   705152 </td><td>  1.42919 × 10<sup>+01</sup> </td><td>  1.11896 × 10<sup>+00</sup> </td>
+</tr>
+<tr>
+<td>5+0 </td><td> 147456 </td><td>  2811136 </td><td>  1.42927 × 10<sup>+01</sup> </td><td>  1.11904 × 10<sup>+00</sup> </td>
+</tr>
+<tr>
+<td>5+1 </td><td> 150528 </td><td>  2869504 </td><td>  1.42929 × 10<sup>+01</sup> </td><td>  1.11906 × 10<sup>+00</sup> </td>
+</tr>
+<tr>
+<td>5+2 </td><td> 156672 </td><td>  2986240 </td><td>  1.42929 × 10<sup>+01</sup> </td><td>  1.11905 × 10<sup>+00</sup> </td>
+</tr>
+<tr>
+<td>5+3 </td><td> 168960 </td><td>  3219712 </td><td>  1.42929 × 10<sup>+01</sup> </td><td>  1.11905 × 10<sup>+00</sup> </td>
+</tr>
+<tr>
+<td>6+0 </td><td> 589824 </td><td> 11225600 </td><td>  1.42929 × 10<sup>+01</sup> </td><td>  1.11905 × 10<sup>+00</sup> </td>
+</tr>
+</tbody>
+</table>
+<!--
+\begin{table}[ht]
+\centerline{
+\begin{tabular}{|r|r|r|r|r|}\hline
+level & nel& ndof & drag & lift \\ \hline
+$0+0$ & $   144$ & $    3032$ & $ 1.41635\e{+01}$ & $ 1.15592\e{+00}$ \\
+$1+0$ & $   576$ & $   11536$ & $ 1.42236\e{+01}$ & $ 1.11747\e{+00}$ \\
+$2+0$ & $  2304$ & $   44960$ & $ 1.42730\e{+01}$ & $ 1.11692\e{+00}$ \\
+$3+0$ & $  9216$ & $  177472$ & $ 1.42880\e{+01}$ & $ 1.11852\e{+00}$ \\
+$4+0$ & $ 36864$ & $  705152$ & $ 1.42919\e{+01}$ & $ 1.11896\e{+00}$ \\
+$5+0$ & $147456$ & $ 2811136$ & $ 1.42927\e{+01}$ & $ 1.11904\e{+00}$ \\
+$5+1$ & $150528$ & $ 2869504$ & $ 1.42929\e{+01}$ & $ 1.11906\e{+00}$ \\
+$5+2$ & $156672$ & $ 2986240$ & $ 1.42929\e{+01}$ & $ 1.11905\e{+00}$ \\
+$5+3$ & $168960$ & $ 3219712$ & $ 1.42929\e{+01}$ & $ 1.11905\e{+00}$ \\
+$6+0$ & $589824$ & $11225600$ & $ 1.42929\e{+01}$ & $ 1.11905\e{+00}$ \\
+\hline
+\hline
+\textbf{ref.} &&& $14.29$ & $1.119$ \\
+\hline
+\end{tabular}
+} \caption{Results for \textbf{CFD1}}
+\end{table}
+-->
+</p>
+
+<p>
+<table class="Basic">
+<caption>Results for <b>CFD2</b></caption>
+<thead>
+<tr>
+  <th>level</th>
+  <th>nel</th>
+  <th>ndof</th>
+  <th>drag</th>
+  <th>lift</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0+0 </td><td>    144 </td><td>     3032 </td><td>  1.33188 × 10<sup>+02</sup> </td><td>  1.18522 × 10<sup>+01</sup> </td>
+</tr>
+<tr>
+<td>1+0 </td><td>    576 </td><td>    11536 </td><td>  1.34996 × 10<sup>+02</sup> </td><td>  1.10739 × 10<sup>+01</sup> </td>
+</tr>
+<tr>
+<td>2+0 </td><td>   2304 </td><td>    44960 </td><td>  1.36355 × 10<sup>+02</sup> </td><td>  1.05337 × 10<sup>+01</sup> </td>
+</tr>
+<tr>
+<td>3+0 </td><td>   9216 </td><td>   177472 </td><td>  1.36610 × 10<sup>+02</sup> </td><td>  1.05303 × 10<sup>+01</sup> </td>
+</tr>
+<tr>
+<td>4+0 </td><td>  36864 </td><td>   705152 </td><td>  1.36678 × 10<sup>+02</sup> </td><td>  1.05347 × 10<sup>+01</sup> </td>
+</tr>
+<tr>
+<td>5+0 </td><td> 147456 </td><td>  2811136 </td><td>  1.36696 × 10<sup>+02</sup> </td><td>  1.05349 × 10<sup>+01</sup> </td>
+</tr>
+<tr>
+<td>5+1 </td><td> 150528 </td><td>  2869504 </td><td>  1.36700 × 10<sup>+02</sup> </td><td>  1.05346 × 10<sup>+01</sup> </td>
+</tr>
+<tr>
+<td>5+2 </td><td> 156672 </td><td>  2986240 </td><td>  1.36701 × 10<sup>+02</sup> </td><td>  1.05343 × 10<sup>+01</sup> </td>
+</tr>
+<tr>
+<td>5+3 </td><td> 168960 </td><td>  3219712 </td><td>  1.36701 × 10<sup>+02</sup> </td><td>  1.05340 × 10<sup>+01</sup> </td>
+</tr>
+<tr>
+<td>6+0 </td><td> 589824 </td><td> 11225600 </td><td>  1.36700 × 10<sup>+02</sup> </td><td>  1.05343 × 10<sup>+01</sup> </td>
+</tr>
+</tbody>
+</table>
+</p>
+
+<!--
+\begin{table}[ht] \centerline{
+\begin{tabular}{|r|r|r|r|r|}\hline
+level & nel& ndof & drag & lift \\ \hline
+$0+0$ & $   144$ & $    3032$ & $ 1.33188\e{+02}$ & $ 1.18522\e{+01}$ \\
+$1+0$ & $   576$ & $   11536$ & $ 1.34996\e{+02}$ & $ 1.10739\e{+01}$ \\
+$2+0$ & $  2304$ & $   44960$ & $ 1.36355\e{+02}$ & $ 1.05337\e{+01}$ \\
+$3+0$ & $  9216$ & $  177472$ & $ 1.36610\e{+02}$ & $ 1.05303\e{+01}$ \\
+$4+0$ & $ 36864$ & $  705152$ & $ 1.36678\e{+02}$ & $ 1.05347\e{+01}$ \\
+$5+0$ & $147456$ & $ 2811136$ & $ 1.36696\e{+02}$ & $ 1.05349\e{+01}$ \\
+$5+1$ & $150528$ & $ 2869504$ & $ 1.36700\e{+02}$ & $ 1.05346\e{+01}$ \\
+$5+2$ & $156672$ & $ 2986240$ & $ 1.36701\e{+02}$ & $ 1.05343\e{+01}$ \\
+$5+3$ & $168960$ & $ 3219712$ & $ 1.36701\e{+02}$ & $ 1.05340\e{+01}$ \\
+$6+0$ & $589824$ & $11225600$ & $ 1.36700\e{+02}$ & $ 1.05343\e{+01}$ \\
+\hline
+\hline
+\textbf{ref.} &&& $136.7$ & $10.53$ \\
+\hline
+\end{tabular}
+} \caption{Results for \textbf{CFD2}}
+\end{table}
+-->
+
+<p>
+<center><b>CFD3</b>: lift and drag forces on the cylinder and flag</center>
+<img src="../../../../../media/fsi/cfd3_3_0_2_lift_zoom.png" title="Lift on cylinder and flag" alt="Lift on cylinder and flag" /><br />
+<img src="../../../../../media/fsi/cfd3_3_0_2_drag_zoom.png" title="Drag on cylinder and flag" alt="Drag on cylinder and flag" />
+</p>
+
+<p>
+<table class="Basic">
+<caption>Results for <b>CFD3</b></caption>
+<thead>
+<tr>
+  <th>level</th><th>nel</th><th>ndof</th><th>drag</th><th>lift</th>
+</tr>
+</thead>
+<tbody>
+<tr><th colspan="5">
+  <span class="math"><img class="latex" alt="$\Delta t=0.01$" title="$\Delta t=0.01$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADsAAAAKCAYAAAAKAya7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABV0lEQVRIx92W3U3DQBCEv0UUYKUEl2BRgunAgg5CB45SAnSQtOB0EEpI0kHSAcEdDC8buBzn/DjmhZFOlvfG552bvbVNEjHMbAY0kt7pgJnlQCZpw4DwdStgB+TAXFLbl2tmlaQFAJKOBpABBbCO5yLeDKhOcfqM8L2ey7IP1zdhDMhNSYrN/bo8JQbYHhYZUOivTQY+Dzn14YZi7yPLi6AsJ0ADLGIO8Oy3T2a2CkvZzDJgeqZaPyS9JeIPwD6K7b1EdzdwAY7FhpC0MbOdmdVhYh4/nNd54rnWN6oPskSs7YhfwwXgLnCkTDSbCTB1t0I8epkPjRYYJUS1N3J/nE2ICV1ceVmGbpVd7t1YxivgJYqNOsryGu63IIDxmaah8OAD26DjDd2ktlGHXUe55JdwUw0KP9C6YDTxZwco/uDTUwC1r/8aiWuA+kJu6XPyudJSPxX/FV9DzWYiNTZlDgAAAABJRU5ErkJggg==" /></span>
+</th></tr>
+<tr>
+  <td> 1+0 </td><td>    576 </td><td>    11536 </td><td>  416.8 ± 3.3578 [4.3825] </td><td>  -24.702 ± 342.38 [4.3825] </td>
+</tr>
+<tr>
+  <td> 2+0 </td><td>   2304 </td><td>    44960 </td><td>  437.29 ± 5.3462 [4.3825] </td><td>  -11.085 ± 429.88 [4.3825] </td>
+</tr>
+<tr>
+  <td> 3+0 </td><td>   9216 </td><td>   177472 </td><td>  438.99 ± 5.4419 [4.3825] </td><td>  -10.289 ± 433.09 [4.3825] </td>
+</tr>
+<tr>
+  <td> 4+0 </td><td>  36864 </td><td>   705152 </td><td>  439.38 ± 5.4639 [4.3825] </td><td>  -9.9868 ± 434.79 [4.3825] </td>
+</tr>
+<tr><th colspan="5">
+  <span class="math"><img class="latex" alt="$\Delta t=0.005$" title="$\Delta t=0.005$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAAAJCAYAAABpCZF5AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABnElEQVRIx7WV4VHcQAyFPzFXgCEdmA4c0oHpwJAOSAd3QwWZoQOnBegAqCB3dHDuIJ7t4OWPzGw2a/vOHJrZsS29lbXS0wpJpAtogTpnizAlUE1hliz3uwYafxZLsDO2FpCv3XCO3A8KoAJ2M0G3QPMJydglsTwvwc7Y1q77J9Fn/C8Xkt6A3swaxqUGXjihmFkVf0sKwJWZlcdgD/EjKbj+XVbpDzwRABvgEXjKBPHdP2/NbBvtwcwK4H7m3H8kPWT0V0Cf6HqnfHcEtpzx88ULHYBroJXUrcailfRmZp2ZrePAXV86xX5l9gVP5BIpMrowop/CzvlpJXVevN6L/vUsqmgdVzhix71XO5Zr4JnTSwAuMocOR2In/QyJcOmAysyKVUTtMXZsnfab5L7YjPT9R9pkC/xI77BMi8xh+zGbt/mrpPOByWb2fmCAu4kbu/IRVEa6vT+bqdG3cJrskymwS2IpD8Rmbf6+jmzNMGnML5X9ARR+knTj1W+9TbpMa51iotRe4W9Jfz8CvwdWzWCnbLUnNgCXwE9J4S/S82IniDg0SAAAAABJRU5ErkJggg==" /></span>
+</th></tr>
+<tr>
+  <td> 1+0 </td><td>    576 </td><td>    11536 </td><td>  416.83 ± 3.4023 [4.3956] </td><td>  -23.897 ± 346.72 [4.3956] </td>
+</tr>
+<tr>
+  <td> 2+0 </td><td>   2304 </td><td>    44960 </td><td>  437.41 ± 5.5856 [4.3956] </td><td>  -12.673 ± 434.74 [4.3956] </td>
+</tr>
+<tr>
+  <td> 3+0 </td><td>   9216 </td><td>   177472 </td><td>  439.05 ± 5.5804 [4.3956] </td><td>  -11.837 ± 436.17 [4.3956] </td>
+</tr>
+<tr>
+  <td> 4+0 </td><td>  36864 </td><td>   705152 </td><td>  439.45 ± 5.6183 [4.3956] </td><td>  -11.893 ± 437.81 [4.3956] </td>
+</tr>
+</tbody>
+</table>
+</p>
+<!--
+\begin{table}[h!]
+  \centerline{
+    \begin{tabular}{|r|r|r|r|r|}\hline
+      level & nel& ndof & drag & lift \\ \hline
+      $1+0$ & $   576$ & $   11536$ &
+      $ 416.8 \pm 3.3578 [4.3825]$ & $ -24.702 \pm 342.38 [4.3825]$ \\
+      $2+0$ & $  2304$ & $   44960$ &
+      $ 437.29 \pm 5.3462 [4.3825]$ & $ -11.085 \pm 429.88 [4.3825]$ \\
+      $3+0$ & $  9216$ & $  177472$ &
+      $ 438.99 \pm 5.4419 [4.3825]$ & $ -10.289 \pm 433.09 [4.3825]$ \\
+      $4+0$ & $ 36864$ & $  705152$ &
+      $ 439.38 \pm 5.4639 [4.3825]$ & $ -9.9868 \pm 434.79 [4.3825]$ \\
+      \hline
+%    \end{tabular}
+%  }
+%  \centerline{
+%    \begin{tabular}{|r|r|r|r|r|}
+      \hline
+      level & nel& ndof & drag & lift \\ \hline
+      $1+0$ & $   576$ & $   11536$ &
+      $ 416.83 \pm 3.4023 [4.3956]$ & $ -23.897 \pm 346.72 [4.3956]$ \\
+      $2+0$ & $  2304$ & $   44960$ &
+      $ 437.41 \pm 5.5856 [4.3956]$ & $ -12.673 \pm 434.74 [4.3956]$ \\
+      $3+0$ & $  9216$ & $  177472$ &
+      $ 439.05 \pm 5.5804 [4.3956]$ & $ -11.837 \pm 436.17 [4.3956]$ \\
+      $4+0$ & $ 36864$ & $  705152$ &
+      $ 439.45 \pm 5.6183 [4.3956]$ & $ -11.893 \pm 437.81 [4.3956]$ \\
+      \hline
+      \hline
+      \textbf{ref.}&&&
+      $ 439.45 \pm 5.6183 [4.3956]$&$ -11.893 \pm 437.81 [4.3956]$\\
+      \hline
+    \end{tabular}
+  }
+  \caption{Results for \textbf{CFD3} with $\Delta t = 0.01$ and $0.005$}
+\end{table}
+-->
+
+
+<hr />
+
+<ul><li><a href="fsi_cfd_tests.html">CFD tests</a><ul><li><a href="../fsi_definitions.html">Definitions</a></li><li><a href="../fsi_quantities.html">Quantities for Comparison</a></li><li><a href="../fsi_tests.html">Partial computational Tests</a><ul><li><a href="fsi_cfd_tests.html">CFD tests</a></li><li><a href="fsi_csm_tests.html">CSM tests</a></li><li><a href="fsi_fsi_tests.html">FSI tests</a></li></ul></li><li><a href="../fsi_bibliography.html">Bibliography</a></li><li><a href="../fsi_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

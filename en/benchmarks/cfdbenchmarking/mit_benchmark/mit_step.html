@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Time Step and Mesh Information - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html">Software</a><div class="submenu"><a href="../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../software/featflow.html">FEATFLOW</a><a href="../../../software/featflow2.html">FEATFLOW2</a><a href="../../../software/parpp3d.html">parPP3D</a><a href="../../../software/documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../flow.html">Flow around a Cylinder</a><a href="../bubble.html">Rising Bubble</a><a href="../fsi_benchmark.html">FSI Benchmark</a><a href="../mit_benchmark.html" class="selected">MIT Benchmark</a><div class="submenu"><a href="mit_intro.html">Introduction</a><a href="mit_geoconf.html">Geometry and Configuration</a><a href="mit_step.html" class="selected">Time Step and Mesh Information</a><a href="mit_result.html">Results and Discussion</a><a href="mit_references.html">References</a></div></div></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../benchmarks.html">Benchmarks</a> » <a href="../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../mit_benchmark.html">MIT Benchmark</a> » <a href="mit_step.html">Time Step and Mesh Information</a>  </div>
+
+  <hr />
+
+  <h2>MIT Benchmark</h2>
+ <h4>Time step and mesh information</h4>
+ <p>The time step is chosen so that there are enough data points in one oscillation of the resulting variables to graphically postprocess all quantities and so that smaller time steps do not significantly improve the solutions with respect to the quantitative measurements. After comparison with the results from Davis <a href="mit_references.html#davis">[3]</a>, Gresho <a href="mit_references.html#gresho">[4]</a></a>, Turek <a href="mit_references.html#turek">[5]</a> and Le Quéré <a href="mit_references.html#lequere">[6]</a></a> we choose approximately 34 time steps in one oscillation which corresponds to <span class="math">ΔT=0.1</span> as time step size. But before, we need to simulate the problem for a very long time (up to time <span class="math">t=1500</span>) until we find a steady oscillation. To do this, we simulate by using a larger time step (<i>ΔT=0.5</i>) and a coarser mesh (2 times refinement from the above coarse mesh). The steady oscillation can be seen from the figure below. Then, starting from the last solution at time t=1500, computation for different meshes with a smaller time step (<i>ΔT=0.1</i>) is undergo for another 100 time unit.</p>
+ <p> </p>
+ <p>Temperature oscillations at point 1</p>
+ <p><img src="../../../../media/mit/temperatur_zzz.png" title="Temperature oscillations at point 1" alt="Temperature oscillations at point 1" width="500" /></p>
+ <p>The plotting data of the above figure can be found <a href="mit_references.html#temperature05">here</a>.</p>
+ <p></p>
+ <p>Several meshes have been used to perform the spatial discretization. The coarse mesh has approximately 1:5 x-to-y ratio of grid points and decreases gradually towards the walls. We apply local refinement on elements attached to both walls after several regular refinements. Note that regular refinement doubles the number of the total elements in both x and y-direction. The figure below describes how the local refinement is generated for some exemplary meshes. The meshes are denoted by '<span class="math"><img class="latex" alt="$n$" title="$n$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGBAMAAAAMK8LIAAAAKlBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmU0mKAAAADXRSTlMAEGaZMlTvRM3dq7siFsIoOAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAACZJREFUCNdjEDIJUmAISGdsYGCcwL6AgcmAOYCBq4CNlYGbgVkHAE5fBG2AmuWjAAAAAElFTkSuQmCC" />R_a<img class="latex" alt="$i$" title="$i$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAJBAMAAAAIg/utAAAAJ1BMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAilU6eAAAADHRSTlMAIs0QZolUq0TddjK7l+1SAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAJ0lEQVQI12NgEGJgYGBmAAOWQAaG5AogdwIDA1cAAwOTGAMDazYDACcPArv/JC8nAAAAAElFTkSuQmCC" /></span>' for <span class="math"><img class="latex" alt="$i$" title="$i$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAJBAMAAAAIg/utAAAAJ1BMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAilU6eAAAADHRSTlMAIs0QZolUq0TddjK7l+1SAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAJ0lEQVQI12NgEGJgYGBmAAOWQAaG5AogdwIDA1cAAwOTGAMDazYDACcPArv/JC8nAAAAAElFTkSuQmCC" /></span> local refinement steps after <span class="math"><img class="latex" alt="$n$" title="$n$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGBAMAAAAMK8LIAAAAKlBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmU0mKAAAADXRSTlMAEGaZMlTvRM3dq7siFsIoOAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAACZJREFUCNdjEDIJUmAISGdsYGCcwL6AgcmAOYCBq4CNlYGbgVkHAE5fBG2AmuWjAAAAAElFTkSuQmCC" /></span> regular refinements.</p>
+ <p> </p>
+ <p>Several hierarchies and types of meshes</p>
+ <p><img src="../../../../media/mit/meshx.png" title="Several hierarchies and types of meshes" alt="Several hierarchies and types of meshes" width="550" /></p>
+ <p>
+ Our very refined mesh, 4R_a3, has total number of elements which are comparable with Davis <a href="mit_references.html#davis">[3]</a>, approximately half from Gresho <a href="mit_references.html#gresho">[4]</a>, and one-third from Turek <a href="mit_references.html#turek">[5]</a> as can be seen from table below. 
+ </p>
+ <table class="Basic">
+ <caption>Contributor's and our testing meshes</caption> <thead> 
+ <tr>
+ <td>Author<br />Mesh</td>
+ <td>Turek<br />128 x 704</td>
+ <td>Davis<br />83 x 403</td>
+ <td>Gresho<br />105 x 481</td>
+ <td>Le Quéré<br />48 x 180</td>
+ </tr>
+ </thead> 
+ <tbody>
+ <tr>
+ <th> Mesh </th><th> Elements </th><th> Nodes </th><th> Edges </th><th> Dof </th>
+ </tr>
+ <tr>
+ <td>2R</td>
+ <td>1408</td>
+ <td>1513</td>
+ <td>2920</td>
+ <td>21747</td>
+ </tr>
+ <tr>
+ <td>2R_a1</td>
+ <td>1936</td>
+ <td>2043</td>
+ <td>3978</td>
+ <td>29679</td>
+ </tr>
+ <tr>
+ <td>2R_a5</td>
+ <td>17776</td>
+ <td>17891</td>
+ <td>35666</td>
+ <td>267327</td>
+ </tr>
+ <tr style="border-top: 2px solid black;">
+ <td>3R</td>
+ <td>5632</td>
+ <td>5841</td>
+ <td>11472</td>
+ <td>85731</td>
+ </tr>
+ <tr>
+ <td>3R_a1</td>
+ <td>6688</td>
+ <td>6899</td>
+ <td>13586</td>
+ <td>101583</td>
+ </tr>
+ <tr>
+ <td>3R_a4</td>
+ <td>21472</td>
+ <td>21689</td>
+ <td>43160</td>
+ <td>323379</td>
+ </tr>
+ <tr style="border-top: 2px solid black;">
+ <td>4R</td>
+ <td>22528</td>
+ <td>22945</td>
+ <td>45472</td>
+ <td>340419</td>
+ </tr>
+ <tr>
+ <td>4R_a1</td>
+ <td>24640</td>
+ <td>25059</td>
+ <td>49698</td>
+ <td>372111</td>
+ </tr>
+ <tr>
+ <td>4R_a3</td>
+ <td>37312</td>
+ <td>37735</td>
+ <td>75046</td>
+ <td>562215</td>
+ </tr>
+ </tbody>
+ </table>
+<p class="Space10">» Continue to <a href="mit_result.html">Results and Discussion</a>.</p>
+<p class="Space5">» Return to the <a href="../mit_benchmark.html">MIT benchmark page</a>.</p></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

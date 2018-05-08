@@ -1,0 +1,1082 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Matrices/Vectors - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html" class="selected">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="tutorial_conceptmatvec.html">Matrices/Vectors</a>  </div>
+
+  <hr />
+
+  <h1>Matrices/Vectors</h1>
+
+<p>There exist two types of vectors and matrices, "scalar" vectors/matrices and "block" vectors/matrices. "Scalar" matrices/vectors correspond to <code>t_spatialDiscretisation</code> structures, while "block" matrices correspond to <code>t_blockDiscretisation</code> structures:</p>
+
+<ol>
+<li><p><code>t_vectorScalar</code> (linearsystemscalar.f90)</p>
+
+<ul>
+<li>Encapsules all degrees of freedom of a finite element space $V_h$</li>
+<li>Is associated to a finite element space, identified by a <code>t_scalarDiscretisation</code> structure.<br><br></li>
+</ul></li>
+<li><p><code>t_matrixScalar</code> (linearsystemscalar.f90)</p>
+
+<ul>
+<li>Describes a linear operator $A_h: V_h \to W_h$, where $V_h$ and $W_h$ are associated finite element spaces.</li>
+<li>Is associated to two finite element spaces $V_h$ and $W_h$, identified by corresponding <code>t_scalarDiscretisation</code> structures. $V_h$ is referred to as "trial space" and $W_h$ as "test space".</li>
+</ul>
+
+<blockquote>
+  <p><strong>Note:</strong> $A_h$ is associated to the trial space $V_h$ and the test space $W_h$. The target space is actually $W_h^*$ which is, however, associated to $W_h$ because the space is finite dimensional.</p>
+</blockquote></li>
+<li><p><code>t_vectorBlock</code> (linearsystemblock.f90)</p>
+
+<ul>
+<li>Encapsules all degrees of freedom of a tensor product space $X_h$, e.g., $X_h = V_h \times V_h$.</li>
+<li>Is associated to a tensor product space, identified by a <code>t_blockDiscretisation</code> structure.</li>
+<li>Contains a list of <code>t_vectorScalar</code> structures, each describing a subvector in the block vector.</li>
+<li>Subvectors can be reached by <code>(t_vectorBlock)%RvectorBlock(:)</code>.</li>
+<li>By default, memory for a block vector is allocated as a continuous 1D array. The subvectors are realised as parts of the complete vector.<br><br></li>
+</ul></li>
+<li><p><code>t_matrixBlock</code> (linearsystemblock.f90)</p>
+
+<ul>
+<li>Describes an operator $G_h : X_h \to Y_h$, where $X_h$ and $Y_h$ are tensor products of finite element spaces.</li>
+<li>Is associated to two tensor product spaces $X_h$ and $Y_h$, identified by corresponding <code>t_blockDiscretisation</code> structures. $X_h$ is referred to as "trial space" and $Y_h$ as "test space".</li>
+</ul></li>
+</ol>
+
+<blockquote>
+  <p><strong>Note:</strong> $G_h$ is associated to the trial space $X_h$ and the test space $Y_h$. The target space is actually $Y_h^*$ which is, however, associated to $Y_h$ because the space is finite dimensional.</p>
+</blockquote>
+
+<hr />
+
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td><a href="tutorial_conceptmatvec.html#Working-with-scalar-vectors">Working with "scalar" vectors</a></td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><a href="tutorial_conceptmatvec.html#Working-with-block-vectors">Working with "block" vectors</a></td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><a href="tutorial_conceptmatvec.html#Working-with-scalar-matrices">Working with "scalar" matrices</a></td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><a href="tutorial_conceptmatvec.html#Working-with-block-matrices">Working with "block" matrices </a></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="Working-with-scalar-vectors">Working with "scalar" vectors (linearsystemscalar.f90)</h2>
+
+<h3>Essential properties</h3>
+
+<p>The following properties are the essential standard properties of a "scalar" vector structure <code>t_vectorScalar</code> from the viewpoint of the user:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Property</th>
+  <th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>NEQ</td>
+  <td>Number of equations</td>
+</tr>
+<tr>
+  <td>p_rspatialDiscr</td>
+  <td>Pointer an underlying scalar discretisation structure defining an associated finite element space</td>
+</tr>
+</tbody>
+</table>
+
+<p>There is a 1D data array associated to a vector. By default, this array is of type <em>double precision</em>. If one wants to manually modify the content of a vector, a pointer to the content can be obtained using the <code>lsyssc_getbase_XXXX</code> routine, e.g.,</p>
+
+<pre><code>type(t_vectorScalar) :: rx
+real(DP), dimension(:), pointer :: p_Dx
+...
+call lsyssc_getbase_double (rx,p_Dx)
+
+! Do something with p_Dx...
+</code></pre>
+
+<h3>Creation/destruction</h3>
+
+<p>Vectors can be created based on a discretisation structure. "Scalar" vectors are created based on a "scalar" discretisation structure using <code>lsyssc_createVector</code> and destroyed using <code>lsyssc_releaseVector</code>:</p>
+
+<pre><code>type(t_scalarDiscretisation) :: rdiscrVh
+type(t_vectorScalar) :: rx
+...
+call lsyssc_createVector (rdiscrVh,rx)
+...
+call lsyssc_releaseVector (rx)
+</code></pre>
+
+<p>By default, the vector is not initialised. To initialise a vector with zero upon creation, the additional optional flag <code>bclear</code> can be set to <code>.true.</code>:</p>
+
+<pre><code>...
+call lsyssc_createVector (rdiscrVh,rx,.true.)
+</code></pre>
+
+<h3>Linear algebra</h3>
+
+<p>For the linear algebra, the module <code>linearsystemscalar.f90</code> provides all necessary functionality. <code>linearsystemscalar.f90</code> is an extension of the module <code>linearalgebra.f90</code> which provides the link to high performance BLAS routines. The following table lists a subset of important subroutines for the linear algebra of scalar vectors:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>lsyssc_clearVector</td>
+  <td>Clear a vector, i.e. overwrites all entries with 0.0 or with a defined value</td>
+</tr>
+<tr>
+  <td>lsyssc_copyVector</td>
+  <td>Copy a vector to another one</td>
+</tr>
+<tr>
+  <td>lsyssc_scaleVector</td>
+  <td>Scale a vector by a constant</td>
+</tr>
+<tr>
+  <td>lsyssc_addConstant</td>
+  <td>Adds a constant to a vector</td>
+</tr>
+<tr>
+  <td>lsyssc_vectorLinearComb</td>
+  <td>Linear combination of two vectors ("DAXPY")</td>
+</tr>
+<tr>
+  <td>lsyssc_scalarProduct</td>
+  <td>Calculate the scalar product of two vectors</td>
+</tr>
+<tr>
+  <td>lsyssc_vectorNorm</td>
+  <td>Calculate the norm of a vector</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="Working-with-block-vectors">Working with "block" vectors (linearsystemblock.f90)</h2>
+
+<h3>Essential properties</h3>
+
+<p>The following properties are the essential standard properties of a "block" vector structure <code>t_vectorScalar</code> from the viewpoint of the user:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Property</th>
+  <th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>NEQ</td>
+  <td>Total number of equations</td>
+</tr>
+<tr>
+  <td>p_rblockDiscr</td>
+  <td>Pointer an underlying scalar discretisation structure defining an associated finite element space</td>
+</tr>
+<tr>
+  <td>nblocks</td>
+  <td>Number of blocks</td>
+</tr>
+<tr>
+  <td>RvectorBlock(:)</td>
+  <td>Array of subvectors</td>
+</tr>
+</tbody>
+</table>
+
+<p>There is a 1D data array associated to a vector. By default, this array is of type <em>double precision</em>. If one wants to manually modify the content of a vector, a pointer to the content can be obtained using the <code>lsysbl_getbase_XXXX</code> routine, e.g.,</p>
+
+<pre><code>type(t_vectorBlock) :: rx
+real(DP), dimension(:), pointer :: p_Dx
+...
+call lsysbl_getbase_double (rx,p_Dx)
+
+! Do something with p_Dx...
+</code></pre>
+
+<p>The data array is of length <code>NEQ</code> and contains the data of all subvectors. If the data of a subvector has to be accessed, this can be done via access to the subvector using <code>RvectorBlock</code>. The following code demonstrates the access to the data of the 3rd subvector:</p>
+
+<pre><code>type(t_vectorBlock) :: rx
+real(DP), dimension(:), pointer :: p_Dx
+...
+! Get a pointer to the data of the 3rd subvector
+call lsyssc_getbase_double (rx%RvectorBlock(3),p_Dx)
+</code></pre>
+
+<h3>Creation/destruction</h3>
+
+<p>Similarly to "scalar" vectors, "block" vectors are created based on a "block" discretisation structure using <code>lsysbl_createVector</code> and destroyed using <code>lsysbl_releaseVector</code>:</p>
+
+<pre><code>type(t_blockDiscretisation) :: rdiscrXh
+type(t_vectorBlock) :: rx
+...
+call lsysbl_createVector (rdiscrXh,rx)
+...
+call lsysbl_releaseVector (rx)
+</code></pre>
+
+<p>The vector is only initialised with zero if the additional flag <code>bclear=.true.</code> is specified:</p>
+
+<pre><code>...
+call lsysbl_createVector (rdiscrXh,rx,true.)
+</code></pre>
+
+<h3>Linear algebra</h3>
+
+<p>For the linear algebra, the module <code>linearsystemblock.f90</code> provides all necessary functionality. <code>linearsystemblock.f90</code> boils down all operations to operations on the subvectors or applies BLAS routines directly if possible. The following table lists a subset of important subroutines for the linear algebra of scalar vectors:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>lsysbl_clearVector</td>
+  <td>Clear a vector, i.e. overwrites all entries with 0.0 or with a defined value</td>
+</tr>
+<tr>
+  <td>lsysbl_copyVector</td>
+  <td>Copy a vector to another one</td>
+</tr>
+<tr>
+  <td>lsysbl_scaleVector</td>
+  <td>Scale a vector by a constant</td>
+</tr>
+<tr>
+  <td>lsysbl_vectorLinearComb</td>
+  <td>Linear combination of two vectors ("DAXPY")</td>
+</tr>
+<tr>
+  <td>lsysbl_scalarProduct</td>
+  <td>Calculate the scalar product of two vectors</td>
+</tr>
+<tr>
+  <td>lsysbl_vectorNorm</td>
+  <td>Calculate the norm of a vector</td>
+</tr>
+<tr>
+  <td>lsysbl_vectorNormBlock</td>
+  <td>Calculates the norms of all subvectors</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="Working-with-scalar-matrices">Working with "scalar" matrices (linearsystemscalar.f90)</h2>
+
+<h3>Essential properties</h3>
+
+<p>The following properties are the essential standard properties of a "scalar" matrix structure <code>t_matrixScalar</code> from the viewpoint of the user:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Property</th>
+  <th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>cmatrixFormat</td>
+  <td>Format of the matrix</td>
+</tr>
+<tr>
+  <td>NEQ</td>
+  <td>Number of rows in the matrix</td>
+</tr>
+<tr>
+  <td>NCOLS</td>
+  <td>Number of columns in the matrix</td>
+</tr>
+<tr>
+  <td>dscaleFactor</td>
+  <td>A scaling factor of the matrix; default=1.0</td>
+</tr>
+<tr>
+  <td>p_rspatialDiscrTrial</td>
+  <td>Pointer to the trial space</td>
+</tr>
+<tr>
+  <td>p_rspatialDiscrTest</td>
+  <td>Pointer to the test space</td>
+</tr>
+</tbody>
+</table>
+
+<p>Matrices can be saved in different matrix formats (identified by <code>cmatrixFormat</code> in the structure). Matrix formats are referred to by appropriate IDs. The following table gives an overview about the most commonly used data formats in FEAT2:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Id</th>
+  <th>Matrix format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>LSYSSC_MATRIX1</td>
+  <td>Full matrix, saves all entries</td>
+</tr>
+<tr>
+  <td>LSYSSC_MATRIX9</td>
+  <td>Standard CSR matrix + diagonal pointer</td>
+</tr>
+<tr>
+  <td>LSYSSC_MATRIXD</td>
+  <td>Diagonal matrix, saves only the main diagonal</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Matrix formats</h3>
+
+<p>Each matrix format has its own properties realised in the structure <code>t_matrixScalar</code>. The following paragraphs give a short overview about the matrix formats.</p>
+
+<ol>
+<li><p><strong>LSYSSC_MATRIX1 - Full matrix</strong></p>
+
+<p>This matrix format saves all entries in the matrix in one large continuous array of size <code>(t_matrixScalar)%NA=NEQ*NCOLS</code>. By default, the matrix data is saved in double precision. A pointer to the matrix data can be obtained using the <code>lsyssc_getbase_XXXX</code> routines. The data is stored "row-wise" (similar to C/C++) to speed up matrix-vector multiplication.</p>
+
+<p>The follwing example demonstrates how to fill row 50 with "ones":</p>
+
+<pre><code>type(t_matrixScalar) :: rmatrix
+real(DP), dimension(:), pointer :: p_Da
+...
+! Get the data
+call lsyssc_getbase_double (rmatrix,p_Da)
+
+! Full row 50 with one.
+do i=1,rmatrix%NCOLS
+  p_Da( (50-1)*rmatrix%NCOLS + i ) = 1.0_DP
+end do
+</code></pre></li>
+<li><p><strong>LSYSSC_MATRIX9 - CSR matrix</strong></p>
+
+<p>This matrix format saves only the nonzero entries in a matrix in one continuous array of size <code>(t_matrixScalar)%NA</code>. By default, the matrix data is saved in double precision. The following arrays are associated to such a matrix:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Array name</th>
+  <th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>DA</code></td>
+  <td>data array of size <code>NA</code> with the nonzero entries</td>
+</tr>
+<tr>
+  <td><code>KCOL</code></td>
+  <td>integer array of size <code>NA</code>; saves for every entry the column in the matrix</td>
+</tr>
+<tr>
+  <td><code>KLD</code></td>
+  <td>integer array of size <code>NEQ+1</code>; saves for every row the start index in <code>DA</code>/<code>KCOL</code>; furthermore, there is <code>KLD(NEQ+1)=NA+1</code></td>
+</tr>
+<tr>
+  <td><code>KDIAGONAL</code></td>
+  <td>integer array of size NEQ; saves for every row an index to the diagonal entry in <code>DA</code>/<code>KCOL</code> (;this is an extension to the usual CSR structure); if there is no diagonal entry, <code>KDIAGONAL</code> points to the beginning of the next row, similar to <code>KLD</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>A pointer to the data arrays can be obtaind using the <code>lsyssc_getbase_XXXX</code> routines.     The follwing example demonstrates how to set the entry at row 50 / column 40 to 1 (assuming that A(40,50) exists):</p>
+
+<pre><code>type(t_matrixScalar) :: rmatrix
+real(DP), dimension(:), pointer :: p_Da
+integer, dimension(:), pointer :: p_Kcol
+integer, dimension(:), pointer :: p_Kld
+
+...
+! Get the data
+call lsyssc_getbase_double (rmatrix,p_Da)
+call lsyssc_getbase_Kcol (rmatrix,p_Kcol)
+call lsyssc_getbase_Kld (rmatrix,p_Kld)
+
+! Set A(50,40)=1. Search for column 40 in row 50.
+do i=p_Kld(50),p_Kld(50+1)-1
+  if (p_Kcol(i) == 40) then
+    p_Da(i) = 1.0_DP
+    exit
+  end if
+end do
+</code></pre></li>
+<li><p><strong>LSYSSC_MATRIXD - Diagonal matrix</strong></p>
+
+<p>This matrix format saves only the entries of the main diagonal in one continuous array of size <code>(t_matrixScalar)%NA=NEQ</code>. By default, the matrix data is saved in double precision. A pointer to the matrix data can be obtained using the <code>lsyssc_getbase_XXXX</code> routines.</p>
+
+<p>The follwing example demonstrates how to fill the main diagonal with "ones":</p>
+
+<pre><code>type(t_matrixScalar) :: rmatrix
+real(DP), dimension(:), pointer :: p_Da
+
+...
+! Get the data
+call lsyssc_getbase_double (rmatrix,p_Da)
+
+! Fill the main diagonal with "(1,1,1,1,...)"
+do i=1,rmatrix%NEQ
+  p_Da(i) = 1.0_DP
+end do
+</code></pre></li>
+</ol>
+
+<h3>Content and structure</h3>
+
+<p>A matrix structure <code>t_matrixScalar</code> encapsules two types of data:</p>
+
+<ol>
+<li><p><strong>Matrix structure</strong></p>
+
+<p>Data of type "matrix structure" describe structural data of the matrix. Apart of simple data like NEQ, this term in particular refers to the column/row structure of CSR matrix (<code>KCOL</code>, <code>KLD</code>), i.e., the pattern of zero/nonzero entries.</p></li>
+<li><p><strong>Matrix content</strong></p>
+
+<p>The term "matrix content" refers to the actual entries of the matrix which are calculated, e.g., during the integration.</p></li>
+</ol>
+
+<p>FEAT2 differs between these two types of data as they are logically completely different and may be used independent of each other. Matrices always have a "structure" but not necessarily a content:</p>
+
+<ul>
+<li>For simple matrices like full matrices of diagonal matrices, the "structure" contains only simple data like <code>NEQ</code> and does not need memory.</li>
+<li>For more complicated matrices like CSR, the "structure" is the nonzero pattern (which needs memory) while the "content" is the actual matrix data.</li>
+<li>"Graph matrices" which realise a graph only contain structural data and no content.
+
+<ul>
+<li>This includes, in particular, the structure of finite element matrices. Different matrices for the same finite element space $V_h$ all have the same structure, so the structure can be calculated once in advance.</li>
+</ul></li>
+</ul>
+
+<p>To work with the structure and the content, the module <code>linearsystemscalar.f90</code> provides a couple of subroutines:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>lsyssc_convertMatrix</td>
+  <td>Convert a matrix into another matrix structure</td>
+</tr>
+<tr>
+  <td>lsyssc_hasMatrixStructure</td>
+  <td>Check if a matrix has a structure in memory or not</td>
+</tr>
+<tr>
+  <td>lsyssc_hasMatrixContent</td>
+  <td>Check if a matrix has a content in memory or not</td>
+</tr>
+<tr>
+  <td>lsyssc_releaseMatrixContent</td>
+  <td>Releases the content of the matrix, the structure will stay unchanged</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Creation/destruction of scalar matrices</h3>
+
+<p>Depending on the type of the matrix, a "scalar" matrix is created in one or two steps, depending on the type.</p>
+
+<ul>
+<li><p><strong>Full matrix</strong></p>
+
+<p>Full matrices are always created in matrix format LSYSSC_MATRIX1.
+This type of matrix is created using the subroutine <code>lsyssc_createFullMatrix</code> from <code>linearsystemscalar.f90</code>.
+Example:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscr
+type(t_matrixScalar) :: rmatrix
+...
+call lsyssc_createFullMatrix (rspatialDiscr,rmatrix [,bclear=.true.])
+</code></pre>
+
+<p>where the optional parameter <code>bclear=.true.</code> can be specified to initialise the matrix with zero upon creation. FEAT2 reserves memory for the entries (content) on the heap.</p>
+
+<p>Alternatively, the matrix can be created by directly specifying the size of the matrix (without discretisation structure attached). The following example creates an <code>NEQ x NEQ</code> matrix without attached discretisation structure:</p>
+
+<pre><code>type(t_matrixScalar) :: rmatrix
+...
+call lsyssc_createFullMatrix (rmatrix,NEQ [,bclear=.true.])
+</code></pre></li>
+<li><p><strong>Diagonal matrix</strong></p>
+
+<p>Diagonal matrices can be created in all matrix formats using the subroutine <code>lsyssc_createDiagMatrixStruc</code> from <code>linearsystemscalar.f90</code>. The matrix format has to be specified as parameter. Example:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscr
+type(t_matrixScalar) :: rmatrix
+...
+call lsyssc_createDiagMatrixStruc (&amp;
+    rspatialDiscr,LSYSSC_MATRIXD,rmatrix [,bclear=.true.])
+</code></pre>
+
+<p>where the optional parameter <code>bclear=.true.</code> can be specified to initialise the matrix with zero upon creation. FEAT2 reserves memory for the entries (content) on the heap.</p>
+
+<p>Alternatively, if the matrix is square, it can be created by directly specifying the size of the matrix (without discretisation structure attached). The following example creates a diagonal <code>NEQ x NEQ</code> matrix without attached discretisation structure:</p>
+
+<pre><code>type(t_matrixScalar) :: rmatrix
+...
+call lsyssc_createDiagMatrixStruc (&amp;
+    rmatrix,LSYSSC_MATRIXD,NEQ [,bclear=.true.])
+</code></pre></li>
+<li><p><strong>CSR matrices</strong></p>
+
+<p>For the creation of CSR matrices, special routines from <code>bilinearformevaluation.f90</code> are designed to determine the matrix pattern based on the underlying finite element space. The creation of a CSR matrix requires two steps: Creation of the structure and creation of the content. The main entry point is the subroutine <code>bilf_createMatrixStructure</code>. The following example demonstrates how to create a CSR matrix ("format 9") based on a discretisation:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscr
+type(t_matrixScalar) :: rmatrix
+...
+call bilf_createMatrixStructure (&amp;
+    rspatialDiscr,LSYSSC_MATRIX9,rmatrix)
+</code></pre>
+
+<p>CSR matrices handle structure and content independent of each other. After a call to <code>lsyssc_createDiagMatrixStruc</code>, the "content" of the matrix is empty, no data arrays are attached to the matrix. To create a data array for the entries, one has to use the additional call <code>lsyssc_allocEmptyMatrix</code>:</p>
+
+<pre><code>call lsyssc_allocEmptyMatrix (rmatrix [,bclear=.true.])
+</code></pre>
+
+<p>The optional parameter <code>bclear=.true.</code> can be specified to initialise the entries with zero upon creation.</p></li>
+</ul>
+
+<p>Independent of the creation, a matrix is destroyed using <code>lsyssc_releaseMatrix</code>:</p>
+
+<pre><code>call lsyssc_releaseMatrix (rmatrix)
+</code></pre>
+
+<h3>Different trial and test spaces</h3>
+
+<p>The matrix creation routines usually allow to specify different trial and test spaces which usually leads to a rectangular matrix with more or less columns than rows. Such situations usually appear during the creation of submatrices in a block matrix, see below. The alternative test space can be specified as additional parameter during the creation of the matrix structure.</p>
+
+<p>The following example creates a CSR matrix with different trial and test spaces. The trial space is identified by <code>rspatialDiscrVh</code> and the test space as <code>rspatialDiscrWh</code>:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscrVh
+type(t_spatialDiscretisation) :: rspatialDiscrWh
+type(t_matrixScalar) :: rmatrix
+...
+call bilf_createMatrixStructure (&amp;
+    rspatialDiscrVh,LSYSSC_MATRIX9,rmatrix,rspatialDiscrWh)
+</code></pre>
+
+<h3>Linear algebra</h3>
+
+<p>For the linear algebra, the module <code>linearsystemscalar.f90</code> provides all necessary functionality. The following table lists a subset of important subroutines for the linear algebra of scalar matrices:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>lsyssc_matVec</td>
+  <td>Matrix-vector multiplication</td>
+</tr>
+<tr>
+  <td>lsyssc_invertedDiagMatVec</td>
+  <td>Multiply a vector with the inverse of the diagonal of a scalar matrix (-> used, e.g., for the Jacobi iteration)</td>
+</tr>
+<tr>
+  <td>lsysbl_allocEmptyMatrix</td>
+  <td>Allocates memory for the entries of a matrix</td>
+</tr>
+<tr>
+  <td>lsyssc_clearMatrix</td>
+  <td>Clear a matrix</td>
+</tr>
+<tr>
+  <td>lsyssc_scaleMatrix</td>
+  <td>Scale a matrix by a constant</td>
+</tr>
+<tr>
+  <td>lsyssc_matrixLinearComb</td>
+  <td>Linear combination of two matrices</td>
+</tr>
+<tr>
+  <td>lsyssc_calcDeterminant</td>
+  <td>Calculates the determinant of a square matrix</td>
+</tr>
+<tr>
+  <td>lsyssc_calcGerschgorin</td>
+  <td>Apply the theorem of Gerschgorin to get approximations for the min/max eigenvalues of a matrix</td>
+</tr>
+<tr>
+  <td>lsyssc_clearOffdiags</td>
+  <td>Clear all offdiagonal entries in a matrix</td>
+</tr>
+<tr>
+  <td>lsyssc_multMatMat</td>
+  <td>Multiplies two matrices</td>
+</tr>
+<tr>
+  <td>lsyssc_transposeMatrix</td>
+  <td>Calculate the transpose of a matrix</td>
+</tr>
+<tr>
+  <td>lsyssc_lumpMatrix</td>
+  <td>Lumping of a matrix</td>
+</tr>
+<tr>
+  <td>lsyssc_initialiseIdentityMatrix</td>
+  <td>Initialises the content of a matrix to an identity matrix</td>
+</tr>
+<tr>
+  <td>lsyssc_copyMatrix</td>
+  <td>Copies matrix structure and content</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Sharing/copying of matrix data</h3>
+
+<p>Depending on the underlying problem, finite element space etc., finite element matrices can be tremendeously large. FEAT2 implements the special functionality of "shared" matrix data to save memory. Every matrix can "share" its structure and/or content with another "parent" matrix. Memory is allocated and maintained only in this "parent" matrix, while the "child" matrix does not need additional memory for the shared data. This technique allows to work with so-called "template matrices" and is a good technique to ensure that matrices have a common nonzero pattern. Whereever one wants to "derive" one matrix or another, it should be taken into account whether the data should actually be copied or shared.</p>
+
+<p>There are three main routines in <code>linearsystemscalar.f90</code> responsible for the implementation of shared matrices:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>lsyssc_duplicateMatrix</td>
+  <td>Extended version of <code>lsyssc_copyMatrix</code></td>
+</tr>
+<tr>
+  <td>lsyssc_isMatrixStructureShared</td>
+  <td>Tests if the structure of a matrix is shared with another matrix</td>
+</tr>
+<tr>
+  <td>lsyssc_isMatrixContentShared</td>
+  <td>Tests if the content of a matrix is shared with another matrix</td>
+</tr>
+</tbody>
+</table>
+
+<p>The subroutine <code>lsyssc_duplicateMatrix</code> is an extended and much cheaper variant of <code>lsyssc_copyMatrix</code> and should be used whereever possible. It allows to selectively copy or share the data of one matrix with another. The routine accepts four parameters:</p>
+
+<ul>
+<li>A source matrix.</li>
+<li>A destination matrix.</li>
+<li>What to do with the structure of the source.</li>
+<li>What to do with the content of the source.</li>
+</ul>
+
+<p>Let us demonstrate this on an example with template matrices. The following example at first create a template finite element matrix in CSR format. This template matrix only has a structure defining the nonzero pattern of the entries. No content is attached. We create it only for the purpose to create other matrices later:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscr
+type(t_matrixScalar) :: rmatrixTemplate
+type(t_matrixScalar) :: rmatrixLaplace, rmatrixMass
+...
+call bilf_createMatrixStructure (rspatialDiscr,LSYSSC_MATRIX9,rmatrixTemplate)
+</code></pre>
+
+<p>In a second step, we use <code>lsyssc_duplicateMatrix</code> to create a matrix structure for a Laplace and a mass matrix. Both matrices will "share" the matrix structure (so <code>KCOL</code>, <code>KLD</code>,...) with the template matrix, this does not need additional memory. The content of the two matrices is different, of course, so we tell <code>lsyssc_duplicateMatrix</code> to allocate new memory for the content, which we initialise by zero in a second step:</p>
+
+<pre><code>....
+call lsyssc_duplicateMatrix (rmatrixTemplate,rmatrixLaplace,&amp;
+    LSYSSC_DUP_SHARE,LSYSSC_DUP_EMPTY)
+call lsyssc_duplicateMatrix (rmatrixTemplate,rmatrixMass,&amp;
+    LSYSSC_DUP_SHARE,LSYSSC_DUP_EMPTY)
+
+call lsyssc_clearMatrix (rmatrixLaplace)
+call lsyssc_clearMatrix (rmatrixMass)
+...
+</code></pre>
+
+<p>As can be seen, the constants <code>LSYSSC_DUP_xxxx</code> define what to do with the structure (here: "share") and the content (here: allocate a new, "empty" content). The follwing list shows the effect of the different constants if applied to structure and/or content. For this table, assume a call</p>
+
+<pre><code>call lsyssc_duplicateMatrix (rA,rB,LSYSSC_DUP_...,LSYSSC_DUP_...)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+  <th>Constant</th>
+  <th>structure/content(rB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>LSYSSC_DUP_SHARE</td>
+  <td>shared with structure/content(rA)</td>
+</tr>
+<tr>
+  <td>LSYSSC_DUP_EMPTY</td>
+  <td>allocate new memory, no initialisation</td>
+</tr>
+<tr>
+  <td>LSYSSC_DUP_COPYOVERWRITE</td>
+  <td>overwrite with structure/content(rA)</td>
+</tr>
+<tr>
+  <td>LSYSSC_DUP_COPY</td>
+  <td>copy from structure/content(rA), allocate new memory</td>
+</tr>
+<tr>
+  <td>LSYSSC_DUP_ASIS</td>
+  <td>copy if structure/content(rB) is not shared, ignore if shared</td>
+</tr>
+<tr>
+  <td>LSYSSC_DUP_REMOVE</td>
+  <td>remove any old structure/content(rB), deallocated if necessary</td>
+</tr>
+<tr>
+  <td>LSYSSC_DUP_DISMISS</td>
+  <td>drop any old structure/content(rB), no deallocation</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+  <p><strong>Warning:</strong> If a "child" matrix shares its date with a parent matrix, the user is responsible to take care of the data of the parent matrix. Changing data arrays of the parent matrix would also change the data arrays of the child matrix.</p>
+</blockquote>
+
+<p>Child matrices have to be released with <code>call lsyssc_releaseMartix</code> in the same way as other matrices. FEAT2 takes care that releasing a child matrix will not to a destruction of the data in the parent matrix.</p>
+
+<blockquote>
+  <p><strong>Warning:</strong> The opposite is not true. If the parent matrix is destroyed, the child matrix gets invalid. If the parent matrix has been released, the user shall never use a child matrix for anything except for destruction.</p>
+</blockquote>
+
+<h2 id="Working-with-block-matrices">Working with "block" matrices (linearsystemblock.f90)</h2>
+
+<p>In contrast to "scalar" matrices, "block" matrices do not contain any actual data. A "block" matrix is realised as a (m x n) array of scalar matrices that describe the actual operators between the finite element spaces. It is a logical representation of an operator between the corresponding tensor product spaces.</p>
+
+<h3>Essential properties</h3>
+
+<p>The following properties are the essential standard properties of a "block" matrix structure <code>t_matrixBlock</code> from the viewpoint of the user:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Property</th>
+  <th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>NEQ</td>
+  <td>Total number of rows</td>
+</tr>
+<tr>
+  <td>NCOLS</td>
+  <td>Total number of columns</td>
+</tr>
+<tr>
+  <td>nblocksPerRow</td>
+  <td>Number of "block columns", i.e., number of blocks in one "block row" of the block matrix</td>
+</tr>
+<tr>
+  <td>nblocksPerCol</td>
+  <td>Number of "block rows", i.e., number of blocks in one "block column" of the block matrix</td>
+</tr>
+<tr>
+  <td>RmatrixBlock(:,:)</td>
+  <td>2D array of all submatrices</td>
+</tr>
+<tr>
+  <td>p_rblockDiscrTest</td>
+  <td>Pointer to the trial space</td>
+</tr>
+<tr>
+  <td>p_rblockDiscrTrial</td>
+  <td>Pointer to the test space</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Creation/destruction</h3>
+
+<p>A block matrix is created upon a "block discretisation" by a simple call to <code>lsysbl_createMatrix</code> and released after use with <code>lsysbl_releaseMatrix</code>:</p>
+
+<pre><code>type(t_blockDiscretisation) :: rdiscr
+type(t_matrixScalar) :: rmatrix
+...
+call lsysbl_createMatrix (rdiscr,rmatrix)
+...
+call lsysbl_releaseMatrix (rmatrix)
+</code></pre>
+
+<p>The command <code>lsysbl_createMatrix</code> creates an "empty" matrix with the number of block rows/columns matching the number of finite element spaces in rdiscr. No memory is allocated for any submatrix, and no submatrix is initialised.</p>
+
+<h3>Working with submatrices</h3>
+
+<p>The user can access the submatrices via <code>(t_matrixBlock)%RmatrixBlock(i,j)</code>. This array provides empty memory for all the submatrices, and the user has to create submatrices where necessary with the usual techniques for the structure <code>t_matrixScalar</code>. The user is responsible to initialise the submatrices with the correct "scalar" discretisation structure.</p>
+
+<p>In the following example, it is assumed that</p>
+
+<ul>
+<li><code>rspatialDiscrVh</code>describes a finite element space $V_h$,</li>
+<li><code>rspatialDiscrWh</code> describes a finite element space $W_h$,</li>
+<li><code>rblockDiscr</code> describes the tensor product space $X_h$ := $V_h$ x $W_h$, created by <code>rspatialDiscrVh</code> and <code>rspatialDiscrWh</code>.</li>
+</ul>
+
+<p>The example creates a 2x2 block matrix, realising an operator $G_h : X_h \to X_h$. In the diagonal blocks (1,1) and (2,2), empty finite element matrices are created in CSR format and initialised with zero.</p>
+
+<pre><code>type(t_scalarDiscretisation) :: rspatialDiscrVh,rspatialDiscrWh
+type(t_blockDiscretisation) :: rblockDiscr
+type(t_matrixBlock) :: rmatrix
+
+...
+call lsysbl_createMatrix (rblockDiscr,rmatrix)
+
+! Create block (1,1)
+call bilf_createMatrixStructure (&amp;
+    rspatialDiscrVh,LSYSSC_MATRIX9,rmatrix%RmatrixBlock(1,1))
+
+! Create block (2,2)
+call bilf_createMatrixStructure (&amp;
+    rspatialDiscrWh,LSYSSC_MATRIX9,rmatrix%RmatrixBlock(2,2))
+
+! Allocate all created submatrices and initialise with zero
+call lsysbl_allocEmptyMatrix(rmatrix,.true.)
+</code></pre>
+
+<p>If, additionally, the matrix at position (1,2) and/or (2,1) should be created, an extended syntax for <code>bilf_createMatrixStructure</code> has to be used. For these matrices trial and test spaces differ, and this has to be taken into account in the call to <code>bilf_createMatrixStructure</code>. The following example creates submatrices at all four blocks:</p>
+
+<pre><code>type(t_scalarDiscretisation) :: rspatialDiscrVh,rspatialDiscrWh
+type(t_blockDiscretisation) :: rblockDiscr
+type(t_matrixBlock) :: rmatrix
+
+...
+call lsysbl_createMatrix (rblockDiscr,rmatrix)
+
+! Create block (1,1)
+call bilf_createMatrixStructure (&amp;
+    rspatialDiscrVh,LSYSSC_MATRIX9,rmatrix%RmatrixBlock(1,1))
+
+! Create block (2,2)
+call bilf_createMatrixStructure (&amp;
+    rspatialDiscrWh,LSYSSC_MATRIX9,rmatrix%RmatrixBlock(2,2))
+
+! Create block (1,2). Offdiagonal block.
+call bilf_createMatrixStructure (&amp;
+    rspatialDiscrVh,LSYSSC_MATRIX9,rmatrix%RmatrixBlock(1,2),&amp;
+    rspatialDiscrWh)
+
+! Create block (2,1). Offdiagonal block.
+call bilf_createMatrixStructure (&amp;
+    rspatialDiscrWh,LSYSSC_MATRIX9,rmatrix%RmatrixBlock(2,1),&amp;
+    rspatialDiscrVh)
+
+! Allocate all created submatrices and initialise with zero
+call lsysbl_allocEmptyMatrix(rmatrix,.true.)
+</code></pre>
+
+<p>If some finite element spaces are the same, it is advisable to use template matrices in order to save memory. In the following example, it is assumed that</p>
+
+<ul>
+<li><code>rspatialDiscrVh</code> describes a finite element space $V_h$,</li>
+<li><code>rblockDiscr</code> describes the tensor product space $X_h$ := $V_h$ x $V_h$, created by <code>rspatialDiscr</code>.</li>
+</ul>
+
+<p>The example creates a 2x2 block matrix, realising an operator $G_h : X_h \to X_h$. In the diagonal blocks (1,1) and (2,2), empty finite element matrices are created in CSR format and initialised with zero. The submatrices are created based on a "template" matrix for the finite element space. For this purpose, the routine <code>lsysbl_duplicateMatrix</code> is used which copies a scalar submatrix into a block of a block matrix.</p>
+
+<pre><code>type(t_scalarDiscretisation) :: rspatialDiscrVh
+type(t_blockDiscretisation) :: rblockDiscr
+type(t_matrixBlock) :: rmatrixTemplate
+type(t_matrixBlock) :: rmatrix
+
+...
+! Create a template matrix for the space $V_h$
+call bilf_createMatrixStructure (&amp;
+    rspatialDiscrVh,LSYSSC_MATRIX9,rmatrix%RmatrixBlock(1,1))
+
+! Create the block matrix
+call lsysbl_createMatrix (rblockDiscr,rmatrix)
+
+! Create block (1,1) / (2,2) using the template matrix
+call lsysbl_duplicateMatrix (rmatrixTemplate,rmatrix,1,1,&amp;
+    LSYSSC_DUP_SHARE,LSYSSC_DUP_EMPTY)    
+
+call lsysbl_duplicateMatrix (rmatrixTemplate,rmatrix,2,2,&amp;
+    LSYSSC_DUP_SHARE,LSYSSC_DUP_EMPTY)    
+
+! Initialise with zero
+call lsysbl_clearMatrix(rmatrix)
+</code></pre>
+
+<p>The following table gives a brief overview about the most important subroutines in <code>linearsystemblock.f90</code> which are used to deal with submatrices:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>lsysbl_duplicateMatrix</td>
+  <td>Duplicates a scalar matrix into a submatrix of a block matrix <br><strong>or</strong> duplicates a block matrix to another one</td>
+</tr>
+<tr>
+  <td>lsysbl_isSubmatrixPresent</td>
+  <td>Checks if a submatrix at a position (i,j) is present</td>
+</tr>
+<tr>
+  <td>lsysbl_releaseMatrixRow</td>
+  <td>Releases a row of submatrices from a block matrix</td>
+</tr>
+<tr>
+  <td>lsysbl_releaseMatrixColumn</td>
+  <td>Releases a column of submatrices from a block matrix</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Linear algebra</h3>
+
+<p>For the linear algebra with block matrices, the module <code>linearsystemblock.f90</code> provides a set of subroutines. The most important subroutines can be found in the following table:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>lsysbl_matVec</td>
+  <td>Matrix-vector multiplication</td>
+</tr>
+<tr>
+  <td>lsysbl_invertedDiagMatVec</td>
+  <td>Multiply a vector with the inverse of the diagonal of a matrix</td>
+</tr>
+<tr>
+  <td>lsysbl_allocEmptyMatrix</td>
+  <td>Allocates memory for the entries of a matrix</td>
+</tr>
+<tr>
+  <td>lsysbl_clearMatrix</td>
+  <td>Clear a matrix</td>
+</tr>
+<tr>
+  <td>lsysbl_scaleMatrix</td>
+  <td>Scale a matrix by a constant</td>
+</tr>
+<tr>
+  <td>lsysbl_copyMatrix</td>
+  <td>Copies matrix structural data and content</td>
+</tr>
+<tr>
+  <td>lsysbl_duplicateMatrix</td>
+  <td>Extended version of <code>lsysbl_copyMatrix</code>. Applies <code>lsyssc_duplicateMatrix</code> to every submatrix <strong>or</strong> duplicates a scalar matrix into a submatrix of a block matrix.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Other functionality can be emulated by the user by applying the corresponding linear algebra routines to the scalar subroutines.</p>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+  src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

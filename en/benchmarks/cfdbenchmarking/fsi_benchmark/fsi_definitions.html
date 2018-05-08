@@ -1,0 +1,585 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Definitions - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html">Software</a><div class="submenu"><a href="../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../software/featflow.html">FEATFLOW</a><a href="../../../software/featflow2.html">FEATFLOW2</a><a href="../../../software/parpp3d.html">parPP3D</a><a href="../../../software/documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../flow.html">Flow around a Cylinder</a><a href="../bubble.html">Rising Bubble</a><a href="../fsi_benchmark.html" class="selected">FSI Benchmark</a><div class="submenu"><a href="fsi_definitions.html" class="selected">Definitions</a><a href="fsi_quantities.html">Quantities for Comparison</a><a href="fsi_tests.html">Partial computational Tests</a><a href="fsi_bibliography.html">Bibliography</a><a href="fsi_reference.html">Reference Values</a></div><a href="../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../benchmarks.html">Benchmarks</a> » <a href="../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../fsi_benchmark.html">FSI Benchmark</a> » <a href="fsi_definitions.html">Definitions</a>  </div>
+
+  <hr />
+
+  <h2>Definitions</h2>
+<p>We consider the flow of an <b>incompressible Newtonian fluid</b>
+interacting with an <b>elastic solid</b>. We denote by <span class="math"><img class="latex" alt="$\Omega^f_t$" title="$\Omega^f_t$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA8klEQVQ4y52T/W3CMBDFf5cJLEbwCK7YIGyAxAaM0B0YITPQDcIGhRUyQpsNHn9wpm5iobonWbKfz+/efdgk0WpmloADEJDUvIABiEDo/hm9B5Kk2XIKZrYHtsCn+26BUdKlQjJK2gFkSSd3Xkq9Ae8LLAGn4kwABOwrBMdHjBX29O2AjSubKylPLjkU2Jukj3zoJE3uGCsECZgkzWYWzWzwtH7MZfUvatC/amnnJBdgLqX6/lrrwtL6PBRlcbxYwe9SgZ9/qXRQwPeiPYNjKrAIDCuCP45vBM4+M6mZwElGIKyK2GK5pc85aHw/+Z/5ysAdu9VH9URDCXUAAAAASUVORK5CYII=" /></span>
+the domain occupied by the fluid and <span class="math"><img class="latex" alt="$\Omega^s_t$" title="$\Omega^s_t$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAANCAYAAAB2HjRBAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA2klEQVQoz5WTYW3DUAyEP08FEA1CIEQqgwchGAZhHAohoxAIDYOuFB6ELQxuP3qvcrZqak5yXnz2Wc7pJSQBEBEjcAQu3HAEzpIW50REDxSgAmDxyY3kAK7Ae8pHYPbZ4YeA8YH47TZfra8APTAB5QC8equVv6het3Pe+7xKWg6SakTUVMgYgCqpDf7YVL1S+eeby2++xYsHLMCa1murfma3H6GZ0GXTbFbn2pD4+f5uQsA3cEpNkzklrgemjfiZsHD2nRh2iT3gDHQbw/ZA0uprultc/Q98AfwAhgnymXkirJ4AAAAASUVORK5CYII=" /></span> by the solid at the
+time <span class="math"><img class="latex" alt="$t\in[0,T]$" title="$t\in[0,T]$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAOCAYAAACCRSRZAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABr0lEQVRIx82W4VECMRCFv3WugBtKgA4QO8AOADuADryxBO1AOmCgA68EpAOvBOY6eP5wbyZGLnegzrD/kmw2u/vyXmKS+A8zsykwB7aSSv7JzGwJ3ALPWTA5BHJJhz86Zwi8NvE8/gyofG0tqe5I9B3YAx/ACFgChS+PgIGkuZnNgDwL9hbAG3BIBM+BhQfKgVpS0bO4raTbIM4WuE+cNQaKBlVH4CDpJfB5DPeExUyDqtvgHHm312dehXE4llSb2cTMhpKqNmQl7YLxPbCJfL41/sbMxmb27ONFfHCYjKQicXjKJsAxmjv6dTtpUSFNs8vI59s4k3QI+NLW8ZWk1S/4k5+Yq1vm25Dt5HMWQPiWInOAXtzBPpypgcGJAuuezfiBSqqYJF+ceMUvkNkDMbIDV7Y+1tXsL85EpJy50sS2cQG4yPx65JEqVg3/nLf5XyFTulZXp7TfeTVxKdxdKAJz318Bd/6gNvbU+EQFL90XYOrqt2vl1jk/gOidSXLGkdz3fYTNbJZKtGsvUGVnXpcaWHOldnMNSfg/rrzmYipg5Yl2IV52/dM6fiYPQP0JKMrDz9xflVcAAAAASUVORK5CYII=" /></span>.
+Let <span class="math"><img class="latex" alt="$\Gamma^0_t=\bar{\Omega}^f_t \cap \bar{\Omega}^s_t$" title="$\Gamma^0_t=\bar{\Omega}^f_t \cap \bar{\Omega}^s_t$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAQCAYAAACBSfjBAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAB/UlEQVRYw9WX/XGjQAzFf8q4AOZK4Doglw5IB8xcB9BBMikBd+C0kHQQdxDHHZirIBl38O4fkeEI3zbmsjPMgsTuE1o9SZgkvuMwswj4DQSSsqXsWI0wOAV2wC9gJ2k/g1PSukzSY8vrGZADHwvaAJJ6LyAC8srzy5B1c11uzwFIlrRDEiunQgakwBp4d9/euoNvPeoOFb+HM9EyAW6AVxfd+GFta4e+N7NC0vOl8c0sBGKg+IxAd4g8n1RPOvc5BdKK/DBDVOVNkQ28AXddjOjYMwU2vnfu99Ep+EACPPkc9DkwuQSFgcDxkxYnqEGW9Ox5B8Qt8mgKvr8Xu782QNxZREqKOGViMysXZw3hHwAPPSx5l7RukP/w+digK8r9JZX66wGV92cTlqS1meXAfix+LX29SdoOrsItH17VH4H7KblHUmFmRUtujYBC0tHzz73Tqm8cO3TBFHx/fvxShdsofOHKGnfkoHhKTu3Qbc6FvzpjBTuFwkjamllWparvuatX4TnGZPwxEQg8zRh9oVMrqSXwwHXRGDvGROAp+FfeB5a5K/deqCnCwnN3/dXT9z7zj/de5bh22aH885nDjpPwB0ZI6L1P3tZHXShPDrajSz/1G5rwxyx+WbLI/C921PGvRoZ62UosOpa2o4o/xoGF58ePhf23tB3/4P8FRJQf6oStas8AAAAASUVORK5CYII=" /></span> be the part of the boundary where the elastic solid
+interacts with the fluid.</p>
+
+<h3>Fluid properties</h3>
+<p>
+The fluid is considered to be <b>Newtonian</b>,
+<b>incompressible</b> and its state is described by the velocity and
+pressure fields <img class="latex" alt="$\vec{v}^f, p^f$" title="$\vec{v}^f, p^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAOCAYAAAChHnWMAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABNElEQVQ4y62V4W2DMBCFv4cyADMwAmo3IBtQdYNkg2aEim6QGegG6QZtskFWiLLB659DtayQEsFJFvbJfH4+P4xsMyUk1cArUNreMjNSHrZvNqCNBYfxHqjS3JyW8lahqgLy3dXAGtiG6gY42P5cqAp/vDtKu2x8WKICt3jFmFrbu0z5iYUi5xWR3Ejq4liQ1Etqk/eegO+JC5TB20tqJLUpe4zXAiXQA3Viyk1qogfK3MbzDDTRb4B+jLcajCaptj2U6AqcQv0OOE4tdWpc21/RrYBylJco3SdKNzNNl/N64G1sfpEoPQ9nCvxMNVjMz2M97DZ2X9n+GOXYHhbugENe0n9E9DH/Jcsf4zK6AM/Au+3rvTOc+723N3LnRxgFC4ek5uE7ZQEDpv+XKo70GD6YxPkFPjY5EFy6C1gAAAAASUVORK5CYII=" />.  The balance equations are
+<div class="equation">
+<img class="latex" alt="\begin{eqnarray*}
+\begin{split}
+  \label{p0:f:blm0}
+  \varrho^f \pp{\vec{v}^f}{t}+ \varrho^f ( \grad \vec{v}^f) \vec{v}^f &amp;=
+   \div \tens{\sigma}^f \\
+  \div \vec{v}^f&amp;= 0
+\end{split} \qquad \text{ in } \Omega^f_t .
+\end{eqnarray*}
+" title="\begin{eqnarray*}
+\begin{split}
+  \label{p0:f:blm0}
+  \varrho^f \pp{\vec{v}^f}{t}+ \varrho^f ( \grad \vec{v}^f) \vec{v}^f &amp;=
+   \div \tens{\sigma}^f \\
+  \div \vec{v}^f&amp;= 0
+\end{split} \qquad \text{ in } \Omega^f_t .
+\end{eqnarray*}
+" src="data:image/png;base64,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" /></div>
+</p>
+<p>The material constitutive equation is
+<div class="equation">
+<img class="latex" alt="\begin{align*}
+  \tens{\sigma}^f=- p^f \tens{I} + \varrho^f \nu^f ( \grad \vec{v}^f +
+    \trans{\grad \vec{v}^f} ).
+\end{align*}
+" title="\begin{align*}
+  \tens{\sigma}^f=- p^f \tens{I} + \varrho^f \nu^f ( \grad \vec{v}^f +
+    \trans{\grad \vec{v}^f} ).
+\end{align*}
+" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM4AAAASCAYAAAAT4+GQAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEF0lEQVRo3u2b7XHbSAyGH9y4AOZKoDugThUc1YGcdCB1YI9LkDuQU0Eid2B14FgdiB3EZgfID4M3e2t+LEmLosbCjCbS0rv7LoiPFyAjqspZzvKZREQWwCXwBCyBHHgEZsBaVbdNa1yc1XiWTygvqnpvTjQF9vb7XkTmIQv8ddbhWT6bqOpDl2u9M46IJMA3IFLV5Qmk5tHi7YPtmOc6JRs4BNauVG0JrICXEwkyY8bbB1vtXBGJVTX7hDr9EKwiEqlq/iFUzbw3BZKqRUcYbUaJtw+2prkicl04jYgkAZ+4Yb+5iESH1umQWEUkBRJgZt99+Vqs826PLl01EXlU1dkJdVFK8ZpSvptiI2ALPKrq3bGx9TzXHMhUdWdnfAUy3rpHVfKroDFmmD6lSWzN5aFsYIxYRWSlqjdlxVCrj4FatZ13rE8IXkCB1xZrzofC1mUusPF+ry0gVK21MP5ft9+qD+5QnY0Ba8l+iT/epav2D2/971ORWrxOit62WHM6BLYuc42a+OM3QGrXyiRqolxe1O2CO1RnY8DqytYaC+XNAUvvS6Mtvlw6ReakqTNhKfe2AdDvvpTI9vkKTICN0a0pbw+xQvEWKfzxgHRsYYXp1KLptg6biFwDt6r6xRnbADcB50qBnWdIuYjcW4E8K8F2XzJ2WejR9v7htGonh+qkjQ2rrZmWUjVLRwpcA3MzInWKKoDY0uhiRDRsbv/ugdS+p+ZEQXiBZztr3GLfVctUv7DvkWGtxWbXn73f+5D7YNeSkvHIzpl449e+Tu1vN869n9s5OttAS50dFWuZjfhjYhu/AndFijMvXgNfjtGJcqJIlbhRGxHZq+qlM/cqpBh0itHcje4B2TP1qF1l9hSRZ1WdODRqU2BtOr9zP9Y2bxtwprVF313FtbjQjbGMbUVXztVpasV21oIJdNbZkFgDz/PfPXSpWpGGfjjjEzOmvONGvaha8TpE4F7+DZm1oF2N9Y3p4Cao01KOLasxnjr6uHYMZh/iNCZ5Q/3wKiKJOVZcYYg+zrjF/r10NjTWrnLhKDpz2nsL4KoPT/UVd0CZGd0qsMeqetVirh80PlIS/v/Q7Rvwb4hDq+pV8d5Uy1rwyQriXV39YBG9KkDFRimLIPhraNYxMqwvXvMlv1DVrYjcAd9F5MkK2NkQXvtBkgJ7M7JpiGHa4W+NDwMsRST4PaUWsnOyxtQoZN6ALQayOmrSYHAPZmi1kRzY1Zz3pxls4bgPR7q3R8dqGW3jDN0CT5zK85iawm1/rKbEUM97OuBbBzQsojHqbAxYS5ot7/aXU/7/OBYNli2o2dD4Nqb4jLdX2fOB9o2sm3THWfroMTHq/y6LnazjGKVZA38bBcpG6tiuU6+Gwlk8QCzrrp0lvLtb1aj6A+THhzcdzXcdAAAAAElFTkSuQmCC" /></div>
+</p>
+<p>
+The constant density of the fluid is <span class="math"><img class="latex" alt="$\varrho^f$" title="$\varrho^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAtUlEQVQoz42R4Q2CQAyFv5obgBkcgegEMgKEDWAWR2AW2cDoBjACYYPnnx45jco1adLrXV77vTNJ7IWZlUALFEjaTWAAjkBxyFSvgFLSmjvhFuvcCc94DslFByzA2RVHvzoB903BR3ZA53UBTCnw23refCQPSmByV4YoFDOYWQXMydoVMEqagf6TKbjikvRa4PLLhBAdMLPagRtJ6z/n6py/2BiA1sxW51j21M0hm6R3deCv8QIBfrSwSvr55QAAAABJRU5ErkJggg==" /></span> and the viscosity
+is denoted by <span class="math"><img class="latex" alt="$\nu^f$" title="$\nu^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAYAAACksgdhAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAmElEQVQoz5WQ0Q3CMAxE33WCzJARKkbICJUYgQ3KLJ2hI8AGqGzADGUD84GDDB8oiWTJTuy888nMaDmSRuAIJMysKYAFyEAaOigFGM3s2UO61LyHdK/14JezpP2ncZWUvTwAt8+jozOwBSkZeEQTotQqrwDXADoDJ0lZ0gJsX3r9pxUonk/A/NcUb9zDwNTg5HsfH0gt9r8AyQDF6cbu3kYAAAAASUVORK5CYII=" /></span>.  The Reynolds number is defined by <span class="math"><img class="latex" alt="$\Re = \frac{2 r \bar{V}}{\nu^f}$" title="$\Re = \frac{2 r \bar{V}}{\nu^f}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAATCAYAAADF7c7rAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAByUlEQVRYw92X/Y3TQBDFfy+6Agx0YDoIooNcBwY6sDsIogKUdGBKgHQQl3C+DnAHB9fB4w/G0cqXONEJFPtGWmkzO17tzHvzEdlm7iIpA1aJqrN9D6CX4OCYLHjhspgo5YpYtaTVGdtaUhs07XVrSRtJGbYntSKX1rHPgfaM/RLYD3RFv1cYVEAJbIEH4A2QAXWfrFdCcgV8sF1JyoECeAvsgVvbVdj9tv0q9qXtb4dLwuMMMJANImMgvxKSfYBJ0CwSdNO3tnG+SvW2T+dggtzyCsjlwMdAbhnv6YBbYBe/H5NP7oKFvwZ6bsYSHdjZ3g10OdAB74Gvwwsj2b+c8eHB9nbEuT3wKKlKHg/wOhwdShvI3R9DKqVoETDXwGYsmcN2M7UiNVxDBJtApInSu04i/SlJ/AMS/4Ge/3TyuBk5a4Ia28EI1FwwNj2borb1jKBsTt45UkXLv8eH8xz4earfXLFv5n1lPbYWEfEy/C37iSB6yU7SOipaB1QxIRRRcJoJDD6fE+Y8RXfuw3bQ80k1n9WwLelHMAZJeTjVS3bKubn9m2gSStYJevvR4MyBopJa2+8klZdU8kvbxFScWwJdUPT7GB2PyR+eQdSq5F7iUAAAAABJRU5ErkJggg==" /></span>, with the mean velocity
+<span class="math"><img class="latex" alt="$\bar{V}=\frac23 v(0,\frac{H}{2},t)$" title="$\bar{V}=\frac23 v(0,\frac{H}{2},t)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAAAQCAYAAACbdRhPAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACyklEQVRYw81Y0XGbQBB9z5MCiEtAHZCkA9yBklQQqQN5UoLcgdxBBneAUkGEOjAdxKaDl589Zn0RksDIeGc04oDb29t7u28XSkIQkgtEIukeFxSSc7u8AVBI2g7QkUqqR7AlA/AbwA9JDyRTACWAjaS7V+hNJDXBoZP9AOQAVnadAqgG6FiNaE8KoHTjBMDzCHoXABJJuLITWJMUycJOtT0ZkhXJkmQ+NrolbR1yUgC7AdGx9UgnuSI5t/+kp0k5gNrmzwGsvf4+EWfR4rPEzxcIByAA+SURdAQBiYVt33lFNK4inWVPfSWA1I03AOYD7PpvnqE88zceASy6QuGCzk7DugCyHvMyDwYbV9E7z96BZ+h8jMdD9n9onu1z/cFFwh7AzIcFgLpN9h1k0IZKt/ztIhxHSg3JpaWUZUTiM0N/TbIA8EvSg4X/3qn7DOApWuLJNlqfIjUDV0vAtva1zd/3IN3vNvxGcidpb5mkJpn7E1j7EI3RPgGhzi0tFAH5dm/hwjbzqS9OIQCqISlhBLs3Hc8qj/BHQw1ILi5dDto66iBTGopBMgsoAdAcQVtjiPSS2P1Bdhyy64zXbixqD4p3eA0gs7DYnVtfvialnNqAVUa+SkhdnR478kU6Mrk+lU56OLJPpXN7rsNhlcrdmSfeHFM+gqQWeeFwPRD+WN4OOXLvy0C7rkNDZEA6ykkDmqSD+iQ1oWSNnj8x6jQrSZ/whmLktDOyKX2naU5bhxANacY930haRk7IDTxfAtnas8J0fB2j8+3SR3Jj9tYuFYZoTafuNNv620hv1bfe7UtoY3a+fQjZSD65woQiqZG0NFTNBnyvuCW5ei+d74n0U0pqJkX4AXQVA+Zl5zRMpj8Zq/Ptqa8tsV/k8LcWQ/a1pHtrgipJH6eMOrMjN5t8STqO/okdnhhSmlC/Dvk8O7KzS1dy7jwpjyH/AMu1rj/KefbqAAAAAElFTkSuQmCC" /></span>,
+<span class="math"><img class="latex" alt="$r$" title="$r$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGCAYAAAAPDoR2AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAUElEQVQI113NURFAUABE0UMCWcigASpooJQIVJFBhPXhGcad2a/duVuhwYQOq5s5yQhDEjjRlvGShFI0OJL4pi6aCbsfT9l//l6Kdvsrk7gAr7IxgWY6YaQAAAAASUVORK5CYII=" /></span> radius of the cylinder and
+<span class="math"><img class="latex" alt="$H$" title="$H$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAJCAYAAADpeqZqAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAlklEQVQY032RURHCMBAFN1WAhkhAQ3BALUQCXpAAlQAWIoFaoA4eP3ed5KbDzeQjO3m57AVJ+AIqIGABirECNOADVEkQQtlCp8BfHjgKVaD1zLiA7PuJsS7AuwcppTOwSVp3Zjf5gS/wNAev2ULzTqLPwdNa7zM4Abc/PsNgpuDzCD4FWCVtwZ1sXQTcfUo+Sfufa9/pBxx4rCqK1NblAAAAAElFTkSuQmCC" /></span>
+height of the channel (see <a href="fsi_definitions.html#fig1">Figure 1</a>).
+</p>
+
+<h3>Structure properties</h3>
+<p>
+The structure is assumed to be <b>elastic</b> and
+<b>compressible</b>. Its configuration is described by the
+displacement <span class="math"><img class="latex" alt="$\vec{u}^s$" title="$\vec{u}^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAKCAYAAABv7tTEAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAo0lEQVQoz32QbQ3CQBBE31RBg4RKKEioBDS0EtCAhGo4JCCBSqAWkDD82SNHvzbZ5LJ7kzez2GargStQb+1kG0kNMPBfLTDbHmLfATMAB6T7gpoyXTHcLUk1cAnKDUhVLHpJY9hAUiMpFdomerL9/AUOfBvkvrS3sl74fhfvBHSHoqCNheizJ7BNVXieIk+bTyup2zpOFj2Ac3w6AS9JfQ69rC+QHa9l5EYM8QAAAABJRU5ErkJggg==" /></span>, with velocity field
+<span class="math"><img class="latex" alt="$\vec{v}^s=\pp{\vec{u}^s}{t}$" title="$\vec{v}^s=\pp{\vec{u}^s}{t}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAASCAYAAAD7T5b+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAB00lEQVRIx9WX4W3bQAyFPwYeQOgI8gaCu4G8gdpM0GSDGJ0gcDdQNgjcEbxBnGwQbdDAG7z+6DvgYEhKjUSpeoDgs3jH4yP5eFRIYi4jIhrgCFTAnaTjwLoKOErqIqL261LSHcBiRoBqAEl7YB8RO+BLJr/Jll8Ct0AHvAC153+GpN4HaIBiSD7F4whVnj+OrCvSL3DjfXWShyQiogSuT5xXGf0294Q9OUWktsC9pCen4VbS0rZVwFrSdUrRMTsWNrQDNqeHSNpYyRq4B/YTcglJT3716eSszlxLqfdtTN/FkMCACivbGNhqIkp9Bh6y/2tnSHL4pZ0KUL6mbGFPXQFLoHVF2WWRSUoeh0Ju8N9fOeuXpB8DshZorOdrsiOTPwArp+LBdPg5dlhjwu0ykjbA1QcXicLGvrk4RbqnIuJZ0jIrr92Jt6Ys5+96WS4yEHlqledUubemn6R4d1DmzXNm4OEcJb75N/+qw+gzKOVzay41H8mlEY7VuS3Arm/eu3cOAM7pMJxV7di+C2Y63GGQdRiFS/oWOLqpHeXU3AD1dhi+Qwvgdoxfc43UYIeRCpOj9l+BaoEyIgp3O3mH0TmSL4ORntNHYs/dtwIOf13KPX4Dr/TjX/FEjRgAAAAASUVORK5CYII=" /></span>. The balance equations are
+<div class="equation">
+<img class="latex" alt="\begin{eqnarray*}
+  \begin{split}
+    \varrho^s \pp{\vec{v}^s}{t}+ \varrho^s ( \grad \vec{v}^s)
+    \vec{v}^s&amp;= \div (\tens{\sigma}^s) + \varrho^s \vec{g}
+%\\    \div \vec{v}^s&amp;= 0
+  \end{split} \qquad \text{ in } \Omega^s_t .
+\end{eqnarray*}
+" title="\begin{eqnarray*}
+  \begin{split}
+    \varrho^s \pp{\vec{v}^s}{t}+ \varrho^s ( \grad \vec{v}^s)
+    \vec{v}^s&amp;= \div (\tens{\sigma}^s) + \varrho^s \vec{g}
+%\\    \div \vec{v}^s&amp;= 0
+  \end{split} \qquad \text{ in } \Omega^s_t .
+\end{eqnarray*}
+" src="data:image/png;base64,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" /></div>
+</p>
+<p>Written in the more common Lagrangian description, i.e. with respect
+to some fixed reference (initial) state <span class="math"><img class="latex" alt="$\Omega^s$" title="$\Omega^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAYAAADtj3ZXAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAs0lEQVQoz32Qaw3CQBCEvyUVcEFCJTSpg5NQDUjAQyUUC0igDqAWzgJ1MPzoXrJAYZK9zb7nxiQBYGYD0AN3NvTATdLsMWbWAhkoAPjw6I1EAxbgHOIBuLpP+CNg2Bk+bftV+zLQAhOQG+DorFa+UZxu8rh1v0iaG0nFzEooRHRAkVQXX96qTin/+XP+zFc7+IIZWAO9SvUR1d5DFSFF0Vys5LVu73JtFPAExjA8eU6/aL8A8GSp5i2ndCAAAAAASUVORK5CYII=" /></span>, we have
+<div class="equation">
+<img class="latex" alt="\begin{eqnarray*}
+\begin{split}
+  \varrho^s \p2p{\vec{u}^s}{t} &amp;= \div ( J \tens{\sigma}^s
+  \transm{\tens{F}}) + \varrho^s \vec{g}
+%%\\  \det \tens{F}&amp;= 1
+\end{split} \qquad \text{ in } \Omega^s
+\end{eqnarray*}
+" title="\begin{eqnarray*}
+\begin{split}
+  \varrho^s \p2p{\vec{u}^s}{t} &amp;= \div ( J \tens{\sigma}^s
+  \transm{\tens{F}}) + \varrho^s \vec{g}
+%%\\  \det \tens{F}&amp;= 1
+\end{split} \qquad \text{ in } \Omega^s
+\end{eqnarray*}
+" src="data:image/png;base64,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" /></div>
+where <span class="math"><img class="latex" alt="$\tens{F}=\tens{I}+\nabla \vec{u}^s$" title="$\tens{F}=\tens{I}+\nabla \vec{u}^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAALCAYAAADoWAqZAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAB4ElEQVRIx92X723bMBDFfywygLqCs4GabiBt4I5QeYMYHUHdwO4EjbOBPULjDaINCmuDly9PgELrnx35Q0uAOOF45PHIe++oIIn/uYUQ0glmtaRqYI0lcJBUn401BxhCSIASKDz2bJkAD5b3Q46uDDABfgGZfRyAvaSfM619AiqgHjD9I2nlOQtgFY2nQCVp5fHMa4Kkdx0QcOrQvwJJrJ+r9/kdsF9OtNv4QvrGi7G4gLLtF9hZJp+iG8v8eWhu0LcIcOxK4Zmy8J3fie3rRLs1kA1AORmLS9K6ldG118yBh7vINrfcW5a+wSPwvQciP0YC+DsBjrHf2ZqkOoSwdSx5tP8C2HbovjjrKkO2lPTNJgvLF0mHOFVfDKWdIatbQbbH7+KCOeUFtonXTyP9Y0wLtt01toZ4r6+4iJxckT5bt5eU37hKnvmdmOlZBPnBTA8hbHxB+WhlDeFV0r2/d8BGUie93EUbAnhq6VYTgv8ohEf5z0GuI99lw00XcOEphJBKOvow674nS3t/LfgOHuAZD409WboCu6I1fn/fMtPbXOhs3PaYLkwpzRuyagpdXxamxrzc95fwywd4r8vv8hYc2MGF5YDNwoUzc98AxSgH/oN/GEtJz1fMK4CnuZ5kb3kCBF3iK6cpAAAAAElFTkSuQmCC" /></span> is the deformation gradient
+tensor. For further details see for example <a href="fsi_bibliography.html#Ciarlet88">[Ciarlet88]</a>.
+</p>
+
+<p>The material is specified by giving the Cauchy stress tensor
+<span class="math"><img class="latex" alt="$\tens{\sigma}^s$" title="$\tens{\sigma}^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAYAAADtj3ZXAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAnElEQVQoz5XQXVHDABAE4O+iIBoioYCD4CAakFA0VAIS0NA6ACxUQxxsX46ZPBTa3sw+3N/u7VUS90ZVTZhxhsFjscMrRnwPD6iOWPHeBM/DprlU1bGqcgVTj02NnyQn7fkNwR4Ljp3P2CVxDfr+4LAp/pKNfy0mMTQ7fG4sPmFNst76xbxVaU/B8p9qEpVEVR166Qsv+EhyuqV6AaeNdoYgHuD/AAAAAElFTkSuQmCC" /></span> (the 2nd Piola-Kirchhoff stress tensor is then given
+by <span class="math"><img class="latex" alt="$\tens{S}^s=J\tens{F}^{-1}\tens{\sigma}^s\tens{F}^{-T}$" title="$\tens{S}^s=J\tens{F}^{-1}\tens{\sigma}^s\tens{F}^{-T}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHIAAAALCAYAAACj8Nl0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACQUlEQVRYw+2Y/W3aUBTFf1fKAG5HgA1IuwFsQNoJChuAMkHlbhB1goRsABtUsAFs0OINTv/oMXoldgKujSKlT7Iu3Ofne7gf514TknjrKyIGwBS4k7R5pRgz4DuwBDLjnQPvgf4V/xeSNhFRvHKYQ0k3DurMSffo7+OriqjfOuKF5RoYSbqJiB4wBHZ2wKrjDPzkrCuAeWnPezkw8e2PlhnwwbIvaXehaqn1S1tYy6B5jeyXw16k1BoRa+Bresi6laR5RIyBz8C9dcUFnPQEU7InoJD07ki/Ba4lFRExsbOO1yql0YjIgfsm1HqKX17C6qR9EWd5RlL/ONI4mGNAQK/UWZ8DAxsZAj3gzqVOl5dtCsgq9obeWyT3Zv68aGArBwYNMT7rlzax+llPzlT1yHVEPJhSHyTNE4rolffU0WpCz8+tn5K+ndIXgE1N5Y8sl5a5HbkBvpxZUUMnKxFRpDTnapsay/HqA79O8EsrWBMsRUT0/qLjo2jfOXPSq/PKeyb7FkBes7cusxzY/vkprduf2MbMjLUsfXJO9V4Ea43hgbNGTWiqRUfuqxyWUO4+0S07ovW8IrBZg+d0hvVArR5nD03VcuNS3jWYNv+ZWj0JZjXDR0lzD4lu2va4b3mf6K49sBQNntMlVtLSzyua6v6c7GuhCrbAJKH5OlotW8C4QyzDtPrcB8+2eQmskghJRMTS/D1y8y7X/BKvGEkVzjwAjKqq1v/A3LpfAaw8DM07wpM7gD+Aj34JX5149qJYfwOpIEvhpdUlhgAAAABJRU5ErkJggg==" /></span>) by the
+following constitutive law for the <b>St. Venant-Kirchhoff</b>
+material (<span class="math"><img class="latex" alt="$\tens{E}=\frac12 ( \trans{\tens{F} }\tens{F} - \tens{I})$" title="$\tens{E}=\frac12 ( \trans{\tens{F} }\tens{F} - \tens{I})$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGkAAAAQCAYAAAAVr1EzAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACaUlEQVRYw+WY7Y3aQBCGnzlRgGtwOnCuBNMB5CoIdAC6EkgHpoPEdGB3wEEHRwe5cweTHxlLy8pr7MPISIw0YrVez/ua2fnYFVVlbBGRBFgCmaoeW9bFqnrqaXsBfAP2hlEBBTA1vJI7FBGJVLUCeLoHQuaY6gLpVV8HmXyo6lpVd8ARKFR1q6pzIOJ+5YeIRGdOEpFIRDIRUdPc0YPNzUbaVTOg9HdagG8hIp82F5tzQptj9xWbQ0aL2a9tFyKyMm5b4LUmeqaAAp8N8zmQ+vNDKbABksCzvOW9EN93IGrAWHTg0tnmQN8ewlsAyZPn2dSGpVcvsJz+MVK92geenfG1nVmnsGOd03viDW6zD54nJfAy8SanjkMQkY2Nj8DOrwlG/vUCj7+q+qsD0cTGlYeTGn6T1HwL+90Ama3/GcCIReTU0jB0tjmQ+HhuOj6JSOqH18FCL7eX9Bbh3TMVZC1p0OX7/v+7rsYb3GZHvDj0fOJFRQJU1vkgIkUd3iKS3qJdFRENFHW5VHSb+F5byPvadFr8kBSh/83DC3auEy+t+Llx7tSFaVOHdW26u+SMlta85vvHmVteuWd627Qu7Fq81s0/acuNqlpZy5kD3xsIVsD6xr3DHnhuqEtNfE9D14cBbHbB+912zsPCLbe8qEYwN63zZXbjvDwzzZrafBc/wHdzJf7gNr+AN2tYlwILxmwKHCIrG8fAoc1Jj6S2aaPRr4VUtXRqVgy8NSxb1yfxRxHrAwpVrZ7uiFQEzFV1Gah9pXOwfgR5rq+t5E5uwWOrRVsRSdpuwh9RRneSOahwWu23pmh6ZPkHCxcsMgGuFQ4AAAAASUVORK5CYII=" /></span>)
+<div class="equation">
+<img class="latex" alt="\begin{align*}
+  \tens{\sigma}^s &amp;= \frac{1}{J} \tens{F} \left(
+  \lambda^s  ( \tr \tens{E} ) \tens{I} + 2 \mu^s \tens{E}
+  \right) \trans{\tens{F}} \\
+  \tens{S}^s &amp;= \lambda^s  ( \tr \tens{E} ) \tens{I} +
+  2 \mu^s \tens{E}
+\end{align*}
+" title="\begin{align*}
+  \tens{\sigma}^s &amp;= \frac{1}{J} \tens{F} \left(
+  \lambda^s  ( \tr \tens{E} ) \tens{I} + 2 \mu^s \tens{E}
+  \right) \trans{\tens{F}} \\
+  \tens{S}^s &amp;= \lambda^s  ( \tr \tens{E} ) \tens{I} +
+  2 \mu^s \tens{E}
+\end{align*}
+" src="data:image/png;base64,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" /></div>
+</p>
+
+<p>The density of the structure in the undeformed configuration is
+<span class="math"><img class="latex" alt="$\varrho^s$" title="$\varrho^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAMCAYAAAC0qUeeAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAo0lEQVQoz32Q0Q2DMBBD30UMwAyMULUTlG4AYoOs0Bk6UxkBukEZIWID96NXhKoESydFPseyzyRRgpk1QAssAIFjnIAbUANTOHCtgRW4+4dztVtGIAEX4AlMQOPrWdKIZ45A9HcNvCXxPz/xvBHfnFlxMLOtraMFxlyPyp3SjhuAa0n88oKdl+slraUrdbl8uamAwcxWz52OXM0L9TvuIWnJiT9B93N3DQM1JQAAAABJRU5ErkJggg==" />. The elasticity of the material is characterized by the
+Poisson ratio <span class="math"><img class="latex" alt="$\nu^s$" title="$\nu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAJCAYAAAAGuM1UAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVQY04XPYQ3CUAxG0fOmYBLIJBAkbA7mAQdMFBKYBJAAFoaD8oO+ZCHLaNI0bb+2tyUi7FkppUOPFzT+2xEDWtybP9tbvDHl0KnJxqWUsvyIrzigS39ExCx/qIV1/qz52itSj3l1YMJ5C7MODLglypjb583HEmHJOGLcQlnhfvlT3O6JI8IHLl9l8TbtJ/8AAAAASUVORK5CYII=" /></span> (<span class="math"><img class="latex" alt="$\nu^s&lt;\frac12$" title="$\nu^s&lt;\frac12$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAQCAYAAACV3GYgAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABKElEQVRIx82W4U3DMBCFv6syQLqCR8gMZoOUEcgGjRiAH7ABM5QNyAgtG7QrkA0ePzgjCwklaUtlSyc5p/PL6Z3fnZFECQY0wCvQJN+KQpakD2DMfdXUITMLQARODjLcKuE5zDXAHVAD+6U/MLNgZs9mFpeerSaAa6e6dxuBYWZSDdABR0n9OcxVDrQFHiWtM/Ad8AQEdx3mlNQZ2nh8t4Dh6FXCzEZJp6SU4GD593Gh2qKrrb2WglNZ469y9V6Smywz018SBtgB0fctsL2gXyUGHy5lziRhZp+S1mbWesJvV2AjF8TLuTgBODhj9T90/uBMxom41u0ntpTRFdNVysVZFTK6hkyQITX7YmZr1vQ3qT+uCkosAPeSOhfTt1oLSew9e5XsJXVfPbFFiHDW5EoAAAAASUVORK5CYII=" /></span> for a compressible structure)
+and by the Young modulus <span class="math"><img class="latex" alt="$E$" title="$E$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAJCAYAAADkZNYtAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAmUlEQVQY022QUQ3DMAxE31UDEAwdg2HoMIxBxqAcRqEMxiEUMgjBUAa3jyVVGs2SJZ9t2c+WbZpJWoEXsAG5pgPwABK2DwdmwEAY8gGIE2dbgI/tvW4KAFWXsfkOpE7HFthO/yYHSVFSBvZTteO6/eShF2BuzLZPzSuQ+8O6WrTNNPC+B6z2zgRwkTQDz7q2SGpHXStasV0Avv0MYhQ2dFOZAAAAAElFTkSuQmCC" /></span>. The alternative characterization is
+described by the Lam� coefficients <span class="math"><img class="latex" alt="$\lambda^s$" title="$\lambda^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAJCAYAAADpeqZqAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAlElEQVQY032Q0Q2DMBBD32WCzMAIzJBuACvQWToCM3QEGAFWYAXYwP25VCmEWrIUneWzLyYJADNrgBHoJR0UcC0BG0DIgqQNmIAXV7TAA4jAgqQvfbhXZgnITVIo13mtxcyGU1LjXCXNP0m+uXORO4bKwQcQ/V1FKAwt0EmavfvzzpQrJWD89yGnE4jAVBHennwxfQBy0Y/olgSo4gAAAABJRU5ErkJggg==" /></span> and <span class="math"><img class="latex" alt="$\mu^s$" title="$\mu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAMCAYAAAC5tzfZAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAn0lEQVQoz5WQUQ3DMAxEn6MBCIZCmAohYVAuwzAIwzAILYQUwkphZXD7caWoWtXU0ik+xyefbZI4CzPrgAQsAIG2uAMZiEAJDVMisAIPF/ah+nyaWar46AKAzjFLmpCE7zUDseLfLd8jVBaipNV5AqYjy5u9fVMGxjNRBj5VfQCKmQ3/RDd/e7e1Nb28thxNi34VWhF8n8KFCH7/9xXRD+u/XTeYMU8uAAAAAElFTkSuQmCC" /></span> (the shear
+modulus):
+<div class="equation">
+<img class="latex" alt="\begin{align*}
+\nu^s&amp;=\frac{\lambda^s}{2(\lambda^s+\mu^s)} &amp;
+E&amp;=\frac{\mu^s(3\lambda^s+2\mu^s)}{(\lambda^s+\mu^s)}\\
+\mu^s&amp;=\frac{E}{2(1+\nu^s)} &amp;
+\lambda^s&amp;=\frac{\nu^s E}{(1+\nu^s)(1-2\nu^s)}
+\end{align*}
+" title="\begin{align*}
+\nu^s&amp;=\frac{\lambda^s}{2(\lambda^s+\mu^s)} &amp;
+E&amp;=\frac{\mu^s(3\lambda^s+2\mu^s)}{(\lambda^s+\mu^s)}\\
+\mu^s&amp;=\frac{E}{2(1+\nu^s)} &amp;
+\lambda^s&amp;=\frac{\nu^s E}{(1+\nu^s)(1-2\nu^s)}
+\end{align*}
+" src="data:image/png;base64,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" /></div>
+</p>
+
+
+<h3>Interaction conditions</h3>
+<p>
+The boundary conditions on the fluid solid interface are assumed to be
+<div class="equation">
+<img class="latex" alt="\begin{eqnarray*}
+  \begin{split}
+    \tens{\sigma}^f \vec{n} &amp;= \tens{\sigma}^s \vec{n} \\
+    \vec{v}^f&amp;= \vec{v}^s
+  \end{split}
+  \qquad \text{ on } \Gamma^0_t,
+\end{eqnarray*}
+" title="\begin{eqnarray*}
+  \begin{split}
+    \tens{\sigma}^f \vec{n} &amp;= \tens{\sigma}^s \vec{n} \\
+    \vec{v}^f&amp;= \vec{v}^s
+  \end{split}
+  \qquad \text{ on } \Gamma^0_t,
+\end{eqnarray*}
+" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIkAAAAjCAYAAACgoylBAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADjElEQVR42u2b+1HiUBTGf8ehgKwlxA6idhA7QO0AOpCxhNgBbgWudgAdqHRAOhDp4OwfHNxrNkzICwLeb+YOE3LJfNzHdx43R1SVshCRCLgFAlUd4nHU6FX83RBIgIUfwuPHSUUViYFIVZcFffsiEuzrz4lIKCIDEYlFJO4y1y5DKpqbiapeZSfEFMZFBKT7Mkki0jez+ARM14u6i1w7DVUt1Wwwky37JmWf31QDAlO8EBgDcVe5dr2VVhIRGQALVX3ptESuTMcNkAKhqj56Sahpbkyah7b7sjhT1dT6jbOS7EzIue3aEDg1pXrcMIH3Bdw+VPWhwJQU8q3D08MxN8AAUOAO6AMTu147qDiyPciR6r59fq5l3eT+vSVTUsh3w+92yvNY2nqQ1LXJziQEJX2AuXMdA88t+RqV+e6K5zG1niPXT47AnAPLohA3gxtg6lxfZ57ZlLmpy3drnh7fB/1rF5pZ0bU0l9jhz24EAXy6Et+gktTiuyueRxfdiEhig/0KXAJjVZ3WyZ2IyBh4t/xE2nDkUpnvLnkeTPSyiljfgAvgTVVntZNpHke1QCLgVlVHmxKlJ36YfjwugLlzHWY79PwYHb1KDC36ewA+7NaVpT+uWju78TiohRKaUvxyoz8RSVR1tI258Uryc/FqajJzTsnzDj69knTYTFywOneKLPKa2UQmlteZWWLwVlWvyypJ6bS8b51KgYfAJPPdu5MXStwMsR1JxAXPK5U9zzYf3XQPQ1MJFymrTDHmfL4695ZtE/KLpJsIWu6fZ5ae/SI5HIzNH3ERAX9ajoAWeb6RiAQ+uukYVDUVkZGI3JmZuQSuVXXpVCkgIlPzNyK7nmWPFZw8CUBi4e1LzgJJgFREokxK/r616MaXXBxcNDVZL8Sce/22lMSXXByegi1FJMw75DxpaCV+lSOUKbloeDf0RSQoU0bh8S96stdBF5kxjYFplRehC8sR8lK7LThauRwsb/BfGYVHPZlpIgGUVCm5aDgJlVCyjMK3lkoqttjleyu58GUULY1rxbqbM1Zvg6WWhHlaL4q8kosNk1m5pKKIg0ez6JVcIH1L6vx2snxPwKn5CSNW5wyFnrT1reSgbuLgp7MjSmITNVfVM8cDTnf9fmgXOHgl2Tw5Md9LEsIKL03XNTe1OXi0uEgscpg7k/1WJXFT1dw0xcGjXcc1sHBzYhO+ryhmrxx+Ev4CEJw8g/AJCW8AAAAASUVORK5CYII=" /></div>
+where <span class="math"><img class="latex" alt="$\vec{n}$" title="$\vec{n}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAKCAYAAACJxx+AAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAf0lEQVQY033QUQ3CUBBE0fNQ0CChEsBCJZRKAC1IKA5IJYAFJIAFJAw/D1IIMMkms/sxN7OS+Dbo0ZQkSiktdt61ws2fhH0SpS4/VdBgwBojWiwhyQH6mnJHV32DSxJmh+uM32FKYlFRA84z9AZHlQPTM/6Je/2imtNHxRFbtA8oN2uQItL3wAAAAABJRU5ErkJggg==" /></span> is a unit normal vector to the interface
+<span class="math"><img class="latex" alt="$\Gamma^0_t$" title="$\Gamma^0_t$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAYAAADUFP50AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAvElEQVQoz72S3Q3CQAyDPyMGgBWODSpW6AbMUDaAGcoqjAAbULEBbEDVDcxLQCck+sMDkaIolnx2cpFtxoSkCmiANdBgezCBAqiz/jSXVABboAIOwCNESgDbZajcMgPp9UICDCw+lOqoFVBl+G02MNolagOsMvwu20hKYWVpu/uynB1wDXfnXqt9OePH+A9R0vFNjH/cR19L2nwhJaB9AyMvJwFHoAYK2+OIrzPLtz5pRttdWJ5EvMf8LcATSEHDeq4tiwEAAAAASUVORK5CYII=" /></span>. This implies the no-slip condition for the flow, and that
+the forces on the interface are in balance.</p>
+
+<h3>Domain definition</h3>
+<p>The domain is based on the 2D version of the well-known CFD benchmark in
+<a href="fsi_bibliography.html#TurekSchaefer1996">[TurekSchaefer1996]</a> and shown here in <a href="fsi_definitions.html#fig1">Figure 1</a>. By omitting the elastic bar
+behind the cylinder one can exactly recover the setup of the <em>flow around cylinder</em>
+configuration which allows for validation of the flow part by comparing the results with
+the older flow benchmark.</p>
+<div id="fig1" class="equation">
+<img src="../../../../media/fsi/fig1.jpg" title="computational domain" alt="computational domain" />
+<!--
+\begin{figure}[ht]
+  \centerline{\psset{framearc=0, dimen=middle, unit=5cm}
+    \begin{pspicture}(-0.1,-0.1)(2.3,0.51)
+      \psline(0,0)(2.2,0)(2.2,0.41)(0,0.41)(0,0)
+      \pscircle(0.2,0.2){0.05}%\uput[-90](0.2,0.2){$C$}
+        %\psline{->}(0.2,0.2)(0.25,0.2)\uput[-90](0.225,0.2){$R$}
+      \psline[fillstyle=solid,fillcolor=gray](0.249,0.19)(0.6,0.19)(0.6,0.21)(0.249,0.21)
+      \psline{<->}(0,-0.05)(2.2,-0.05)\uput[-90](1.1,-0.05){$L$}
+      \psline{<->}(-0.05,0)(-0.05,0.41)\uput[180](-0.05,0.2){$H$}
+      \psline{<->}(0.25,0.15)(0.6,0.15)\uput[-90](0.4,0.15){$l$}
+      \psline{>-<}(0.645,0.19)(0.645,0.21)\uput[0](0.645,0.2){$h$}
+      \uput[225](0,0){$(0,0)$}
+    \end{pspicture} }
+  \caption{Computational domain}
+  \label{fig1}
+\end{figure}
+\begin{figure}[th]
+  \centerline{\psset{framearc=0, dimen=middle, unit=20cm}
+    \begin{pspicture}(0.1,0.15)(0.65,0.25)
+      \psline[fillstyle=solid,fillcolor=lightgray](0.249,0.19)(0.6,0.19)(0.6,0.21)(0.249,0.21)
+      \pscircle(0.2,0.2){0.05}
+      \psline{-}(0.195,0.2)(0.205,0.2)\psline{-}(0.2,0.195)(0.2,0.205)
+      \uput[90](0.2,0.2){$C$}
+      \psline{->}(0.2,0.2)(0.25,0.2)\uput[-90](0.225,0.2){$r$}
+      \psline[linestyle=dashed](0.25,0.2)(0.6,0.2)
+      \psline{<->}(0.25,0.175)(0.6,0.175)\uput[-90](0.4,0.175){$l$}
+      \psline{<->}(0.625,0.19)(0.625,0.21)\uput[0](0.625,0.2){$h$}
+      %\uput[-45](0.6,0.19){$(0.6,0.19)$}
+      \pscircle[fillstyle=solid, fillcolor=black](0.6,0.2){0.003}
+      \uput[45](0.6,0.2){$A$}
+      %\pscircle[fillstyle=solid, fillcolor=black](0.45,0.2){0.003}
+      %\uput[90](0.45,0.21){$A1$}
+      \pscircle[fillstyle=solid, fillcolor=black](0.15,0.2){0.003}
+      \uput[180](0.15,0.2){$B$}
+    \end{pspicture}}
+  \caption{Detail of the structure part}
+  \label{fig2}
+\end{figure}
+-->
+</div>
+<div id="fig2" class="equation">
+<img src="../../../../media/fsi/fig2.jpg" title="Detail of the structure part" alt="Detail of the structure part" />
+</div>
+<ul>
+<li>The domain dimensions are: length <span class="math"><img class="latex" alt="$L=2.5$" title="$L=2.5$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAJCAYAAACmJ6W6AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABMUlEQVQ4y7WU0U3DQBBE36AU4EAHTgcOJZgOIkoIHViiAgQdJC2EDhIqQKGDpAPAHQw/a3Q5JYYPe6X9uL251dzu7GKbzoElYGADLNO7oRyogSZ8A5Q92FXwMbAHKtvkoDIAxUiEC6BJzgvg0INv4s0JnytOrQY+bLeMY7fAc3LeAaWk8tID223OZ5Jh7iJRr0kqgMc/YJ+2XzICO0nz7BPYPl7IcSNpAbTBbWX7mLfjG6jHkMaF9m/7ZifVO1ABe9soAkjqgsqrOoZcJC2jyut/4oso6nSS6fmcNO6B9RDySN7XwJft1x6SFfBme9ppW9KvztJWNWemtxpYElUqwVizRXJX9myarW0Ua+4hCK5jH84iwbXt+YCSKIFDFm67akraAO9dh6IjVQziDHiy3f4AKCUDtlpODmIAAAAASUVORK5CYII=" /></span>, height 
+<span class="math"><img class="latex" alt="$H=0.41$" title="$H=0.41$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAAKCAYAAAAQP8Y1AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABT0lEQVRIx92V4U3DMBCFv5M6gJURPELECGaDwAjpBkWMUDaAEdoR2hFIN0g3aMkGxx8HHZbdBmj+8CQr1pPvzs++PKOqjANoAQW2QIhcADqgB1q7/hYD8MAKaOLXTYx7za0Fmq95ppCmQcBuDmExd2fmDthNiAnAB+CtKHM5LieutcUMrzbRDYXVab1005kYF8X1uXVW3ILvuAf2lhCRGhhU9UgGIuKAZy7jpKovGf4OOCfcOXbQsZDrUVXfRIRrSMUFYCMireEeUsEWqjoAT/wOLsMNBR4RCcBmavKFCfTxOpdJwmU0mDkwAFVG8FDokPEwfyYu/pCHzJr60mn9sS3fgWXCVYWWDEBlusoDjYjsVfVQaivriKuMK/VzuKSp0Sdm0SWG4wtxes1Q7Duj8e3w1jmjKzUziqvNO7dO7H2bOXBX2G8w/BoIMir8j/gEiIuaB8bS5BUAAAAASUVORK5CYII=" /></span>.</li>
+<li>The circle center is positioned at
+<span class="math"><img class="latex" alt="$C=(0.2,0.2)$" title="$C=(0.2,0.2)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAOCAYAAAC4lZsqAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAB7klEQVRYw9WX7W3bQAyGHwYeQE03UDdQ0g00gtsRlA0sZIRkA2cFewN7gyTdwNqgrjZ4+4cKLodTZCCnuiYgyDzdkTzy5YdNEucmMysldVwImVkhqQe4+g+MWV2S85x+mlkBYDECzawBCmd7f78ApaRtZuctgU7SrwGJwBLogBJ4GiKdOFsDlbPfgXYqEDnlm9mDpBZJuBNLYAfUw1qwLncgOR9gE/Gvwe8C2I2cK4BVwC+Bwwn6sskHGqAKDxyAakTgbgbnVZGRVXhBX/uTChxQA4ou/GGQc8t3YD0sHJEbYD+kUoLaVCEF7iey9Lekx5FvNRDquwWO0Z6jG/ouNSXtzewmOstECmeVL6kzs3rhdaEGbsY0pxzrtaP9RAn8BuwDvkjs6UfWY5ta4G5C3yzyrzwCjKFv6Db/gHrgOnHpfqIxNF5Ln84hfxHDdyTVtjOkcGz4SyLK1x/Z553yeOJ0MI/8oRsCTaKYNrmbR9TZmmjtEBXu16gJlBFfR12xCL4VCZ1Z5IfN9W0ONLMV8NW78dGdu50zZ81sLeku4CtHfOez13oo3Ga2AZ4lPXrdPsSIlvQl2IukH5G+LPIDdJbMhbATUbieE+Fz2w4U5/4r1zryL4ocyTtJ/Vkd6KPQ3g3KecE6GpFy0+1Q3v4CZiTMe9igRA4AAAAASUVORK5CYII=" /></span>
+(measured from
+  the left bottom corner of the channel) and the radius is <span class="math"><img class="latex" alt="$r=0.05$" title="$r=0.05$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAJCAYAAABwgn/fAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABOElEQVQ4y72U4U2DUBSFv2sYAOsGdQNaN6AbYDfQblDjBCbdgK5QN2idQO0GsoH4Njj+uRjyghKq8hKSx+Ej3HfP4ZokxlhmNgUKoAKmwFZSGMqaWQncOnoEbiQdkTTKBby29imwP4UF1q6l7XfORnIja997d+fe+cGspBC7mZhZCiyBGbBzfSXpOvpACtz31PwuadOhz4E60mqPTTWQvTCzAgjAAiglVQmQS9qa2QdQOpzFlXgH7k40Je3Qwjd6H1tKqry5tTd/lkh69G7Xko4Ob/44XQGYdBQchrLNIXxVQGZmaeLCEjj05Pw30XoBVpE26YjVj6z/P0+SzpuUmNlXZHB78n+eWm/RJGpPpgyY9rG+X7eeFc1EM0mY2V7SYoTJlbsLV1HWd8Bz42YPm/vBA3AJPEgKn3ZFgdL29a0MAAAAAElFTkSuQmCC" /></span>.</li>
+<li>The elastic structure bar has length
+  <span class="math"><img class="latex" alt="$l=0.35$" title="$l=0.35$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC8AAAAJCAYAAACi0nWHAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABYklEQVQ4y62U4U3DQAyFP6MOEGCDdINQNkg3KCuUDYKYAJUNygplg8IEEDZoNyDNBo8f+MJxSgqqYumUxL53ZzvPD0kABVADlSTGWkAOVMDCn9mRvaXvWwIboIhia0C+6hCLwdsYMFLydfSeAdsje9Ul9V3ALopVjv9V/Bk/NpP0wUhmZkX8LakFZmaWD0Cmyf1tivczOpv4RSXwMpBEBtz/keunpMfENwOaxNc4lfbpAZJi3xS4ib4vzWzhBc2BtaT9xINzpw09h7bA3QnNz3p87YA/NCoHbn0G433rUJyZNT4TV4FTu2PDdCLflzHno3vKf2Ar4NCXkxclIJs4LUj5NAJt3r2LsV30USZ0XFL4w8/AymekAV4lnYc8zazDLlyKCiAfufu7pGOx+nT3uUzWiWwegsLEEu75biVhHlw5+IkRzRWn9G5fJ9zdAG/hj5nZMoLOgYegPi4ohc/M1GPtFyC/BAfK/1/FAAAAAElFTkSuQmCC" /></span>
+  and height
+  <span class="math"><img class="latex" alt="$h=0.02$" title="$h=0.02$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAJCAYAAACfQBThAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABRklEQVQ4y7WV4W3CMBCFv6sYIGIEdwPabmA2gBXoBkSdoKIbwArpBjBCYQOyQSEbvP65SK6VtoQSS5bsy4v07u69s0kCwMxWwEzSPQMtMwvADKiBAGwkNX2xZhaBiUOfgFJSjSQ8oRmwbu9DbGCfnAtg2xfr52XG+yiJ9Oc1EAdMZJIS9NgZCH2wQASUJSogjJLORmDrLZx6l+qs9QXw8oeaPiW9dcQfgVMWOznB+lKspJ2ZPWRYJNWjRJ9jYCepSfT6jZRrtrzSMkVHrPkh/itW0iGJl8AzwF3SldfEjFPgcGP/N16wnHRzLdbMFkAlaQPQymyeVTxKmndMmP/I7KOtYLLGHRK7COt2OEl6T6UDcE4MFYHKKxFvPASOmXH3melDD2xM7otWgsFb1X4IQPvmDDHRlu7HVUa+ykZuJ9b5KdtnSXwBTTQbUvLQSloAAAAASUVORK5CYII=" /></span>
+, the right bottom corner is positioned at 
+  <span class="math"><img class="latex" alt="$(0.6,0.19)$" title="$(0.6,0.19)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAAOCAYAAACVZ7SQAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAB1UlEQVRIx92W7W3bMBCGn9MEhEdQN1DSDTSCkE5QdwNlhMAjJCs4G9gbJPEG1Qi2Nrj+uQuuBBVJQdACPoAQSR3f++DxJUVVcRGRWlUHrkBEJKnqCFCFyf5aAjS5E5EEIKqKiHTAoKon31GgAwagBp48KxNZ64ANcAZQ1eeZLK/Cdxs5rog0wA/gBfgOPEQcEdmp6j1WrntVxRvwFvoJOMT/me4W6K1fA7+ndD+J35kNBVK27hLGTSGOrc3TuJNB+S1TvgD1hBOXbJxmAlyFH3TyILs8oQWdGthVQAucQhXcetkFOdsCCuWCiLTWdla2H8li/BkZc6Kx7juOcUxbAd8yo2kCME04nOw8H4EH4DDj3Br8STF7o51v94VSkqsJg5uCYyViGIDRWdkOfe07/MEOLMWfC/QGaEWkNV8I37+CzMFfC3ib0mKbSyt9W4O/JNAn21ViwvMgX8JWY9dIymp98MUi0niJ2NzJx/aNV1ETzspq/AUX/iXg/wJ+FtTOzkKPBQbsjcF2kfmAfcbGtelsgceC7n6CYZfit6arptuGf47RA13BTgtsi0F+ZSsZ/1fNkp6ceO5FpL+iJ51fbwdVHavAiscZVvyMoRY4/qc4b/0Z+Ad/B4kEjc/iHQAAAABJRU5ErkJggg==" /></span>
+, and the left end is fully attached to the fixed cylinder.</li>
+<li>The control points are <span class="math"><img class="latex" alt="$A(t)$" title="$A(t)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAOCAYAAAA1+Nx+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABHklEQVQ4y52T3U0DMRCEv0EpwEoJRwcmJRwdRNBBSgg1hA5CC5RAOkBJB0kJcB0ML06wrHUEGekePGvP/tysbHMLJA22T51Ysj0B3N0ovu6JFzxJSgDY7n7APuCWQG64IeA2tvsdSFoDOQg92z403EtJUuMoKfcqz+WBgaHh18H9I5CCrja9DuZlxlNT2Qgcqi6zpE0190vH5f04C0aTbe/K8QSkKnwP7CqRg6ShVP8WVTprrQeMkhaFSsFsWzwCH71g20Gy/VolfChVnzEFGmP5ySHuKrFV4I4jMK/On8CiFbE9SVpevP+Lr7Mz3otYbvy+B76BVcVvG7dsO7sxAquri9ax8Pav94B0S4IU7UKwR0vb/DtBJZCvxC8j/QHcz4iC/7wglwAAAABJRU5ErkJggg==" /></span>, fixed with the structure with
+  <span class="math"><img class="latex" alt="$A(0)=(0.6,0.2)$" title="$A(0)=(0.6,0.2)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAAAOCAYAAAA/pHIsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACcElEQVRYw9VY0Y3bMAx9LDJAkBHcDZx0A3eDw42QbuCgI+Q2yK2QbnAZ4ZwN4g2a8wavH6UCgifHUhxfrwQMWDJFPZEi+WAhiVtERAqS7YDOnGSHD5AUPJ9JrG++3GigTjzwo4jMP+BA9f8UAO8buZYJItKQXLq5BwAtyWO4gQAeALQACgDP9vaLyJbkZsIAZOHpWb8AcAYAkr+GMi7VvohUAEodfgOwsZfl4huS0QdA/RfTu/m9GzfmfQ7gxX1fAyj79hn75OKJYKv1vQBwStgvyb5+q834wdsPvunbqFRQBFC4+dqNG7f2za0pAGwnCkA2Hv/NOy5hvyT7ACp7iTUojPlm1pN1C5JHEelUMaRQBeBo9FYhjY2c7RqSraZltDkB+DlQcX6TfOr5lo3H7F2akgEA3wHsAFwjEsn2SR5EZOnWwpaj4JtZxDElyYMOW41gkK8ADmYca7pdz/w70Vo6pl+MwbPS+Vad8QqgUZt9knXe0KdUNgB+xPRmkaZTicjKbFpcAdVpU/NAu3/EOHLwtAC6cDNJdiJS6CU83vO8IrLW3vU8GAStiU9m8dLdDL/ZayS6C5+a17jyyHI0Bk+bmrFjzqvl7nyVddlO3cOQ9q7Dr53OyTWfJmLnZaLGnIUnEA7LdMLYsyPVnUf2zLFfAqgcG5p73wTFPYCTpZJ6wEa7/9rM72IMRfW3nilo81xPSFGT8eg5a89O1Dm7iO6+j5EN2Tfs0j5vMd+MPnSK/hD1u2cQ7p1pU9m2vrnlt8VGROrEml9qKZqyUSfj+WT/ji6+yQ6COvQQePaArIZ+A4yVTDw5Tqoc/b23XHzzB1myJwXsMRTEAAAAAElFTkSuQmCC" /></span>
+  , and
+  <span class="math"><img class="latex" alt="$B=(0.15,0.2)$" title="$B=(0.15,0.2)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAAOCAYAAABaSYBTAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACUklEQVRYw92X7XHaQBCGn824AMXugHQgOx0oHRCnA9wBTCrwQAeiBdwBpIKEdAAdBKuDNz+yMJr1gSQCIcPN3GjubrW7tx/v7pkkLj3MrCdpzRUMM8skVQDv/gNlhtdiWB+PZpYBIGk3gSEgoAQGPkugrNOdagJ9IK+te65D379ZGx6JvdLvIWBZl3GAT2vZQOE0Q2AG9ML5WNIb42Z/7P2G2WvqEicw7iysl0GXeYNjBm7ALBEkWRvndJXtZ8OgxyrQDIA8pfAywVBAcWLD5kHJPMp2p/Ya+CSNe4QurWR71CoGZJ3Ws2B8E/DiE7AImFgCE0mLFHgDXxsw6JekSWK/AH7W1g/AJtBsXNGumHxnZn2g8juVDbjeWrakhZndh3+p85e0NrMiGvcReDazwj3yxdNjmtLIq+LoSOD/EByZJWiqPftNY2dMM9s4Lt4foO8kW1I9KEbAU4rupt4OeXrVo+zFzJZmxj4Dn3BUwG3i0lVXRiFK10Beb5FOJdvMBl43pgeN62m6SNCs93n9L2EhKv4jEQG3XSHBzHLgm6T32+wys6bfOsv27N5Iejnk5V3ljoXAgf61TStzZBs2CHurUCiWQZdeU0HbU83ngU+W4NNatq+L0B3Eojo3B+0+MAam3hdmwJ2fjc7V5JtZKekpRF3hEfMxYOcM+L7NAo+c3PWeuAEX4axybH/eQoLzQdLnRMQ3ynb4XMUs3GZKTX6PczwOOkRveSG5/XPfC8gu/fwdmdnwip6+2wyYS6oualxP1YUr9K8uv69wn2o8bIvcb36Duiro97HtAAAAAElFTkSuQmCC" /></span>
+  .</li>
+</ul>
+<p>
+The setting is intentionally non-symmetric
+(see <a href="fsi_bibliography.html#TurekSchaefer1996">[TurekSchaefer1996]</a>) to prevent the dependence of the onset
+of any possible oscillation on the precision of the computation.
+</p>
+<p class="Space5">
+<table class="Basic">
+<thead>
+<tr><th colspan="2">geometry parameters</th><th>value [m]</th></tr>
+</thead>
+<tbody>
+<tr><td>channel length</td><td>L</td><td>2.5</td></tr>
+<tr><td>channel width</td><td>H</td><td>0.41</td></tr>
+<tr><td>cylinder center position</td><td>C</td><td>(0.2,0.2)</td></tr>
+<tr><td>cylinder radius</td><td>r</td><td>0.05</td></tr>
+<tr><td>elastic structure length</td><td>l</td><td>0.35</td></tr>
+<tr><td>elastic structure thickness</td><td>h</td><td>0.02</td></tr>
+<tr><td>reference point (at t=0)</td><td>A</td><td>(0.6,0.2)</td></tr>
+<tr><td>reference point</td><td>B</td><td>(0.2,0.2)</td></tr>
+</tbody>
+</table>
+</p>
+
+<h3>Boundary conditions</h3>
+<ul>
+<li>A parabolic velocity profile is prescribed at the left channel
+inflow
+<div class="equation">
+<img class="latex" alt="  \begin{align*}
+    v^f(0,y)=1.5 \bar{U} \frac{y (H-y)}{\left(\frac{H}{2}\right)^2}
+    =1.5 \bar{U} \frac{4.0}{0.1681} y (0.41-y),
+    \label{vp}
+  \end{align*}
+" title="  \begin{align*}
+    v^f(0,y)=1.5 \bar{U} \frac{y (H-y)}{\left(\frac{H}{2}\right)^2}
+    =1.5 \bar{U} \frac{4.0}{0.1681} y (0.41-y),
+    \label{vp}
+  \end{align*}
+" src="data:image/png;base64,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" /></div>
+  such that the mean inflow velocity is <span class="math"><img class="latex" alt="$\bar{U}$" title="$\bar{U}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAnUlEQVQY04WQUQ0CMRBE356CBgknoUHCSbgEB0gAL1gAByCB4OBOAqmD4Wd7WUoTJmnazk6nO2uSqDCzIw0kXbZ6FP+Fi2dg8XWS1PJXIBMKCzDXe+C3x4P3moAReHQ+L/Uw+D4Bq6QSVWaWgWcrPgC3jute0qvnfO+IU28aAlITLANT5KrzCuxCr8mFX4FNEmY2AmcfXwHekn4yfAAZLmSPbZz5XgAAAABJRU5ErkJggg==" /></span> and the maximum of
+  the inflow velocity profile is <span class="math"><img class="latex" alt="$1.5\bar{U}$" title="$1.5\bar{U}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAMCAYAAABx290PAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABCklEQVQ4y72U/W3CQAzFf0Yd4NRuQDe4GegGmSEj0BEQbEBXSDeADQrdoBmB3gav/9whl14gkVBPsmT72e/F9xGTxD2XmbWXOUlvZ/zegjeXJLJoU/whA7aAsh2B6PuBr2zLSr4DYkm0mSTcEFwCYaguEze1vrPvkqMEr2BhiANoi/8w8QSezKwBEvACbCX1GVsAvaR0cYkicKid4ZgJ586PwNHFHbC+Np0kZhMvWO/CHohmFtyEu0pb8MFswvuKZvbtxFOF+FDZzs/Rgllk7iZaOawB9k64Bx4dHoCFpP0vzrwVEVgDG2BXisysAz4kbXJcahPwDKyKYP6w1/w0EnCS9P5niP/+0/wAwmQ3by1uoA4AAAAASUVORK5CYII=" /></span>.</li>
+<li>The outflow condition can be chosen by the user, for example
+  <em>stress free</em> or <em>do nothing</em> conditions. The outflow
+  condition effectively prescribes some reference value for the
+  pressure variable <span class="math"><img class="latex" alt="$p$" title="$p$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAJCAYAAAAPU20uAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAe0lEQVQY03XO0Q3CQAwD0JeKAW6GWwExAccGhd2YoWxQVoANOkv4uZOqSliKYsVW7MhMEVHwwBkLCi54ykyY+97QOm9YJsjMl47MfHdaUaYhRETDEOGG9XQ4fLq5ombmfW9o2CJi7gWvI3MU3Qbfz7TL//qDirXn1+OHH/L0RVwuStc+AAAAAElFTkSuQmCC" /></span>. While this value could be arbitrarily set in
+  the incompressible case, in the case of compressible structure this
+  will have influence on the stress and consequently the deformation
+  of the solid. In this proposal, we set the reference pressure at the
+  outflow to have <em>zero mean value</em>.</li>
+<li>The <em>no-slip</em> condition is prescribed for the fluid on the
+  other boundary parts. i.e. top and bottom wall, circle and
+  fluid-structure interface <span class="math"><img class="latex" alt="$\Gamma_t^0$" title="$\Gamma_t^0$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAYAAADUFP50AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAvElEQVQoz72S3Q3CQAyDPyMGgBWODSpW6AbMUDaAGcoqjAAbULEBbEDVDcxLQCck+sMDkaIolnx2cpFtxoSkCmiANdBgezCBAqiz/jSXVABboAIOwCNESgDbZajcMgPp9UICDCw+lOqoFVBl+G02MNolagOsMvwu20hKYWVpu/uynB1wDXfnXqt9OePH+A9R0vFNjH/cR19L2nwhJaB9AyMvJwFHoAYK2+OIrzPLtz5pRttdWJ5EvMf8LcATSEHDeq4tiwEAAAAASUVORK5CYII=" /></span>.</li>
+</ul>
+
+<h3>Initial conditions</h3>
+<p>
+Suggested starting procedure for the non-steady tests is to use a
+smooth increase of the velocity profile in time as
+<div class="equation">
+<img class="latex" alt="\begin{align*}
+v^f(t,0,y) =
+\begin{cases}
+v^f(0,y) \frac{1-\cos ( \frac{\pi}{2} t )}{2} &amp; \text{ if } t&lt;2.0 \\
+v^f(0,y) &amp; \text{ otherwise }
+\end{cases}
+\end{align*}
+" title="\begin{align*}
+v^f(t,0,y) =
+\begin{cases}
+v^f(0,y) \frac{1-\cos ( \frac{\pi}{2} t )}{2} &amp; \text{ if } t&lt;2.0 \\
+v^f(0,y) &amp; \text{ otherwise }
+\end{cases}
+\end{align*}
+" src="data:image/png;base64,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" /></div>
+where <span class="math"><img class="latex" alt="$v^f(0,y)$" title="$v^f(0,y)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAOCAYAAABU4P48AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABqElEQVRIx7VW0W3CMBB9L+oAESOkG6SMkG4QiQ3CBmEGRkg3aOkGsAElG5ARUDZ4/Tkjy7VpoOlJluLz2ffufH4XSsIUIVkCWAHIJa0j64WkAf8gJHNJIwBA0qQBoANQGOBwrZ16ziMDQOP8Tt1QAjgDqCNrNYDSmxcAWtO3sQAfBL2dDNg27BP6XTA/ed95at+DWS6zO+q3T+iPwfwqVndLksUMpXwAsMrMUUNy6w4muSNZe8ZLH5gnVRDIEsAlsLlYmdxKSOi/ILkLgh8AVJkB+3APytbfASw8+xdJnxFfzwHAPGIzJvQObMx/BSDKOE8OCMlSUu856S3iDYDTxGsbg0BdEGNqQ8L/q7HSD3ElUVmNOCkkDTbWkt5uAPTlK2KzSGXrxhupJB2SgO06zo6kE45jcrS6ddnq/eu3swbXUEiWpou9haMHPhXgxaefzrizvpNuughnOx7e2m1dKTCkQY+7nf+949zApgLQzMGP3Z329W987zeioNPm2Qz8uCHZ/uE/oSB58nnce3x+je8ljXP1+jKWlcS15oEuty5Wp/5JADTu+xtJIPFx3Bdp5gAAAABJRU5ErkJggg==" /></span> is the velocity profile.
+</p>
+
+<h3>Material parameters</h3>
+<p class="Space5">
+<table class="Basic">
+<thead>
+<tr>
+  <th>material</th>
+  <th><span class="math"><img class="latex" alt="$\varrho^s$" title="$\varrho^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAMCAYAAAC0qUeeAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAo0lEQVQoz32Q0Q2DMBBD30UMwAyMULUTlG4AYoOs0Bk6UxkBukEZIWID96NXhKoESydFPseyzyRRgpk1QAssAIFjnIAbUANTOHCtgRW4+4dztVtGIAEX4AlMQOPrWdKIZ45A9HcNvCXxPz/xvBHfnFlxMLOtraMFxlyPyp3SjhuAa0n88oKdl+slraUrdbl8uamAwcxWz52OXM0L9TvuIWnJiT9B93N3DQM1JQAAAABJRU5ErkJggg==" /></span> [<span class="math"><img class="latex" alt="$\frac{\textrm{kg}\nop}{\textrm{m}^3}$" title="$\frac{\textrm{kg}\nop}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAATCAYAAABPwleqAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABAUlEQVQ4y52T0U3DQBBE30QuwKIE04GVEpIOcAuhA1MCgg7SAikhUAFKOsAlBHcwfLCOLpbBl6xkefd0tzNzs4dtbANUwMNQ53yXBRyuObzgMk5cEcXUoqSXSJ9t95Ja4Ag0wAF4s92Pae+BFtiM7mIb+e4/zXugHP7JegusgDrdXyRUq0CpgC3wIamx3QFr4B7oJWH7CDBvxy9qHXmZUi8yLvUdWEq6i/rzzBYwN4aCzvxGaQN0IeE1S3OidTU4MmlVRoN2aJJ9eLBwjFxIqoEd8BjymqgB1rafAnUpqYsB4qw55rUcv6y5V7ZImvS32FUBXzG7FfA9yuu/kLN9noofi1+FzofMjbwAAAAASUVORK5CYII=" /></span>]</th>
+  <th><span class="math"><img class="latex" alt="$\nu^s$" title="$\nu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAJCAYAAAAGuM1UAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVQY04XPYQ3CUAxG0fOmYBLIJBAkbA7mAQdMFBKYBJAAFoaD8oO+ZCHLaNI0bb+2tyUi7FkppUOPFzT+2xEDWtybP9tbvDHl0KnJxqWUsvyIrzigS39ExCx/qIV1/qz52itSj3l1YMJ5C7MODLglypjb583HEmHJOGLcQlnhfvlT3O6JI8IHLl9l8TbtJ/8AAAAASUVORK5CYII=" /></span></th>
+  <th><span class="math">E</span> [<span class="math"><img class="latex" alt="$10^6 \frac{\textrm{kg}\nop}{\textrm{s}^2}$" title="$10^6 \frac{\textrm{kg}\nop}{\textrm{s}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABmUlEQVRIx7WV/W3CQAzFf0YMEDFCukFKNwgbhHYDRgAxQUU3oBsU2AA2aGGDZATKBq9/1CddUXR8FE46cdgv52efP0wSt1xmlgOFpNVZ+FsTcBJbSY/nYLv/MFIAuf/tSXqP1Ptz7+leaTwDppKGEZk23MyPr5IOZjYGdsAQ2AKLTgSu2t7TzMZmVvlv5qpn15dmNgJ6Ld+OgVrSxI3nwIOkTYiYpANABYwAAZkkwga20TkD1n4eAfNIXh99tw74+E5gDJSepL+ySKkjcBETcNm3v3sRCLi8js45UDum8lDnEbE5MAskUgRGwePYEFBG3oToFTGubTu+iKK2lJRMwqxFdghySW8X5u4G6JtZyJfPU1VwaEmuzOWpCtEF1TTrJPRfLbIe0KQulWRtGxh4+U1ieSdx0S5+Bi/BRlJzZdPC2/PgTyMys9IzFmBqZmuvVYCh13MDPLkHFy93JsyJ5u6zIDGkSmARGtA9h1Hh+bJ3oytg6d5nkgb3JlABL954Nqm86dwp4o0Pqsa73u3H8YlVmlnfCXykgD+J/Teic7nTrwAAAABJRU5ErkJggg==" /></span>]</th>
+  <th><span class="math"><img class="latex" alt="$\mu^s$" title="$\mu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAMCAYAAAC5tzfZAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAn0lEQVQoz5WQUQ3DMAxEn6MBCIZCmAohYVAuwzAIwzAILYQUwkphZXD7caWoWtXU0ik+xyefbZI4CzPrgAQsAIG2uAMZiEAJDVMisAIPF/ah+nyaWar46AKAzjFLmpCE7zUDseLfLd8jVBaipNV5AqYjy5u9fVMGxjNRBj5VfQCKmQ3/RDd/e7e1Nb28thxNi34VWhF8n8KFCH7/9xXRD+u/XTeYMU8uAAAAAElFTkSuQmCC" /></span> [<span class="math"><img class="latex" alt="$10^6 \frac{\textrm{kg}\nop}{\textrm{m}\textrm{s}^2}$" title="$10^6 \frac{\textrm{kg}\nop}{\textrm{m}\textrm{s}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAATCAYAAAATSBSOAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABzklEQVRIx8WW/U3zMBDGfxd1gKgjhA0CbJBu0MIGYYNUTIDKBrABb7tBYQIIGzQjoG7w8M9ZskIITUt4LVmxz3e55z5tk8SYw8wyIJe0GSw7NjgHWEs6Hyo3OUFhDmS+nUp67GH/OEbH5EhgKXAraREBPURu5cs7SXszq4B3YAHUwD9J+8CfRILzrnwxs8rM5v5N/ejKzwszK4HpAcAqYCdp6cAy4EzSc/B8DCyMOVACAlJJhAnU0ToFtr4ugYeIvovl2hPYBvlYB1ABhRfMF7lE0qYrX9qhcqsu3OK3Fv2nag3zAXhxGsDMQ3rdmRqRFWpZVQZPRbQdUERWB6/nfZ77xptVkHOvrts8fQWRdtD2gS7p/sQO8+yRCPn6OqRa9x2Jnjq9L4w6oT2t4n3Sw/vWQZsCTZ8CSXbsjHJwKcmSHiXvcWi9jTSSmpFukdz1bhwkEzMrgFApt2a29d4DsPD+1ACXbtUow50Rqrv5s7t14COhCDfFr4Pz8KyBm+B93wPMJC2dZ+p3biHp3oGt3WuppBlD+9OBPawOPbN1y9T+nTuQEsi++08yYg71tZzGHw0NsPr1J9MPeZN6oTVA1lrnQGFmF057+q+PzWPHJz3YyDpMXqmeAAAAAElFTkSuQmCC" /></span>]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><b>polybutadiene</b></td><td> 910 </td><td> 0.50 </td><td> 1.6 </td><td> 0.53 </td>
+</tr>
+<tr>
+  <td>polyurethane</td><td> 1200</td><td> 0.50 </td><td> 25  </td><td> 8.3 </td>
+</tr>
+<tr>
+  <td><b>polypropylene</b></td><td> 1100</td><td> 0.42</td><td> 900 </td><td> 317 </td>
+</tr>
+<tr>
+  <td>PVC                    </td><td> 1400</td><td> 0.42</td><td> 1500</td><td> 528 </td>
+</tr>
+<tr>
+  <td>steel                  </td><td> 7800</td><td> 0.29</td><td> 210000</td><td> 81400 </td>
+</tr>
+<tr>
+  <td>cork                   </td><td> 180 </td><td> 0.25</td><td> 32  </td><td>   12.8 </td>
+</tr>
+</tbody>
+</table>
+</p>
+
+<p class="Space5">
+<table class="Basic">
+<thead>
+<tr>
+  <th>material</th>
+  <th><span class="math"><img class="latex" alt="$\varrho^s$" title="$\varrho^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAMCAYAAAC0qUeeAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAo0lEQVQoz32Q0Q2DMBBD30UMwAyMULUTlG4AYoOs0Bk6UxkBukEZIWID96NXhKoESydFPseyzyRRgpk1QAssAIFjnIAbUANTOHCtgRW4+4dztVtGIAEX4AlMQOPrWdKIZ45A9HcNvCXxPz/xvBHfnFlxMLOtraMFxlyPyp3SjhuAa0n88oKdl+slraUrdbl8uamAwcxWz52OXM0L9TvuIWnJiT9B93N3DQM1JQAAAABJRU5ErkJggg==" /></span> [<span class="math"><img class="latex" alt="$\frac{\textrm{kg}\nop}{\textrm{m}^3}$" title="$\frac{\textrm{kg}\nop}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAATCAYAAABPwleqAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABAUlEQVQ4y52T0U3DQBBE30QuwKIE04GVEpIOcAuhA1MCgg7SAikhUAFKOsAlBHcwfLCOLpbBl6xkefd0tzNzs4dtbANUwMNQ53yXBRyuObzgMk5cEcXUoqSXSJ9t95Ja4Ag0wAF4s92Pae+BFtiM7mIb+e4/zXugHP7JegusgDrdXyRUq0CpgC3wIamx3QFr4B7oJWH7CDBvxy9qHXmZUi8yLvUdWEq6i/rzzBYwN4aCzvxGaQN0IeE1S3OidTU4MmlVRoN2aJJ9eLBwjFxIqoEd8BjymqgB1rafAnUpqYsB4qw55rUcv6y5V7ZImvS32FUBXzG7FfA9yuu/kLN9noofi1+FzofMjbwAAAAASUVORK5CYII=" /></span>]</th>
+  <th><span class="math"><img class="latex" alt="$\nu^s$" title="$\nu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAJCAYAAAAGuM1UAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVQY04XPYQ3CUAxG0fOmYBLIJBAkbA7mAQdMFBKYBJAAFoaD8oO+ZCHLaNI0bb+2tyUi7FkppUOPFzT+2xEDWtybP9tbvDHl0KnJxqWUsvyIrzigS39ExCx/qIV1/qz52itSj3l1YMJ5C7MODLglypjb583HEmHJOGLcQlnhfvlT3O6JI8IHLl9l8TbtJ/8AAAAASUVORK5CYII=" /></span></th>
+  <th><span class="math">E</span> [<span class="math"><img class="latex" alt="$10^6 \frac{\textrm{kg}\nop}{\textrm{s}^2}$" title="$10^6 \frac{\textrm{kg}\nop}{\textrm{s}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABmUlEQVRIx7WV/W3CQAzFf0YMEDFCukFKNwgbhHYDRgAxQUU3oBsU2AA2aGGDZATKBq9/1CddUXR8FE46cdgv52efP0wSt1xmlgOFpNVZ+FsTcBJbSY/nYLv/MFIAuf/tSXqP1Ptz7+leaTwDppKGEZk23MyPr5IOZjYGdsAQ2AKLTgSu2t7TzMZmVvlv5qpn15dmNgJ6Ld+OgVrSxI3nwIOkTYiYpANABYwAAZkkwga20TkD1n4eAfNIXh99tw74+E5gDJSepL+ySKkjcBETcNm3v3sRCLi8js45UDum8lDnEbE5MAskUgRGwePYEFBG3oToFTGubTu+iKK2lJRMwqxFdghySW8X5u4G6JtZyJfPU1VwaEmuzOWpCtEF1TTrJPRfLbIe0KQulWRtGxh4+U1ieSdx0S5+Bi/BRlJzZdPC2/PgTyMys9IzFmBqZmuvVYCh13MDPLkHFy93JsyJ5u6zIDGkSmARGtA9h1Hh+bJ3oytg6d5nkgb3JlABL954Nqm86dwp4o0Pqsa73u3H8YlVmlnfCXykgD+J/Teic7nTrwAAAABJRU5ErkJggg==" /></span>]</th>
+  <th><span class="math"><img class="latex" alt="$\mu^s$" title="$\mu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAMCAYAAAC5tzfZAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAn0lEQVQoz5WQUQ3DMAxEn6MBCIZCmAohYVAuwzAIwzAILYQUwkphZXD7caWoWtXU0ik+xyefbZI4CzPrgAQsAIG2uAMZiEAJDVMisAIPF/ah+nyaWar46AKAzjFLmpCE7zUDseLfLd8jVBaipNV5AqYjy5u9fVMGxjNRBj5VfQCKmQ3/RDd/e7e1Nb28thxNi34VWhF8n8KFCH7/9xXRD+u/XTeYMU8uAAAAAElFTkSuQmCC" /></span> [<span class="math"><img class="latex" alt="$10^6 \frac{\textrm{kg}\nop}{\textrm{m}\textrm{s}^2}$" title="$10^6 \frac{\textrm{kg}\nop}{\textrm{m}\textrm{s}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAATCAYAAAATSBSOAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABzklEQVRIx8WW/U3zMBDGfxd1gKgjhA0CbJBu0MIGYYNUTIDKBrABb7tBYQIIGzQjoG7w8M9ZskIITUt4LVmxz3e55z5tk8SYw8wyIJe0GSw7NjgHWEs6Hyo3OUFhDmS+nUp67GH/OEbH5EhgKXAraREBPURu5cs7SXszq4B3YAHUwD9J+8CfRILzrnwxs8rM5v5N/ejKzwszK4HpAcAqYCdp6cAy4EzSc/B8DCyMOVACAlJJhAnU0ToFtr4ugYeIvovl2hPYBvlYB1ABhRfMF7lE0qYrX9qhcqsu3OK3Fv2nag3zAXhxGsDMQ3rdmRqRFWpZVQZPRbQdUERWB6/nfZ77xptVkHOvrts8fQWRdtD2gS7p/sQO8+yRCPn6OqRa9x2Jnjq9L4w6oT2t4n3Sw/vWQZsCTZ8CSXbsjHJwKcmSHiXvcWi9jTSSmpFukdz1bhwkEzMrgFApt2a29d4DsPD+1ACXbtUow50Rqrv5s7t14COhCDfFr4Pz8KyBm+B93wPMJC2dZ+p3biHp3oGt3WuppBlD+9OBPawOPbN1y9T+nTuQEsi++08yYg71tZzGHw0NsPr1J9MPeZN6oTVA1lrnQGFmF057+q+PzWPHJz3YyDpMXqmeAAAAAElFTkSuQmCC" /></span>]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td>air                    </td><td></td><td> 1.23 </td><td> 0.015</td><td> 0.018 </td>
+</tr>
+<tr>
+    <td>aceton                 </td><td></td><td> 790  </td><td> 0.405</td><td> 0.32  </td>
+</tr>
+<tr>
+    <td>ethyl alcohol          </td><td></td><td> 790  </td><td> 1.4</td><td> 1.1   </td>
+</tr>
+<tr>
+    <td>oil, vegetable         </td><td></td><td> 920  </td><td> 76.1</td><td>70     </td>
+</tr>
+<tr>
+    <td>water                  </td><td></td><td> 1000 </td><td> 1.14</td><td> 1.14   </td>
+</tr>
+<tr>
+    <td>blood                  </td><td></td><td> 1035 </td><td> 3 -- 4</td><td> 3 -- 4</td>
+</tr>
+<tr>
+    <td><b>glycerine</b>     </td><td></td><td> 1260 </td><td> 1127</td><td>1420   </td>
+</tr>
+<tr>
+    <td>honey                  </td><td></td><td> 1420 </td><td> 7042</td><td>10000  </td>
+</tr>
+<tr>
+    <td>mercury                </td><td></td><td> 13594</td><td> 0.0114</td><td> 1.55  </td>
+</tr>
+</tbody>
+</table>
+</p>
+
+<!--\begin{table}[th]
+\centerline{
+  \begin{tabularx}{0.85\linewidth}{|p{25mm}|Xr|r|r|r|}
+    \hline
+    material && $\varrho^s$ [$\frac{\textrm{kg}}{\textrm{m}^3}$] &
+    $\nu^s$ & $E$ [$10^6 \frac{\textrm{kg}}{\textrm{m}\textrm{s}^2}$]&
+    $\mu^s$ [$10^6 \frac{\textrm{kg}}{\textrm{m}\textrm{s}^2}$] \\\hline
+    <b>polybutadiene</b> && 910 & 0.50 & 1.6 & 0.53 \\
+    polyurethane  && 1200& 0.50 & 25  & 8.3 \\
+    <b>polypropylene</b> && 1100& 0.42& 900 & 317 \\
+    PVC                    && 1400& 0.42& 1500& 528 \\
+    steel                  && 7800& 0.29& 210000& 81400 \\
+    cork                   && 180 & 0.25& 32  &   12.8 \\
+    \hline
+  \end{tabularx}}
+  \vspace{2mm}
+  \centerline{
+  \begin{tabularx}{0.85\linewidth}{|p{25mm}|Xr|r|r|}
+    \hline
+    material && $\varrho^f$ [$\frac{\textrm{kg}}{\textrm{m}^3}$] &
+    $\nu^f$ [$10^{-6} \frac{\textrm{m}^2}{\textrm{s}}$] &
+    $\mu^f$ [$10^{-3} \frac{\textrm{kg}}{\textrm{m}\textrm{s}}$]
+    \\\hline
+    air                    && 1.23 & 0.015& 0.018 \\
+    aceton                 && 790  & 0.405& 0.32  \\
+    ethyl alcohol          && 790  & 1.4& 1.1   \\
+    oil, vegetable         && 920  & 76.1&70     \\
+    water                  && 1000 & 1.14& 1.14   \\
+    blood                  && 1035 & 3 -- 4& 3 -- 4\\
+    <b>glycerine</b>     && 1260 & 1127&1420   \\
+    honey                  && 1420 & 7042&10000  \\
+    mercury                && 13594& 0.0114& 1.55  \\
+    \hline
+  \end{tabularx}
+}
+  \caption{Overview of some solid and fluid material
+  parameters (densities $\varrho^f$, $\varrho^s$, Poisson ratio
+  $\nu^s$, Young modulus $E$, shear modulus $\mu^s$, dynamic viscosity
+  $\mu^f$ and kinematic viscosity $\nu^f$)}
+  \label{tabMat}
+\end{table}
+-->
+<p>An overview of certain material properties for some relevant fluids
+and elastic materials is shown in the <a href="fsi_definitions.html#tabMat">Table</a>. The choice
+of the parameters for the benchmark is guided by several requirements:</p>
+
+<p>First, we would like the flow to be in the laminar regime, which implies "small"
+Reynolds numbers. On the other hand, the flow should be capable of deforming the elastic
+structure. A typical fluid candidate for such experiments is glycerine.</p>
+
+<p>In order not to introduce additional numerical complications connected with high aspect
+ratios in the geometry, the deformable structure has a certain thickness which requires
+that the stiffness of the material should be low enough to allow significant
+deformations. Certain rubber-like materials fit into such a setting, namely polybutadiene
+(for a future incompressible configuration) and polypropylene.</p>
+
+<p>In the table the material parameters are presented for 2 combinations of
+glycerine and selected rubber-like material.</p>
+
+<p class="Space5">
+<table class="Basic">
+<tr><th>parameter</th><th>polybutadiene & glycerine</th><th>polypropylene & glycerine</th></tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\varrho^s$" title="$\varrho^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAMCAYAAAC0qUeeAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAo0lEQVQoz32Q0Q2DMBBD30UMwAyMULUTlG4AYoOs0Bk6UxkBukEZIWID96NXhKoESydFPseyzyRRgpk1QAssAIFjnIAbUANTOHCtgRW4+4dztVtGIAEX4AlMQOPrWdKIZ45A9HcNvCXxPz/xvBHfnFlxMLOtraMFxlyPyp3SjhuAa0n88oKdl+slraUrdbl8uamAwcxWz52OXM0L9TvuIWnJiT9B93N3DQM1JQAAAABJRU5ErkJggg==" /></span> [<span class="math"><img class="latex" alt="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" title="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAATCAYAAAAao7T0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABnElEQVRIx8WW7W3CMBCGn0MdwGKEjJAyQtggXYFuEGbICMzQbgAbtLBBs0ELG7z9c65cKyRAiWrJyvl8H6/t+4hJYophZgVQSnq9WGcqMA5oL+nxUvnZHxytzKw0s9bMqjNiX9fYnN0IJACPkg7AJ1COyLc+g68bM6vMbOOHCgBIwp+qjnTCK4AGqP0bsv0a2OR6yf7W9VaZzY3TL5k8NbAC1ONsn9AB2PY4rHKjGZgQvwm/cb3yl3wioEyhTME47+gnq+NpfX08c6sfbqcG9kCRgNwAbQpoCMwqvwk3Xvlpa6dboDr3VD0gmwjA7fzc6sNA3IUe3skBn4BYP3ZXxv8OWJjZ3NdvcWMIzAmY9wA8jWSObsjOdiy133t4c6AbMizJLpnAM7AE1pE3GzB6SJ/Ka0EnqbtDZY62dg7oZ1QeVMqD0TMh1pk2ZsM9ph+0Sf1N2ptGmiiSOjPbSlqOBfCtjkrgxWMC4MnXAEtJa7+VhZl1XnP41Q7uOb3AhZ4qvh/Sm031FF6LmLxrXxAPwbtyARQZXf7Lz9W14xtK+RY8ir520AAAAABJRU5ErkJggg==" /></span>]</td>
+  <td>0.91</td>
+  <td>1.1</td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\nu^s$" title="$\nu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAJCAYAAAAGuM1UAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVQY04XPYQ3CUAxG0fOmYBLIJBAkbA7mAQdMFBKYBJAAFoaD8oO+ZCHLaNI0bb+2tyUi7FkppUOPFzT+2xEDWtybP9tbvDHl0KnJxqWUsvyIrzigS39ExCx/qIV1/qz52itSj3l1YMJ5C7MODLglypjb583HEmHJOGLcQlnhfvlT3O6JI8IHLl9l8TbtJ/8AAAAASUVORK5CYII=" /></span></td>
+  <td>0.5</td>
+  <td>0.42</td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\mu^s$" title="$\mu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAMCAYAAAC5tzfZAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAn0lEQVQoz5WQUQ3DMAxEn6MBCIZCmAohYVAuwzAIwzAILYQUwkphZXD7caWoWtXU0ik+xyefbZI4CzPrgAQsAIG2uAMZiEAJDVMisAIPF/ah+nyaWar46AKAzjFLmpCE7zUDseLfLd8jVBaipNV5AqYjy5u9fVMGxjNRBj5VfQCKmQ3/RDd/e7e1Nb28thxNi34VWhF8n8KFCH7/9xXRD+u/XTeYMU8uAAAAAElFTkSuQmCC" /></span> [<span class="math"><img class="latex" alt="$10^6 \frac{\textrm{kg}\nop}{\textrm{ms}^2}$" title="$10^6 \frac{\textrm{kg}\nop}{\textrm{ms}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAATCAYAAAATSBSOAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABzklEQVRIx8WW/U3zMBDGfxd1gKgjhA0CbJBu0MIGYYNUTIDKBrABb7tBYQIIGzQjoG7w8M9ZskIITUt4LVmxz3e55z5tk8SYw8wyIJe0GSw7NjgHWEs6Hyo3OUFhDmS+nUp67GH/OEbH5EhgKXAraREBPURu5cs7SXszq4B3YAHUwD9J+8CfRILzrnwxs8rM5v5N/ejKzwszK4HpAcAqYCdp6cAy4EzSc/B8DCyMOVACAlJJhAnU0ToFtr4ugYeIvovl2hPYBvlYB1ABhRfMF7lE0qYrX9qhcqsu3OK3Fv2nag3zAXhxGsDMQ3rdmRqRFWpZVQZPRbQdUERWB6/nfZ77xptVkHOvrts8fQWRdtD2gS7p/sQO8+yRCPn6OqRa9x2Jnjq9L4w6oT2t4n3Sw/vWQZsCTZ8CSXbsjHJwKcmSHiXvcWi9jTSSmpFukdz1bhwkEzMrgFApt2a29d4DsPD+1ACXbtUow50Rqrv5s7t14COhCDfFr4Pz8KyBm+B93wPMJC2dZ+p3biHp3oGt3WuppBlD+9OBPawOPbN1y9T+nTuQEsi++08yYg71tZzGHw0NsPr1J9MPeZN6oTVA1lrnQGFmF057+q+PzWPHJz3YyDpMXqmeAAAAAElFTkSuQmCC" /></span>]</td>
+  <td>0.53</td>
+  <td>317</td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\varrho^f$" title="$\varrho^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAtUlEQVQoz42R4Q2CQAyFv5obgBkcgegEMgKEDWAWR2AW2cDoBjACYYPnnx45jco1adLrXV77vTNJ7IWZlUALFEjaTWAAjkBxyFSvgFLSmjvhFuvcCc94DslFByzA2RVHvzoB903BR3ZA53UBTCnw23refCQPSmByV4YoFDOYWQXMydoVMEqagf6TKbjikvRa4PLLhBAdMLPagRtJ6z/n6py/2BiA1sxW51j21M0hm6R3deCv8QIBfrSwSvr55QAAAABJRU5ErkJggg==" /></span>  [<span class="math"><img class="latex" alt="$10^3 \frac{\textrm{kg}}{\textrm{m}^3}$" title="$10^3 \frac{\textrm{kg}}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAATCAYAAAAao7T0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABnElEQVRIx8WW7W3CMBCGn0MdwGKEjJAyQtggXYFuEGbICMzQbgAbtLBBs0ELG7z9c65cKyRAiWrJyvl8H6/t+4hJYophZgVQSnq9WGcqMA5oL+nxUvnZHxytzKw0s9bMqjNiX9fYnN0IJACPkg7AJ1COyLc+g68bM6vMbOOHCgBIwp+qjnTCK4AGqP0bsv0a2OR6yf7W9VaZzY3TL5k8NbAC1ONsn9AB2PY4rHKjGZgQvwm/cb3yl3wioEyhTME47+gnq+NpfX08c6sfbqcG9kCRgNwAbQpoCMwqvwk3Xvlpa6dboDr3VD0gmwjA7fzc6sNA3IUe3skBn4BYP3ZXxv8OWJjZ3NdvcWMIzAmY9wA8jWSObsjOdiy133t4c6AbMizJLpnAM7AE1pE3GzB6SJ/Ka0EnqbtDZY62dg7oZ1QeVMqD0TMh1pk2ZsM9ph+0Sf1N2ptGmiiSOjPbSlqOBfCtjkrgxWMC4MnXAEtJa7+VhZl1XnP41Q7uOb3AhZ4qvh/Sm031FF6LmLxrXxAPwbtyARQZXf7Lz9W14xtK+RY8ir520AAAAABJRU5ErkJggg==" /></span>]</td>
+  <td>1.26</td>
+  <td>1.26</td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\nu^f$" title="$\nu^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAYAAACksgdhAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAmElEQVQoz5WQ0Q3CMAxE33WCzJARKkbICJUYgQ3KLJ2hI8AGqGzADGUD84GDDB8oiWTJTuy888nMaDmSRuAIJMysKYAFyEAaOigFGM3s2UO61LyHdK/14JezpP2ncZWUvTwAt8+jozOwBSkZeEQTotQqrwDXADoDJ0lZ0gJsX3r9pxUonk/A/NcUb9zDwNTg5HsfH0gt9r8AyQDF6cbu3kYAAAAASUVORK5CYII=" /></span>   [<span class="math"><img class="latex" alt="$10^{-3} \frac{\textrm{m}^2}{\textrm{s}}$" title="$10^{-3} \frac{\textrm{m}^2}{\textrm{s}}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAATCAYAAADrqO95AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABjElEQVRIx82W4W3CMBCFv0MMEBgh3QDoBA0bwAp0A6qOQDdghAo2KCOUbtBsUMgGr3/OlWURILSUnGTldImd53fvzjZJtNXMrAAyIJf0AtBpMdgBgKQ1MA7xblsBS/pw4DlQhnjnyizNzGxgZgtPb9P5OVAAT1cHbGYZMHSmvoDBBWBXLodVTD1eeJPgR7EcmAMTf2bpN6eGz10msQHw6ewVwDLyF8fWM1+w75N6kqpol1tJw4ixlaRxSLdXcGqboL+k2h8lTeO1gQdJVfKfH79O3GHXihl0FrYJM3tvMecyO4sytU/eb0/5h8YxDY+AXRLb+c/PsQ2wC+wC00SfmZkV7ueJX6v3Y23tULqrmvihzFXAOgIfvyuBuyjUq/EbAa5c2+kmqj/oIBcfr8ck8X4g1o+b+C8OBbt0dE6cNFnSV0tP582s60URRP5sZm+SguamZjZ3Vu/jwrnZHaPNt7WmRXeL21nfW2cRrpNNiu6/Lfd+PYraYasBl350l8Ci9ZIACjMbOeDXuo++Aa4dXcxAOxo+AAAAAElFTkSuQmCC" /></span>]</td>
+  <td>1.13</td>
+  <td>1.13</td>
+</tr>
+</table>
+</p>
+<!--
+\begin{table}[t]
+  \centerline{
+    \begin{tabular}{|l|r|r|}
+    \hline
+    parameter &
+    \begin{minipage}{22mm} polybutadiene \& glycerine\end{minipage} &
+    \begin{minipage}{22mm} polypropylene \& glycerine\end{minipage}\\ \hline
+    $\varrho^s$ [$10^3 \frac{\textrm{kg}}{\textrm{m}^3}$]
+      & $0.91$   &$1.1$\\
+    $\nu^s$
+      & $0.5$   &$0.42$\\
+    $\mu^s$ [$10^6 \frac{\textrm{kg}}{\textrm{ms}^2}$]
+      & $0.53$  &$317$\\ \hline
+    $\varrho^f$  [$10^3 \frac{\textrm{kg}}{\textrm{m}^3}$]
+      & $1.26$  &$1.26$ \\
+    $\nu^f$   [$10^{-3} \frac{\textrm{m}^2}{\textrm{s}}$]
+      & $1.13$ &$1.13$\\
+    \hline
+    \end{tabular}
+  }
+  \caption{Proposed material combination}
+  \label{tabExam}
+\end{table}
+-->
+
+
+<hr />
+
+<ul><li><a href="fsi_definitions.html">Definitions</a><ul><li class="selected"><a href="fsi_definitions.html">Definitions</a></li><li><a href="fsi_quantities.html">Quantities for Comparison</a></li><li><a href="fsi_tests.html">Partial computational Tests</a><ul><li><a href="fsi_tests/fsi_cfd_tests.html">CFD tests</a></li><li><a href="fsi_tests/fsi_csm_tests.html">CSM tests</a></li><li><a href="fsi_tests/fsi_fsi_tests.html">FSI tests</a></li></ul></li><li><a href="fsi_bibliography.html">Bibliography</a></li><li><a href="fsi_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

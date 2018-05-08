@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Naming conventions - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html" class="selected">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="tutorial_namingcon.html">Naming conventions</a>  </div>
+
+  <hr />
+
+  <h1>Naming conventions in the Feat2 package</h1>
+
+<p>The Feat2 package has been created using a set of strong naming convention rules that help the programmer to read and understand also unknown code. The following sections contain a brief overview about these rules. New programmers should deeply study these rules and follow them whereever possible.</p>
+
+<h3>Filename restrictions</h3>
+
+<ul>
+<li><p>The filename of a module file has to match the name of the module (plus an attached ".f90"). So a module "fsystem" implies a filename "fsystem.f90", a module "linearsystemblock" implies the filename "linearsystemblock.f90".</p></li>
+<li><p>Filenames and module names shall be &lt;= 31 characters long (this is a Fortran restriction).</p></li>
+</ul>
+
+<h3>Source code indention</h3>
+
+<p>Readibility is reatly enhanced by appropriate usage of text indention. The general rules are as follows:</p>
+
+<ul>
+<li>A new block is indented by two spaces.</li>
+<li>If a command is spanned over multiple lines, starting from the second line, there is an indention by four spaces.</li>
+<li>Definitions of input/output variables in subroutines/functions shall be in the same column as the definition of the subroutine/function.</li>
+<li>Internal variables of a subroutine are indented by two spaces, aligned with the code.</li>
+</ul>
+
+<p>Here an example of a module defintion:</p>
+
+<pre><code>module mymodule
+
+  use anothermodule1
+  use anothermodule2
+
+contains
+
+  subroutine sub1(a,b,c)
+
+  integer, intent(in) :: a
+  integer, intent(in) :: b
+  integer, intent(out) :: c
+
+    integer :: i
+    integer :: j
+
+    call somesubroutine ("Some text","more text", &amp;
+        "next line", "even more test", &amp;
+        a, b, c)
+
+    if (a .lt. b) then
+      c = 1
+    else
+      j = 1
+      do i=1,10
+        j = j + 1
+      end do
+      c = j
+    end if
+
+  end subroutine
+
+end module
+</code></pre>
+
+<h3>Naming conventions of variables and types</h3>
+
+<p>Variable names follow a specific scheme which allows the reader to derive the type of the variable from the first letter(s). The following rules apply here:</p>
+
+<ul>
+<li><p>All names should be self-descriptive.</p></li>
+<li><p>Standard (non-pointer, non-array, non-handles) variables start with a lowercase letter that defines the type. Structures are generally referred to by "r". The second letter is lowercase as well. Variable names containing multiple words shall use an uppercase letter for every new word ("CamelCase"). Instructive example:</p>
+
+<pre><code>imyNewVariable    - integer variable
+nmyNewVariable    - integer variable with the meaning of a maximum number
+cmyNewVariable    - integer variable with a fixed value set
+                    (e.g., values of constants)
+fmyNewVariable    - float type variable (REAL(SP))
+dmyNewVariable    - double precision variable (REAL(DP))
+qmyNewVariable    - quadrupel precision variable (REAL(QP))
+smyNewVariable    - string variable
+bmyNewVariable    - boolean variable
+rmyNewVariable    - An arbitrary structure.
+</code></pre></li>
+<li><p>If the variable is an array, the first letter is to be set upper case. The letter "C" is in this case reserved for character arrays. Instructive example:</p>
+
+<pre><code>ImyNewVariable    - array of integers
+FmyNewVariable    - array of single precision variables
+DmyNewVariable    - array of double precision variables
+QmyNewVariable    - array of quadruple precision variables
+SmyNewVariable    - array of string variable
+CmyNewVariable    - array of characters
+BmyNewVariable    - array of boolean variable
+RmyNewVariable    - array of a structure
+</code></pre></li>
+<li><p>If the variable is a handle identifying an array, a "h_" precedes the name. Instructive example:</p>
+
+<pre><code>h_ImyNewVariable  - handle to array of integers
+h_FmyNewVariable  - handle to array of single precision variables
+h_DmyNewVariable  - handle to array of double precision variables
+h_QmyNewVariable  - handle to array of quadrupel precision variables
+h_BmyNewVariable  - handle to array of boolean variable
+</code></pre></li>
+<li><p>If the variable is a pointer to an object, a "p_" precedes the qualifier. Instructive example:</p>
+
+<pre><code>p_imyNewVariable  - pointer to integer variable
+p_fmyNewVariable  - pointer to float type variable (REAL(SP))
+p_dmyNewVariable  - pointer to double precision variable (REAL(DP))
+p_qmyNewVariable  - pointer to quadrupel precision variable (REAL(QP))
+p_smyNewVariable  - pointer to string variable
+p_bmyNewVariable  - pointer to boolean variable
+p_rmyNewVariable  - Pointer to structure
+</code></pre>
+
+<pre><code>p_ImyNewVariable  - pointer to array of integers
+p_FmyNewVariable  - pointer to array of single precision variables
+p_DmyNewVariable  - pointer to array of double precision variables
+p_QmyNewVariable  - pointer to array of quadrupel precision variables
+p_BmyNewVariable  - pointer to array of boolean variable
+p_RmyNewVariable  - Pointer to array of structures
+</code></pre></li>
+<li><p>Structure are generally declared with a "t_" preceding the structure name. Example:</p>
+
+<pre><code>type t_timer
+  ...
+end type
+</code></pre></li>
+<li><p>Constants are written completely in uppercase letters. They shall start with an identifier (plus underscore) that refers to the module where the constant is defined. Instructive examples:</p>
+
+<pre><code>EL_Q1     - Defines the Q1 element. Constant from "element.f90".
+CUB_G2X2  - Refers to the 2x2 Gauss rule. Constant from "cubature.f90"
+</code></pre></li>
+</ul>
+
+<h3>Naming conventions for subroutines and functions</h3>
+
+<ul>
+<li><p>Subroutines and functions shall start with an identifier (plus underscore) that refers to the module where the constant is defined. The complete identifier has to be &lt;= 31 characters in length (by the Fortran standard). Instructive examples:</p>
+
+<pre><code>subroutine tria_readTriFile2D    - triangulation.f90
+subroutine tria_done             - triangulation.f90
+
+subroutine sys_halt              - fsystem.f90
+subroutine sys_upcase            - fsystem.f90
+
+subroutine lsyssc_createVector   - linearsystemscalar.f90
+subroutine lsyssc_scalarProduct  - linearsystemscalar.f90
+
+subroutine lsysbl_createVector   - linearsystemblock.f90
+subroutine lsysbl_scalarProduct  - linearsystemblock.f90
+</code></pre></li>
+</ul>
+
+<h3>Exceptions</h3>
+
+<ul>
+<li><p>Parts of names that are abbreviations in themselves can be capitalised even if they violate the above rules. They are not capitalised if they appear as a first component of a name. Example:</p>
+
+<pre><code>iid      - is ok.
+iID      - is wrong.
+dtimeCPU - is ok.
+dtimeCpu - is ok.
+</code></pre></li>
+<li><p>The rules shall hold for all <em>public</em> identifiers for modules. Internal identifiers (i.e., variables, constants, subroutines, functions) which are not public <em>should</em> follow these rules as well but may violate them for a good reason.</p></li>
+<li><p>Self explaining variables (like a small "i" or "j" identifying a running index for a <code>DO</code> loop, e.g.) are allowed to be used in subroutines/functions as long as they are non-public.</p></li>
+</ul>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

@@ -1,0 +1,572 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Boundary conditions - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html" class="selected">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="concepts_bdconditions.html">Boundary conditions</a>  </div>
+
+  <hr />
+
+  <h1>Boundary conditions</h1>
+
+<p>The topic of boundary conditions is one of the most complicated ones when dealing with partial differential equations. Usually, the choice of the boundary conditions depend on the type of the equation, and thus, the implementation is equation dependent. However, the implementation of boundary conditions is often very similar, and FEAT2 special technique for some of the most common boundary conditions.</p>
+
+<h2>Dirichlet boundary conditions</h2>
+
+<p>Dirichlet boundary conditions are the most commonly used type of boundary conditions. This type enforces a special value of a function on the boundary. One may think of, e.g., a condition like $$u_{|\partial\Omega}=0$$ for the boundary $\partial\Omega$ of a domain $\Omega$.</p>
+
+<p>There are basically two basic ideas how to implement such boundary conditions:</p>
+
+<ol>
+<li>Overwrite degrees of freedom with the desired value ("strong" implementation)</li>
+<li>Introduce penalty terms as boundary integrals ("weak" implementation)</li>
+</ol>
+
+<p>FEAT2 supports the "strong" implementation method (method 1) out-of-the-box. Dirichlet boundary conditions are always "discretised" into a boundary condition structure <code>t_discreteBC</code> (from the module <code>discretebc.f90</code>) which realises nothing else than collecting all degrees of freedom on the boundary together with their corresponding values. In a second step, the <code>t_discreteBC</code> structure is applied to matrices and vectors to modify their content.</p>
+
+<h3>A fundamental example</h3>
+
+<p>Let us at first give a very basic example to demonstrate the logic behind boundary conditions. We start with the 1D Poisson equation
+$$ -\partial_{xx} u = f \qquad\text{in $[0,1]$},$$ $$u(0)=u(1)=0$$ for an arbitrary right-hand side $f$. The equation is discretised with the $Q_1$ element on a mesh with two cells and three mesh points: $x_0=0$, $x_1=1/3$, $x_2=2/3$, $x_3=1$, see the following picture.</p>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/bdcond_simplefefct.svg" title="A 1D linear FE function on three cells" alt="A 1D linear FE function on three cells" />
+</center></p>
+
+<p>A discretisation with a linear finite element leads to the following (indefinite) linear system for the unknowns $u_0=u_h(x_0)$, $u_1=u_h(x_1)$, $u_2=u_h(x_2)$, $u_3=u_h(x_3)$:</p>
+
+<p>$$
+  \begin{pmatrix}
+   2 &amp; -1 &amp;    &amp;   &#92;&#92;
+  -1 &amp; 2  &amp; -1 &amp;   &#92;&#92;
+     &amp; -1 &amp; 2  &amp; -1 &#92;&#92;
+     &amp;   &amp; -1 &amp;  2 &#92;&#92;
+  \end{pmatrix}
+  \begin{pmatrix}
+   u_0 &#92;&#92;
+   u_1 &#92;&#92;
+   u_2 &#92;&#92;
+   u_3
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+   f_0 &#92;&#92;
+   f_1 &#92;&#92;
+   f_2 &#92;&#92;
+   f_3 &#92;&#92;
+  \end{pmatrix}
+$$</p>
+
+<p>In the following, we want to implement the Dirichlet boundary conditions</p>
+
+<p>$$ u_0 = 0,\ u_3 = 0.$$</p>
+
+<p><strong>The "strong" implementation</strong> of these conditions is done in two steps:</p>
+
+<ol>
+<li>Replace the rows 1 and 4 (corresponding to $x_0$ and $x_3$) by unit vectors.</li>
+<li>Replace the right-hand side values $f_0$ and $f_3$ by $u(x_0)=0$ and $u(x_3)=0$.</li>
+</ol>
+
+<p>One obtains the system</p>
+
+<p>$$
+  \begin{pmatrix}
+   1 &amp;    &amp;    &amp;   &#92;&#92;
+  -1 &amp; 2  &amp; -1 &amp;   &#92;&#92;
+     &amp; -1 &amp; 2  &amp; -1 &#92;&#92;
+     &amp;   &amp;    &amp;  1 &#92;&#92;
+  \end{pmatrix}
+  \begin{pmatrix}
+   u_0 &#92;&#92;
+   u_1 &#92;&#92;
+   u_2 &#92;&#92;
+   u_3
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+   0 &#92;&#92;
+   f_1 &#92;&#92;
+   f_2 &#92;&#92;
+   0
+  \end{pmatrix}.
+$$</p>
+
+<p>Solving this system leads to a finite element function $u_h$ which exactly fulfils the desired boundary conditions $u_h(x_0)=u_0=u(x_0)=0$ and $u_h(x_3)=u_3=u(x_3)=0$.</p>
+
+<p>An iterative solution algorithm then sets up a defect in the form $d:=b-Ax$, i.e.,</p>
+
+<p>$$
+  \begin{pmatrix}
+   d_0 &#92;&#92;
+   d_1 &#92;&#92;
+   d_2 &#92;&#92;
+   d_3
+  \end{pmatrix}
+  :=
+  \begin{pmatrix}
+   0 &#92;&#92;
+   f_1 &#92;&#92;
+   f_2 &#92;&#92;
+   0
+  \end{pmatrix}
+  -
+  \begin{pmatrix}
+   1 &amp;    &amp;    &amp;   &#92;&#92;
+  -1 &amp; 2  &amp; -1 &amp;   &#92;&#92;
+     &amp; -1 &amp; 2  &amp; -1 &#92;&#92;
+     &amp;   &amp;    &amp;  1 &#92;&#92;
+  \end{pmatrix}
+  \begin{pmatrix}
+   u_0 &#92;&#92;
+   u_1 &#92;&#92;
+   u_2 &#92;&#92;
+   u_3
+  \end{pmatrix}.
+$$</p>
+
+<p>Assuming that $u_0=f_0=u(x_0)$ and $u_3=f_3=u(x_3)$ are set in advance, there must necessarily hold $d_0=d_3=0$ for the defect vector $d=(d_0,d_1,d_2,d_3)$.</p>
+
+<h3>Strong implementation of Dirichlet boundary conditions</h3>
+
+<p>For the strong implementation of Dirichlet boundary conditions, the following modules are involved:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Module</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>discretebc.f90</td>
+  <td>Structure encapsuling boundary conditions</td>
+</tr>
+<tr>
+  <td>bcassemblybase.f90</td>
+  <td>Basic structures for the assembly of boundary conditions</td>
+</tr>
+<tr>
+  <td>bcassembly.f90</td>
+  <td>Assembly routines for boundary conditions</td>
+</tr>
+<tr>
+  <td>vectorfilters.f90</td>
+  <td>Implementation of assmebled boundary conditions into vectors</td>
+</tr>
+<tr>
+  <td>matrixfilters.f90</td>
+  <td>Implementation of assmebled boundary conditions into matrices</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>boundary.f90</td>
+  <td>Description of regions where boundary conditions are to be applied</td>
+</tr>
+<tr>
+  <td>meshregion.f90</td>
+  <td>Description of regions where boundary conditions are to be applied</td>
+</tr>
+</tbody>
+</table>
+
+<p>The core structure for the implementation of boundary conditions is <code>t_discreteBC</code> from <code>discretebc.f90</code>. Boundary conditions are always <em>assembled</em>, which means that the degrees of freedom in combination with the values to prescribe are collected and saved for being imposed to matrices vectors.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> In the above example, the structure <code>t_discreteBC</code> contains the following description:</p>
+  
+  <ol>
+  <li>For RHS vectors: Set $f_0:=u(x_0)=0$ and $f_3:=u(x_3)=0$.</li>
+  <li>For matrices: Replace row 1 and 4 by unit vectors.</li>
+  <li>For solution vectors: Set $u_0:=u(x_0)=0$ and $u_3:=u(x_3)=0$.</li>
+  <li>For defect vectors $d$: Set $d_0:=0$ and $d_3:=0$.</li>
+  </ol>
+</blockquote>
+
+<p>There are four steps necessary to work with Dirichlet boundary conditions:</p>
+
+<ol>
+<li>Creation of a structure of type <code>t_discreteBC</code>.</li>
+<li>Adding all regions where Dirichlet boundary conditions occur. This necessitates a callback function that provides the values on the boundary. For the description regions on the boundary, mesh regions or boundary regions can be utilised.</li>
+<li>Imposing the boundary conditions to the RHS vector, to the system matrix/matrices, probably to the solution vector and all defect vectors.</li>
+<li>Releasing the structure.</li>
+</ol>
+
+<p>The following commands are relevant:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Subroutine</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>bcasm_initDiscreteBC</strong>, <br><strong>bcasm_releaseDiscreteBC</strong></td>
+  <td>Initialises / Releases a boundary condition structure.</td>
+</tr>
+<tr>
+  <td><strong>bcasm_newDirichletBConMR</strong></td>
+  <td>Assemble Dirichlet boundary conditions. The desired part of the boundary is described by a mesh region <code>t_meshRegion</code>.</td>
+</tr>
+<tr>
+  <td><strong>bcasm_newDirichletBConRealBd</strong></td>
+  <td>Assemble Dirichlet boundary conditions. The desired part of the boundary is described by a boundary region <code>t_boundaryRegion</code>.</td>
+</tr>
+<tr>
+  <td><strong>vecfil_discreteBCrhs</strong></td>
+  <td>Impose the boundary conditions into a RHS vector.</td>
+</tr>
+<tr>
+  <td><strong>vecfil_discreteBCsol</strong></td>
+  <td>Impose the boundary conditions into a solution vector.</td>
+</tr>
+<tr>
+  <td><strong>vecfil_discreteBCdef</strong></td>
+  <td>Impose the boundary conditions into a defect vector.</td>
+</tr>
+<tr>
+  <td><strong>matfil_discreteBC</strong></td>
+  <td>Impose the boundary conditions into a matrix.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The assembly routines <code>bcasm_newDirichletBConMR</code> and <code>bcasm_newDirichletBConRealBd</code> are based on a block discretisation structure <code>t_blockDiscretisation</code> that describes the underlying tensor product space of the equation. Furthermore, these routines accept a parameter <code>iequation</code> which identifies the corresponding subspace where to assemble the boundary conditions for. For example, if a discretisation structure <code>rdiscr</code> describes a finite element space $X_h=V_h\times W_h$, the call</p>
+
+<pre><code>  call bcasm_newDirichletBConMR ( &amp;
+      rdiscr, 2, rdiscreteBC, rmeshRegion, fgetBdValues)
+</code></pre>
+
+<p>assembles boundary conditions for the second subspace, i.e., $W_h$ - corresponding to the 2nd subvector in the solution/RHS vectors and 2nd block row in the corresponding matrices.</p>
+
+<p><strong>Example: Strong implementation of Dirichlet-0 boundary conditions on the complete boundary using mesh regions.</strong> The following example demonstrates the above approach on a simple example:</p>
+
+<ul>
+<li>At first, we need a callback function that returns values on the boundary. Let us assume, we want to prescribe $u(x)=0$ for all degrees of freedom on the boundary. We create a proper callback function <code>fgetBdValues</code>.</li>
+<li>Second, we initialise a boundary condition structure and add the complete boundary as Dirichlet boundary to it via a mesh region.</li>
+<li>Third, we apply the discrete boundary conditions to the RHS, the matrix, the initial solution vector (speeds up the computation) and call the linear solver for solvong the system.</li>
+<li>Fourth, we release memory.</li>
+</ul>
+
+<p>The code reads as follows:</p>
+
+<pre><code>subroutine fgetBdValues (...,Dcoords,Dvalues,...)
+...
+  Dvalues(1) = 0.0_DP
+end subroutine
+
+  ...
+  type(t_blockDiscretisation) :: rdiscr
+  type(t_vectorBlock) :: rx, rrhs
+  type(t_matrixBlock) :: rmatrix
+  type(t_discreteBC) :: rdiscreteBC
+  type(t_meshRegion) :: rmeshRegion
+  ...
+
+  ! Initialise the BC structure
+  call bcasm_initDiscreteBC(rdiscreteBC)
+
+  ! Get a mesh region descibing the complete boundary
+  call mshreg_createFromNodalProp( &amp;
+      rmeshRegion, rtriangulation,MSHREG_IDX_ALL)
+
+  ! Assemble boundary conditions into rdiscreteBC.
+  call bcasm_newDirichletBConMR ( &amp;
+      rdiscr, 1, rdiscreteBC, rmeshRegion, fgetBdValues)
+
+  ! Destroy the mesh region
+  call mshreg_done(rmeshRegion)
+
+  ! Apply to the RHS and matrix
+  call vecfil_discreteBCrhs (rrhs,rdiscreteBC)
+  call matfil_discreteBC (rmatrix,rdiscreteBC)
+
+  ! Apply to the solution vector to have a proper initial solution
+  call vecfil_discreteBCsol (rx,rdiscreteBC)
+
+  ! Solve the system
+  ...
+
+  ! Release boundary conditions
+  call bcasm_releaseDiscreteBC (rdiscreteBC)
+</code></pre>
+
+<p>One recognizes the following parts of the code:</p>
+
+<ol>
+<li><p>The subroutine</p>
+
+<pre><code>subroutine fgetBdValues (...,Dcoords,Dvalues,...)
+...
+  Dvalues(1) = 0.0_DP
+end subroutine
+</code></pre>
+
+<p>is the callback function which returns Dirichlet boundary values. <code>Dcoords</code> contains the coordinates of the points where values are to be returned. The routine has to set <code>Dvalues(1)</code> to the value in the desired point on the boundary.</p></li>
+<li><p>The code</p>
+
+<pre><code>call bcasm_initDiscreteBC(rdiscreteBC)
+...
+call bcasm_releaseDiscreteBC (rdiscreteBC)
+</code></pre>
+
+<p>creates an empty structure <code>rdiscreteBC</code> and releases it after use.</p></li>
+<li><p>In the call</p>
+
+<pre><code>call mshreg_createFromNodalProp( &amp;
+    rmeshRegion, rtriangulation,MSHREG_IDX_ALL)
+...
+call mshreg_done(rmeshRegion)
+</code></pre>
+
+<p>a mesh region is created (and destroyed) which contains all vertices/edges/faces on the complete boundary.</p></li>
+<li><p>The actual assembly of the boundary conditions is done in</p>
+
+<pre><code>call bcasm_newDirichletBConMR ( &amp;
+    rdiscr, 1, rdiscreteBC, rmeshRegion, fgetBdValues)
+</code></pre>
+
+<p>This subroutine assembles the boundary conditions based on the mesh region <code>rmeshRegion</code> and calls the callback function <code>fgetBdValues</code> for returning the values in the points on the boundary. Note that the "1" in the above command refers to the first subspace of the finite element tensor space described by <code>rdiscr</code>.</p></li>
+<li><p>After the boundary conditions are assmbled, the code</p>
+
+<pre><code>call vecfil_discreteBCrhs (rrhs,rdiscreteBC)
+call matfil_discreteBC (rmatrix,rdiscreteBC)
+</code></pre>
+
+<p>imposes them into the RHS vector and into the matrix. The RHS vector is overwritten by the values of the solution in the points on the boundary, while the corresponding rows in the matrix are replaced by unit vectors.</p></li>
+<li><p>Finally, the underlying linear system is solved. This is done by</p>
+
+<pre><code>call vecfil_discreteBCsol (rx,rdiscreteBC)
+
+! Solve the system
+...
+</code></pre>
+
+<p>In a first step, <code>vecfil_discreteBCsol</code> is used to impose the Dirichlet boundary values into the solution vector. This step is optional (as the solution will anyway converge to it), but advised as the linear solver usually converges faster. Then, the actual system is solved.</p></li>
+</ol>
+
+<p><strong>Example: Inhomogeneous Dirichlet boundary conditions.</strong> For inhomogeneous boundary conditions, the callback routine <code>fgetBdValues</code> has to be adjusted properly. The following callback function for example imposes the Dirichlet boundary condition $u(x)=x_1 x_2$ for $x\in\partial\Omega$:</p>
+
+<pre><code>subroutine fgetBdValues (...,Dcoords,Dvalues,...)
+...
+  dx = Dcoords(1)
+  dy = Dcoords(2)
+  Dvalues(1) = dx*dy
+end subroutine
+</code></pre>
+
+<p><strong>Example: Dirichlet boundary conditions based on boundary regions.</strong> For equations in 2D which involve a description of the boundary via a t_boundary structure, there is an alternative way for describing regions on the boundary where Dirichlet boundary conditions should be imposed. THe user can set up an arbitrary boundary region <code>t_boundaryRegion</code> and apply the routine <code>bcasm_newDirichletBConRealBd</code>. The following code demonstrates this approach:</p>
+
+<pre><code>subroutine fgetBdValues (...,dwhere,Dvalues,...)
+...
+  real(DP) :: dx,dy
+
+  ! Get x/y-coordinates of the point
+  call boundary_getCoords(rdiscretisation%p_rboundary, &amp;
+      rboundaryRegion%iboundCompIdx, dwhere, dx, dy)
+
+  Dvalues(1) = ...   ! (use dwhere, dx, dy,...)
+
+end subroutine
+
+  ...
+  type(t_discreteBC) :: rdiscreteBC
+  type(t_boundaryRegion) :: rregion
+  ...
+
+  ! Initialise the BC structure
+  call bcasm_initDiscreteBC(rdiscreteBC)
+
+  ! Boundary conditions for 1st bd. component, 1st bd. segment.
+  call boundary_createRegion (rboundary, 1, 1, rregion)
+  call bcasm_newDirichletBConRealBd ( &amp;
+      rdiscr, 1, rregion, rdiscreteBC, fgetBdValues)
+
+  ! Boundary conditions for 1st bd. component, 2nd bd. segment.
+  call boundary_createRegion (rboundary, 1, 2, rregion)
+  call bcasm_newDirichletBConRealBd ( &amp;
+      rdiscr, 1, rregion, rdiscreteBC, fgetBdValues)
+  ...
+</code></pre>
+
+<p>In this example, <code>boundary_createRegion</code> from <code>boundary.f90</code> is invoked to create a boundary region for segment 1, 2, ... on the 1st boundary component of the the analytical boundary. In a second step, <code>bcasm_newDirichletBConRealBd</code> is called to assemble the boundary conditions on each boundary region.</p>
+
+<blockquote>
+  <p><strong>Remark:</strong> In contrast to mesh regions, the callback routine <code>fgetBdValues</code> can not directly access the x/y coordinates of the point where the boundary condition is to be imposed. Instead, the point is identified via a parameter value <code>dwhere</code> and a boundary component <code>rboundaryRegion%iboundCompIdx</code>. The parameter value <code>dwhere</code> is given in 0-1 parametrisation. If necessary, one can obtain the corresponding x/y coordinates via the routine <code>boundary_getCoords</code> as indicated in the above example.</p>
+</blockquote>
+
+<p><strong>Example: Parametrised boundary conditions.</strong> Similar to all callback-based routines, the callback routine <code>fgetBdValues</code> can be parametrised via a <code>t_collection</code> structure from <code>collection.f90</code>. For this purpose, the usual "collection strategy" of the FEAT2 package is used. The assembly routine accepts an optional parameter <code>rcollection</code> of type <code>t_collection</code> which is passed to the callback function:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Type of data</th>
+  <th>passed via</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Double precision data can be passed via</td>
+  <td><code>(t_collection)%DquickAccess(:)</code></td>
+</tr>
+<tr>
+  <td>Integers can be passed via</td>
+  <td><code>(t_collection)%IquickAccess(:)</code></td>
+</tr>
+<tr>
+  <td>Strings can be passed via</td>
+  <td><code>(t_collection)%SquickAccess(:)</code></td>
+</tr>
+<tr>
+  <td>Block vectors can be passed via</td>
+  <td><code>(t_collection)%p_rvectorQuickAccessX</code><br> with N=1,2,...</td>
+</tr>
+<tr>
+  <td>Parsers can be passed via</td>
+  <td><code>(t_collection)%p_rfparserQuickAccessN</code><br> with N=1,2,...</td>
+</tr>
+<tr>
+  <td>Parameter lists can be passed via</td>
+  <td><code>(t_collection)%p_rparlistQuickAccessN</code><br>with N=1,2,...</td>
+</tr>
+<tr>
+  <td>Complex parameters can be specified via</td>
+  <td>named items in the collection.</td>
+</tr>
+</tbody>
+</table>
+
+<p>etc. Using only the quick access arrays, the collection does not even have to be initialised.</p>
+
+<p>The following example demonstrates how to set up a parabolic heating on the 1st boundary segment, where themaximum temperature is specified in a variable <code>dmaxTemp</code>:</p>
+
+<pre><code>subroutine fgetBdValues (...,dwhere,Dvalues,rcollection)
+...
+  real(DP) :: dmaxTemp
+  integer :: iequation
+
+  ! Get the parameters
+  dmaxTemp = rcollection%DquickAccess(1)
+  iequation = rcollection%IquickAccess(1)
+
+  if (iequation .eq. 1) then
+    Dvalues(1) = mprim_getParabolicProfile (dwhere,1.0_DP,dmaxTemp)
+  ...
+end subroutine
+
+  ...
+  type(t_discreteBC) :: rdiscreteBC
+  type(t_boundaryRegion) :: rregion
+
+  real(DP) :: dmaxTemp
+  type(t_collection) :: rcollection
+  ...
+
+  ! Initialise the BC structure
+  call bcasm_initDiscreteBC(rdiscreteBC)
+
+  ! Prepare a collection structure, pass dmaxTemp
+  ! and the current equation
+  rcollection%IquickAccess(1) = 1
+  rcollection%DquickAccess(1) = dmaxTemp
+
+  ! Boundary conditions for 1st bd. component, 1st bd. segment.
+  call boundary_createRegion (rboundary, 1, 1, rregion)
+  call bcasm_newDirichletBConRealBd (rdiscr, rcollection%IquickAccess(1), &amp;
+      rregion, rdiscreteBC, fgetBdValues, rcollection)
+  ...
+</code></pre>
+
+<p>The parameters <code>dmaxTemp</code> as well as the number of the current equation are saved to <code>DquickAccess(1)</code> and <code>IquickAccess(1)</code> and passed via the collection to the callback routine. The callback routine can then extract the parameter from the collection. Passing the number of the current equation has been proven useful, so the callback routine can decide what is to be assembled.</p>
+
+<h2>Do-nothing (Neumann) boundary conditions</h2>
+
+<p>This type of boundary condition is the most simple one. One just does - nothing. A matrix and a right-hand side vector coming from the matrix/vector assembly already "prepared" for Neumann boundary conditions and do not have to be modified by any means to implement this. However, one has to note that pure do-nothing boundary conditions usually lead to an indefinite system, and thus, further modifications often have to be applied to the system to obtain a definite one.</p>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+// for correct syntax see http://docs.mathjax.org/en/latest/start.html
+// note that when editing this page these parenthesis need to be
+// escaped with 4 backslashes such that 2 of them end up on the
+// generated web page!
+MathJax.Hub.Config({
+tex2jax: {
+    inlineMath:  [ ['$','$'], ['\\(','\\)'] ]
+}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>FSI tests - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../../index.html">Home</a>
+  <a href="../../../../contact.html">Contact</a><a href="../../../../software.html">Software</a><div class="submenu"><a href="../../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../../software/featflow.html">FEATFLOW</a><a href="../../../../software/featflow2.html">FEATFLOW2</a><a href="../../../../software/parpp3d.html">parPP3D</a><a href="../../../../software/documentation.html">Documentation</a></div><a href="../../../../team.html">Team</a><a href="../../../../links.html">Links</a><div class="submenu"><a href="../../../../links/websites.html">Websites</a><a href="../../../../links/software_links.html">Software</a></div><a href="../../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../../flow.html">Flow around a Cylinder</a><a href="../../bubble.html">Rising Bubble</a><a href="../../fsi_benchmark.html" class="selected">FSI Benchmark</a><div class="submenu"><a href="../fsi_definitions.html">Definitions</a><a href="../fsi_quantities.html">Quantities for Comparison</a><a href="../fsi_tests.html" class="selected">Partial computational Tests</a><div class="submenu"><a href="fsi_cfd_tests.html">CFD tests</a><a href="fsi_csm_tests.html">CSM tests</a><a href="fsi_fsi_tests.html" class="selected">FSI tests</a></div><a href="../fsi_bibliography.html">Bibliography</a><a href="../fsi_reference.html">Reference Values</a></div><a href="../../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../../publications.html">Publications</a><a href="../../../../services.html">Services</a><div class="submenu"><a href="../../../../services/cdrom.html">CD-ROM</a><a href="../../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../../news.html">News</a><a href="../../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../../index.html">Home</a> » <a href="../../../../benchmarks.html">Benchmarks</a> » <a href="../../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../../fsi_benchmark.html">FSI Benchmark</a> » <a href="../fsi_tests.html">Partial computational Tests</a> » <a href="fsi_fsi_tests.html">FSI tests</a>  </div>
+
+  <hr />
+
+  <h2>FSI tests</h2>
+
+<p>The following FSI tests are performed for two different inflow
+speeds. FSI1 is resulting in a steady state solution, while the other
+two tests (FSI2, FSI3) result in periodic solutions and correspond to
+the final benchmark settings.</p>
+
+<div>
+<table class="Basic">
+<caption>Parameter settings for the full FSI benchmarks</caption>
+<thead>
+<tr>
+  <th>parameter</th>
+  <th>FSI1</th>
+  <th>FSI2</th>
+  <th>FSI3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\varrho^s$" title="$\varrho^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAMCAYAAAC0qUeeAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAo0lEQVQoz32Q0Q2DMBBD30UMwAyMULUTlG4AYoOs0Bk6UxkBukEZIWID96NXhKoESydFPseyzyRRgpk1QAssAIFjnIAbUANTOHCtgRW4+4dztVtGIAEX4AlMQOPrWdKIZ45A9HcNvCXxPz/xvBHfnFlxMLOtraMFxlyPyp3SjhuAa0n88oKdl+slraUrdbl8uamAwcxWz52OXM0L9TvuIWnJiT9B93N3DQM1JQAAAABJRU5ErkJggg==" /></span>
+  [<span class="math"><img class="latex" alt="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" title="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAATCAYAAAAao7T0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABnElEQVRIx8WW7W3CMBCGn0MdwGKEjJAyQtggXYFuEGbICMzQbgAbtLBBs0ELG7z9c65cKyRAiWrJyvl8H6/t+4hJYophZgVQSnq9WGcqMA5oL+nxUvnZHxytzKw0s9bMqjNiX9fYnN0IJACPkg7AJ1COyLc+g68bM6vMbOOHCgBIwp+qjnTCK4AGqP0bsv0a2OR6yf7W9VaZzY3TL5k8NbAC1ONsn9AB2PY4rHKjGZgQvwm/cb3yl3wioEyhTME47+gnq+NpfX08c6sfbqcG9kCRgNwAbQpoCMwqvwk3Xvlpa6dboDr3VD0gmwjA7fzc6sNA3IUe3skBn4BYP3ZXxv8OWJjZ3NdvcWMIzAmY9wA8jWSObsjOdiy133t4c6AbMizJLpnAM7AE1pE3GzB6SJ/Ka0EnqbtDZY62dg7oZ1QeVMqD0TMh1pk2ZsM9ph+0Sf1N2ptGmiiSOjPbSlqOBfCtjkrgxWMC4MnXAEtJa7+VhZl1XnP41Q7uOb3AhZ4qvh/Sm031FF6LmLxrXxAPwbtyARQZXf7Lz9W14xtK+RY8ir520AAAAABJRU5ErkJggg==" /></span>] </td><td> 1  </td><td> 10 </td><td> 1 </td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\nu^s$" title="$\nu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAJCAYAAAAGuM1UAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVQY04XPYQ3CUAxG0fOmYBLIJBAkbA7mAQdMFBKYBJAAFoaD8oO+ZCHLaNI0bb+2tyUi7FkppUOPFzT+2xEDWtybP9tbvDHl0KnJxqWUsvyIrzigS39ExCx/qIV1/qz52itSj3l1YMJ5C7MODLglypjb583HEmHJOGLcQlnhfvlT3O6JI8IHLl9l8TbtJ/8AAAAASUVORK5CYII=" /></span> </td><td> 0.4 </td><td> 0.4 </td><td> 0.4 </td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\mu^s$" title="$\mu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAMCAYAAAC5tzfZAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAn0lEQVQoz5WQUQ3DMAxEn6MBCIZCmAohYVAuwzAIwzAILYQUwkphZXD7caWoWtXU0ik+xyefbZI4CzPrgAQsAIG2uAMZiEAJDVMisAIPF/ah+nyaWar46AKAzjFLmpCE7zUDseLfLd8jVBaipNV5AqYjy5u9fVMGxjNRBj5VfQCKmQ3/RDd/e7e1Nb28thxNi34VWhF8n8KFCH7/9xXRD+u/XTeYMU8uAAAAAElFTkSuQmCC" /></span>
+  [<span class="math"><img class="latex" alt="$10^6 \frac{\textrm{kg}\nop}{\textrm{ms}^2}$" title="$10^6 \frac{\textrm{kg}\nop}{\textrm{ms}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAATCAYAAAATSBSOAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABzklEQVRIx8WW/U3zMBDGfxd1gKgjhA0CbJBu0MIGYYNUTIDKBrABb7tBYQIIGzQjoG7w8M9ZskIITUt4LVmxz3e55z5tk8SYw8wyIJe0GSw7NjgHWEs6Hyo3OUFhDmS+nUp67GH/OEbH5EhgKXAraREBPURu5cs7SXszq4B3YAHUwD9J+8CfRILzrnwxs8rM5v5N/ejKzwszK4HpAcAqYCdp6cAy4EzSc/B8DCyMOVACAlJJhAnU0ToFtr4ugYeIvovl2hPYBvlYB1ABhRfMF7lE0qYrX9qhcqsu3OK3Fv2nag3zAXhxGsDMQ3rdmRqRFWpZVQZPRbQdUERWB6/nfZ77xptVkHOvrts8fQWRdtD2gS7p/sQO8+yRCPn6OqRa9x2Jnjq9L4w6oT2t4n3Sw/vWQZsCTZ8CSXbsjHJwKcmSHiXvcWi9jTSSmpFukdz1bhwkEzMrgFApt2a29d4DsPD+1ACXbtUow50Rqrv5s7t14COhCDfFr4Pz8KyBm+B93wPMJC2dZ+p3biHp3oGt3WuppBlD+9OBPawOPbN1y9T+nTuQEsi++08yYg71tZzGHw0NsPr1J9MPeZN6oTVA1lrnQGFmF057+q+PzWPHJz3YyDpMXqmeAAAAAElFTkSuQmCC" /></span>] </td><td> 0.5 </td><td> 0.5 </td><td> 2.0 </td>
+</tr>
+<tr style="border-top: 2px solid black;">
+  <td><span class="math"><img class="latex" alt="$\varrho^f$" title="$\varrho^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAtUlEQVQoz42R4Q2CQAyFv5obgBkcgegEMgKEDWAWR2AW2cDoBjACYYPnnx45jco1adLrXV77vTNJ7IWZlUALFEjaTWAAjkBxyFSvgFLSmjvhFuvcCc94DslFByzA2RVHvzoB903BR3ZA53UBTCnw23refCQPSmByV4YoFDOYWQXMydoVMEqagf6TKbjikvRa4PLLhBAdMLPagRtJ6z/n6py/2BiA1sxW51j21M0hm6R3deCv8QIBfrSwSvr55QAAAABJRU5ErkJggg==" /></span>
+  [
+  <span class="math"><img class="latex" alt="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" title="$10^3 \frac{\textrm{kg}\nop}{\textrm{m}^3}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAATCAYAAAAao7T0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABnElEQVRIx8WW7W3CMBCGn0MdwGKEjJAyQtggXYFuEGbICMzQbgAbtLBBs0ELG7z9c65cKyRAiWrJyvl8H6/t+4hJYophZgVQSnq9WGcqMA5oL+nxUvnZHxytzKw0s9bMqjNiX9fYnN0IJACPkg7AJ1COyLc+g68bM6vMbOOHCgBIwp+qjnTCK4AGqP0bsv0a2OR6yf7W9VaZzY3TL5k8NbAC1ONsn9AB2PY4rHKjGZgQvwm/cb3yl3wioEyhTME47+gnq+NpfX08c6sfbqcG9kCRgNwAbQpoCMwqvwk3Xvlpa6dboDr3VD0gmwjA7fzc6sNA3IUe3skBn4BYP3ZXxv8OWJjZ3NdvcWMIzAmY9wA8jWSObsjOdiy133t4c6AbMizJLpnAM7AE1pE3GzB6SJ/Ka0EnqbtDZY62dg7oZ1QeVMqD0TMh1pk2ZsM9ph+0Sf1N2ptGmiiSOjPbSlqOBfCtjkrgxWMC4MnXAEtJa7+VhZl1XnP41Q7uOb3AhZ4qvh/Sm031FF6LmLxrXxAPwbtyARQZXf7Lz9W14xtK+RY8ir520AAAAABJRU5ErkJggg==" /></span>
+  ] </td><td> 1 </td><td> 1 </td><td> 1 </td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\nu^f$" title="$\nu^f$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAYAAACksgdhAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAmElEQVQoz5WQ0Q3CMAxE33WCzJARKkbICJUYgQ3KLJ2hI8AGqGzADGUD84GDDB8oiWTJTuy888nMaDmSRuAIJMysKYAFyEAaOigFGM3s2UO61LyHdK/14JezpP2ncZWUvTwAt8+jozOwBSkZeEQTotQqrwDXADoDJ0lZ0gJsX3r9pxUonk/A/NcUb9zDwNTg5HsfH0gt9r8AyQDF6cbu3kYAAAAASUVORK5CYII=" /></span>
+  [
+  <span class="math"><img class="latex" alt="$10^{-3} \frac{\textrm{m}^2}{\textrm{s}\nop}$" title="$10^{-3} \frac{\textrm{m}^2}{\textrm{s}\nop}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAATCAYAAADrqO95AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABjElEQVRIx82W4W3CMBCFv0MMEBgh3QDoBA0bwAp0A6qOQDdghAo2KCOUbtBsUMgGr3/OlWURILSUnGTldImd53fvzjZJtNXMrAAyIJf0AtBpMdgBgKQ1MA7xblsBS/pw4DlQhnjnyizNzGxgZgtPb9P5OVAAT1cHbGYZMHSmvoDBBWBXLodVTD1eeJPgR7EcmAMTf2bpN6eGz10msQHw6ewVwDLyF8fWM1+w75N6kqpol1tJw4ixlaRxSLdXcGqboL+k2h8lTeO1gQdJVfKfH79O3GHXihl0FrYJM3tvMecyO4sytU/eb0/5h8YxDY+AXRLb+c/PsQ2wC+wC00SfmZkV7ueJX6v3Y23tULqrmvihzFXAOgIfvyuBuyjUq/EbAa5c2+kmqj/oIBcfr8ck8X4g1o+b+C8OBbt0dE6cNFnSV0tP582s60URRP5sZm+SguamZjZ3Vu/jwrnZHaPNt7WmRXeL21nfW2cRrpNNiu6/Lfd+PYraYasBl350l8Ci9ZIACjMbOeDXuo++Aa4dXcxAOxo+AAAAAElFTkSuQmCC" /></span>
+  ] </td><td> 1 </td><td> 1 </td><td> 1 </td>
+</tr>
+<tr style="border-top: 2px solid black;">
+  <td><span class="math"><img class="latex" alt="$\bar{U}$" title="$\bar{U}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAnUlEQVQY04WQUQ0CMRBE356CBgknoUHCSbgEB0gAL1gAByCB4OBOAqmD4Wd7WUoTJmnazk6nO2uSqDCzIw0kXbZ6FP+Fi2dg8XWS1PJXIBMKCzDXe+C3x4P3moAReHQ+L/Uw+D4Bq6QSVWaWgWcrPgC3jute0qvnfO+IU28aAlITLANT5KrzCuxCr8mFX4FNEmY2AmcfXwHekn4yfAAZLmSPbZz5XgAAAABJRU5ErkJggg==" /></span>
+  [
+  <span class="math"><img class="latex" alt="$\frac{\textrm{m}\nop}{\textrm{s}}$" title="$\frac{\textrm{m}\nop}{\textrm{s}}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAOCAYAAAAWo42rAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAjElEQVQoz63R4QnCQAwF4O9KBxBH6AhHR+guzqIbOILoKo6gI6gbxB9e5VqQ9ocPkjx44SUhkHHDUOJY8X1EiAifxBWbkX/FijcKIuJlAV01usNzxnNESGXEIhJWda52bKzE/xvbycIpZWzxwBARh1+OHXbocZko44vK9bnUAedaa2eOQ0qpxx2nWngDxBtN67+aTpAAAAAASUVORK5CYII=" /></span>
+  ] </td><td> 0.2 </td><td> 1 </td><td> 2 </td>
+</tr>
+<tr>
+  <th>parameter</th>
+  <th>FSI1</th>
+  <th>FSI2</th>
+  <th>FSI3</th>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\beta=\frac{\varrho^s}{\varrho^f}$" title="$\beta=\frac{\varrho^s}{\varrho^f}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAYAAAD/Rn+7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABc0lEQVRIx82W4W3CQAyFv4cywIkRMkJEN2CE0hW6Aagj0A1ggwo2gBFaNoANQNng9UcvKFwTQVUgWLJyd7ES28/2O9nmkUTSMC5z2/MejycHoIhPeg+QsVxSiOsADIE1UAKoS4glTYEPYADsbK9Tm6ylBgLQBw62lzdy7hnY295IGkRYfzmI7aPG9Iba/qv+/poKLIAiXaeaZjDYLmsR7m6I8A4YSsqBle1Nk1GWQLuWNAaeIsyjBmgC8Hbm53vb72dstrbn56LIErhLSVXWXqtspjbA5Ep1uIjjZNaWwZP6S2pkmp5dqfb8F81iJAXwmfieN9XgfyG2rQvHz883YlTjSC3VPgcWt+rgMxnOgXHaxRugiB0VgL7tUUfzewJsJQXbZVZL/bILmotkUG/GEphXZ72W+rsXzQXgpXaDOZnF1WUhbxonN3buSHPxqKg5vWqlujs2wkU010R195KLaK7xNnMnuYjmOr2wSlpImsUmbZVvw/Yfhqp7mmsAAAAASUVORK5CYII=" /></span></td><td> 1 </td><td> 10 </td><td> 1</td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\nu^s$" title="$\nu^s$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAJCAYAAAAGuM1UAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVQY04XPYQ3CUAxG0fOmYBLIJBAkbA7mAQdMFBKYBJAAFoaD8oO+ZCHLaNI0bb+2tyUi7FkppUOPFzT+2xEDWtybP9tbvDHl0KnJxqWUsvyIrzigS39ExCx/qIV1/qz52itSj3l1YMJ5C7MODLglypjb583HEmHJOGLcQlnhfvlT3O6JI8IHLl9l8TbtJ/8AAAAASUVORK5CYII=" /></span></td><td> 0.4 </td><td> 0.4 </td><td> 0.4 </td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\textrm{Ae}=\frac{E^s}{\varrho^f \bar{U}^2}$" title="$\textrm{Ae}=\frac{E^s}{\varrho^f \bar{U}^2}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAAUCAYAAADV9o4UAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACAklEQVRYw92Y/a3aMBTFf7digIgRMkKqbhA2iMoGeRuAOkFFN4ANnmADGKF9G5AN+Njg9J/ryrXgpUk/nqkly8YxDueecz+MSeJ/amZW+7SUtLm3790DAqvMTGbWeG/N7JuZFb7lDFQ+3m2TByT1Chwk7cyslNSZ2VdJVwdfAwdg+qoBU6mbWQXMJS0zZbwF3gN74EnSbNRBkn7qbrFLup5Ld8Clz6t4HNJv+XgHHMysyVTqpaTOSXtxhU6HHjJJZe6HPQNPwC553gClG+cD8FnSNdlTAJ963nuS9GWgxH+cG5FSArNRck9lHs0vQVJBTsA++twAq1xdoq9PIouWQOVjkHwDBGbmSZ4EOP2F4PVPCotY6lUsPzPrgHUEHKCTdPhVSY6RuiQbabCQyuLf+tIrdaC9EUEvQf7uT8fkefNGkX0FLAZ+p3YFL0IKrz1FHOO0ALQO/BiM4ntXfkADFG8AuhwBuooI3Evi4YKSu98iNnpEUgBXANtUxW609b08nlOVVkY1eFyybtI06msHd9+rM7tJgncNLLO+pJjZypn7mGSS4gboGfCcrJ0T0Fvft71ZsmYi5zgItdF8dSugpiW2M1sMLVlzaHO/YQU2g4SXknZ3yuy0rL0Oup1lJPOTA5q+9odCdGM7Ryl61/uOTIG3fWB/t+Uc3LZmtvbb1x9v3wF82FzwWB44uQAAAABJRU5ErkJggg==" /></span></td><td> 3.5 × 10<sup>4</sup> </td><td> 1.4 × 10<sup>3</sup> </td><td> 1.4 × 10<sup>3</sup> </td>
+</tr>
+<tr style="border-top: 2px solid black;">
+  <td><span class="math"><img class="latex" alt="$\Re=\frac{\bar{U} d}{\nu^f}$" title="$\Re=\frac{\bar{U} d}{\nu^f}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAATCAYAAAA9DTUcAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABrklEQVRIx92X/W3bQAzFf8/wAAK6gbKB2m7gbiC0GygbuOgEgb2BMkLtDawV0g2qDfKxwesf5QXCOZEDA6nkEjhAxzvpSL5HHiXbzFEkFcBqoOpt/xp9Z67OnCML/iNZzJRijaRHSatEOUk7Sc0r+1tJzZyRubXdAdh+Ag62b0f2d0tJFXANNMAWuAc+AAXQnkq6d5IvwE2me8jQWAFl6D/Z7okCUAAGCttJV4WuTLp/NYDHbL7KbCsDqfTc2n49ZwaIVBMg02fzMqjGwKZDPNfATlKxHEnCGtjb3me6Mg77DNxkh6T74ccJY+9tb0fW2zgrBTbPlQ5ogmpXwBNwRLM6IG2BTQZ1laCNeZ3vmXrkyHQR6U7SnaT1IILfBon3HOF3KMtn3+LLsVIXVW6btRTdG9qQs2lmW290enP0nZFq1vxdfl4vgd8Z9eop6BS2rHP9IiKZbtYm5inp9pLWwFfbPXAtaSOpjgTtJrpQvw9YcNmNZlDsqJIuZmzwLpVnSWU4kKTIHbmErrkb0KodoHK4qP8ZSXe2P0anfLKKnirNUzpSAX3Q7OdLlHpJ/gCGYw55hzXjpAAAAABJRU5ErkJggg==" /></span></td><td> 20 </td><td> 100 </td><td> 200 </td>
+</tr>
+<tr>
+  <td><span class="math"><img class="latex" alt="$\bar{U}$" title="$\bar{U}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAnUlEQVQY04WQUQ0CMRBE356CBgknoUHCSbgEB0gAL1gAByCB4OBOAqmD4Wd7WUoTJmnazk6nO2uSqDCzIw0kXbZ6FP+Fi2dg8XWS1PJXIBMKCzDXe+C3x4P3moAReHQ+L/Uw+D4Bq6QSVWaWgWcrPgC3jute0qvnfO+IU28aAlITLANT5KrzCuxCr8mFX4FNEmY2AmcfXwHekn4yfAAZLmSPbZz5XgAAAABJRU5ErkJggg==" /></span></td><td> 0.2 </td><td> 1 </td><td> 2 </td>
+</tr>
+</tbody>
+</table>
+</p>
+
+<div class="Space10" style="overflow:auto;">
+<table class="Basic">
+<caption>Results for <b>FSI1</b></caption>
+<tbody><tr>
+<th> level </th><th>    nel </th><th>     ndof </th><th> ux(A) </th><th>     uy(A) </th><th>    drag </th><th>   lift
+</th></tr>
+<tr>
+<td> 2+0  </td><td>    992 </td><td>   19488 </td><td> 2.287080e-05 </td><td> 8.193038e-04 </td><td> 1.427359e+01 </td><td> 7.617550e-01
+</td></tr>
+<tr>
+<td> 3+0  </td><td>   3968 </td><td>   76672 </td><td> 2.277423e-05 </td><td> 8.204231e-04 </td><td> 1.429177e+01 </td><td> 7.630484e-01
+</td></tr>
+<tr>
+<td> 4+0  </td><td>  15872 </td><td>  304128 </td><td> 2.273175e-05 </td><td> 8.207084e-04 </td><td> 1.429484e+01 </td><td> 7.635608e-01
+</td></tr>
+<tr>
+<td> 5+0  </td><td>  63488 </td><td> 1211392 </td><td> 2.271553e-05 </td><td> 8.208126e-04 </td><td> 1.429486e+01 </td><td> 7.636992e-01
+</td></tr>
+<tr>
+<td> 6+0  </td><td> 253952 </td><td> 4835328 </td><td> 2.270838e-05 </td><td> 8.208548e-04 </td><td> 1.429451e+01 </td><td> 7.637359e-01
+</td></tr>
+<tr>
+<td> 7+0  </td><td> 1015808 </td><td> 19320832 </td><td> 2.270493e-05 </td><td> 8.208773e-04 </td><td> 1.429426e+01 </td><td> 7.637460e-01
+</td></tr>
+</tbody></table>
+<!-- old version
+<table class="Basic">
+<caption>Results for <b>FSI1</b></caption>
+<thead>
+<tr>
+  <td> level </td><td> nel </td><td> ndof</td><td> ux of A  × 10<sup>-3</sup> ] </td><td> uy of A  × 10<sup>-3</sup> ] </td><td> drag </td><td> lift </td>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td> 2+0 </td><td>    992 </td><td>    19488 </td><td> 0.022871 </td><td> 0.81930 </td><td> 14.27360 </td><td> 0.76178 </td>
+</tr>
+<tr>
+  <td> 3+0 </td><td>   3968 </td><td>    76672 </td><td> 0.022775 </td><td> 0.82043 </td><td> 14.29177 </td><td> 0.76305 </td>
+</tr>
+<tr>
+  <td> 4+0 </td><td>  15872 </td><td>   304128 </td><td> 0.022732 </td><td> 0.82071 </td><td> 14.29484 </td><td> 0.76356 </td>
+</tr>
+<tr>
+  <td> 5+0 </td><td>  63488 </td><td>  1211392 </td><td> 0.022716 </td><td> 0.82081 </td><td> 14.29486 </td><td> 0.76370 </td>
+</tr>
+<tr>
+  <td> 6+0 </td><td> 253952 </td><td>  4835328 </td><td> 0.022708 </td><td> 0.82086 </td><td> 14.29451 </td><td> 0.76374 </td>
+</tr>
+</tbody>
+</table>
+-->
+</div>
+
+<p>
+<center><b>FSI2</b>: x and y displacement of the point A</center>
+<img src="../../../../../media/fsi/fsi2b_ux_zoom.png" title="x and y displacement of A, ux zoom" alt="x and y displacement of A, ux zoom" /><br />
+<img src="../../../../../media/fsi/fsi2b_uy_zoom.png" title="x and y displacement of A, uy zoom" alt="x and y displacement of A, uy zoom" />)}}<br />
+<center><b>FSI2</b>: lift and drag force on the cylinder and flag</center>
+<img src="../../../../../media/fsi/fsi2b_lift_zoom.png" title="Lift on cylinder and flag" alt="Lift on cylinder and flag" /><br />
+<img src="../../../../../media/fsi/fsi2b_drag_zoom.png" title="Drag on cylinder and flag" alt="Drag on cylinder and flag" />
+</p>
+
+<div class="Space10" style="overflow:auto;">
+<table class="Basic">
+<caption>Results for <b>FSI2</b> with timestep Δ=0.02</caption>
+<tbody><tr>
+<td>  2+0  </td><td>   992 </td><td>  19488 </td><td> -1.402e-2 ± 1.203e-2 [3.85] </td><td> 1.25e-3 ± 7.93e-2 [1.93] </td><td> 2.1010e+2 ± 7.262e+1 [3.85] </td><td> 2.5e-1 ± 2.279e+2 [1.93]
+</td></tr>
+<tr>
+<td>  3+0  </td><td>  3968 </td><td>  76672 </td><td> -1.454e-2 ± 1.250e-2 [3.86] </td><td> 1.25e-3 ± 8.07e-2 [1.93] </td><td> 2.1306e+2 ± 7.576e+1 [3.86] </td><td> 8.5e-1 ± 2.344e+2 [1.93]
+</td></tr>
+<tr>
+<td>  4+0  </td><td> 15872 </td><td> 304128 </td><td> -1.487e-2 ± 1.273e-2 [3.86] </td><td> 1.24e-3 ± 8.17e-2 [1.93] </td><td> 2.1283e+2 ± 7.589e+1 [3.86] </td><td> 9.2e-1 ± 2.343e+2 [1.93]
+</td></tr>
+</tbody></table>
+
+<table class="Basic">
+<caption>Results for <b>FSI2</b> with timestep Δ=0.01</caption>
+<tbody><tr>
+<th> level </th><th>   nel </th><th>   ndof </th><th> ux(A) </th><th> uy(A) </th><th> drag </th><th> lift
+</th></tr>
+<tr>
+<td>  2+0  </td><td>   992 </td><td>  19488 </td><td> -1.401e-2 ± 1.204e-2 [3.86] </td><td> 1.25e-3 ± 7.93e-2 [1.93] </td><td> 2.1009e+2 ± 7.282e+1 [3.86] </td><td> 5.2e-1 ± 2.286e+2 [1.93]
+</td></tr>
+<tr>
+<td>  3+0  </td><td>  3968 </td><td>  76672 </td><td> -1.454e-2 ± 1.248e-2 [3.86] </td><td> 1.25e-3 ± 8.07e-2 [1.93] </td><td> 2.1306e+2 ± 7.576e+1 [3.86] </td><td> 8.5e-1 ± 2.344e+2 [1.93]
+</td></tr>
+<tr>
+<td>  4+0  </td><td> 15872 </td><td> 304128 </td><td> -1.487e-2 ± 1.273e-2 [3.86] </td><td> 1.24e-3 ± 8.17e-2 [1.93] </td><td> 2.1518e+2 ± 7.778e+1 [3.86] </td><td> 8.7e-1 ± 2.380e+2 [1.93]
+</td></tr>
+</tbody></table>
+
+<table class="Basic">
+<caption>Results for <b>FSI2</b> with timestep Δ=0.0005</caption>
+<tbody><tr>
+<td>  2+0  </td><td>   992 </td><td>  19488 </td><td> -1.401e-2 ± 1.204e-2 [3.86] </td><td> 1.28e-3 ± 7.92e-2 [1.93] </td><td> 2.1014e+2 ± 7.286e+1 [3.86] </td><td> 4.9e-1 ± 2.287e+2 [1.93]
+</td></tr>
+<tr>
+<td>  3+0  </td><td>  3968 </td><td>  76672 </td><td> -1.448e-2 ± 1.245e-2 [3.86] </td><td> 1.24e-3 ± 8.07e-2 [1.93] </td><td> 2.1305e+2 ± 7.574e+1 [3.86] </td><td> 8.4e-1 ± 2.348e+2 [1.93]
+</td></tr>
+<tr>
+<td>  4+0  </td><td> 15872 </td><td> 304128 </td><td> -1.485e-2 ± 1.270e-2 [3.86] </td><td> 1.30e-3 ± 8.16e-2 [1.93] </td><td> 2.1506e+2 ± 7.765e+1 [3.86] </td><td> 6.1e-1 ± 2.378e+2 [1.93]
+</td></tr>
+</tbody></table>
+
+<!-- old values
+<table class="Basic">
+<caption>Results for <b>FSI2</b> with timestep {{$latex->math('\Delta t=0.002, \Delta t=0.001')}}</caption>
+<thead>
+<tr>
+  <th> lev. </th><th> ux of A [ × 10<sup>-3</sup> ] </th><th> uy of A [ × 10<sup>-3</sup> ] </th><th> drag </th><th> lift </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td> 2 </td><td> -14.00 ± 12.03 [3.8] </td><td> 1.18 ± 78.7 [2.0] </td><td> 209.46 ± 72.30 [3.8] </td><td> -1.18 ± 269.6 [2.0] </td>
+</tr>
+<tr>
+  <td> 3 </td><td> -14.25 ± 12.03 [3.8] </td><td> 1.20 ± 79.2 [2.0] </td><td> 202.55 ± 67.02 [3.8] </td><td> 0.71 ± 227.1 [2.0] </td>
+</tr>
+<tr>
+  <td> 4 </td><td> -14.58 ± 12.37 [3.8] </td><td> 1.25 ± 80.7 [2.0] </td><td> 201.29 ± 67.61 [3.8] </td><td> 0.97 ± 233.2 [2.0] </td>
+</tr>
+<tr style="border-top: 2px solid black;">
+  <th> lev. </th><th> ux of A  [ × 10<sup>-3</sup>] </th><th> uy of A  [ × 10<sup>-3</sup> ] </th><th> drag </th><th> lift </th>
+</tr>
+<tr style="border-top: 2px solid black;">
+  <td> 2 </td><td> -14.15 ± 12.23 [3.7] </td><td> 1.18 ± 78.8 [1.9] </td><td> 210.36 ± 70.28 [3.7] </td><td> 0.80 ± 286.0 [1.9] </td>
+</tr>
+<tr>
+  <td> 3 </td><td> -13.97 ± 12.01 [3.8] </td><td> 1.25 ± 79.3 [2.0] </td><td> 203.54 ± 68.43 [3.8] </td><td> 0.41 ± 229.3 [2.0] </td>
+</tr>
+<tr>
+  <td> 4 </td><td> -14.58 ± 12.44 [3.8] </td><td> 1.23 ± 80.6 [2.0] </td><td> 208.83 ± 73.75 [3.8] </td><td> 0.88 ± 234.2 [2.0] </td>
+</tr>
+</tbody>
+</table>
+-->
+</div>
+
+<p>
+<center><b>FSI3</b>: x and y displacement of the point A</center>
+<img src="../../../../../media/fsi/fsi3b_ux_zoom.png" title="x and y displacement of A, ux zoom" alt="x and y displacement of A, ux zoom" /><br />
+<img src="../../../../../media/fsi/fsi3b_uy_zoom.png" title="x and y displacement of A, uy zoom" alt="x and y displacement of A, uy zoom" /><br />
+<center><b>FSI3</b>: lift and drag force on the cylinder and flag</center>
+<img src="../../../../../media/fsi/fsi3b_lift_zoom.png" title="Lift on the cylinder and flag" alt="Lift on the cylinder and flag" /><br />
+<img src="../../../../../media/fsi/fsi3b_drag_zoom.png" title="Drag on the cylinder and flag" alt="Drag on the cylinder and flag" />
+</p>
+
+<div class="Space10" style="overflow:auto;">
+<table class="Basic">
+<caption>Results for <b>FSI3</b> with timestep Δ=0.001</caption>
+<tbody><tr>
+<th> level </th><th>  nel </th><th>  ndof </th><th> ux(A) </th><th> uy(A) </th><th> drag </th><th> lift
+</th></tr>
+<tr>
+<td> 2+0  </td><td>  992 </td><td>  19488 </td><td> -3.02e-3 ± 2.83e-3 [10.75] </td><td> 1.41e-3 ± 3.547e-2 [5.37] </td><td> 4.582e+2 ± 2.832e+1 [10.75] </td><td> 2.41 ± 1.4558e+2 [5.37]
+</td></tr>
+<tr>
+<td> 3+0  </td><td>  3968 </td><td> 76672 </td><td> -2.78e-3 ± 2.62e-3 [10.93] </td><td> 1.44e-3 ± 3.436e-2 [5.46] </td><td> 4.591e+2 ± 2.663e+1 [10.93] </td><td> 2.41 ± 1.5126e+2 [5.46]
+</td></tr>
+<tr>
+<td> 4+0  </td><td> 15872 </td><td> 304128 </td><td> -2.86e-3 ± 2.70e-3 [10.95] </td><td> 1.45e-3 ± 3.493e-2 [5.47] </td><td> 4.602e+2 ± 2.765e+1 [10.95] </td><td> 2.47 ± 1.5487e+2 [5.47]
+</td></tr>
+</tbody></table>
+
+<table class="Basic">
+<caption>Results for <b>FSI3</b> with timestep Δ=0.0005</caption>
+<tbody><tr>
+<th> level </th><th>  nel </th><th>  ndof </th><th> ux(A) </th><th> uy(A) </th><th> drag </th><th> lift
+</th></tr>
+<tr>
+<td> 2+0  </td><td>  992 </td><td>  19488 </td><td> -3.02e-3 ± 2.85e-3 [10.75] </td><td> 1.42e-3 ± 3.563e-2 [5.37] </td><td> 4.587e+2 ± 2.878e+1 [10.75] </td><td> 2.23 ± 1.4602e+2 [5.37]
+</td></tr>
+<tr>
+<td> 3+0  </td><td>  3968 </td><td> 76672 </td><td> -2.78e-3 ± 2.62e-3 [10.92] </td><td> 1.44e-3 ± 3.435e-2 [5.46] </td><td> 4.591e+2 ± 2.662e+1 [10.92] </td><td> 2.39 ± 1.5068e+2 [5.46]
+</td></tr>
+<tr>
+<td> 4+0  </td><td> 15872 </td><td> 304128 </td><td> -2.86e-3 ± 2.70e-3 [10.92] </td><td> 1.45e-3 ± 3.490e-2 [5.46] </td><td> 4.602e+2 ± 2.747e+1 [10.92] </td><td> 2.37 ± 1.5375e+2 [5.46]
+</td></tr>
+</tbody></table>
+
+<table class="Basic">
+<caption>Results for <b>FSI3</b> with timestep Δ=0.00025</caption>
+<tbody><tr>
+<th> level </th><th>  nel </th><th>  ndof </th><th> ux(A) </th><th> uy(A) </th><th> drag </th><th> lift
+</th></tr>
+<tr>
+<td> 2+0  </td><td>  992 </td><td>  19488 </td><td> -3.02e-3 ± 2.85e-3 [10.74] </td><td> 1.32e-3 ± 3.573e-2 [5.36] </td><td> 4.587e+2 ± 2.880e+1 [10.74] </td><td> 2.23 ± 1.4600e+2 [5.33]
+</td></tr>
+<tr>
+<td> 3+0  </td><td>  3968 </td><td> 76672 </td><td> -2.77e-3 ± 2.61e-3 [10.93] </td><td> 1.43e-3 ± 3.443e-2 [5.46] </td><td> 4.591e+2 ± 2.650e+1 [10.93] </td><td> 2.36 ± 1.4991e+2 [5.46]
+</td></tr>
+<tr>
+<td> 4+0  </td><td> 15872 </td><td> 304128 </td><td> -2.88e-3 ± 2.72e-3 [10.93] </td><td> 1.47e-3 ± 3.499e-2 [5.46] </td><td> 4.605e+2 ± 2.774e+1 [10.93] </td><td> 2.50 ± 1.5391e+2 [5.46]
+</td></tr>
+</tbody></table>
+
+<!-- old values
+<table class="Basic">
+<caption>Results for <b>FSI3</b> with timestep <span class="math"><img class="latex" alt="$\Delta t=0.001, \Delta t=0.0005$" title="$\Delta t=0.001, \Delta t=0.0005$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJIAAAAMCAYAAACJF+S9AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACNElEQVRYw+2Y73EaQQzFf2Io4OJ0QDogTge4A5JUYKcDGFeQiTuAFqADSAXBdMB1YOY6ePkiMuvN/efMBx+auRlOEtLuu33S7pokYjGzBbCStKVAzGwEJJL2dCgedwqkwAhYSsqa+taJY2ZTSesWY3zX+FTYFsCDp9gD95L2SHr1AAkwBp5jW+S3AKZlPm2eMK+PZdPGt8I2dTDkH7vJ+PqAT5lt5rpXuA1yFvKNs+hoZtMSckyAbcdsG4fvzoJbZ0ht36o4ktaSli2H+a7xqZNDUhZXwWGcPCjFc2AFrHMG+N1fv5nZLizfZpYAjxWYvEh6ytHfAsdId/TymjbwHTWI0+hDnovPmRhdAp8q7D46gTLgDlhISodFs5C0N7PUzGbhhFx/6v/LnP9lDnIbSXJ0WYG+zLdJnFbSFp8zMboEPlU5FpJSJ8TRyfR5ELBkkrMxnAOPzqBQ7oAN3UsG3OQAkjX0bRKnbjXqCz6lOU6LyCUFxmaWDINSW8S6nZfhedT/5wWAn9PadsCPeE9S0I7KfI8N4tRZRJ3hcyZGl8Cn0OZt+7ekD6fKamb/wAB4KNn5j/10Mwp0h+D0k3R8KjlEJ4bnaCyjmr6FtkD/36nNc8S6XuFTZPPfs+j0u5GE+SbqUIOYa0lfg7uEDZC+wT3J2BmdAl+inrwC/pyYWuFbZps46L+AJwdjG+QgmGsf8amDXQZ8An5KyizvQrLv0vaiss8yuEJwletCeptq1PlFYh/kL24hNSxGQsZrAAAAAElFTkSuQmCC" /></span></caption>
+<thead>
+<tr>
+  <th> lev. </th><th> ux of A [ × 10<sup>-3</sup> ] </th><th> uy of A [ × 10<sup>-3</sup>] </th><th> drag </th><th> lift </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td> 2 </td><td> -3.02 ± 2.78 [10.6] </td><td> 0.99 ± 35.70 [5.3] </td><td> 444.6 ± 31.69 [10.6] </td><td> 9.48 ± 151.55 [5.3] </td>
+</tr>
+<tr>
+  <td> 3 </td><td> -3.02 ± 2.83 [10.6] </td><td> 1.43 ± 35.43 [5.3] </td><td> 457.1 ± 20.05 [10.6] </td><td> 1.23 ± 146.04 [5.3] </td>
+</tr>
+<tr>
+  <td> 4 </td><td> -2.85 ± 2.56 [10.9] </td><td> 1.53 ± 34.35 [5.3] </td><td> 459.8 ± 20.00 [10.9] </td><td> 1.51 ± 148.76 [5.3] </td>
+</tr>
+<tr style="border-top: 2px solid black">
+  <th> lev. </th><th> ux of A [ × 10<sup>-3</sup> ] </th><th> uy of A [ × 10<sup>-3</sup> ] </th><th> drag </th><th> lift </th>
+</tr>
+<tr style="border-top: 2px solid black">
+  <td> 2 </td><td> -3.00 ± 2.79 [10.7] </td><td> 1.19 ± 35.72 [5.3] </td><td> 445.0 ± 35.09 [10.7] </td><td> 8.26 ± 163.72 [5.3] </td>
+</tr>
+<tr>
+  <td> 3 </td><td> -2.86 ± 2.68 [10.7] </td><td> 1.45 ± 35.34 [5.3] </td><td> 455.7 ± 24.69 [10.7] </td><td> 1.42 ± 146.43 [5.3] </td>
+</tr>
+<tr>
+  <td> 4 </td><td> -2.69 ± 2.53 [10.9] </td><td> 1.48 ± 34.38 [5.3] </td><td> 457.3 ± 22.66 [10.9] </td><td> 2.22 ± 149.78 [5.3] </td>
+</tr>
+</tbody>
+</table>
+-->
+</div>
+
+<hr />
+
+<ul><li><a href="fsi_fsi_tests.html">FSI tests</a><ul><li><a href="../fsi_definitions.html">Definitions</a></li><li><a href="../fsi_quantities.html">Quantities for Comparison</a></li><li><a href="../fsi_tests.html">Partial computational Tests</a><ul><li><a href="fsi_cfd_tests.html">CFD tests</a></li><li><a href="fsi_csm_tests.html">CSM tests</a></li><li><a href="fsi_fsi_tests.html">FSI tests</a></li></ul></li><li><a href="../fsi_bibliography.html">Bibliography</a></li><li><a href="../fsi_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

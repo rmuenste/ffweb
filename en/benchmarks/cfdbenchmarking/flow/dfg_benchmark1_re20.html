@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>DFG benchmark 2D-1 (RE20, laminar) - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html">Software</a><div class="submenu"><a href="../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../software/featflow.html">FEATFLOW</a><a href="../../../software/featflow2.html">FEATFLOW2</a><a href="../../../software/parpp3d.html">parPP3D</a><a href="../../../software/documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../flow.html" class="selected">Flow around a Cylinder</a><div class="submenu"><a href="dfg_benchmark1_re20.html" class="selected">DFG benchmark 2D-1 (RE20, laminar)</a><a href="dfg_benchmark2_re100.html">DFG benchmark 2D-2 (RE100, periodic)</a><a href="dfg_benchmark3_re100.html">DFG benchmark 2D-3 (RE100, fixed time interval)</a><a href="dfg_flow3d.html">3D laminar case (Re=20 and Re=100)</a></div><a href="../bubble.html">Rising Bubble</a><a href="../fsi_benchmark.html">FSI Benchmark</a><a href="../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../benchmarks.html">Benchmarks</a> » <a href="../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../flow.html">Flow around a Cylinder</a> » <a href="dfg_benchmark1_re20.html">DFG benchmark 2D-1 (RE20, laminar)</a>  </div>
+
+  <hr />
+
+  <h1>DFG flow around cylinder benchmark 2D-1, laminar case (Re=20)</h1>
+
+<p>This benchmark simulates a fluid in a pipe with a circular obstacle. It is set up in 2D and simulated stationary.</p>
+
+<h2>Geometry and flow configuration</h2>
+
+<p>The underlying geometry is a pipe without a circular cylinder $\Omega=[0,2.2] \times [0,0.41] \setminus B_r(0.2,0.2)$ with $r=0.05$. Taking a fluid density of $\rho=1.0$, the fluid is characterised by the stationary Navier-Stokes equations</p>
+
+<p>$$ -\nu\Delta u + u\nabla u + \nabla p = 0,\qquad \text{\div }u = 0 $$</p>
+
+<p>with $u$ defining the velocity and $p$ the pressure. The kinematic viscosity is taken as</p>
+
+<p>$$ \nu = 0.001. $$</p>
+
+<p><center>
+<img src="../../../../media/dfg_bench1_2d/geometry.png" title="Underlying geometry" alt="Underlying geometry" />
+</center></p>
+
+<h3>Boundary conditions</h3>
+
+<p>For the lower and upper walls $\Gamma_1=[0,2.2]\times{0}$ and $\Gamma_1=[0,2.2]\times{0.41}$ as well as the boundary $S=\partial B_r(0.2,0.2)$, no-slip boundary conditions are defined,</p>
+
+<p>$$ u_{|\Gamma_1} = u_{|\Gamma_3} = u_{|S} = 0. $$</p>
+
+<p>On the left edge $\Gamma_4={0}\times[0,0.41]$, a parabolic inflow profile is prescribed,</p>
+
+<p>$$ u(0,y) = \left( \frac{4 U y (0.41-y)}{0.41^2} , 0 \right), $$</p>
+
+<p>with a maximum velocity $U=0.3$. On the right edge $\Gamma_4={2.2}\times[0,0.41]$, do-nothing boundary conditions define the outflow,</p>
+
+<p>$$ \nu \partial_\eta u - p \eta = 0 $$</p>
+
+<p>with $\eta$ denoting the outer normal vector.</p>
+
+<h3>Reynolds number</h3>
+
+<p>For a maximum velocity of $U=0.3$, the parabolic profile results in a mean velocity</p>
+
+<p>$$ U_\text{mean} = \frac{2}{3}\cdot 0.3 = 0.2. $$</p>
+
+<p>The characteristic length of the flow configuration is</p>
+
+<p>$$ L = 2\cdot 0.05 = 0.1 $$</p>
+
+<p>the diameter of the object perpendicular to the flow direction. This results in a Reynolds number</p>
+
+<p>$$ \text{Re} = \frac{U_\text{mean} L}{\nu} = \frac{0.2 \cdot 0.1}{0.001} = 20. $$</p>
+
+<p>For this Reynolds number, the flow turns into a stationary. This is visualised in the Figure below.</p>
+
+<p><center>
+<img src="../../../../media/dfg_bench1_2d/velocity.png" title="Velocity magnitude" alt="Velocity magnitude" />
+<br>
+Velocity magnitude
+</center></p>
+
+<p><center>
+<img src="../../../../media/dfg_bench1_2d/pressure.png" title="Pressure" alt="Pressure" />
+<br>
+Pressure
+</center></p>
+
+<p><center>
+<img src="../../../../media/dfg_bench1_2d/streamfunction.png" title="Streamfunction" alt="Streamfunction" />
+<br>
+Streamfunction
+</center></p>
+
+<h2>Important numerical quantities</h2>
+
+<p>For the numerical comparison of data, the forces around the circle are measured. These drag and lift forces are defined by</p>
+
+<p>$$ \begin{pmatrix} F_D  F_L \end{pmatrix} = \int_{S} \sigma \eta ds $$</p>
+
+<p>with $\eta$ denoting the outer normal vector of the circle. The stress tensor $\sigma$ in this formula is defined as</p>
+
+<p>$$ \sigma := \nu \nabla u  -  p I. $$</p>
+
+<p>A not so straightforward calculation which exploits $u_{|S}=0$ can be used to derive the following formulas for the drag and lift force, which can alternatively be used in 2D, see [3]:</p>
+
+<p>$$ F_D =   \int_S \left(\nu \frac{\partial u_{\tau}}{\partial_\eta} \eta_2 - p \eta_1 \right) ds,\quad
+   F_L = - \int_S \left(\nu \frac{\partial u_{\tau}}{\partial_\eta} \eta_1 - p \eta_2 \right) ds $$</p>
+
+<p>From the forces, one obtains the dimensionless drag and lift coefficients,</p>
+
+<p>$$ C_D = \frac{2}{U_\text{mean}^2 L} F_D,\qquad C_L = \frac{2}{U_\text{mean}^2 L} F_L. $$</p>
+
+<h2>Setup of the test and data measurement</h2>
+
+<p>To measure numerical data, one carries out a stationary numerical simulation</p>
+
+<p>The following numerical quantities are measured:</p>
+
+<ul>
+<li>The drag and lift coefficients $C_D$ and $C_L$.</li>
+<li>the pressure difference $p_\text{diff}:=p(a_1)-p(a_2)$ in the points $a_1=(0.15,0.2)$ and $a_2=(0.25,0.2)$ on the front and rear side of the cylinder.</li>
+</ul>
+
+<h2>Reference results</h2>
+
+<p>In [2], the results have been computed with high order spectral methods. The following values define the reference values for this test:</p>
+
+<ul>
+<li>Drag coefficient
+$$ C_D = 5.57953523384 $$</li>
+<li>Lift coefficient
+$$ C_L = 0.010618948146 $$</li>
+<li>Pressure difference
+$$ p_\text{diff} = 0.11752016697 $$</li>
+</ul>
+
+<h2>References</h2>
+
+<table>
+<thead>
+<tr>
+  <th>Id</th>
+  <th>Title</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>[1]</td>
+  <td>Turek, Schaefer; Benchmark computations of laminar flow around cylinder; in Flow Simulation with High-Performance Computers II, Notes on Numerical Fluid Mechanics 52, 547-566, Vieweg 1996</td>
+</tr>
+<tr>
+  <td>[2]</td>
+  <td>Nabh; On High Order Methods for the Stationary Incompressible Navier-Stokes Equations; University of Heidelberg; Preprint 42/98, 1998; <a href="http://numerik.iwr.uni-heidelberg.de/Paper/Preprint1998-14.pdf">Download</a></td>
+</tr>
+<tr>
+  <td>[3]</td>
+  <td>John; Higher order Finite element methods and multigrid solvers in a benchmark problem for the 3D Navier-Stokes equations, Int. J. Numer. Meth. Fluids 2002; 40: 775-798 (DOI: 10.1002/ d.377)</td>
+</tr>
+</tbody>
+</table>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['$','$'], ['\(','\)'] ]
+  }
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

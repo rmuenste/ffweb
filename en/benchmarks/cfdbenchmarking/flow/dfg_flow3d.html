@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>3D laminar case (Re=20 and Re=100) - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html">Software</a><div class="submenu"><a href="../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../software/featflow.html">FEATFLOW</a><a href="../../../software/featflow2.html">FEATFLOW2</a><a href="../../../software/parpp3d.html">parPP3D</a><a href="../../../software/documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../flow.html" class="selected">Flow around a Cylinder</a><div class="submenu"><a href="dfg_benchmark1_re20.html">DFG benchmark 2D-1 (RE20, laminar)</a><a href="dfg_benchmark2_re100.html">DFG benchmark 2D-2 (RE100, periodic)</a><a href="dfg_benchmark3_re100.html">DFG benchmark 2D-3 (RE100, fixed time interval)</a><a href="dfg_flow3d.html" class="selected">3D laminar case (Re=20 and Re=100)</a><div class="submenu"><a href="dfg_flow3d/dfg_flow3d_configuration.html">Benchmark configuration</a><a href="dfg_flow3d/dfg_flow3d_software.html">Used CFD Software Packages</a><a href="dfg_flow3d/dfg_flow3d_results.html">Results</a><a href="dfg_flow3d/dfg_flow3d_conclusion.html">Conclusions and Bibliography</a><a href="dfg_flow3d/dfg_flow3d_reference.html">Reference Values</a></div></div><a href="../bubble.html">Rising Bubble</a><a href="../fsi_benchmark.html">FSI Benchmark</a><a href="../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../benchmarks.html">Benchmarks</a> » <a href="../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../flow.html">Flow around a Cylinder</a> » <a href="dfg_flow3d.html">3D laminar case (Re=20 and Re=100)</a>  </div>
+
+  <hr />
+
+  <h2>Benchmark Computations of 3D Laminar Flow around a Cylinder</h2>
+
+<p class="center">by E. Bayraktar, O. Mierka and S. Turek</p>
+
+<h3>Abstract</h3>
+
+<p>Numerically challenging, comprehensive benchmark cases are of great importance for researchers in the field of CFD.
+Numerical benchmark cases offer researchers frameworks to quantitatively explore limits of the computational tools and to validate them.
+Therefore, we focus on simulation of numerically challenging benchmark tests, laminar and transient 3D flows around a cylinder, and aim to establish a new comprehensive benchmark case by doing direct numerical simulations with three distinct CFD software packages.
+Although the underlying benchmark problems have been defined firstly in 1996, the first case which was a steady simulation of flow around a cylinder at <span class="math">Re=20</span> could be accurately solved first in 2002 by John.
+Moreover, there is no precisely determined results for non-stationary case, the simulation of transient flow with time varying Reynolds number.
+The benchmark problems are studied with three CFD software packages, OpenFOAM, Ansys-CFX and <span style="font-variant: small-caps;">FeatFlow</span> which employ different numerical approaches to the discretization of the incompressible Navier-Stokes equations, namely finite volume method, element based finite volume method and finite element method respectively.
+The first benchmark test is considered as the "necessary condition" for the software tools, then they are compared according to their accuracy and performance in the second benchmark test.
+All the software tools successfully pass the first test and show well agreeing results for the second case such that the benchmark result was precisely determined. As a main result, the CFD software package with high order finite element approximation has been found to be computationally more efficient and accurate than the ones adopting low order space discretization methods.
+</p>
+
+<h3>Introduction</h3>
+
+<p>Despite all the developments in computer technology and in the field of numerics, the numerical solution of incompressible Navier-Stokes equations is still very challenging. Efficient and accurate simulation of incompressible flows is very important and prerequisite for the simulation of more complex applications, for instance, polymerization, crystallization or mixing phenomena. Numerous open-source or commercial CFD software packages are available to study these complex applications. Nonetheless, it is often observed that some of these software tools which produce colorful pictures as results of the simulations, fail in some benchmark tests subject to laminar flow around obstacles. Therefore, we are motivated to quantitatively compare performances of well known software packages by studying benchmark problems for laminar flow in 3D.</p>
+
+<p>A set of benchmark problems had been defined within a DFG High-Priority Research Program by <a href="dfg_flow3d/dfg_flow3d_conclusion.html#Turek1996">Schäfer and Turek</a> and these test cases have been studied by <a href="dfg_flow3d/dfg_flow3d_conclusion.html#Braack2006">many</a> <a href="dfg_flow3d/dfg_flow3d_conclusion.html#John2002">researchers</a>. 
+One of the most studied 3D cases from the mentioned study is the flow around a cylinder with Reynolds number being 20. 
+Although it is a low Reynolds number with steady solution problem and it had been formulated many years ago, the exact solutions could have been determined first by <a href="dfg_flow3d/dfg_flow3d_conclusion.html#John2002">John in 2002</a> and later by <a href="dfg_flow3d/dfg_flow3d_conclusion.html#Braack2006">Braak and Richter</a>. 
+Regarding existence of the very precise results for this benchmark test, we expect the employed software tools to accurately reproduce the results, which is considered as necessary condition for the software packages to continue with solving a second benchmark test for higher Reynolds numbers.</p>
+
+<p>The second benchmark problem is unsteady and corresponds to a time-varying Reynolds number. 
+There are not many studies on this benchmark test, one of the most recent studies is <a href="dfg_flow3d/dfg_flow3d_conclusion.html#John2006">from 2005 by John</a>. 
+However, in John's study the benchmark computation is performed to verify the developed methodology and software rather than improving the benchmark results, and his study is focused on the numerical approaches to the solution of incompressible Navier-Stokes equations. 
+In this study, we aim to establish a new comprehensive benchmark case by doing direct numerical simulations with three distinct CFD software packages.</p>
+
+<p>The benchmark problems are studied with the open-source software package OpenFOAM, the widely used commercial code ANSYS-CFX (CFX) and our in-house code <span style="font-variant: small-caps;">FeatFlow</span>.
+OpenFOAM (version 1.6) is a C++ library used primarily to crate executables, known as applications.
+The applications fall into two categories: solvers that are each designed to solve a specific problem in continuum mechanics; and utilities that are designed to perform tasks that involve data manipulation (see <a href="http://www.openfoam.com" target="_blank">OpenFOAM homepage</a>).
+From the available solvers, icoFoam which is designed to solve the incompressible Navier-Stokes equations with a Finite Volume approach, is employed.
+CFX (version 12.0 Service Pack 1) is a commercial general purpose fluid dynamics program that has been applied to solve wide-ranging fluid flow problems with the element based Finite Volume Method. 
+The transient solver of CFX is employed for the benchmark computations. 
+<span style="font-variant: small-caps;">FeatFlow</span> is an open source, multipurpose CFD software package which was firstly developed as a part of the FEAT project by Stefan Turek at the University of Heidelberg in beginning of the 1990s based on the Fortran77 finite element packages FEAT2D and FEAT3D (see <a href="../../../../index.html">FeatFlow homepage</a>). 
+<span style="font-variant: small-caps;">FeatFlow</span> is both a user oriented as well as general purpose subroutine system which uses the finite element method (FEM) to treat generalized unstructured quadrilateral (in 2-D) and hexahedral (in 3-D) meshes.</p>
+
+<p>Studying benchmark problem with these three different software packages which employ different numerical techniques also give an insight to answer of the following questions:</p>
+
+<ul>
+  <li>Can one construct an efficient solver for incompressible flow without employing multigrid components, at least for the pressure Poisson equation?</li>
+  <li>What is the "best" strategy for time stepping: fully coupled iteration or operator splitting (pressure correction scheme)?</li>
+  <li>Does it pay to use higher order discretization in space or time?</li>  
+</ul>
+
+<p>These questions are considered to be crucial in the construction of efficient and reliable solvers, particularly in 3D. 
+Every researcher who is involved in developing fast, accurate and efficient flow solvers should be interested. 
+The authors had put their honest effort to obtain the most accurate results with the most optimal settings for all the codes; nevertheless, this benchmark study is especially meant to motivate future works by other research groups and the presented results are opened to discussion.</p>
+
+<p>The paper continues with the benchmark configuration and the definition of comparison criteria. In Section 3, the software packages and the employed numerical approaches are described. The results are presented within the subsequent section and the paper is concluded with a discussion of the results.</p>
+
+<hr />
+
+<ul><li><a href="dfg_flow3d.html">3D laminar case (Re=20 and Re=100)</a><ul><li><a href="dfg_flow3d/dfg_flow3d_configuration.html">Benchmark configuration</a></li><li><a href="dfg_flow3d/dfg_flow3d_software.html">Used CFD Software Packages</a></li><li><a href="dfg_flow3d/dfg_flow3d_results.html">Results</a></li><li><a href="dfg_flow3d/dfg_flow3d_conclusion.html">Conclusions and Bibliography</a></li><li><a href="dfg_flow3d/dfg_flow3d_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

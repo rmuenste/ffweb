@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>FEATFLOW2 - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../media/css/featflow.css" />
+<script type="text/javascript" src="../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../index.html">Home</a>
+  <a href="../contact.html">Contact</a><a href="../software.html" class="selected">Software</a><div class="submenu"><a href="feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="featflow.html">FEATFLOW</a><a href="featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="featflow2/tutorial.html">Tutorial</a><a href="featflow2/featflow2_concepts.html">Concepts</a></div><a href="parpp3d.html">parPP3D</a><a href="documentation.html">Documentation</a></div><a href="../team.html">Team</a><a href="../links.html">Links</a><div class="submenu"><a href="../links/websites.html">Websites</a><a href="../links/software_links.html">Software</a></div><a href="../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../publications.html">Publications</a><a href="../services.html">Services</a><div class="submenu"><a href="../services/cdrom.html">CD-ROM</a><a href="../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../news.html">News</a><a href="../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../index.html">Home</a> » <a href="../software.html">Software</a> » <a href="featflow2.html">FEATFLOW2</a>  </div>
+
+  <hr />
+
+  <h2>The software package FEATFLOW2</h2>
+
+<p>The software package FEATFLOW2 is the successor of the original software package FEATFLOW. Based on the techniques and ideas of the original package, this finite element library exploits all possibilities of the Fortran 90 language to perform highly efficient finite element calculations, while still being flexible enough to be used for academic purposes.</p>
+
+<p>Some of the main highlights read as follows:</p>
+
+<ul>
+<li>Based on the Fortran 90/95 programming language standard. No more 6-letters variables and subroutine names.</li>
+<li>Fully documented source code.</li>
+<li>Automated build system based on shell and perl scripts. Auto tuning of the code to the current processor, compiler, etc., for most up-to-date computer systems like
+
+<ul>
+<li>Linux</li>
+<li>Sun Solaris</li>
+<li>Windows/Cygwin</li>
+<li>Mac OS X</li>
+</ul></li>
+<li>Simple extension of the makefile system to new processors and compiler settings.</li>
+<li>Multiple compiler configurations can be maintained simultaneously (e.g. precompiled libraries for debug and release mode).</li>
+<li>Preprocessor support.</li>
+<li>Support for Cygwin/Windows via GFortran</li>
+<li>Support for native Windows. Project files for Visual Studio + Intel Fortran.</li>
+<li>Basic support for OpenMP. </li>
+<li>Basic support for CUDA (in development).</li>
+<li>Support for ParaView output files for postprocessing.</li>
+<li>Support for h-adaptivity.</li>
+<li>Highly advanced numerical solver algorithms like geometrical multigrid.</li>
+<li>Highly advanced discretisation methods such as limiter-based stabilisation techniques for convection-dominated flows</li>
+</ul>
+
+<p>Example applications already realized with this code or in development:</p>
+
+<ul>
+<li>Standard examples (Poisson, heat equation, laminar Stokes, Navier-Stokes,...)</li>
+<li>Allen-Cahn equations (not in the package)</li>
+<li>Linear elasticity (not in the package)</li>
+<li>Particulate flow (not in the package)</li>
+<li>Shallow water (not in the package)</li>
+<li>Compressible (M)HD (not in the package)</li>
+<li>Optimal Control of the Poisson equation, heat equation, Navier-Stokes equations (not in the package)</li>
+</ul>
+
+<p>The package is under heavy development and is therefore labeled as BETA software. Any user who likes to download and test the software is welcome, but we remark that <em>we can only give very limited support for this project.</em></p>
+
+<h2>Prerequisites</h2>
+
+<p>The following prerequisites are necessary to download and compile the software:</p>
+
+<ul>
+<li>An SVN client (e.g., TortoiseSVN in Windows)</li>
+<li>A Fortran 90 compiler (e.g., gfortran, Intel Fortran compiler or similar)</li>
+<li>Linux, Unix, Mac OS X (with GCC + GFortran + wget + perl), Windows (with Cygwin and Fortran compiler + wget + make + perl) or Windows with Visual Studio and Intel Fortran compiler</li>
+<li>An internet connection</li>
+<li>500 MB disc space (depending on the configuration)</li>
+<li>ParaView for postprocessing of VTK files</li>
+</ul>
+
+<h2>Software repository</h2>
+
+<p>We decided to make the code accessible from the <a href="https://svn.mathematik.tu-dortmund.de:20443/svn/Featflow2">main SVN repository</a>. This way the latest features (as well as the latest bugs) are directly available.</p>
+
+<p>For a simple anonymous checkout, if you use Linux/Unix, enter the following command:</p>
+
+<pre><code>svn co --username=anonymous 
+   https://svn.mathematik.tu-dortmund.de:20443/svn/Featflow2
+</code></pre>
+
+<p>If you have a Featflow2 developer account, enter the following command:</p>
+
+<pre><code>svn co --username=$USER 
+   https://svn.mathematik.tu-dortmund.de:20443/svn/Featflow2
+</code></pre>
+
+<p>In Windows, you can use, e.g., TortoiseSVN to check out the code.</p>
+
+<p>Featflow developers cannot only checkout the code but also commit changes to the repository. Moreover, some features which are still under development are not available in the anonymous public version of FEATFLOW2.</p>
+
+<h2>Organization</h2>
+
+<p>The package is organized in the following directories:</p>
+
+<dl>
+<dt><code>applications</code></dt>
+<dd>Contains the main applications like a poisson example, a heat equation example, cc2d for laminar Stokes/Navier-Stokes in 2D and others.</dd>
+
+<dt><code>area51</code> (missing in anonymous version)</dt>
+<dd>Here you can put your own applications. Just copy one of the main examples from the applications/ folder to this folder and change as you like.</dd>
+
+<dt><code>benchmark</code> (missing in anonymous version)</dt>
+<dd>This directory contains a benchmark system we use for regression tests and for massive computations on cluster systems.</dd>
+
+<dt><code>bin</code></dt>
+<dd>Basic shell scripts and makefile system</dd>
+
+<dt><code>codefragments</code> (missing in anonymous version)</dt>
+<dd>This directory contains a collection of code fragments and examples how to use portions of the kernel. The code here is not automatically build and does not belong to any application or to the kernel, but is intended as a copy-and-paste source for user applications.</dd>
+
+<dt><code>docs</code></dt>
+<dd>Documentation system</dd>
+
+<dt><code>kernel</code></dt>
+<dd>The basic FEATFLOW2 kernel with all mathematical basics (finite element spaces, linear solvers, etc.)</dd>
+
+<dt><code>templates</code></dt>
+<dd>Template scripts for different architectures for the creation of makefiles.</dd>
+
+<dt><code>thirdparty</code></dt>
+<dd>Contains the basic libraries in a compressed form or download routines for these (as we are not allowed to distribute the source of all libraries with our package). The makefile system will automatically download these libraries via an existing Internet connection in Linux/Unix, Mac OS X, and Windows.</dd>
+
+<dt><code>tools</code></dt>
+<dd>Auxiliary programs (e.g., creation of EPS files from meshes)</dd>
+
+<dt><code>tutorials</code></dt>
+<dd>A set of tutorials, in correspondence to this Website</dd>
+
+<dt><code>userapps</code> (missing in anonymous version)</dt>
+<dd>This directory contains several experimental applications
+in development by the FeatFlow2 users. Once development is finished, these applications will be moved to the main application directory.</dd>
+</dl>
+
+<h2>The makefile system in Linux/Unix and Mac OS X</h2>
+
+<p>As an example application, we show here how to compile the poisson example under a Linux/gcc/gfortran based system. Proceed as follows:</p>
+
+<p>1.) Switch to applications/poisson</p>
+
+<pre><code>cd applications/poisson
+</code></pre>
+
+<p>2.) Create a makefile script via a configure command. This will look at your system, detect your CPU and your compiler settings:</p>
+
+<pre><code>./configure
+</code></pre>
+
+<p>Note: This is not the usual "configure" command which is provided by many Linux software packages. We wrote this configure on our own. It is a specialized shell/perl script and creates you a makefile "GNUmakefile".</p>
+
+<p>3.) Compile the application</p>
+
+<pre><code>make
+</code></pre>
+
+<p>Note: During the first build, the makefile system will automatically download some basic libraries from the internet, untar/unzip the libraries and compile them (e.g., AMD, UMFPACK, LAPACK).</p>
+
+<p>4.) Run the application</p>
+
+<pre><code>./poisson
+</code></pre>
+
+<p>5.) Start paraview and open one of the VTK files in the gmv/ subdirectory. These files were produced by the application and represent the solution of a poisson equation on the unit square.</p>
+
+<p>You can configure the makefile system in various ways. This can be done by passing appropriate parameters to the ./configure command. Here some examples:</p>
+
+<ul>
+<li><p><code>./configure --help</code></p>
+
+<p>Print all parameters.</p></li>
+<li><p><code>./configure --no-opt --debug</code></p>
+
+<p>Configures the makefile to not use optimization and to generate debug symbols.</p></li>
+<li><p><code>./configure --list-ids</code></p>
+
+<p>Print all configuration IDs which are valid vor this system. Every ID stands for one compiler setting.</p></li>
+<li><p><code>./configure --id=...</code></p>
+
+<p>Configure the makefile to use a special compiler setting. The ID "..." can be one of the IDs you got with the "--list-ids" parameter.</p>
+
+<p>For example, <code>--list-ids</code> may output you</p>
+
+<pre><code>Valid build IDs (for pc64-opteron6100-linux hosts) match
+against the following regular expressions:
+
+...
+(pc|pc64)-.*-.*-g95-.*
+(pc|pc64)-.*-.*-gcc-.*
+(pc|pc64)-.*-.*-intel-.*
+...
+
+Use any of these build IDs as argument for the --id 
+option. The current build ID for nightwish is:
+
+  pc64-opteron6100-linux-gcc-blas
+</code></pre>
+
+<p>Then you can enforce the use of the intel compiler by forcing the build ID which stands for the Intel compiler by replacing "gcc" by "intel":</p>
+
+<pre><code>./configure --id=pc64-opteron6100-linux-intel-blas
+</code></pre></li>
+</ul>
+
+<p>Note that you can have multiple IDs precompiled simultaneously. You can switch between two IDs by using <code>./configure --id=...</code> followed by a <code>make</code>.</p>
+
+<p>If you want to cross-compile for a specific build ID which does not fit to the host where the compilation is done you need to specify the "--force-id" flag:</p>
+
+<pre><code>    ./configure --id=pc64-opteron6100-linux-intel-blas --force-id
+</code></pre>
+
+<p>Furthermore, the make process itself can be influenced by various
+parameters, e.g.,</p>
+
+<ul>
+<li><p><code>make help</code></p>
+
+<p>Print all parameters.</p></li>
+<li><p><code>make clean</code></p>
+
+<p>Delete all object files and force a complete rebuild with the next "make" for the current build id.</p>
+
+<p>VERY VERY HELPFUL, TO BE DONE AT FIRST IF YOUR COMPILER DOES NOT WANT TO COMPILE THE CODE AFTER AN UPDATE!!!</p></li>
+<li><p><code>make id</code></p>
+
+<p>Show the current compiler settings</p></li>
+<li><p><code>make purge</code></p>
+
+<p>Delete all object files for all IDs. That way, you do a complete tabula-rasa...</p></li>
+</ul>
+
+<h2>Customizing the makefiles</h2>
+
+<p>If you want to customize the makefiles to a system which is not yet supported, you have to modify the compiler files as follows:</p>
+
+<ul>
+<li><p>If you have a completely new CPU, modify <code>bin/guess_id</code> which detects the CPU to generate a basic build ID. You may easily find out if this is the case by invoking the command</p>
+
+<pre><code>./bin/guess_id
+</code></pre>
+
+<p>in the Featflow2 main directory. If this command returns a generic string such as</p>
+
+<pre><code>pc64-x86-linux
+</code></pre>
+
+<p>then you CPU is not yet detected correctly by the <code>guess_id</code> script.</p></li>
+<li><p>Once you added a new CPU you may have to adjust the actual compiler settings to use optimisation flags taylored to the new CPU. Some compilers (GCC version 4.2 or better, Intel compiler suite 11.0 or better) support automatic tuning for the host, where the compilation is done. In this case it suffices to enable this feature:</p>
+
+<pre><code>./configure --id=pc64-opteron6100-linux-intel-blas --opt=NATIVE
+</code></pre>
+
+<p>If you need to cross-compile or your compiler does not support automatic tuning then you have to define appropriate compiler settings manually.
+In the <code>templates/</code> directory you find several template makefiles which belong to one of the following categories:</p>
+
+<dl>
+<dt><code>ARCH_CPU-xxx.mk</code></dt>
+<dd>Architecture and CPU specific settings (you only need to modify these files if you port FEATFLOW2 to a completely new architecture such as the POWER-architecture by IBM)</dd>
+
+<dt><code>BLAS-xxx.mk</code></dt>
+<dd>Settings for BLAS library to be used (you only need to modify these files if your system has a BLAS implementation which is not yet supported by FEATFLOW2)</dd>
+
+<dt><code>COMP-xxx.mk</code></dt>
+<dd>Generic compiler settings such as arguments passed to the linker (you only need to modify these files if your system has a compiler suite which is not yet supported by FEATFLOW2 such as the NAG compiler suite; another situation in which you may have to modify these files is if you added a new architecture and need to specify generic compiler settings for this particular architecture)</dd>
+
+<dt><code>OS-xxx.mk</code></dt>
+<dd>Operating system specific settings (you only need to modify these files if you port FEATFLOW2 to a completely new operating system such as BSD-type OSes)</dd>
+
+<dt><code>CFLAGSOPT-xxx-yyy.mk</code></dt>
+<dd>
+<p>These files contain a list of manually defined optimisation flags for various combinations of architectures and compiler suites. Each block defines optimisation flags to be used for architecture <code>xxx</code> and compiler suite <code>yyy</code>:</p>
+
+<pre><code># CPUs based on AMD Family 10h cores with x86-64 instruction set
+# support. (This supersets MMX, SSE, SSE2, SSE3, SSE4A, 3DNow!,
+# enhanced 3DNow!, ABM and 64-bit instruction set extensions.)
+ifeq ($(call match,$(ID),(pc|pc64)-(opteron4100|opteron6100)-.*-intel-.*),yes)
+ifeq ($(call intelminversion,11,1),yes)
+CFLAGSOPTF77  := -xSSE3
+CFLAGSOPTF90  := -xSSE3
+CFLAGSOPTC    := -xSSE3
+CFLAGSOPTCXX  := -xSSE3
+LDFLAGSOPT    := -xSSE3
+else
+CFLAGSOPTF77  := -xT
+CFLAGSOPTF90  := -xT
+CFLAGSOPTC    := -xT
+CFLAGSOPTCXX  := -xT
+LDFLAGSOPT    := -xT
+endif
+endif
+</code></pre>
+
+<p>The above example illustrates that is is even possible to use different settings depending on the actual compiler version which is necessary in case the command line options have changed over time or some optimization flags are not available in older compiler versions.</p>
+
+<p>To add support for a new CPU create a new block of this type based on the existing templates and adjust it to your needs.</p>
+</dd>
+</dl></li>
+</ul>
+
+<h2>Compiling applications with CYGWIN in Windows</h2>
+
+<p>Compiling applications using the CYGWIN environment is basically the same as using a Unix/Linux system, see above. However, one has to take care that a couple of additional tools are installed using the SETUP of CYGWIN. The following tools have to be installed:</p>
+
+<ul>
+<li>Devel / GCC4-GFORTRAN</li>
+<li>Devel / GCC4-G++</li>
+<li>Devel / MAKE</li>
+<li>Interpreters / Perl</li>
+<li>Web / WGET</li>
+</ul>
+
+<p>and all their dependencies (which are detected automatically by the CYGWIN setup).</p>
+
+<h2>Compiling applications in native Windows</h2>
+
+<p>With the appropriate tools, Featflow 2 can be compiled natively in a Windows environment. However, there is a bit preparation necessary, as some libraries have to be compiled in advance. The process is done automatically as far as possible.</p>
+
+<p>The following tools are necessary:</p>
+
+<ul>
+<li>Visual Studio 2010 or higher</li>
+<li>Intel Fortran Compiler 12 or higher</li>
+</ul>
+
+<p>For downloading of the SVN repository, a SVN implementation is needed, e.g. TortoiseSVN. After the checkout has been completed, the following scripts have to be executed manually (e.g. with a double-click):</p>
+
+<dl>
+<dt><code>thirdparty/getlibs_win.cmd</code></dt>
+<dd>Downloads external libraries from the internet and extracts the sourcefiles on the local hard disc.</dd>
+
+<dt><code>thirdparty/buildlibs_win32.cmd</code> and/or <code>buildlibs_win64.cmd</code></dt>
+<dd>Invokes the Visual Studio compiler and pre-compiles all libraries as well as the Featflow-2 kernel. Compiler detection and compilation should be done automatically and will take a while.</dd>
+</dl>
+
+<p><code>buildlibs_win32.cmd</code> compiles the libraries using a 32 bit compiler, while <code>buildlibs_win64.cmd</code> applies a 64 bit compiler for the compilation. You should compile the version which you plan to use later.</p>
+
+<p>Afterwards, one can find appropriate <code>.sln</code> project files in every project directory, which can be opened with Visual Studio. For example, there is a file <code>applications/poisson/poisson.sln</code> which defines the complete project settings for the Poisson equation. Open the <code>.sln</code> file of your choice. Afterwards, you have the choice between four targets: <strong>Debug</strong>/<strong>Release</strong> in 32 or 64 bit mode. Choose a target which fits to the libraries compiled in the previous step, then you can compile and run the project.</p>
+
+<p><strong>Remark</strong>: Currently, there are still some project files in the directory <code>winXXXX</code> of every application. These directories contain project files for Visual Studio 2003 and are deprecated. They will be removed in future.</p>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Geometry and flow configurations - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../../index.html">Home</a>
+  <a href="../../../../contact.html">Contact</a><a href="../../../../software.html">Software</a><div class="submenu"><a href="../../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../../software/featflow.html">FEATFLOW</a><a href="../../../../software/featflow2.html">FEATFLOW2</a><a href="../../../../software/parpp3d.html">parPP3D</a><a href="../../../../software/documentation.html">Documentation</a></div><a href="../../../../team.html">Team</a><a href="../../../../links.html">Links</a><div class="submenu"><a href="../../../../links/websites.html">Websites</a><a href="../../../../links/software_links.html">Software</a></div><a href="../../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../../flow.html">Flow around a Cylinder</a><a href="../../bubble.html" class="selected">Rising Bubble</a><div class="submenu"><a href="../bubble2D.html">Rising Bubble 2D</a><a href="../bubble3D.html" class="selected">Rising Bubble 3D</a><div class="submenu"><a href="bubble_configurations.html" class="selected">Geometry and flow configurations</a><a href="bubble_verification.html">Verification</a><a href="bubble_participate.html">Participate</a><a href="bubble_reference.html">Reference data</a></div></div><a href="../../fsi_benchmark.html">FSI Benchmark</a><a href="../../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../../publications.html">Publications</a><a href="../../../../services.html">Services</a><div class="submenu"><a href="../../../../services/cdrom.html">CD-ROM</a><a href="../../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../../news.html">News</a><a href="../../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../../index.html">Home</a> » <a href="../../../../benchmarks.html">Benchmarks</a> » <a href="../../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../../bubble.html">Rising Bubble</a> » <a href="../bubble2D.html">Rising Bubble 2D</a> » <a href="bubble_configurations.html">Geometry and flow configurations</a>  
+     </div>
+
+  <hr />
+
+  <h2>Bubble Benchmark</h2>
+
+<ul class="List">
+<li><a href="../bubble2D.html">Rising Bubble</a></li>
+<li class="Selected"><a href="bubble_configurations.html">Geometry and flow configurations</a></li>
+<li><a href="bubble_verification.html">Verification</a></li>
+<li><a href="bubble_participate.html">Participate</a></li>
+<li><a href="bubble_reference.html">Reference data</a></li>
+</ul>
+<hr />
+
+<h2><a name="SECTION00012000000000000000"> Geometry and flow configurations:</a></h2>
+<p>The initial configuration, see the figure below, is identical for both test cases and consists of a circular bubble of radius <span class="math"><i>r<sub>0</sub> = 0.25</i></span> centered at <span class="math"><i>(x,y) = (0.5, 0.5)</i></span> in a 1 by 2 rectangular domain. The density of the bubble is smaller than that of the surrounding fluid (<span class="math"><i>ρ<sub>2</sub><ρ<sub>1</sub></i></span>). The no-slip boundary condition (<span class="math"><b>u</b> = 0</span>) is used at the top and bottom  boundaries, whereas the free slip condition  (<span class="math"><img class="latex" alt="$\mathbf u\cdot\hat{\mathbf{n}}=0$" title="$\mathbf u\cdot\hat{\mathbf{n}}=0$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAKBAMAAADm5As7AAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMARN0iu4lmVDIQq5l2781qAaG6AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAgUlEQVQY02NgQIAJDDgB+0YkDvPxk8hyFoxIGvkYpuA0pI+B14BB6DPLVzBP9seplwwMnKFAcICBIYWBSYCB7TMDRI7tG+cfhL4jDHwFUDlXoNwPqCIwyEPos2SAMmBmgu1j/8wBNfMzsj4mhnlAhauP/S0Au+zX7E8CcDmO48EMAIEXKPKZLza5AAAAAElFTkSuQmCC" /></span>, <span class="math"><img class="latex" alt="$\hat{\boldsymbol\tau}\cdot  (\nabla \mathbf{u} + (\nabla \mathbf{u})^T)\cdot \hat{\mathbf{n}}=0$" title="$\hat{\boldsymbol\tau}\cdot  (\nabla \mathbf{u} + (\nabla \mathbf{u})^T)\cdot \hat{\mathbf{n}}=0$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJcAAAAOBAMAAADQ2JPBAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMAEFSZRCIy76vdZs12u4m0LhjtAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABdUlEQVQ4y4VSv0vDQBh9SdpqL60EXASRxNXJQdwKxUHr1sk5OHSp/4OD/4G4udTZH9S5ILE4iCB0dMyio1vjD8T63V1yuTPaPkhe8u6+9315FyBHGX9AFz0sXRxfEf0PtRZVOoS2uaqLZwhqkU30u1LB3sgeQv90MBism6u6uADUQ0FmpfiC4S3d90ppg3k4I4CpdkFBZCGqkgRUJYeLFX2IA1gJUFPvcUEsx2hJKqKLuTbsw8lEdroDGjyX3XH9W5mZYt9+4un1xf6d5P4asF4JEXCJahOtrZNt6b0J+CEisDFyM1OULimxT+srn+wRLuXCeLj1WNQ5I9uTddTwhjc0RM2MClgim0qc88ngRjwGivKFZk4oHWMyU8zNypl/9pkiM/jN1HuNrsYqnfi4kpuZ4kjulJQ1lahimeeYna9Dl08O1tHDW5CZGWKpJzam1H1f/Ggqs8rwWT9cXse0PycoiI6n01RY0Sxx36Dp6MwSewYV8QOMNYElQZPDAgAAAABJRU5ErkJggg==" /></span>, <span class="math"><img class="latex" alt="$\hat{\boldsymbol\tau}$" title="$\hat{\boldsymbol\tau}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAKBAMAAACUK2mNAAAAKlBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmU0mKAAAADXRSTlMAEFSZRCIy76vdZs12rOu3ZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAADFJREFUCNdjYGAQYAACJhMQGcYC5oAFau/eTWDwcJriBuRwGYCEuA+ASFkHEOkOVAgAsZcGZ3uAR/AAAAAASUVORK5CYII=" /></span> - the tangent vector) is imposed on the vertical walls.</p>
+
+<h5>Initial configuration and boundary conditions for the test cases</h5>
+<div class="Gallery">
+<ul>
+<li><a title="" onclick="return showPic(this, 'placeholder1', 'desc1')" href="../../../../../media/bubble3D/geometry3D.png">Initial configuration and boundary conditions for the test cases</a></li>
+</ul>
+<div class="picture"><img id="placeholder1" src="../../../../../media/bubble3D/geometry3D.png" alt="" />
+<p class="caption"><a id="desc1" href="../../../../../media/bubble3D/geometry3D.png">Initial configuration and boundary conditions for the test cases</a></p>
+</div>
+</div>
+
+<p>The table below lists the fluid and physical parameters which specify the test cases. The evolution of the bubbles should be tracked for 3 time units during which the defined benchmark quantities should be measured. The first test case models a rising bubble with Reynolds number <span class="math">Re=35</span>, Eötvös number <span class="math">Eo=10</span>, and both density and viscosity ratios equal to 10. The second and more challenging test case models a rising bubble with <span class="math">Re=35</span>, <span class="math">Eo=125</span>, and with large density and viscosity ratios (1000 and 100).</p>
+<div>
+<div><a name="157"></a> 
+<h5>Physical parameters and dimensionless numbers defining the test cases.</h5>
+<table class="Basic">
+<thead>
+<tr>
+<th> Test Case </td>
+<th> <span class="math"><i>ρ<sub>1</sub></i></span> </th>
+<th> <span class="math"><i>ρ<sub>2</sub></i></span> </th>
+<th> <span class="math"><i>μ<sub>1</sub></i></span> </th>
+<th> <span class="math"><i>μ<sub>2</sub></i></span> </th>
+<th> <span class="math"><i>g</i></span> </th>
+<th> <span class="math"><i>σ</i></span> </th>
+<th> <span class="math"><i>Re</i></span> </th>
+<th> <span class="math"><i>Eo</i></span> </th>
+<th> <span class="math"><i>ρ<sub>1</sub>/ρ<sub>2</sub></i></span> </th>
+<th> <span class="math"><i>μ<sub>1</sub>/μ<sub>2</sub></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"> 1 </td>
+<td align="right">1000</td>
+<td align="right">100</td>
+<td align="right"> 10</td>
+<td align="right"> 1</td>
+<td align="right"> 0.98</td>
+<td align="right"> 24.5</td>
+<td align="right"> 35</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right"> 10 </td>
+</tr>
+<tr>
+<td align="center"> 2 </td>
+<td align="right">1000</td>
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="right"> 0.1</td>
+<td align="right">0.98</td>
+<td align="right"> 1.96</td>
+<td align="right"> 35</td>
+<td align="right">125</td>
+<td align="right">1000</td>
+<td align="right">100</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<p class="Space20">Continue reading:
+<ul class="List">
+<li><a href="bubble_verification.html">Verification</a></li>
+</ul>
+</p></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

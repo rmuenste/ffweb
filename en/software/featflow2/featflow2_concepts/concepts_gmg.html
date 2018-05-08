@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Geometric Multigrid - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html" class="selected">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="concepts_gmg.html">Geometric Multigrid</a>  </div>
+
+  <hr />
+
+  <h1>The geometric multigrid solver</h1>
+
+<p>Multigrid is a very special solver which differs slightly in setting up a corresponding solver tree. A multigrid solver does not rely on just one linear system on one mesh. Instead, it exploits a sequence of linear systems created by a sequence of refined meshes.</p>
+
+<dl>
+<dt>Problem hierarchy</dt>
+<dd>Let $\Omega\subset\mathbb{R}^d$ be a domain and $\Omega_1$, $\Omega_2$, ..., $\Omega_N$ be a sequence of meshes approximating $\Omega$. $\Omega_1$ is the coarsest mesh and $\Omega_N$ the finest one. For every level $l=1,...,N$, there is a mesh size $h_l$ associated, with $h=h^L$ being the mesh size of the finest mesh on level $L$. 
+Assuming regular reginement, one has $h_l:=2^{L-l} h$.</dd>
+
+<dd>
+<p>This sequence of meshes generates a sequence of finite element spaces $X_1$, ..., $X_L$, with $X_L=X_h$ denoting the finite element space of the underlying PDE on the finest mesh. Discretisation of the underlying PDE leads to a sequence of linear problems on all meshes,
+$$A^l x^l = b^l \qquad\text{on level $l=1,...,L$}.$$
+With $A=A^L$, $x=x^L$ and $b=b^L$, the underlying aim is to compute a solution of the linear system
+$$A x = b\qquad\text{on level $L$}.$$</p>
+</dd>
+</dl>
+
+<p>The following figure demonstrates such a problem hierarchy. A sequence of meshes implies a sequence of FE spaces which lead to a sequence of problems.</p>
+
+<p><img src="../../../../media/featflow2/tutorial_graphics/problemhierarchy_gmg.svg" title="Problem hierarchy" alt="Problem hierarchy" /></p>
+
+<dl>
+<dt>Minimum requirements</dt>
+<dd>
+<p>The minimum requirements, a multigrid solver needs for doing its work, can be summarised as follows:</p>
+
+<ol>
+<li><p>A set of matrices $A^1$, ..., $A^L$ for all levels.</p></li>
+<li><p>A "coarse grid" solver on level 1, i.e., any linear solver which is robust and able to efficiently solve a linear system on level $l=1$. This can be, e.g., an iterative solver or a Gauss elimination.</p></li>
+<li><p>On every level $l>1$ a "smoother". This is typically an iterative solver which performs a fixed number of iterations to "partially" solve a linear system on level $l$.</p></li>
+<li><p>The right-hand side vector $b=b_L$ on the maximum level. In fact, right-hand side vectors $b^l$ on level $l &lt; L$ are not used.</p></li>
+</ol>
+</dd>
+
+<dt>Additional components</dt>
+<dd>
+<p>In addition to the above minimum requirements, the multigrid solver allows the specification of additional components:</p>
+
+<ul>
+<li><p>A prolongation operator $P:X_{l-1}\to X_l$, $l=2,...,L$, for interpolating a solution from a coarser to a finer level.</p></li>
+<li><p>A restriction operator $R:X_l^&#42;\to X_{l-1}^&#42;$, $l=2,...,L$, for shifting right-hand side vectors to coarser levels; $X_l^*$ denotes here the space of right-hand side vectors which can usually be associated to $X_l$ via the degrees of freedom.</p></li>
+<li><p>A filter chain on every level that implements boundary conditions into defect vectors.</p></li>
+<li><p>A damping strategy which automatically adjusts the damping of the coarse grid correction</p></li>
+</ul>
+</dd>
+
+<dd>
+<p>For nonlinear problems which apply a linear solver for intermediate problems, one usually needs</p>
+
+<ul>
+<li>an additional interpolation operator $I:X_l\to X_{l-1}$ that interpolates a solution down to a lower level.</li>
+</ul>
+</dd>
+</dl>
+
+<h2>Basic setup</h2>
+
+<p>The following code demonstrates how to set up a basic solver tree for a geometric multigrid solver.</p>
+
+<pre><code>type(t_linsolNode), pointer :: p_rsolver, p_rsmoother
+type(t_linsolMG2LevelInfo), pointer :: p_rlevel
+type(t_matrixBlock), dimension(:), pointer :: Rmatrices
+integer :: i,NLMAX
+
+...
+
+! Create multigrid
+call linsol_initMultigrid2 (p_rsolver,NLMAX)
+
+! Create a coarse grid solver on level 1
+call linsol_getMultigrid2Level (p_rsolver,1,p_rlevel)
+call linsol_initUMFPACK4 (p_rlevel%p_rcoarseGridSolver)
+
+! Create smoothers on all levels l&gt;1
+do i = 2,NLMAX
+
+  ! Create a Jacobi smoother, 4 smoothing steps, damping 0.7
+  call linsol_initJacobi(p_rsmoother)
+  call linsol_convertToSmoother(p_rsmoother, 4, 0.7_DP)
+
+  ! Use for pre- and postsmoothing
+  call linsol_getMultigrid2Level (p_rsolver,i,p_rlevel)
+  p_rlevelInfo%p_rpresmoother =&gt; p_rsmoother
+  p_rlevelInfo%p_rpostsmoother =&gt; p_rsmoother
+
+end do
+...
+
+! Prepare system matrices
+allocate(Rmatrices(NLMAX))
+do i=1,NLMAX
+  ... (set up matrix on level l)
+end do
+
+! Tell the solver about our matrices
+call linsol_setMatrices(p_rsolver,Rmatrices)
+
+... (solve the system)
+</code></pre>
+
+<p>The code performs as follows:</p>
+
+<ol>
+<li><p>In the beginning, a solver node for <code>NLMAX</code> levels is created.</p></li>
+<li><p>On level $l=1$, an UMFPACK coarse grid solver is created.</p></li>
+<li><p>On level $l>1$, a simple Jacobi(0.7) smoother is created. This is installed as presmoother and postsmoother.</p></li>
+<li><p>An array of NLMAX matrices is allocated. On every level, a system matrix is created. The array of system matrices on all levels is finally passed to the solver.</p></li>
+</ol>
+
+<p>Some remarks to the above code:</p>
+
+<ul>
+<li><p>The access to the different levels of the multigrid solver is done via the routine <code>linsol_getMultigrid2Level</code> which returns a pointer to a "level structure". During the initialisation, the different parameters in this structure has to be defined in a loop over all levels. On the coarsest mesh, a coarse grid solver has to be installed, while on finer meshes smoothers have to be defined.</p></li>
+<li><p>Multigrid allows to define a "presmoother" (smoothing before a correction by coarse grid data) and a "postsmoother" (smoothing after the correction by coarse grid data). At least one of them should be defined on every level $l>1$, otherwise, the multigrid iteration will not converge.</p></li>
+<li><p>The command <code>linsol_initJacobi</code> creates a Jacobi preconditioner. An additional defect correction loop (which would be necessary to use Jacobi as solver) is optional; multigrid automatically applies an internal defect correction if it is not specified.</p></li>
+<li><p>The command <code>linsol_convertToSmoother</code> "converts" a solver node <code>p_rsmoother</code> into a smoother. This is basically done by fixing the minimum and maximum number of iterations in the solver to the defined value, here 4. Furthermore, it allows the specification of an additional damping parameter, which is here set to 0.7.</p></li>
+</ul>
+
+<h2>Boundary condition filters</h2>
+
+<p>For problems with boundary conditions, it is advisable to install on every level a <em>boundary condition defect filter</em> that filters defect vectors for boundary conditions. The problem is that prolongation/restriction operators usually destroy any boundary condition imposed to any vector. Boundary condition filters are usually applied directly after a restriction and a prolongation to ensure that boundary conditions are fulfilled.</p>
+
+<p>For this purpose, a <em>filter chain</em> has to be installed on every level which applies the corresponding boundary conditions (see also the section about filtering). A filter chain consists of an array of <code>t_filterChain</code> structures, each representing a filter to be applied to (defect) vectors. The following code demonstrates the use of such filter chains, which have to be set up (similar to matrices) on all levels.</p>
+
+<pre><code>type(t_linsolNode), pointer :: p_rsolver, p_rsmoother
+type(t_linsolMG2LevelInfo), pointer :: p_rlevel
+type(t_matrixBlock), dimension(:), pointer :: Rmatrices
+integer :: i,NLMAX
+
+integer :: nfilters
+type(t_filterChain), dimension(:,:), target :: RfilterChains
+type(t_discreteBC), target :: RdiscreteBC
+
+...
+! Prepare boundary conditions on all levels
+do i=1,NLMAX
+   call bcasm_initDiscreteBC(RdiscreteBC(i))
+
+   ... initialise RdiscreteBC(i) with boundary conditions
+end do
+...
+
+! Allocate memory for the filter chains
+allocate (RfilterChains(1,NLMAX))
+
+do i=1,NLMAX
+  ! Set up a filter chain for boundary conditions on this level
+  call filter_clearFilterChain (RfilterChains(:,i),nfilters)
+  call filter_newFilterDiscBCDef (RfilterChains(:,i),nfilters,RdiscreteBC(i))
+end do
+
+! Create multigrid
+call linsol_initMultigrid2 (p_rsolver,NLMAX)
+
+! Create a coarse grid solver on level 1.
+call linsol_getMultigrid2Level (p_rsolver,1,p_rlevel)
+call linsol_initBiCGStab (&amp;
+    p_rlevel%p_rcoarseGridSolver,Rfilter=RfilterChains(:,1))
+
+! Pass the filter chain.
+p_rlevel%p_RfilterChain =&gt; RfilterChains(:,1)
+
+! Create smoothers on all levels l&gt;1
+do i = 2,NLMAX
+
+  ! Create a Jacobi smoother, 4 smoothing steps, damping 0.7
+  call linsol_initJacobi(p_rsmoother)
+  call linsol_convertToSmoother(p_rsmoother, 4, 0.7_DP)
+
+  ! Use for pre- and postsmoothing
+  call linsol_getMultigrid2Level (p_rsolver,i,p_rlevel)
+  p_rlevelInfo%p_rpresmoother =&gt; p_rsmoother
+  p_rlevelInfo%p_rpostsmoother =&gt; p_rsmoother
+
+  ! Pass the filter chain
+  call linsol_getMultigrid2Level (p_rsolver,i,p_rlevel)
+  p_rlevel%p_RfilterChain =&gt; RfilterChains(:,i)
+
+end do
+
+...
+</code></pre>
+
+<p>The code performs as follows:</p>
+
+<ol>
+<li><p>On every level $i$, a boundary condition structure <code>RdiscreteBC(i)</code> is created which encapsules, e.g., Dirichlet boundary conditions.</p></li>
+<li><p>Coarse grid solvers and smoothers are created as usual.</p></li>
+<li><p>A 2D array <code>RfilterChains</code> is created which contains a set of filters on every level. In the above example, there is only one filter per level, a boundary condition filter.</p></li>
+<li><p>The filter chain of every level is attached to the corresponding level where is should be applied. Additionally, the filter chain is passed to BiCGStab which wants to have it as parameter as well.</p></li>
+</ol>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+// for correct syntax see http://docs.mathjax.org/en/latest/start.html
+// note that when editing this page these parenthesis need to be
+// escaped with 4 backslashes such that 2 of them end up on the
+// generated web page!
+MathJax.Hub.Config({
+tex2jax: {
+    inlineMath:  [ ['$','$'], ['\\(','\\)'] ]
+}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

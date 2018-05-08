@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Introduction - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html">Software</a><div class="submenu"><a href="../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../software/featflow.html">FEATFLOW</a><a href="../../../software/featflow2.html">FEATFLOW2</a><a href="../../../software/parpp3d.html">parPP3D</a><a href="../../../software/documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../flow.html">Flow around a Cylinder</a><a href="../bubble.html">Rising Bubble</a><a href="../fsi_benchmark.html">FSI Benchmark</a><a href="../mit_benchmark.html" class="selected">MIT Benchmark</a><div class="submenu"><a href="mit_intro.html" class="selected">Introduction</a><a href="mit_geoconf.html">Geometry and Configuration</a><a href="mit_step.html">Time Step and Mesh Information</a><a href="mit_result.html">Results and Discussion</a><a href="mit_references.html">References</a></div></div></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../benchmarks.html">Benchmarks</a> » <a href="../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../mit_benchmark.html">MIT Benchmark</a> » <a href="mit_intro.html">Introduction</a>  </div>
+
+  <hr />
+
+   <h2>MIT Benchmark</h2>
+ 
+ <h4>Introduction</h4>
+ <p>The <a href="mit_references.html#christon1">MIT Benchmark 2001 [1]</a> describes heat driven
+ cavity flow in a 8:1 rectangular domain at near-critical Rayleigh
+ number. This was for special session entitled 'Computational Predictability of Natural Convection Flows in Enclosures' which was held at the First MIT Conference on Computational Fluid and Solid Mechanics. The primary objectives according to <a href="mit_references.html#christon1">[1]</a> are to identify the correct time-dependent solution for the 8:1 differentially-heated cavity with Ra=3.4×10<sup>5</sup> and Pr=0.71, to determine the critical Rayleigh number for the corresponding configuration, and to identify which methods can reliably provide these results.
+ The Governing equations for this problem are the incompressible Navier-Stokes equation, continuity equation, and the energy equation written in terms of temperature</p>
+ <div class="equation"><img class="latex" alt="\begin{displaymath}\rho(\pp{\ub}{t}+\ub \cdot \nabla\ub) = -\nabla p + 2\eta \nabla \cdot\Db+ \rho (1-\gamma \Theta)\jb \end{displaymath}" title="\begin{displaymath}\rho(\pp{\ub}{t}+\ub \cdot \nabla\ub) = -\nabla p + 2\eta \nabla \cdot\Db+ \rho (1-\gamma \Theta)\jb \end{displaymath}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAAeBAMAAAB+qt7aAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMAZlSJRBDd7zKrdpnNIrsB6bK7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADJUlEQVRYw82XTWgTQRTH3253arabJttq8ejaUhA8WNkKIhUiqFBB2FIUwUOj6K1iRMGLhxhFiyD0LmoEEfTiIh56ihWPLTEHQQ8Fg9eKFIRaP2J9b2f2M5v04mHeaWfe7v/95s3kzQuAMG3YAqnsKAzKBbQDVuQCYic/ygU0cObZ8VbuuzQ8fS58U1ogD1C+DOelAroLrCQV0B0wLLWVkQWoH/TCC2APnvzoXh2d/xZvC/kqQKVjsMwcWsN7HOriixvN3+8IVE2fDuTVcrflzMwuLy+73mNPF5+wE8+Jj63j/BK/k978rq3GV4vx1OSvfHiA5DNXvJGe8MbfNpoACldUkuQRHwBtN6uqRXquhQvOl0BvxWR1UHfFEdklUJsor/3yhvcSYeKJYBu4ALH3Y8n6HvoAyKmtMS/4TDnYGARif2KyGC8fB9Lx27dCXhkpPE0DCut2jRbLh4sA07ZtHwpe9XxTr0caAgjK2trUwhETU+dnDoHgshMA8XgRIGW2oeX3Xb8xgfLGX7wzWHEBYFPYWgAUViVcbVUMF9sOEfmsC9q8DwQ507rGFjF1fuYI6H0hAOLxIkA3M671uXJqaifJ1wFKGXohYtP2BKWAE+TG6KCoTjvQdsxUgfugqDSZbb+zaZMGgBWRrwajwD8XGRKyIh4BKagwjjmFY1YegSc4kDbf5x5M2zJO0O/QQemDECi+ZZ5Pc/WqnyHNAsXtMTF1NEWfE9B6ICvixc7QWSdXpTPkARlm1tmdBhSp27VRf9hsKwrk6zFX/EMNt2FIL2QbYHxxwi0zNgJZES8GpItfGcrXITt8GIxED+t9GanbM2NiqJntVQp92cEDPlD/5mYpB9vwfX812uOfj5acQJbH016ORzQ+oI/qEMrX4TRR+z3sp7Q6FKk0Rns5J19vWIe4TaZVdS4bxIvYaChfh71eNRM97Kst7qBK+vRkcmJ/Z4kgXspNUtGLV8GrQXOih724BZCZflV+Td5mDztLBPEi5qfWVFfnYz3srXNleXpq6mFVV6Imn3pYQ6b/itTD9joSAVEP26tKREQ9rLFHpn+KFTmy8w9L7Ok1UDWTpAAAAABJRU5ErkJggg==" /></div>
+ <div class="equation"><img class="latex" alt="\begin{displaymath}\nabla\cdot\ub=0\end{displaymath}" title="\begin{displaymath}\nabla\cdot\ub=0\end{displaymath}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAALBAMAAAApTQijAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMAMiIQ3c2Zu2Z2VIlEq+90D/a4AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAmklEQVQY02NgFAQCBQbswN41NDQ0AVOcadZkBga2AgYGDgNMSVYGcwYG5o8MDJxYTBRl4ANals7A0Azm8vgr1G9gYLDevXv3TgaGdgaWA0BLBRgmQBT3K/BvgOuczsC6AGQpF9BK9g1okq1gncwfQVYyGcAkocZC7GRIXwxVvF5BHqGThcEU7FOYiG1m/yu4JOOsTSAKmy8hAAAe5iHGXXeGgwAAAABJRU5ErkJggg==" /></div>
+ <div class="equation"><img class="latex" alt="\begin{displaymath}\pp{\Theta}{t}+\ub \cdot \nabla\Theta = \frac{1}{\sqrt{Ra~Pr}}~\nabla^2\Theta \end{displaymath}" title="\begin{displaymath}\pp{\Theta}{t}+\ub \cdot \nabla\Theta = \frac{1}{\sqrt{Ra~Pr}}~\nabla^2\Theta \end{displaymath}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALgAAAAhBAMAAACYdHx/AAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMARFRmIs0Q7zJ23Zm7q4mXWencAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACcElEQVRIx7VWz2vTYBh+msR0abYmEy+Ch1KhMDZYdTgHExbEH+ilBalHiQ5UHK5VEPEWdvDXZfE4RVaGijdrb4Md+geIruBBb4XhQIXQ0xgMnN+XJmXdvpB+YXlPycv7PHnyfu+TN0Aim0FsMYzTULIT0cBhuk7hovwOQiMK98mtkAL52OWhFnAtkvIw8om7r7Xxx49+xUGu1PClsHB79mwc5JqFFU0HYlH+DHJl0I6p5y+hZiJPSwC5MKp3Lob0JSAdcc6P/9OZaanoXS2YgdiB5yQMnqd5iEQtvLT8vlQq1Xj86yHmwAL12lklByGaPCfSQUh5iwVq9Zp3mygAj387iKulGgtEyROfjG/eQ9aASXj+nXcc53cou4ug9nFBu360u8pnDM0jL1uwsc+/2m5QtH0EiQOmlx3nhmP75F/dFgomuPzrIqgEBmiP8ktuCxXA829/bXER6IIOko8bi/7BruVIPWtaWG3pIrAHdDTbS35/deahP7c0wfCvZAdOuqfLAyV0MSNZ7LUlBthXDezLPoSoS0WVc0lf6bvy5oVKyuQj34Sys9T075ZX37aCXmTyxcc/U1zccgtyGwVfURl4EFD5BoONUT7haRNCEYs++Zhre2ZsI5WpczCTw5wne6Alf4Yycp1mfkLdnB5eZ32CK7iDDxzkJ/Kk5Ui++gtsyBWaeZKdEpJPWdM5UEUd1Vz/5IkqaTkKOJKXttytINGPyj12cVOxUbc4pK8oZDudQyovFtN0hEVqxemA1ZTjO02cUd0+a5lbtdR5uoZpQ5qH9Oua/E5ctGOoG2Z9hIywtPyDJBuHRK6sI8bo187/AVZY4xts76u5AAAAAElFTkSuQmCC" /></div>
+ <p>where <span class="math"><img class="latex" alt="$\ub, \rho, \gamma, \jb, p, \eta, \Db, Pr, Ra, \Theta$" title="$\ub, \rho, \gamma, \jb, p, \eta, \Db, Pr, Ra, \Theta$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJsAAAAMCAMAAABC3D9FAAAAM1BMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxgEwMAAAAEHRSTlMARN0iu4lmVDIQq5l2781gtG7V5gAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAdZJREFUOMu1VNGS5CAI1BhFRV3+/2sPVIxJpmp3r2rzMBM6KE3TaszPn1jD90kWiRDPE9MGFsJSsn/mDti+9igAIZhfPZbKT9Koym8md0GJ5Lc+WXTYUXqgh6yE0/zBM7glahfUCyWKj0yQlPjkNvVtwdiDGzxp0zuA1wbD0bgHjZC0lxTQgncriHabweBmjq1mFsHR93U231gktDLE0lY2AdVam2fiQcTfuHGVdEyDBRPRwPrUlBuYwxotAjKs1J7cGl0jrOKg2FNjKhtsPfK/55JVQUcRUkoh1Dc3hqJyE5OlD9xYFV64VORgU+OtmyOzpZobzKMTx1m81o+ePugmRQpuztwO3MVNtsoqQMDe+oMbXTRWFz31Dh/BBGbhLwXOon4zwNyicIudBDLEs4+LkQgyI+E2XpmKaxrILcC+1CWDG4rzJ7S6MOPC2GEC88WEDwcKb+c0ZSyBKpjcx9KgmzzrjJzsNiPhNrP4wCQNzuGEEdhMlPPZutwdcoWyntAhoMLo5ISEhACF7bhq+vf9BrshVGNIV9RnCtNut6xuN3jfJ/D5mvkdrJ8AH3lFo3yY6ueH5XzN6nb7Q25WFCp2C1a+RHBinq/ubO6eld0WPLY0/wv/AwEPEDNklarVAAAAAElFTkSuQmCC" /></span> are the velocity, density, thermal expansion, gravity vector, pressure, viscosity, symmetric part of gradient velocity, Prandtl number, Rayleigh number and temperature (see <a href="mit_references.html#christon1">[2]</a> for details).</p>
+ <p></p>
+ <p>To solve the above set of PDEs, we employ a fully coupled monolithic approach utilizing Newton-multigrid solver with divided difference method in handling the jacobian. High order finite element space is implemented and second order time marching technique such as Crank-Nicolson is used. Both are meant to maintain the accuracy of the solution. Further details can be seen in <a href="mit_references.html#damanik09">[8]</a>.</p>
+
+<p class="Space10">» Continue to <a href="mit_geoconf.html">Geometry and Configuration</a></p>
+<p class="Space5">» Return to the <a href="../mit_benchmark.html">MIT benchmark page</a>.</p></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

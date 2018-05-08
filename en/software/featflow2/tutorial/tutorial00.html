@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Tutorial00 - Hi FEAT - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html" class="selected">Tutorial</a><div class="submenu"><a href="tutorial_intro.html">Introduction</a><a href="tutorial_lang.html">Fortran 90/95 for C/C++ programmers</a><a href="tutorial00.html" class="selected">Tutorial00 - Hi FEAT</a><a href="tutorial01.html">Tutorial01</a><a href="tutorial_programming.html">FEAT2 programming techniques </a><a href="tutorial_l2proj.html">The L2 projection </a><a href="tutorial_poisson.html">The poisson equation </a><a href="tutorial_conv-diff.html">The convection-diffusion equation </a><a href="tutorial_lelast.html">Linear elasticity </a><a href="tutorial_stokes.html">The Stokes equations </a><a href="tutorial_navierstokes.html">The Navier-Stokes equations </a></div><a href="../featflow2_concepts.html">Concepts</a></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../tutorial.html">Tutorial</a> » <a href="tutorial00.html">Tutorial00 - Hi FEAT</a>  </div>
+
+  <hr />
+
+  <h1>The very basic "Hello Feat" example</h1>
+
+<p><strong>Releated files:</strong></p>
+
+<ul>
+<li><code>tutorials/tutorial00/src/hellofeat.f90</code></li>
+<li><code>tutorials/tutorial00/configure</code></li>
+</ul>
+
+<h2>Hello FEAT</h2>
+
+<p>The very basic "Hello feat" example <code>hellofeat.f90</code> in the Feat2 package reads as follows:</p>
+
+<pre><code>program HelloFeat
+
+  use fsystem
+  use genoutput
+
+  ! Initialisation
+  call system_init()
+  call output_init("")
+
+  ! Print a message
+  call output_line ("Hello world. This is FEAT-2.")
+
+  ! Cleanup
+  call output_done()
+
+end program
+</code></pre>
+
+<p>In the very beginning, the modules "fsystem" and "genoutput" are included and initialised:</p>
+
+<pre><code>  use fsystem
+  use genoutput
+</code></pre>
+
+<p>The module <code>fsystem</code> contains basic system-wide definitions and specifications. It has to be initialised with <code>call system_init()</code> in the very beginning of every program.</p>
+
+<p>Similarly, the module <code>genoutput</code> (abbrev. for "general output") provides basic output routines for printing text to the terminal. It has to be initialised by one of the <code>output_init</code> routines - for very basic use, a simple <code>call output_init("")</code> is enough.</p>
+
+<p>Afterwards, the command</p>
+
+<pre><code>  call output_line ("Hello world. This is FEAT-2.")
+</code></pre>
+
+<p>prints a message to the terminal. The command <code>output_line</code> the basic text output command for messages to the terminal and a replacement for <code>print</code> and <code>write (*,*)</code>. Without any parameters, it just prints the text message to the terminal. However, it provides additional output features like printing the text to a log file, adding a time stamp to the text, preventing line breaks etc. We come to this in a later tutorial.</p>
+
+<p>The final call</p>
+
+<pre><code>  call output_done()
+</code></pre>
+
+<p>cleans up the output subsystem. Afterwards, the program is finished.</p>
+
+<p>Note that there is currently no cleanup command like <code>system_done</code>. This is currently not necessary but might change in the future.</p>
+
+<h2>Configuration script</h2>
+
+<p>Compiling the "Hello FEAT" example involves the configuration script <code>configure</code> in the main directory of tutorial00. This script creates a makefile which compiles the application as soon as the command <code>make</code> is invoked.</p>
+
+<p>The script reads as follows:</p>
+
+<pre><code>#!/bin/sh
+
+LC_ALL=C
+export LC_ALL
+
+../../bin/configure \
+    --appname=hellofeat \
+    --programfile=src/hellofeat.f90 \
+        --srclist_app="`ls src/*.f90`" \
+    "$@"
+</code></pre>
+
+<p>It performs as follows:</p>
+
+<ul>
+<li><p>An additional configuration script "../../bin/configure" is called which writes the actual makefile</p></li>
+<li><p>The executable is named "hellofeat", set by the <code>--appname</code> parameter.</p></li>
+<li><p>The main program is in the file "src/hellofeat.f90", set by the <code>--programfile</code> parameter.</p></li>
+<li><p>The parameter <code>--srclist_app=</code> is a list of all source files. By default, all ".f90" files from the directory <code>src/</code> are included into the project.</p></li>
+</ul>
+
+<p>The "Hello FEAT" example can be used as a template for new applications written from the scratch. In this case, the two above parameters specified by <code>--appname</code> and <code>--programfile</code> have to be modified in the configure script to get it to work - that's all.</p>
+
+<h2>Compiling and starting the application</h2>
+
+<p>For compiling and starting the application, the following steps are necessary:</p>
+
+<ol>
+<li><p>The <code>configure</code> script has to be invoked. This has to be done only once in advance (or after an "SVN update" or to switch the compiler configuration). The script generates a makefile.</p></li>
+<li><p>The <code>make</code> command has to be invoked. This compiles the application and all necessary libraries.</p></li>
+<li><p>The application can be started by <code>./hellofeat</code></p></li>
+</ol>
+
+<p>On a terminal, ths reads as follows.</p>
+
+<pre><code>.../Featflow2&gt; cd tutorials/tutorial00
+
+.../Featflow2/tutorials/tutorial00&gt; ./configure
+
+This is the FEAT2 custom configuration program.
+It is not GNU Configure.
+There are a couple of optional arguments to this program,
+use '--help' command line option to learn about them.
+checking whether environment sets $MAKE... no
+...
+
+.../Featflow2/tutorials/tutorial00&gt; make
+
+# Building FEAT2.0 application &lt;hellofeat&gt;
+make[1]: Entering directory `.../Featflow2/tutorials/tutorial00'
+...
+... -lumfpack -lamd -lsplib -llapack -lblas -o hellofeat
+
+.../Featflow2/tutorials/tutorial00&gt; ./hellofeat
+
+ Hello world. This is FEAT-2.
+
+.../Featflow2/tutorials/tutorial00&gt; 
+</code></pre>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

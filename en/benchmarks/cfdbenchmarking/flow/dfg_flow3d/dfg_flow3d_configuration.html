@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Benchmark configuration - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../../index.html">Home</a>
+  <a href="../../../../contact.html">Contact</a><a href="../../../../software.html">Software</a><div class="submenu"><a href="../../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../../software/featflow.html">FEATFLOW</a><a href="../../../../software/featflow2.html">FEATFLOW2</a><a href="../../../../software/parpp3d.html">parPP3D</a><a href="../../../../software/documentation.html">Documentation</a></div><a href="../../../../team.html">Team</a><a href="../../../../links.html">Links</a><div class="submenu"><a href="../../../../links/websites.html">Websites</a><a href="../../../../links/software_links.html">Software</a></div><a href="../../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../../flow.html" class="selected">Flow around a Cylinder</a><div class="submenu"><a href="../dfg_benchmark1_re20.html">DFG benchmark 2D-1 (RE20, laminar)</a><a href="../dfg_benchmark2_re100.html">DFG benchmark 2D-2 (RE100, periodic)</a><a href="../dfg_benchmark3_re100.html">DFG benchmark 2D-3 (RE100, fixed time interval)</a><a href="../dfg_flow3d.html" class="selected">3D laminar case (Re=20 and Re=100)</a><div class="submenu"><a href="dfg_flow3d_configuration.html" class="selected">Benchmark configuration</a><a href="dfg_flow3d_software.html">Used CFD Software Packages</a><a href="dfg_flow3d_results.html">Results</a><a href="dfg_flow3d_conclusion.html">Conclusions and Bibliography</a><a href="dfg_flow3d_reference.html">Reference Values</a></div></div><a href="../../bubble.html">Rising Bubble</a><a href="../../fsi_benchmark.html">FSI Benchmark</a><a href="../../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../../publications.html">Publications</a><a href="../../../../services.html">Services</a><div class="submenu"><a href="../../../../services/cdrom.html">CD-ROM</a><a href="../../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../../news.html">News</a><a href="../../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../../index.html">Home</a> » <a href="../../../../benchmarks.html">Benchmarks</a> » <a href="../../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../../flow.html">Flow around a Cylinder</a> » <a href="../dfg_flow3d.html">3D laminar case (Re=20 and Re=100)</a> » <a href="dfg_flow3d_configuration.html">Benchmark configuration</a>  </div>
+
+  <hr />
+
+  <h3>Benchmark configurations</h3>
+
+<p>The solvers are tested in two benchmark configurations with an incompressible Newtonian fluid whose kinematic viscosity (<span class="math">ν</span>) is equal to <span class="math">10<sup>-3</sup> m<sup>2</sup>/s</span> and for which the conservation equations of mass and momentum are written as follows,</p>
+
+<div class="equation">
+<img class="latex" alt="\begin{equation}\begin{split}
+&amp;\frac{\partial \mathbf{u}}{\partial t}
++\mathbf{u}\cdot\nabla \mathbf{u}=-\nabla p
++\nu\Delta\mathbf{u},\\
+&amp;\nabla\cdot\mathbf{u}=0
+\end{split}
+\label{NS}
+\end{equation}
+" title="\begin{equation}\begin{split}
+&amp;\frac{\partial \mathbf{u}}{\partial t}
++\mathbf{u}\cdot\nabla \mathbf{u}=-\nabla p
++\nu\Delta\mathbf{u},\\
+&amp;\nabla\cdot\mathbf{u}=0
+\end{split}
+\label{NS}
+\end{equation}
+" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUMAAAAvBAMAAACLXLWhAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMARFRmIs0Q7zJ23Zm7q4mXWencAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACnklEQVRYw+2Yv2/TUBDHv7aD5cYxLRITEpJVJARLCUVibLyEX5NVKSsyYmGBVog/wKqEaBlKEAOChRQEKykTSBm8MCAhKDNLWBAsFkMkWPjx3rNfklfZiESJuaE3ePD58j4+X77v3QHQ5l0QtwNYpI54EnXqiObBs9QRT115eKhX+UWYcKaNt0YPlBFnQzwmjngL5ipxxNuwXb1nUUZ05h7A/Hjve4Z+W+vMPIzgmJKtBXmelaeNRqM9gmO7AFw1lXYEGFkvoDgGMebNAhC7qqj/YJqUqfbDjkFMqeIWg6g9996ny3aA00h0/Vocx1/7zwnH5e0FTyLeh+MhtFrD0VPMYs2bTRdZCdFEliIJh7ul7ciYOi4AId4MR0/Mfqf2DWYcX4ybcpF3oub0YBfiEsvmXOJAy4hkzBL7q2hMZINpIOZl8YyoOVZxCaL6oYVDaztNGfNBb+ISUOkWg3jCuyMX6RwFMnWdO/ZX6/2Y1XmgygSzJ6KtYMqIV1/VrsuaYzcydZ079i1+ljGl5QAlXi4/RbSzMwmYEr8kLzvUGexGMfLSwR3l7Ji8eyMbryImHLIzODfGTxz+1y1gPNND6Kya+p3BizG+w+vcXVqbRC060GtMT0LZGTyjd77ZYGdZVuHdtDPYfBKSQ7wrEOGnnYHeppfFlwNE3hnYLmlE3hmUA3qIXwaIvDMo6/QYjySIUdoZ2MfoZdGG9ugTtOrfO4P/jCiuNOHS05TYANdIT3LW+aWKPdszMlb07GMMyx2KnD9ORZFyhyK+GVERyJyhiOXjBpUv3ZEtjDoZMSJskSnGMGm1oI4dZiIsk9mtxeyDz0cURMOnk0Ux+xDzEWUyQqkWxewjaVyVyUjL9OkoY1fmU5mMbCzQEXSD8qGR2R8MZeKrIDZkEwAAAABJRU5ErkJggg==" /></div>
+
+<p>The Reynolds number is defined as <span class="math">Re=UD/ν</span> where <span class="math">U</span> is the mean velocity of the imposed parabolic profile on the inflow boundary and <span class="math">D</span> is the diameter of the cylinder. 
+The benchmark geometry and the corresponding 2D mesh at the coarsest level are shown in the figure <a href="dfg_flow3d_configuration.html#geometryAndMesh">below</a>.
+The 3D mesh is obtained by extruding the 2D mesh in the z direction with 4 layers of cells, however the first level mesh for the computations is obtained by two successive refinements via connecting opposite midpoints of the the coarsest mesh which yields a mesh of 6144 cells. 
+Our preliminary studies showed that this mesh offers a good balance between accuracy and computational cost.</p>
+
+<p id="geometryAndMesh" class="center"><img src="../../../../../media/dfg_flow3d/fac_geo_3d.png" title="Geometry (in 2D)" alt="Geometry (in 2D)" style="max-width: 90%;" /></p>
+
+<p class="center"><img src="../../../../../media/dfg_flow3d/meshV3_side_new.png" title="Mesh (in 2D)" alt="Mesh (in 2D)" style="max-width: 90%;" /></p>
+
+<p>The software tools employ different numerical approaches to the discretization in space which leads to different numbers of degrees of freedom (DOF) for the same problem. In the case of OpenFOAM and CFX, the numbers of DOF are comparable while <span class="sc">FeatFlow</span> has a greater number of DOF for the same mesh due to a high order finite element approximation. Therefore, while comparing the results, reader should keep in mind that for the same computational mesh, <span class="sc">FeatFlow</span> has approximately as many DOF as the others have at one level finer grid. The number of DOF is always proportional to number of cells (equivalent to number of vertices for hexahedral meshes with large number of cells) in all CFD packages. The numbers of DOF are presented with respect to the number of cells of the corresponding mesh levels in the table <a href="dfg_flow3d_configuration.html#dof">below</a>.</p>
+
+<ul>
+  <li><span class="math">ndof = 3 · nvt</span> for velocity and <span class="math">ndof = nvt</span> for pressure in case of CFX.</li>
+  <li><span class="math">ndof = 3 · nel</span> for velocity and <span class="math">ndof = nel</span> for pressure in case of OpenFOAM.</li>
+  <li><span class="math">ndof = 24 · nvt</span> for velocity and <span class="math">ndof = 4 · nel</span> for pressure in case of <span class="sc">FeatFlow</span>.</li>
+</ul>  
+
+<p>where <span class="math">ndof</span>, <span class="math">nvt</span> and <span class="math">nel</span> denote the number of DOF, the number of vertices and the number of cells, respectively.</p>
+ 
+<table id="dof" class="plain">
+<caption>Number of unknowns</caption>
+<thead>
+  <tr>
+    <th>Levels</th>
+    <th># of cells</th>
+    <th>Software</th>
+    <th># of DOF <span class="math">u</span></th>
+    <th># of DOF <span class="math">P</span></th>
+    <th>total # of DOF</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: left;">CFX</td>
+    <td style="text-align: right;">21828</td>
+    <td style="text-align: right;">7276</td>
+    <td style="text-align: right;">29104</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">L1</td>
+    <td style="text-align: right;">6144</td>
+    <td style="text-align: left;">OF</td>
+    <td style="text-align: right;">18423</td>
+    <td style="text-align: right;">6144</td>
+    <td style="text-align: right;">24567</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: left;"><span class="sc">FeatFlow</span> </td>
+    <td style="text-align: right;">174624</td>
+    <td style="text-align: right;">24576</td>
+    <td style="text-align: right;">199200</td>
+  </tr>
+</tbody>
+<tbody style="background: #eef;">
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: left;">CFX</td>
+    <td style="text-align: right;">160776</td>
+    <td style="text-align: right;">53592</td>
+    <td style="text-align: right;">214368</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">L2</td>
+    <td style="text-align: right;">49152</td>
+    <td style="text-align: left;">OF</td>
+    <td style="text-align: right;">147456</td>
+    <td style="text-align: right;">49152</td>
+    <td style="text-align: right;">196608</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: left;"><span class="sc">FeatFlow</span></td>
+    <td style="text-align: right;">1286208</td>
+    <td style="text-align: right;">196608</td>
+    <td style="text-align: right;">1482816</td>
+  </tr>
+</tbody>
+<tbody>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: left;">CFX</td>
+    <td style="text-align: right;">1232400</td>
+    <td style="text-align: right;">410800</td>
+    <td style="text-align: right;">1643200</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">L3</td>
+    <td style="text-align: right;">393216</td>
+    <td style="text-align: left;">OF</td>
+    <td style="text-align: right;">1179648</td>
+    <td style="text-align: right;">393216</td>
+    <td style="text-align: right;">1572864</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: left;"><span class="sc">FeatFlow</span></td>
+    <td style="text-align: right;">9859200</td>
+    <td style="text-align: right;">1572864</td>
+    <td style="text-align: right;">11432064</td>
+  </tr>
+</tbody>
+<tbody style="background: #eef;">
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: left;">CFX</td>
+    <td style="text-align: right;">9647136</td>
+    <td style="text-align: right;">3215712</td>
+    <td style="text-align: right;">12862848</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">L4</td>
+    <td style="text-align: right;">3145728</td>
+    <td style="text-align: left;">OF</td>
+    <td style="text-align: right;">9437184</td>
+    <td style="text-align: right;">3145728</td>
+    <td style="text-align: right;">12582912</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: left;"><span class="sc">FeatFlow</span></td>
+    <td style="text-align: right;">77177104</td>
+    <td style="text-align: right;">12582912</td>
+    <td style="text-align: right;">89760016</td>
+  </tr>
+</tbody>
+</table>
+
+<p>The first benchmark problem is at <span class="math">Re=20</span> and has been studied numerically by many research groups, and very accurate results have been presented. The second benchmark problem is unsteady, with a time-varying inflow profile which is very challenging and has not been rigorously studied, consequently  the results have not yet been precisely determined. For the benchmark problems, no-slip boundary condition is employed on the walls and natural do-nothing boundary conditions are imposed at the outflow plane. The inflow conditions are set with <span class="math">U_m=0.45 m/s</span> and <span class="math">U_m=2.25 m/s</span> for the first and the second benchmark problem with the parabolic velocity profiles from equations <a href="dfg_flow3d_configuration.html#parabolicProfile">(2)</a> and <a href="dfg_flow3d_configuration.html#parabolicProfileT">(3)</a>, respectively,</p>
+
+<div id="parabolicProfile" class="equation">
+<img class="latex" alt="\setcounter{equation}{1}
+\begin{equation}
+ U(0,y,z) = 16U_myz(H-y)(H-z)/H^4,\quad V=W=0 
+ \label{parabolicProfile}
+\end{equation}
+" title="\setcounter{equation}{1}
+\begin{equation}
+ U(0,y,z) = 16U_myz(H-y)(H-z)/H^4,\quad V=W=0 
+ \label{parabolicProfile}
+\end{equation}
+" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZMAAAAPBAMAAADT4T/eAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMAVN12qzIQZonvRCKZzbu1VIpIAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADlklEQVRIx8VWT0gUURz+Zt2ZcXfG1YqyLrFG0HVE6LBRbmAQCjFlGhXGgFFiWCtRCqUuhBF5yFtQHaYC6xJN1MFDoRLawcvixUMUQv+kU1BKYVC/NzO782Zm3Tys9EOcfe/3fb8/733vzQD/yRbWLbISmpHWxLNQlKig+Dx0dyDkyly7URhqIYBsrCFKRZE5RtRWmcekOzhZxl2xk12m5dmhCTt1QVfqdwcQWe63QH+9NQ6Wx2wGhprjc5kAUdAh/zCf7AoFlLKOQzL5Vm61oOdrYaT+NBpblPdennBpPhP0eEMLKulXHWsriiqcD0AuceghAxeVpIPlLQ1MGPgSJEYp/zISmVDACstxCBvqOEe1yW+vtIxqHRw3XJrPoujERsg6IxKtFR2IBXQ/ziczMArDwXImUmMDwEqQ2EpyyqE6HFDNO+K3OUckw/RRsBVsM+OcvMOl+awVT3HBUkgLSYg6UhhExGSCHlFopVF59xwtBqQbZJrdinjnseVg4cIIU0GUgxBHvbj91gsipmitsjjO5XMDHgs57HXNKix3FyW7Rs8l6UiNAC+7W9pqloJIzSDHIsvANPahqobmtxyQ2Rnp7rZYZm5X5BUp6WDhwgijUmP3+gbTnhJP6/1EnAZib/o+cgHcgNdDDrvPtMwP64SExm++W9pqRsmYxHOI2TqdJp04rSejZkGifCvxUSzFPE07MGpF+YYqlrefVpCmImh2WpkA5uHNuwEnPQd/t+V8sp0fiw7zl8tA6V2hZHKGtUKn4AQwnBekmI45ACMgMCp5ycGiADMqdVTYIQp2lM5UFYXDXmDZl5EFFMwiDiC+ZFeeF9iiqU6BE9g/zgoluw/WSsSSCF1Ly9mDdrpitA72eHZGQ8J/7N8qSYZV+h+mUjaMMEIGCQ0POGCDmCNiLfAB8SQ37wSkU+852r3b9ruvtkOo5Kl2aSWsFqJJ76wFKK97mVIg1o+giaJOLdJDMt4ZeMQtW+NNjF+1GFbZKmj1DGZjJpXGWXmOU/LL7Vkiqnj+2xrg7ls3YBc4R5Pn9r/690D2CYqVVsJUTPz5hXimMHRfhMAn5wHMFGfOqtZng8HAvbw9S+hEVIsyZ3AF/tduWcxJpuZVLmlu8FfigptDXOXWSEex34Yx6wx+DuVOMaJU7MOF5ifXoxUn2eHCuI39GwPObrIf7FopRWcwuzw9ELZXs4ltxb7BIPkuqrFyfYPZyTL4C7Pq8sSun0bkAAAAAElFTkSuQmCC" /></div>
+
+<div id="parabolicProfileT" class="equation">
+<img class="latex" alt="\setcounter{equation}{2}
+\begin{equation}
+ U(0,y,z) = 16 U_m y z sin(\pi t/8) (H-y) (H-z)/H^4,\quad V=W=0
+ \label{parabolicProfileT}
+\end{equation}
+" title="\setcounter{equation}{2}
+\begin{equation}
+ U(0,y,z) = 16 U_m y z sin(\pi t/8) (H-y) (H-z)/H^4,\quad V=W=0
+ \label{parabolicProfileT}
+\end{equation}
+" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbAAAAAPBAMAAAB3i4cNAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMAVN12qzIQZonvRCKZzbu1VIpIAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEdklEQVRIx82WW2gcVRjH/7O7c9k9s8lGSVIFZSNqXyeICls0K1SQFGRiTVuFlsFII9HIBi8badIOSCQa1Dz1wQtsvcRLEabeyEMvCRL70JchD01FLIF6KT4JuqEYH/zOzOzOOZNBMPXBQzKz58xv/t/lfOecAf6HreM/1GJbRrRtC9j84tC/h1RVlvI6x9VW55brCsWTnLe2PNedfyUnCCzxy4tANgXjqlbKOOEwo9/q2euJKxuZUW6zlNttxWb99yQIV/it0N9EKWQT2JkQiIa/omy5rD4DA+gGjg0WVmsJVUL1Pxqf7ZSGCcdTET8mleKbezD+a7tnXnMG9rDLsRNb/O7Giedt7nwfT2EORTyb8PgFIa5jDp5j5ZBNLdlc1FumlHkGdXUbVeCcg1+SqoSyDXTI8RKOXRHfdUNJeNLZEKde20CnDeHdLX5X0dTLZIZI4vbiIPKJJbEoqjuYhxOyqW1vdL+TV1TGM8FclXIwDWwmVQnVfXTK1pgblHDIfyIaydSCOm21TdzUKAirJOk3WfVIfhFKGaqNCo4i0+CZm2NVXhlvP025oOqYnZ19OQhMfetjL2QRYZzp+lSf06aG6iRgfLd6CQd22tiP7LUjgJ8lvYegzsdGJ70vSbVC8+viMcGZV7/24EOtJfmwFlxGQho5Msurpak9UlIQD0R+x0uMeoZHZsiGDqzgfhR5AfQ8qPO1NTbmBYHFM6ZvauWQRYRxZv10z6CSb4yTwEmdnimU9VegvX4HBWZSDt6pH63GBf2kPUmqK0D+fP1HobwWThIOw0nw0eqr6mK3T+mwxAmN/I4XoQ32hk1m8kEJr1ARhJGXc4129YqBFebRzMflHmHvWloZT+AD7u2HoyRb4hX1DF5ygsDYbyhyLyYpu8RnMBgGdg5YQzzOm883xRYvrT5fGllbyM2I+9d0YsZ4OrPHyQytnseBmVatqtV862CRS5FsNkMWbcxBYS3rYoq2jBkKaD+5TttsA10wGvANG1mf67fbo7RQixy9D9hIbEA+bkaSD1qhaQuVh6sNcxnCQHKNGTZz2Z9kJuNp9LiXsjmOfSRtHeS3U4ct6fwnc9+zMmfZ5PuVSoAR8zkqxVM0DfOlXrDqDgpMcSjxB3hZrSs1dFh4T1C5S/VJtRe4gkJZ2Dh6RoB1vnfE/L746e9SnA/DKIt97rfYlFrBLxwnM+ybieBsVPvnsJtklq/STXN+cPCRkLWB17A45XGW7VCsfo5xRjlRMrrJp/O0DWZLdK6a3fw0Uu69G4UaltjABX1VWAGnb3VJ1cQXf3nTffHw4eJFwjUXAr87fuxLju+CLpUe91tqS6jTOdZy3mwdw8BP4Q34Nn1jv2B6Pzsck5rZ/nUkGnDCLxD5I9AmVTNN1XR0qaKUbX95LEnOa1akdkZdj0TVUvqL1RweCDD5mLZkYQwBI8nPSf8QV9XSPqmGEvFuP7AR2flhflkARm8Mbnw3+qe3OSa34VaE0R5GNzXx9aVNWIHqcIpgDaNSf2HbgQVWdfwNcYoj96Tkp6UAAAAASUVORK5CYII=" /></div>
+
+<p>where <span class="math">F<sub>D</sub></span> and <span class="math">F<sub>L</sub></span> are defined as,</p>
+
+<div class="equation">
+<img class="latex" alt="\setcounter{equation}{3}
+\begin{equation}
+ F_D =  \int   \left( \rho \nu \frac{\partial v_t}{\partial n}n_y - p n_x\right) dS , \qquad
+ F_L = -\int \left( \rho \nu   \frac{\partial v_t}{\partial n}n_x - p n_y\right) dS
+\end{equation}
+" title="\setcounter{equation}{3}
+\begin{equation}
+ F_D =  \int   \left( \rho \nu \frac{\partial v_t}{\partial n}n_y - p n_x\right) dS , \qquad
+ F_L = -\int \left( \rho \nu   \frac{\partial v_t}{\partial n}n_x - p n_y\right) dS
+\end{equation}
+" src="data:image/png;base64,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" /></div>
+
+<p>with the following notations: surface of cylinder <span class="math">S</span>, normal vector <span class="math">n</span> on <span class="math">S</span> with <span class="math">x-</span> and <span class="math">y-</span> component <span class="math">n<sub>x</sub></span> and <span class="math">n<sub>y</sub></span>, tangential velocity <span class="math">v<sub>t</sub></span> on <span class="math">S</span> and tangent vector <span class="math">t=(n<sub>y</sub>,-n<sub>x</sub>,0)</span>.</p>
+
+<hr />
+
+<ul><li><a href="dfg_flow3d_configuration.html">Benchmark configuration</a><ul><li class="selected"><a href="dfg_flow3d_configuration.html">Benchmark configuration</a></li><li><a href="dfg_flow3d_software.html">Used CFD Software Packages</a></li><li><a href="dfg_flow3d_results.html">Results</a></li><li><a href="dfg_flow3d_conclusion.html">Conclusions and Bibliography</a></li><li><a href="dfg_flow3d_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

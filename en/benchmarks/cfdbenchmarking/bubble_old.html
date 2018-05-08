@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Rising Bubble - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../index.html">Home</a>
+  <a href="../../contact.html">Contact</a><a href="../../software.html">Software</a><div class="submenu"><a href="../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../software/featflow.html">FEATFLOW</a><a href="../../software/featflow2.html">FEATFLOW2</a><a href="../../software/parpp3d.html">parPP3D</a><a href="../../software/documentation.html">Documentation</a></div><a href="../../team.html">Team</a><a href="../../links.html">Links</a><div class="submenu"><a href="../../links/websites.html">Websites</a><a href="../../links/software_links.html">Software</a></div><a href="../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="flow.html">Flow around a Cylinder</a><a href="bubble.html" class="selected">Rising Bubble</a><div class="submenu"><a href="bubble/bubble_configurations.html">Geometry and flow configurations</a><a href="bubble/bubble_verification.html">Verification</a><a href="bubble/bubble_participate.html">Participate</a><a href="bubble/bubble_reference.html">Reference data</a></div><a href="fsi_benchmark.html">FSI Benchmark</a><a href="mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../publications.html">Publications</a><a href="../../services.html">Services</a><div class="submenu"><a href="../../services/cdrom.html">CD-ROM</a><a href="../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../news.html">News</a><a href="../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../index.html">Home</a> » <a href="../../benchmarks.html">Benchmarks</a> » <a href="../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="bubble.html">Rising Bubble</a>  </div>
+
+  <hr />
+
+  <h2>Bubble Benchmark</h2>
+
+<ul class="List">
+<li class="Selected"><a href="bubble.html">Rising Bubble</a></li>
+<li><a href="bubble/bubble_configurations.html">Geometry and flow configurations</a></li>
+<li><a href="bubble/bubble_verification.html">Verification</a></li>
+<li><a href="bubble/bubble_participate.html">Participate</a></li>
+<li><a href="bubble/bubble_reference.html">Reference data</a></li>
+</ul>
+
+<hr />
+
+<h3>Two-dimensional rising bubbles</h3>
+<h2><a name="SECTION00011000000000000000"> General information and references:</a></h2>
+<p>In the absence of analytical solutions, which are very hard to come by for the considered two-phase flow problem class, validation of the mathematical modeling is best accomplished with numerical benchmarking. Pure numerical benchmarks on the other hand are of limited use if they cannot be employed to make quantitative comparisons, mere visual inspection is rarely, if ever, enough to draw hard conclusions. To illustrate this, consider the bubble shapes shown in the figures below</p>
+<div><a name="fig_br1000_comparison"></a><a name="44"></a>
+<h5>Numerical simulations of a two-dimensional rising bubble for six different codes with identical problem formulations</h5>
+<div style="text-align: center;"><img src="../../../media/bubble/6codes.png" title="6 different codes" alt="6 different codes" /></div>
+
+<p class="Space20">These shapes were calculated by six different codes with identical problem formulations and should thus ideally give six identical solutions. Unfortunately this is not the case. The shapes are quite similar but it is not possible to tell which solutions, if any, are really correct. In order to be able to do this one must leave the "picture norm" behind and instead use some more rigid metrics with which convergence can be measured directly.</p>
+<p class="Space5">With this in mind two benchmark configurations have been proposed and rigorous benchmark quantities have been defined to measure direct topological parameters, such as interface deformation, and also indirect ones, such as velocity. The task of the proposed benchmarks is to track the evolution of a single two-dimensional bubble rising in a liquid column. This configuration is simple enough to compute accurately yet allows for very complex topology change, giving the interface capturing techniques of today an adequate challenge.</p>
+<h5>References:</h5>
+<table class="Basic" border="0">
+<tbody>
+<tr class="One">
+<td>[1]</td>
+<td>Hysing, S.; Turek, S.; Kuzmin, D.; Parolini, N.; Burman, E.; Ganesan, S.; Tobiska, L.: Quantitative benchmark computations of two-dimensional bubble dynamics, International Journal for Numerical Methods in Fluids, Volume 60 Issue 11, Pages 1259-1288, DOI: 10.1002/fld.1934, 2009, <a href="http://www3.interscience.wiley.com/journal/121519896/abstract">[Webpage]</a></td>
+</tr>
+<tr class="Two">
+<td>[2]</td>
+<td>Hysing, S.; Turek, S.; Kuzmin, D.; Parolini, N.; Burman, E.;   Ganesan, S.; Tobiska, L.: Proposal for quantitative benchmark   computations of bubble dynamics, Ergebnisberichte des Instituts für   Angewandte Mathematik, Nummer 351, Fakultät für Mathematik, TU   Dortmund, 2007 <a href="../../../media/bubble/HysingTurekKuzminParoliniBurmanGanesanTobiska2007.pdf" target="_blank">[PDF]</a></td>
+</tr>
+<tr class="One">
+<td>[3]</td>
+<td>Hysing, S.; Turek, S.: Benchmark proposals for incompressible two-phase flows, 80, ICMF 2007 Programme and Abstracts of the 6th International Conference on Multiphase Flow, Wiley-VCH, 2007</td>
+</tr>
+</tbody>
+</table>
+<p class="Space20">Continue reading:</p>
+<ul class="List">
+<li><a href="bubble/bubble_configurations.html">Geometry and flow configurations</a></li>
+</ul>
+</div></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

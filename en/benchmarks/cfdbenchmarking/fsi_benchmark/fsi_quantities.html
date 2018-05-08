@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Quantities for Comparison - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html">Software</a><div class="submenu"><a href="../../../software/feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../../software/featflow.html">FEATFLOW</a><a href="../../../software/featflow2.html">FEATFLOW2</a><a href="../../../software/parpp3d.html">parPP3D</a><a href="../../../software/documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html" class="selected">Benchmarks</a><div class="submenu"><a href="../../ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../cfdbenchmarking.html" class="selected">CFD Benchmarking Project</a><div class="submenu"><a href="../flow.html">Flow around a Cylinder</a><a href="../bubble.html">Rising Bubble</a><a href="../fsi_benchmark.html" class="selected">FSI Benchmark</a><div class="submenu"><a href="fsi_definitions.html">Definitions</a><a href="fsi_quantities.html" class="selected">Quantities for Comparison</a><a href="fsi_tests.html">Partial computational Tests</a><a href="fsi_bibliography.html">Bibliography</a><a href="fsi_reference.html">Reference Values</a></div><a href="../mit_benchmark.html">MIT Benchmark</a></div></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../benchmarks.html">Benchmarks</a> » <a href="../../cfdbenchmarking.html">CFD Benchmarking Project</a> » <a href="../fsi_benchmark.html">FSI Benchmark</a> » <a href="fsi_quantities.html">Quantities for Comparison</a>  </div>
+
+  <hr />
+
+  <h2>Quantities for Comparison</h2>
+<p>According to our preliminary calculations, self induced periodic
+oscillations develop in the flow and structure.  The comparison will
+be done for <em>fully developed flow</em>, and particularly for
+<em>one full period of the oscillation</em> with respect to the position
+of the point <span class="math"><img class="latex" alt="$A(t)$" title="$A(t)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAOCAYAAAA1+Nx+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABHklEQVQ4y52T3U0DMRCEv0EpwEoJRwcmJRwdRNBBSgg1hA5CC5RAOkBJB0kJcB0ML06wrHUEGekePGvP/tysbHMLJA22T51Ysj0B3N0ovu6JFzxJSgDY7n7APuCWQG64IeA2tvsdSFoDOQg92z403EtJUuMoKfcqz+WBgaHh18H9I5CCrja9DuZlxlNT2Qgcqi6zpE0190vH5f04C0aTbe/K8QSkKnwP7CqRg6ShVP8WVTprrQeMkhaFSsFsWzwCH71g20Gy/VolfChVnzEFGmP5ySHuKrFV4I4jMK/On8CiFbE9SVpevP+Lr7Mz3otYbvy+B76BVcVvG7dsO7sxAquri9ax8Pav94B0S4IU7UKwR0vb/DtBJZCvxC8j/QHcz4iC/7wglwAAAABJRU5ErkJggg==" /></span>.  The suggested quantities of interest are:</p>
+<ul>
+<li>The y-coordinate <span class="math"><img class="latex" alt="$y(t)$" title="$y(t)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAOCAYAAADABlfOAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABF0lEQVQ4y5WT603DQBCEv7EowDU4HRyUYDqwSAcuIdTgEgIdkHSQdBCRDkgJUToY/uzBYVmOWcnSep9zs7vYZukHNDO+OusVC0XSxvZlJuRFUg2wFGEHpDHqCdvwH6Rr2+eR7TUKl/IlKVULnp2A04SrBY4j2xFYV5HYSxokNfHfSNoVyeeyiaSh4DFlX3DePkjqgA/gHaiLQnkoqxKR7XM0r22/Tb2usr23fQvSM6Jn4DDDyqy/KngrB9HazuhuC/n8WzSCTkWDch9PwNM40fZNUvezm79yzUX3wCr4HUYc7oHH8ZQj9hLU5SG2wG5q0Q8TS71deCTbPOwG+AxjAg5Tdw1s7hRMQBc6NdDHKW7uJKUZf5/1b8iCPTv/nNP3AAAAAElFTkSuQmCC" /></span> of the end of the beam structure at
+  point <span class="math"><img class="latex" alt="$A(t)$" title="$A(t)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAOCAYAAAA1+Nx+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABHklEQVQ4y52T3U0DMRCEv0EpwEoJRwcmJRwdRNBBSgg1hA5CC5RAOkBJB0kJcB0ML06wrHUEGekePGvP/tysbHMLJA22T51Ysj0B3N0ovu6JFzxJSgDY7n7APuCWQG64IeA2tvsdSFoDOQg92z403EtJUuMoKfcqz+WBgaHh18H9I5CCrja9DuZlxlNT2Qgcqi6zpE0190vH5f04C0aTbe/K8QSkKnwP7CqRg6ShVP8WVTprrQeMkhaFSsFsWzwCH71g20Gy/VolfChVnzEFGmP5ySHuKrFV4I4jMK/On8CiFbE9SVpevP+Lr7Mz3otYbvy+B76BVcVvG7dsO7sxAquri9ax8Pav94B0S4IU7UKwR0vb/DtBJZCvxC8j/QHcz4iC/7wglwAAAABJRU5ErkJggg==" /></span> (see <a href="fsi_definitions.html#fig2">Figure 2</a>).
+<li><p>Forces exerted by the fluid on the <em>whole</em> submerged body,
+  i.e. lift and drag forces acting on the cylinder and the beam
+  structure together
+  <div class="equation">
+    <img class="latex" alt="\begin{displaymath}(F_D,F_L)= \int_S \tens{\sigma} \vec{n} dS,\end{displaymath}" title="\begin{displaymath}(F_D,F_L)= \int_S \tens{\sigma} \vec{n} dS,\end{displaymath}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAAfCAYAAADKvMJ0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAD80lEQVRo3u1a63HiMBD+9oYCPHRwpAOSdGA6MEkFRzogQwUZ04FzFdyRDnAHATqADg7cwd6PW2X2FBnwAwfNSDMej19aaR/ffiuLmBmh1W9ElADoA4iYee7DmL8FszVuTwByOfvhqCHSG0X5xKcID5HeThtLlPvlrCHSa0d5BODAzOTb2EOk128xgJ2PAw9Gr99GADbeG52IBh5C7FdG+rvXRieiKTP7BlcPX2F4kTnoisQRUdLmPImZzQLDjpk3lrApgBTAK4C13I6kJn1i5ryFCTWSQUQpMz93bPQYwPISJE7Q1q75h2Kfp5KyMdNjkT4SAIXc2gO4/9CTsPcFM8M+xJvZcT8GMHR9U/VoKgPApK2xVBhzCmDbpbwT+lur68i2pzjARx/fiGh4JDfFJWRl3yJzbSojB/DYMcIPuyRxJ5AsAfBLpzyH3jYAluaid0TphqHmVt6f22mgBRZcWwYz7wRuj+Xf2Ylu/lRcVbsD8FwRthOBbddYb8TJHwDcAsgkgvsyx1dHStzJ80cAP6z+JkS0BZAz80642n+OkJXBI4CDQNkUwBZAfAHoaixDw1sHUBsB4CopRVIQyxwTiTrWKQxAovQRK1lrR2qZ6LE45E2FH7GcB9Zzt9EFwljnhZJ3DjKRRISlFZRxrgwWxUVXYPTEpegznCR1OEHkeHdr8ZqFzX/Md47nrv6Wtk16iuG5cm2uYPTN8U4BYKWfEdHEQPSZ+fwcGRsb4iqWV23C+31FPmPgXOfdWwAFM9u6f7DKwLH1XSy6KFRqXGpYBzBX+iyIaCHG/0QEJg4PXQKYngFbU0ckZFaklkVoLRmufjqM9KWe3xnvx1Z0mmh1odpCpzdZ29fQb+t2K/3p1BA5xhtpW/SY+Y2IMkeNFwPYEVFSEoHG014c9xbqeqa8to6MsSZNRBTpCBESt+iQud9VkcfMORHNAfwkondBilHJ+kNk3f8tdXhukJCIRkIKTWqOAaxEpy9qwaoQgjhW+prpOj2r6fVbR/7NXHmwCdGzSYp1nZUhyTWQuGs7ACQ98YDnCnlYlw2F8ro+gL1r1ahhLt6rLUljYa/mnaFAe9HhejtaLlm7/2dhKLwosPUJCfyuLmEYIprUJXg15aWSc2+9NLbYImyiqKa0ZdkauJd/2UI7m8StfZ9EMHo1jhHBwz1xwejNorzwcM/Bp9YLtjy7DV1RLgT4Tn6Y9AHcdP1/Pxj9cu3eWvI0LWXmkVXK+lGyhXYypx8AfLdLT8PoZb3gLeR0/w09UBCeu9YaJMpTAH0iWgej+8/Wt3I5w+eNCmZ/GmSjwis82Qcf4P244WP8+4u1cmwaNRsYzVazvqDB1Rv+L8XXQydgQ0D2AAAAAElFTkSuQmCC" />  </div>
+  where
+  <span class="math"><img class="latex" alt="$S=S_1 \cup S_2$" title="$S=S_1 \cup S_2$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAALCAYAAADC6Ps2AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABYklEQVRIx82W4U3DMBCFv4c6QGCEskEqNsgIbUdoN6BiAtRsEDZAHaGMANmAbgBkg8cfR4oimpbEqXqSFfls5Ysv784n29QmaQrMgSq4voEH2xsi2yVZvbi2CcFJgF09D745sG36YowYrK69x9b+w500YrQEDq0Al43IxrSxWclQ7qQ1X0n6BN5sH2wf/ngRkhLg6cTHfdnOO9bPYo1g53FbsnoEPgCH5zR2GsVinUilYij3pqEAbOe2Z8BtKErrEYpfJ0tSKqmQlF6YOw+jkJTVqbQC8oaKKkm7Y7k6MJU6WbZLSWPUtaNcSVlQTi6pBHa1vH6ApCW5fdsXKYVOsoAtkPZJJSAFVn24wZcBxSTc68/AMiihAu6Bhe1qhB4iFquQVAA74B24C4ea2V734Ya1he21mg3etZikLfBquzxjbxZUUtU3zYCfltl+kZReXWDCQTehvyj6HrRHUPaNfub9F/mSsC+5RK5RAAAAAElFTkSuQmCC" /></span>
+  (see <a href="fsi_quantities.html#figpath">Figure</a>) denotes the part of the circle being
+  in contact with the fluid (i.e. <span class="math"><img class="latex" alt="$S_1$" title="$S_1$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAYAAACksgdhAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAtklEQVQoz5XR4U0DMQwF4M/oBrgZjg0qsQEjtB2hI8AIqGzQGRihM7QjdAPobWD++ER6HBJ9UuT4JS/PdiIzTYiIAWuMRX3hKTNfNegaQY99Zm4abm0BXbPf4jI7PzeuP8hMVeIO14rDxC+t24QXnJAVhz9F6GfiHsfqEVY4YJWZHqrK3azkER/4rPy2t3rpuuB2bDnsJ6eu/uYN2xr7iEdsyvH3yDPzgnd3oPvPpYh4rmGIiPEbiCmKx2FsdHQAAAAASUVORK5CYII=" /></span>) plus part of the boundary of
+  the beam structure being in contact with the fluid (i.e. <span class="math"><img class="latex" alt="$S_2$" title="$S_2$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAYAAACksgdhAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAuUlEQVQoz32SYQ3CQAyFvyYIOA3DAQkOhoOBhOFgk0AmAQ2TMAtsEpDA5uDxgzso48JLLu293kvba00SCWZWABWwROoB7CW1OGycIACdpKPjKjLYOP8E3FfxyWX9QBKxxBqYoy0SnzvfF2iAEVC0WbFJwsyCpGXVXw9MklrX2wHo3xl+SniV2QBligMFMKYHMxBWoiHDlcDVojrNJkS7BS6ZkjtJZ/79kstQAHX0d+Y3Ioe4JYOb1+0J7aexDQpC2BoAAAAASUVORK5CYII=" /></span>), and
+  <span class="math"><img class="latex" alt="$\vec{n}$" title="$\vec{n}$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAKCAYAAACJxx+AAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAf0lEQVQY033QUQ3CUBBE0fNQ0CChEsBCJZRKAC1IKA5IJYAFJIAFJAw/D1IIMMkms/sxN7OS+Dbo0ZQkSiktdt61ws2fhH0SpS4/VdBgwBojWiwhyQH6mnJHV32DSxJmh+uM32FKYlFRA84z9AZHlQPTM/6Je/2imtNHxRFbtA8oN2uQItL3wAAAAABJRU5ErkJggg==" /></span>
+  is the outer unit normal vector to the integration path
+  with respect to the fluid domain.</p>
+  <blockquote>
+  <p>The forces can be calculated in several different
+    ways, i.e.</p>
+<div class="equation">
+<img class="latex" alt="    \begin{align*}
+      (F_D,F_L)= \int_S \tens{\sigma} \vec{n} dS
+      =&amp; \int_{S_1} \tens{\sigma}^f \vec{n} dS + \int_{S_2} \tens{\sigma}^f
+      \vec{n} dS \\
+      =&amp; \int_{S_1} \tens{\sigma}^f \vec{n} dS + \int_{S_2} \tens{\sigma}^s
+      \vec{n} dS \\
+      =&amp; \int_{S_1} \tens{\sigma}^f \vec{n} dS + \int_{S_2} \frac12 (
+      \tens{\sigma}^s + \tens{\sigma}^f ) \vec{n} dS \\
+      =&amp; \int_{S_0} \tens{\sigma} \vec{n} dS.
+    \end{align*}
+" title="    \begin{align*}
+      (F_D,F_L)= \int_S \tens{\sigma} \vec{n} dS
+      =&amp; \int_{S_1} \tens{\sigma}^f \vec{n} dS + \int_{S_2} \tens{\sigma}^f
+      \vec{n} dS \\
+      =&amp; \int_{S_1} \tens{\sigma}^f \vec{n} dS + \int_{S_2} \tens{\sigma}^s
+      \vec{n} dS \\
+      =&amp; \int_{S_1} \tens{\sigma}^f \vec{n} dS + \int_{S_2} \frac12 (
+      \tens{\sigma}^s + \tens{\sigma}^f ) \vec{n} dS \\
+      =&amp; \int_{S_0} \tens{\sigma} \vec{n} dS.
+    \end{align*}
+" src="data:image/png;base64,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" /></div>
+    <p>That means that, up to numerical effects, all proposed evaluations
+    will lead (asymptotically) to the same results.</p>
+</blockquote></li>
+<li>Pressure difference between the points <span class="math"><img class="latex" alt="$A(t)$" title="$A(t)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAOCAYAAAA1+Nx+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABHklEQVQ4y52T3U0DMRCEv0EpwEoJRwcmJRwdRNBBSgg1hA5CC5RAOkBJB0kJcB0ML06wrHUEGekePGvP/tysbHMLJA22T51Ysj0B3N0ovu6JFzxJSgDY7n7APuCWQG64IeA2tvsdSFoDOQg92z403EtJUuMoKfcqz+WBgaHh18H9I5CCrja9DuZlxlNT2Qgcqi6zpE0190vH5f04C0aTbe/K8QSkKnwP7CqRg6ShVP8WVTprrQeMkhaFSsFsWzwCH71g20Gy/VolfChVnzEFGmP5ySHuKrFV4I4jMK/On8CiFbE9SVpevP+Lr7Mz3otYbvy+B76BVcVvG7dsO7sxAquri9ax8Pav94B0S4IU7UKwR0vb/DtBJZCvxC8j/QHcz4iC/7wglwAAAABJRU5ErkJggg==" /></span> and
+  <span class="math"><img class="latex" alt="$B$" title="$B$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAJCAYAAADkZNYtAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAmklEQVQY03XQ0Q2CUBBE0TuEAkjsgBKkBLUDEjvADmzBaAfSCrSAJVCC2MHw4WL0qZPsz2SzOVnZZomkI3AGWmCIugKwfcD2a4Di2TvtJ6DO+MwWuPGdAnikyzugfy8kXYGL7V6JeQJOcb0A9kBnuyXgi6v84x2AxjZZ4u1/eMflI3ni7RLvOo5sAHJJJVDH3CU14V0FrbI9Asz2DlO9bB8BDwAAAABJRU5ErkJggg==" /></span>
+  <div class="equation">
+  <img class="latex" alt="\begin{displaymath}\Delta p^{AB}=p^B-p^{A(t)}.\end{displaymath}" title="\begin{displaymath}\Delta p^{AB}=p^B-p^{A(t)}.\end{displaymath}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAQCAYAAADdw7vlAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACZElEQVRYw+1Z7W3bMBS8MzyA4G7AbKC0G7gbOOkGHsFBJjDSDeyOYG9gd4I23sDeoK43eP1zDAiCkhVBCRmgAghB5CN1eu/eBymaGf5fZV8kawAws0PUXwGYmtm2ae7oHcBtSLoYMMm/JGdqc5KrXMorBUtKX4ERD6GMDH4BcCE5zWJgzzwAdTR0ArA3s63YtwfwOZNOi8HSoK9HAOtAxgE4+2cz2wO4a1pz/IZgKylvB8BFw/cATmJeDeCTmd1mMnARWFr05eSp3rhPwltHXl15uaseTHLV5vYdr6laBeBLNPYVwNLM9mb2Xe+cZzJwKVja9OW99aTxZZSPLwAmnTxYTFoB+AHgtm+o8Ylf632LRFzEtipjDZMdyxV9VQlDX0g6Gdx/w6lrDp6IHWeSs1cCdSoAXMTM2kcEkgvdfVGzAHA0s3UGxWbF0kVfAA4y+kvNILucO70j3CaFcV0Jf2NmNwkPv5d3b4KQsmpi0QC56fGK2B8fXnNibcHfG4Pmz1PfF9hpomIrGddfGoA6et4BWER9M92PKt896zahXAmtBKxDYFDxVyf6K79+UxsHTJgmWPAA4CfJtc9T4aY6kHeZ82gTeQfFquLrpkVkF+twCAzxAUeYiwFs2+aOgzCQXJjkb4XIh5AM2i+GlejuDUNcrxA9NNa+ufk99ZUM0YrxbeHBVKn5vic/R2x8Li08l4Q1BwbZzVEvPHbgwtbM7sTIZ22lzioYlqlNdiHnuNmx5sCg6vwX+/xsIHmMq+uCD+qzY82JYdQznxw+iHGzY82NYfRKsE7Flov/EBVo3OxYS8DwD4CTqB3CAAMaAAAAAElFTkSuQmCC" />  </div>
+  The position of the point <span class="math"><img class="latex" alt="$A(t)$" title="$A(t)$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAOCAYAAAA1+Nx+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABHklEQVQ4y52T3U0DMRCEv0EpwEoJRwcmJRwdRNBBSgg1hA5CC5RAOkBJB0kJcB0ML06wrHUEGekePGvP/tysbHMLJA22T51Ysj0B3N0ovu6JFzxJSgDY7n7APuCWQG64IeA2tvsdSFoDOQg92z403EtJUuMoKfcqz+WBgaHh18H9I5CCrja9DuZlxlNT2Qgcqi6zpE0190vH5f04C0aTbe/K8QSkKnwP7CqRg6ShVP8WVTprrQeMkhaFSsFsWzwCH71g20Gy/VolfChVnzEFGmP5ySHuKrFV4I4jMK/On8CiFbE9SVpevP+Lr7Mz3otYbvy+B76BVcVvG7dsO7sxAquri9ax8Pav94B0S4IU7UKwR0vb/DtBJZCvxC8j/QHcz4iC/7wglwAAAABJRU5ErkJggg==" /></span> is time dependent.</li>
+</ul>
+
+<div id="figpath" class="equation">
+<img src="../../../../media/fsi/fig3.jpg" title="Integration path $S=S_1 cup S_2$ for the force calculation" alt="Integration path $S=S_1 cup S_2$ for the force calculation" />
+<!--
+\begin{figure}[ht]
+\centerline{\psset{framearc=0, dimen=middle, unit=30cm}
+\begin{pspicture}(0.2,0.15)(0.4,0.25)
+    \psarc[linewidth=1pt,linestyle=solid]{-}(0.2,0.2){0.05}{14}{346}
+    \psline[linewidth=1pt,linestyle=solid]{-}(0.252,0.19)(0.6,0.19)(0.6,0.21)(0.252,0.21)
+    \psline{-}(0.195,0.2)(0.205,0.2)\psline{-}(0.2,0.195)(0.2,0.205)
+    \pscircle[linewidth=1pt,linestyle=dashed](0.2,0.2){0.046}
+    \uput[45](0.23,0.23){$S_1$}
+    \uput[90](0.4,0.21){$S_2$}
+    \uput[0](0.15,0.2){$S_0$}
+\end{pspicture}}
+\caption{Integration path $S=S_1 \cup S_2$ for the force calculation}
+\end{figure}
+-->
+</div>
+
+<p>The time dependent values are represented by the mean value, amplitude
+and frequency. The mean value and amplitude are computed from the last
+period of the oscillations by taking the maximum and minimum values,
+then the mean value is taken as average of the min/max values, and the
+amplitude is the difference of the max/min from the mean:</p>
+<div class="equation">
+<img class="latex" alt="\begin{align*}
+\text{mean}=&amp; \frac12 (\max + \min) \\
+\text{amplitude}=&amp; \frac12 ( \max - \min)
+\end{align*}
+" title="\begin{align*}
+\text{mean}=&amp; \frac12 (\max + \min) \\
+\text{amplitude}=&amp; \frac12 ( \max - \min)
+\end{align*}
+" src="data:image/png;base64,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" /></div>
+
+<p>The frequency of the oscillations can be computed either from the
+period time
+<span class="math"><img class="latex" alt="$T$" title="$T$" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAALpr0TAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAgklEQVQY023Q4Q0BYRCE4WdFAaIEOrhEB3etKIGaJDqgBHSgBiWMH07wufm3k3d2NltJVNUVF9yxxhZ7L62xhA59EkmM0PU9j95uhlWSs48GHPzq5js5ph/o/vwG6pAWSmLWVPQ4m1ALDjhNgW11pu5LYl5Vi/Elm3d9Va2SHL8XPgEkOm9ZcQGKxwAAAABJRU5ErkJggg==" /></span>
+as
+<div class="equation">
+<img class="latex" alt="\begin{align*}
+\text{frequency}=&amp; \frac{1}{T}
+\end{align*}
+" title="\begin{align*}
+\text{frequency}=&amp; \frac{1}{T}
+\end{align*}
+" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFYAAAAcCAYAAAD7lUj9AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACpElEQVRo3u2Y7VHbQBCGn2VcgEMJpgORVIDcgYEKYncAQwUZ04FIBQE6sDoAqwPUAdgdvPmRvclFkRywZZLJ3M5odKfT7d28+70miUTbkZlNJN23riVgtwMUOAQK4IOkdQK2X4DVBexBgmc/lIBNwCZgEyVgE7D/WjaQm9mFT6/MLE/p1jvRIJLCHHgCjiXNEjQ9AGtmU5/fJkj61dgh8OQVxE2CpQdgzSwDxq65ALXXwAWwBmaSjr0+Hvn6J+CLpLXvnwELr59fgFpS5U69AApJ187jK/A5NC/a+AIfgTnwDahc8OeSTiPXlQHnwIOfWwKZ83+UNDazIbAE7iVdNgLQELj6Az7Pkq63QtaD1wVwISnM58Cdj3O/8CJan/g/Q2AFDKO1FZA1eMW874CJj1v5Nu/g8wWQ+zhYWFgrwhnA1AUZ1qZhvOsD6LXPYAPmDw586YGNRlrxDJy5dsRNiMem1Deccd7BN7zjvfEZZ67hQTlm0fjGzFbAzMxGLffZmiTZm7OCFmp2bGpJZcOcpj3c9ze+G2jYeHfRrd/tpbNfumdXMHjlf4WbYnyxifu1eePfUYuAjqJ57r6zk28XGBHdu1//JWmPBFS4y7ncoH3rTet9Ba9gkrUDkQOZmdWSSkm1mc3cJTz43tKD14l/X7gmNTX9FphH5l66mVZdfBt3Kl1Ymc/DvtPmvgi0yszW8bd3r876rrzMbOlRv/rLZedU0s0e+C7dbz+5JU4jzT8CDiWdDviPyOv30q3mcQ/8M+AyuBz341Xsh0MP4aDng0NOeuXB4b2p9hw425PFjBqBdhzFi0BVasLsrkgr4KRNiAnY3dzCsiu3Tf3Y7SnflHUkYLencTMHT66gH1cgfvSuq10qr0Q/y+Cpd+EAcjMbtVWK3wHblLV0/vqrJgAAAABJRU5ErkJggg==" /></div>
+or by using fourier analysis on the periodic data and taking the
+lowest significant frequency present in the spectrum.  Additionally, a
+plot of the quantities over the period should be presented.</p>
+
+
+<hr />
+
+<ul><li><a href="fsi_quantities.html">Quantities for Comparison</a><ul><li><a href="fsi_definitions.html">Definitions</a></li><li class="selected"><a href="fsi_quantities.html">Quantities for Comparison</a></li><li><a href="fsi_tests.html">Partial computational Tests</a><ul><li><a href="fsi_tests/fsi_cfd_tests.html">CFD tests</a></li><li><a href="fsi_tests/fsi_csm_tests.html">CSM tests</a></li><li><a href="fsi_tests/fsi_fsi_tests.html">FSI tests</a></li></ul></li><li><a href="fsi_bibliography.html">Bibliography</a></li><li><a href="fsi_reference.html">Reference Values</a></li></ul></li></ul></div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

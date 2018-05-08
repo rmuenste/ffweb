@@ -1,0 +1,1895 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Block assembly - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html" class="selected">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="concept_blockassembly.html">Block assembly</a>  </div>
+
+  <hr />
+
+  <h1>The block assembly</h1>
+
+<p>The block matrix assembly in FEAT2 is an alternative assembly strategy for block matrices. Instead of setting up each submatrix in a block matrix separately, this technique directly works on the complete block matrix, thus saving a lot of computational time for the precomputation of all the basis functions. However, for applying this technique, one has to know a bit more about the assembly of matrices and vectors.</p>
+
+<p>In contrast to the "scalar" assembly, the "block" assembly does not have separate structures for a linear form, bilinear form or trilinear form. Instead, appropriate callback routines directly calculate local matrix/vector entries which are imposed by the block assembly routines into the global matrices/vectors. This involves some additional loops in the callback routines, and the callback routines directly have to deal with finite element basis functions.</p>
+
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td><a href="concept_blockassembly.html#Involved-modules-and-functionality">Involved modules and functionality</a></td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><a href="concept_blockassembly.html#Basics">Basics</a></td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><a href="concept_blockassembly.html#Providing-nonlinearities">Providing nonlinearities / FE functions / temporary memory</a></td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><a href="concept_blockassembly.html#Standard-operators">Standard operators</a></td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><a href="concept_blockassembly.html#Block-matrices">Block matrices: Advanced operator assembly</a></td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><a href="concept_blockassembly.html#Block-vectors">Block vectors: Advanced vector assembly</a></td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><a href="concept_blockassembly.html#Accessing-FE-functions">Accessing FE functions and temporary arrays</a></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="Involved-modules-and-functionality">Involved modules and functionality</h2>
+
+<p>The following modules are involved in the block assembly:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Module</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>blockmatassemblybase.f90</td>
+  <td>Definition of structures</td>
+</tr>
+<tr>
+  <td>blockmatassembly.f90</td>
+  <td>The actual assembly routines</td>
+</tr>
+<tr>
+  <td>blockmatassemblystdop.f90</td>
+  <td>Implementation of standard operators with block assembly routines</td>
+</tr>
+<tr>
+  <td>feevaluation2.f90</td>
+  <td>Evaluation of finite element functions for nonlinearities</td>
+</tr>
+</tbody>
+</table>
+
+<p>Currently, the block assembly routines in <code>blockmatassembly.f90</code> realise the following functionalities:</p>
+
+<ul>
+<li><p><strong>Assembly of block matrices:</strong> Subroutine <code>bma_buildMatrix</code></p>
+
+<p>This subroutine realises the assembly of block matrices. A special callback routine has to be provided that calculates local matrix entries.</p></li>
+<li><p><strong>Assembly of block vectors:</strong> Subroutine <code>bma_buildVector</code></p>
+
+<p>This subroutine realises the assembly of block vectors. A special callback routine has to be provided that calculates local vector entries.</p></li>
+<li><p><strong>Assembly of integrals:</strong> Subroutines <code>bma_buildIntegral</code> and <code>bma_buildIntegrals</code></p>
+
+<p>These subroutines can be used to calculate one or multiple integrals or other distributed operators. They are usually used to compute $L_2$ or $H^1$ norms but can also be used to compute the $sup$ norm of a vector or vector field.</p></li>
+</ul>
+
+<p>The assembly routines support scalar-values as well as vector-values finite element functions and can also deal with interleaved matrices and vectors. However, each functionality needs a special implementation in the corresponding callback routines, see below.</p>
+
+<h2 id="Basics">Basics</h2>
+
+<p>When a block assembly routine is invoked, the following steps are done:</p>
+
+<ul>
+<li><p>The routine loops over sets of cells. On every cell, there exist a set of cubature points.</p></li>
+<li><p>On every cell and in each cubature point on every cell, the assembly routine calculates the values of the basis functions of all finite element spaces that are involved in the assembly. This includes the basis functions that come from the submatrices in the block matrix as well as from the basis functions of all involved nonlinearities.</p></li>
+<li><p>If there are finite element nonlinearities specified (e.g., a convection given by a finite element function), their values in all the cubature points are calculated.</p></li>
+<li><p>Next, a callback routine is invoked. This callback routine has to compute the local matrices/vectors/integrals in all the cubature points on all the elements given.</p></li>
+<li><p>Finally, the assembly routines collect the calculated local matrix/vector/integral contributions and form a global matrix/vector/integral from them.</p></li>
+</ul>
+
+<h3>Simple block matrix assembly</h3>
+
+<p>In the simplest form, calling the matrix assembly reads as follows:</p>
+
+<pre><code>type(t_matrixBlock) :: rmatrix
+...
+call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,fcalcLocalMatrices)
+</code></pre>
+
+<p>The routine <code>fcalcLocalMatrices</code> is a user-defined callback routine that calculates the local matrix contributions.</p>
+
+<h3>Simple block vector assembly</h3>
+
+<p>In the simplest form, calling the vector assembly reads as follows:</p>
+
+<pre><code>type(t_vectorBlock) :: rrhs
+...
+call bma_buildVector (rrhs,BMA_CALC_STANDARD,fcalcLocalVectors)
+</code></pre>
+
+<p>The routine <code>fcalcLocalVectors</code> is a user-defined callback routine that calculates the local vector contributions.</p>
+
+<h3>Simple integral assembly: General integral</h3>
+
+<p>In the simplest form, calling the integral assembly reads as follows:</p>
+
+<pre><code>type(t_scalarCubatureInfo), target :: rmyCubature
+real(DP) :: dintvalue
+...
+call bma_buildIntegral (dintvalue,BMA_CALC_STANDARD,fcalcLocalIntegral,&amp;
+    rtriangulation,rcubatureInfo=rmyCubature)
+</code></pre>
+
+<p>The routine <code>fcalcLocalIntegral</code> is a callback routine that calculates the local integral contribution on a set of cells. <code>rtriangulation</code> specifies the underlying mesh and <code>rmyCubature</code> the cubature formula to be used. The result of the integration is saved to <code>dintvalue</code>.</p>
+
+<p>The alternative routine <code>bma_buildIntegrals</code> cab be used to calculate multiple integrals at once. For example,</p>
+
+<pre><code>type(t_scalarCubatureInfo), target :: rmyCubature
+real(DP), dimension(3) :: Dintvalues
+...
+call bma_buildIntegrals (Dintvalue,BMA_CALC_STANDARD,fcalcLocalIntegral,&amp;
+    rtriangulation,rcubatureInfo=rmyCubature)
+</code></pre>
+
+<p>calculates three domain integrals at once into Dintvalues(:). The corresponding local contributions are calculated by <code>fcalcLocalIntegral</code>. <code>rmyCubature</code> defines the cubature rule to be used on the mesh <code>rtriangulation</code>.</p>
+
+<blockquote>
+  <p><strong>Remark:</strong> This form of the integration does not necessitate any finite element function and is rather seldom used. The original idea of the integral assembly is to calculate norms which involves finite element functions. For such an application, the routine is used in a slightly different manner.</p>
+</blockquote>
+
+<h2 id="Providing-nonlinearities">Providing nonlinearities / FE functions / temporary memory</h2>
+
+<p>All assembly routines can be called with an optional parameter <code>revalVectors</code>. In combination with the module <code>feevaluation2.f90</code>, this parameter offers the possibility to specify finite element functions that live on the same mesh as on which the assembly is applied. All finite element functions given in this structure are automatically evaluated in all cubature points, and the calculated values are provided to the callback routines for further processing.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> A discrete stationary Oseen equation has the form $$-Delta u_h + v_h nabla u_h + nabla p_h = f_h$$ with $u_h$, $v_h$ and $f_h$ vector fields. The operator $n(v_h,cdot):=v_h nabla cdot$ needs a finite element function $v_h$ for the assembly, which specifies the direction of a flow. Such a function can be provided to the callback routines via <code>revalVectors</code>.</p>
+</blockquote>
+
+<p>Let a finite element function $v_h$ be given as a block vector structure <code>rvectorVh</code>. This vector can be provided to the assembly routines as follows. We demonstrate the approach for the matrix assembly, however, for vector or integral assembly, the approach is exactly the same.</p>
+
+<p><strong>Providing a scalar function:</strong> Let $v_h=(v_1)$ be a block vector containing only one subvector. Such a subvector is provided to the assembly routines as follows:</p>
+
+<pre><code>type(t_fev2Vectors) :: rmyVectors
+type(t_vectorBlock) :: rvectorVh
+
+type(t_matrixBlock) :: rmatrix
+...
+call fev2_addVectorToEvalList(rmyVectors,rvectorVh%RvectorBlock(1),0)
+
+call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,&amp;
+    fcalcLocalMatrices,revalVectors=rmyVectors)
+
+call fev2_releaseVectorList (rmyVectors)
+</code></pre>
+
+<p>There is no special initialisation routine for the structure <code>rmyVectors</code>. One simply adds all scalar components of the vector $v_h$ to <code>rmyVectors</code> and provides this structure to the <code>bma_buildXXX</code> routine. The assembly routine will evaluate the provided functions automatically.</p>
+
+<blockquote>
+  <p><strong>Derivatives:</strong> The last parameter <code>nmaxDerivative</code> in the routine <code>fev2_addVectorToEvalList</code> is a derivative quantifier. It advises the evaluation routines what to evaluate. <code>nmaxDerivative=0</code> (as specified above) calculates the function values in the cubature points, =1 the 1st derivatives, =2 the 2nd derivatives and so on. This can be used for more complicated operators which also involve derivatives of nonlinearities.</p>
+</blockquote>
+
+<p>The following example assumes that $v_h=(v_1,v_2,v_3)$ has multiple components. It adds all components, one by one, and advises the assembly routine to calculate also their derivatives in the cubature points. So in the callback function the values of $v_h$ as well as the values of $nabla v_h$ are available.</p>
+
+<pre><code>type(t_fev2Vectors) :: rmyVectors
+type(t_vectorBlock) :: rvectorVh
+
+type(t_matrixBlock) :: rmatrix
+...
+call fev2_addVectorToEvalList(rmyVectors,rvectorVh%RvectorBlock(1),1)
+call fev2_addVectorToEvalList(rmyVectors,rvectorVh%RvectorBlock(2),1)
+call fev2_addVectorToEvalList(rmyVectors,rvectorVh%RvectorBlock(3),1)
+
+call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,&amp;
+    fcalcLocalMatrices,revalVectors=rmyVectors)
+
+call fev2_releaseVectorList (rmyVectors)
+</code></pre>
+
+<p><strong>Providing vector fields:</strong> Let $v_h=(v_1,v_2)$ be a block vector describing a vector field (for example, a velocity vector field of a flow in 2D). The following example provides the vector field to the evaluation routine via the function <code>fev2_addVectorFieldToEvalList</code>. This subroutine expects all components of the vector field in the parameters and allows 1D, 2D and 3D vector fields:</p>
+
+<pre><code>type(t_fev2Vectors) :: rmyVectors
+type(t_vectorBlock) :: rvectorVh
+
+type(t_matrixBlock) :: rmatrix
+...
+call fev2_addVectorFieldToEvalList(rmyVectors,0,&amp;
+    rvectorVh%RvectorBlock(1),rvectorVh%RvectorBlock(2))
+
+call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,&amp;
+    fcalcLocalMatrices,revalVectors=rmyVectors)
+
+call fev2_releaseVectorList (rmyVectors)
+</code></pre>
+
+<p>Again, the parameter <code>nmaxDerivative</code> (which is set to <code>nmaxDerivative=0</code> in this example) specifies in how far derivatives from the vector field should be calculated. A call in the form</p>
+
+<pre><code>...
+call fev2_addVectorFieldToEvalList(rmyVectors,1,&amp;
+    rvectorVh%RvectorBlock(1),rvectorVh%RvectorBlock(2))
+...
+</code></pre>
+
+<p>would calculate $v_h$ as well as $nabla v_h$ and provide it to the callback routine.</p>
+
+<p><strong>Providing temporary memory:</strong> Additionally to vectors and vector fields, the user can also specify "dummy vectors" and "dummy vector fields" in the <code>t_fev2Vectors</code> structure. With this technique, it is possible to provide temporary memory in all cubature points on all elements to callback routines. Such temporary memory is needed in complicated operators for intermediate calculations which cannot be done in one simple step.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> A non-Newtonian fluid following the Power law model is given by the equation $$-nu(x)Delta u + u nabla u + nabla p = f$$ with a nonlinear viscosity $$nu(x) = nu_0 z^{e/2 - 1},$$ $e,,nu_0inmathbb{R}$ a constant and $z$ be given by $$z=||D(u)||^2+varepsilon,qquad D(u)=frac{1}{2} (nabla u + nabla u^T),$$ with $varepsiloninmathbb{R}$ a constant. Computation routines for this model at first evaluate $nabla u$ and $nabla u^T$, then $||D(u)||$ and at the end $nu(x)$. For the intermediate steps, some temporary memory is necessary which can be provided by "dummy vectors".</p>
+</blockquote>
+
+<p>The following routines provide temporary memory:</p>
+
+<dl>
+<dt><code>fev2_addDummyVectorToEvalList</code></dt>
+<dd>
+<p>provides one or multiple temporary arrays with memory in every cubature point on every element. The following example adds one temporary array to the structure <code>rmyVectors</code>.</p>
+
+<pre><code>type(t_fev2Vectors) :: rmyVectors
+type(t_matrixBlock) :: rmatrix
+...
+call fev2_addDummyVectorToEvalList(rmyVectors)
+
+call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,&amp;
+    fcalcLocalMatrices,revalVectors=rmyVectors)
+...
+</code></pre>
+</dd>
+
+<dt><code>fev2_addDummyVecFieldToEvalList</code></dt>
+<dd>
+<p>provides temporary memory for one or multiple vector fields with memory in every cubature point on every element. The following example adds one temporary vector field with 2 vector components to the structure <code>rmyVectors</code>.</p>
+
+<pre><code>type(t_fev2Vectors) :: rmyVectors
+type(t_matrixBlock) :: rmatrix
+...
+call fev2_addDummyVecFieldToEvalList(rmyVectors,2)
+
+call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,&amp;
+    fcalcLocalMatrices,revalVectors=rmyVectors)
+...
+</code></pre>
+
+<p>Using the parameter <code>nsubarrays</code> allows to reserve also some subarrays associated to this temporary array. This is used, e.g., to allocate memory for a vector field as well as its derivatives. The following example allocates temporary memory for a temporary vector field $v_h=(v_1,v_2)$ and its derivative $nabla v_h$ in all cubature points on all elements. We need <code>nsubarrays=3</code>, corresponding to the three terms $v_h$, $partial_x v_h$ and $partial_y v_h$.</p>
+
+<pre><code>type(t_fev2Vectors) :: rmyVectors
+type(t_matrixBlock) :: rmatrix
+...
+call fev2_addDummyVecFieldToEvalList(rmyVectors,2,3)
+
+call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,&amp;
+    fcalcLocalMatrices,revalVectors=rmyVectors)
+...
+</code></pre>
+</dd>
+
+<dt><code>fev2_addCellDummyToEvalList</code></dt>
+<dd>
+<p>provides one or multiple temporary arrays with memory for one information on every element (cell based information). The following example adds one temporary cell based array to the structure <code>rmyVectors</code>.</p>
+
+<pre><code>type(t_fev2Vectors) :: rmyVectors
+type(t_matrixBlock) :: rmatrix
+...
+call fev2_addCellDummyToEvalList(rmyVectors)
+
+call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,&amp;
+    fcalcLocalMatrices,revalVectors=rmyVectors)
+...
+</code></pre>
+</dd>
+
+<dt><code>fev2_addDummyVecFieldToEvalList</code></dt>
+<dd>
+<p>provides temporary memory for one or multiple vector fields with memory for one information on every element (cell based information). The following example adds one temporary vector field with 2 cell based vector components to the structure <code>rmyVectors</code>.</p>
+
+<pre><code>type(t_fev2Vectors) :: rmyVectors
+type(t_matrixBlock) :: rmatrix
+...
+call fev2_addCellVecFieldDummy(rmyVectors,2)
+
+call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,&amp;
+    fcalcLocalMatrices,revalVectors=rmyVectors)
+...
+</code></pre>
+</dd>
+</dl>
+
+<h2 id="Standard-operators">Standard operators</h2>
+
+<p>The module <code>blockmatassemblystdop.f90</code> provides a lot of standard implementations for the most important standard operators - matrices, vectors and integrals. These implemetations are given as callback routines which can either be provided to the <code>bma_buildXXXX</code> routines directly, or which can be called inside of a callback function. The following naming conventions are used here:</p>
+
+<dl>
+<dt><code>bma_fcalc_XXXX</code></dt>
+<dd>Routines with this name can be used as callback function in a call to <code>bma_buildXXXX</code>. Parameters are passed via a <code>t_collection</code> structure and the vector evaluation structure <code>revalVectors</code>. There is no need for writing a user-defined callback function. It is a wrapper for the corresponding <code>bma_docalc_XXXX</code> subroutine.</dd>
+
+<dt><code>bma_docalc_XXXX</code></dt>
+<dd>This is the <em>immediate</em> version of the <code>bma_fcalc_XXXX</code> routine from above. Routines of type <code>bma_docalc_XXXX</code> can be called inside of a callback function of <code>bma_buildXXXX</code> to calculate a specific operator. This allows to easily compute multiple operators in one step.</dd>
+</dl>
+
+<h3>Using <code>bma_fcalc_XXXX</code> for simple calculations</h3>
+
+<p>With the routines <code>bma_fcalc_XXXX</code> from <code>blockmatassemblystdop.f90</code> one can easily assemble all types of matrices with very few commands. Parameters for these routines are passed via the "QuickAccess" arrays of the collection structure in a specified manner. In the following, we give some examples how these routines are used.</p>
+
+<dl>
+<dt>Assembly of a Laplace matrix</dt>
+<dd>
+<p>The following code calculates a Laplace matrix at position (ix,iy) of a block matrix. We specify "1.0" as multiplier in front of the Laplace matrix:</p>
+
+<pre><code>type(t_matrixBlock) :: rmatrix
+type(t_collection) :: rcoll
+...
+  rcoll%DquickAccess(1) = 1.0_DP  ! multiplier
+  rcoll%IquickAccess(1) = ix
+  rcoll%IquickAccess(2) = iy
+
+  call bma_buildMatrix (&amp;
+      rmatrix,BMA_CALC_STANDARD,bma_fcalc_laplace, rcoll)
+...
+</code></pre>
+</dd>
+
+<dt>Assembly of a tensor Laplace matrix</dt>
+<dd>
+<p>The following code calculates a tensor Laplace matrix at position (1,1) of a block matrix - i.e., a $dtimes d$ block matrix with the Laplace operator on the diagonal. The dimension $d$ of the tensor is taken from the underlying triangulation. We specify "1.0" as multiplier in front of the tensor Laplace matrix and use a tensor size of 2. This is typically used for the Stokes equations in 2D where the Stokes operator is exactly a $2times 2$ block matrix with Laplace on the diagonal:</p>
+
+<pre><code>type(t_matrixBlock) :: rmatrix
+type(t_collection) :: rcoll
+...
+  rcoll%DquickAccess(1) = 1.0_DP  ! multiplier
+  rcoll%IquickAccess(1) = 1
+  rcoll%IquickAccess(2) = 1
+  rcoll%IquickAccess(3) = 2
+
+  call bma_buildMatrix (&amp;
+      rmatrix,BMA_CALC_STANDARD,bma_fcalc_laplaceTensor, rcoll)
+...
+</code></pre>
+</dd>
+
+<dt>Assembly of a Mass matrix</dt>
+<dd>
+<p>The following code calculates a mass matrix at position (ix,iy) of a block matrix. We specify "1.0" as multiplier in front of the Laplace matrix:</p>
+
+<pre><code>type(t_matrixBlock) :: rmatrix
+type(t_collection) :: rcoll
+...
+  rcoll%DquickAccess(1) = 1.0_DP  ! multiplier
+  rcoll%IquickAccess(1) = ix
+  rcoll%IquickAccess(2) = iy
+
+  call bma_buildMatrix (&amp;
+      rmatrix,BMA_CALC_STANDARD,bma_fcalc_mass, rcoll)
+...
+</code></pre>
+
+<p>A tensor mass matrix can be assembled via <code>bma_fcalc_massTensor</code>, similar to the tensor Laplace matrix above.</p>
+</dd>
+
+<dt>Assembly of a "scalar" convection operator</dt>
+<dd>
+<p>The following code assembles the convection operator $n(u_h,v_h,w_h)=( (u_h nabla) v_h, w_h )$ at position (1,1) of a block matrix with convection (2.0,3.0). We apply the operator only to the scalar matrix at position (1,1) which realises the convection in a convection-diffusion-reaction equation of type $$-Delta u + u nabla u + u = f.$$</p>
+
+<pre><code>type(t_matrixBlock) :: rmatrix
+type(t_collection) :: rcoll
+...
+  rcoll%IquickAccess(1) = 1  ! x-position
+  rcoll%IquickAccess(2) = 1  ! y-position
+  rcoll%IquickAccess(3) = 0  ! scalar destination
+  rcoll%IquickAccess(4) = 0  ! constant direction
+
+  rcoll%DquickAccess(1) = 1.0_DP  ! multiplier
+  rcoll%DquickAccess(2) = 2.0_DP  ! x-direction
+  rcoll%DquickAccess(3) = 3.0_DP  ! y-direction
+
+  call bma_buildMatrix (&amp;
+      rmatrix,BMA_CALC_STANDARD,bma_fcalc_convec_ugradvw, rcoll)
+...
+</code></pre>
+</dd>
+
+<dt>Assembly of a convection operator</dt>
+<dd>
+<p>The following code assembles the convection operator $n(u_h,v_h,w_h)=( (u_h nabla) v_h, w_h )$ at position (1,1) of a block matrix. The nonlinearity $u_h$ is given as a finite element function, realised by the block vector <code>rvelocity</code>. We apply the nonlinearity to the full velocity tensor; the dimension is derived from the underlying triangulation, which is assumed to be 2D here.</p>
+
+<pre><code>type(t_matrixBlock) :: rmatrix
+type(t_vectorBlock) :: rvelocity
+
+type(t_fev2Vectors) :: rmyVectors
+type(t_collection) :: rcoll
+...
+  ! Parameters
+  rcoll%IquickAccess(1) = 1  ! x-position
+  rcoll%IquickAccess(2) = 1  ! y-position
+  rcoll%IquickAccess(3) = 1  ! tensor destination
+  rcoll%IquickAccess(4) = 1  ! nonconstant direction
+
+  rcoll%DquickAccess(1) = 1.0_DP  ! multiplier
+
+  ! Provide the vector field
+  call fev2_addVectorFieldToEvalList(rmyVectors,0,&amp;
+      rvelocity%RvectorBlock(1),rvelocity%RvectorBlock(2))
+
+  call bma_buildMatrix (&amp;
+      rmatrix,BMA_CALC_STANDARD,bma_fcalc_convec_ugradvw, rcoll,&amp;
+      revalVectors = rmyVectors)
+
+  call fev2_releaseVectorList (rmyVectors)
+...
+</code></pre>
+</dd>
+
+<dt>Assembly of a constant RHS vector</dt>
+<dd>
+<p>The following code assembles a RHS vector to the constant RHS function $f=1$. The RHS is assumed to have only one component:</p>
+
+<pre><code>type(t_matrixBlock) :: rrhs
+type(t_collection) :: rcoll
+...
+  ! Parameters
+  rcoll%IquickAccess(1) = 1       ! Number of components
+  rcoll%DquickAccess(1) = 1.0_DP  ! The value of the RHS function
+
+  call bma_buildVector (&amp;
+      rmatrix,BMA_CALC_STANDARD,bma_fcalc_rhsConst, rcoll)
+...
+</code></pre>
+</dd>
+
+<dt>Assembly of a $||u_h||_{L_2}$</dt>
+<dd>
+<p>The following code assembles the $L_2$ norm of a finite element function $u_h=(u_1)$ given by <code>rx</code>.</p>
+
+<pre><code>type(t_vectorBlock) :: rx
+type(t_fev2Vectors) :: rmyVectors
+real(DP) :: dintegral
+...
+  ! Provide the vector
+  call fev2_addVectorToEvalList(rmyVectors,rx%RvectorBlock(1),0)
+
+  call bma_buildIntegral (&amp;
+      dintvalue,BMA_CALC_STANDARD,bma_fcalc_L2norm,revalVectors=rmyVectors)
+
+  call fev2_releaseVectorList (rmyVectors)
+...
+</code></pre>
+</dd>
+</dl>
+
+<blockquote>
+  <p><strong>Remark:</strong> If a finite element function is specified via <code>revalVectors</code>, a triangulation, boundary definition and cubature rule do not have to be specified. Although it may be advisable top specify a cubature rule, triangulation and boundary description is taken from the first vector in the vector list. This simplifies the call to <code>bma_buildIntegral</code>.</p>
+</blockquote>
+
+<dl>
+<dt>Assembly of a $||u_h||_{H^1}$</dt>
+<dd>
+<p>The following code assembles the $H^1$ norm of a finite element function $u_h=(u_1,u_2)$ given by <code>rx</code>. The callback routine needs the 1st derivatives of the function $u_h$, and thus, <code>nmaxDerivative=1</code> is specified in <code>fev2_addVectorToEvalList</code>:</p>
+
+<pre><code>type(t_vectorBlock) :: rx
+type(t_fev2Vectors) :: rmyVectors
+real(DP) :: dintegral
+...
+  ! Provide the vector and its derivative
+  call fev2_addVectorToEvalList(rmyVectors,rx%RvectorBlock(1),1)
+  call fev2_addVectorToEvalList(rmyVectors,rx%RvectorBlock(2),1)
+
+  call bma_buildIntegral (&amp;
+      dintvalue,BMA_CALC_STANDARD,bma_fcalc_H1norm,revalVectors=rmyVectors)
+
+  call fev2_releaseVectorList (rmyVectors)
+...
+</code></pre>
+</dd>
+
+<dt>Assembly of $||u_h||_{infty}$</dt>
+<dd>
+<p>The following call uses an extended syntax of <code>bma_buildIntegral</code> to calculate the $sup$ norm of a finite element function. Normally, <code>bma_buildIntegral</code> calculates integrals by summing up the contributions of all subdomains. Modifying the optional parameter <code>coperation</code>, <code>bma_buildIntegral</code> can be told to compute the maximum of the values of the subdomains. In combination with <code>bma_fcalc_MAXnorm</code>, this allows to compute the maximum norm:</p>
+
+<pre><code>type(t_vectorBlock) :: rx
+type(t_fev2Vectors) :: rmyVectors
+real(DP) :: dmaxnorm
+...
+  ! Provide the vector
+  call fev2_addVectorToEvalList(rmyVectors,rx%RvectorBlock(1),0)
+
+  call bma_buildIntegral (&amp;
+      dintvalue,BMA_CALC_STANDARD,bma_fcalc_MAXnorm,&amp;
+      revalVectors=rmyVectors,coperation=BMA_INT_MAX)
+
+  call fev2_releaseVectorList (rmyVectors)
+...
+</code></pre>
+</dd>
+</dl>
+
+<h3>Using <code>bma_docalc_XXXX</code> in callback routines</h3>
+
+<p>For more complex matrices and vectors, the user has to provide a user-defined callback routine that does the assembly. The actual calculation routines <code>bma_docalc_XXXX</code> are designed to be called in such user-defined callback routines for the assembly of standard operators. Using these routines allows to assemble a lot of standard operators with high efficiency.</p>
+
+<p>The following example demonstrates how to set up the operator $text{DR}:=-Delta + I$ at position (1,1) of a block matrix. This operator realises the left-hand side of the diffusion-reaction equation $-Delta u + u = f$:</p>
+
+<pre><code>subroutine fcalc_DR(RmatrixData,rassemblyData,rmatrixAssembly,&amp;
+    npointsPerElement,nelements,revalVectors,rcollection)
+...
+
+  call bma_docalc_laplace(RmatrixData,rassemblyData,rmatrixAssembly,&amp;
+      npointsPerElement,nelements,1.0_DP,1,1)
+
+  call bma_docalc_mass(RmatrixData,rassemblyData,rmatrixAssembly,&amp;
+      npointsPerElement,nelements,1.0_DP,1,1)
+
+end subroutine
+
+  ...
+  type(t_matrixBlock) :: rmatrix
+  ...
+  call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,fcalc_DR)
+  ...
+</code></pre>
+
+<p>The callback routine just calls the <code>bma_docalc_XXXX</code> routines for all operators to be assembled. For more complicated operators which probably involve a nonlinearity, parameters must be passed to the user-defined callback routine via the collection structure and the vector evaluation structure <code>revalVectors</code>. The callback routine can then use this information and call the predefined calculation routines.</p>
+
+<p>The following example demonstrates this approach. The callback routine assembles the operator for the diffusion-convection-equation $$-nuDelta u_h + v_h nabla u_h = f_h.$$ The convection is given as a finite element function $v_h$ which is available inside of the callback function via <code>revalVectors%p_RvectorData(1)</code>. The constant $nu$ is passed via the <code>DquickAccess</code> array of the collection.</p>
+
+<pre><code>subroutine fcalc_DC(RmatrixData,rassemblyData,rmatrixAssembly,&amp;
+    npointsPerElement,nelements,revalVectors,rcollection)
+...
+  real(DP) :: dnu
+
+  ! Get the parameter
+  dnu = rcollection%DquickAccess(1)
+
+  ! Calculate nu*Laplace
+  call bma_docalc_laplace(RmatrixData,rassemblyData,rmatrixAssembly,&amp;
+      npointsPerElement,nelements,dnu,1,1)
+
+  ! Calculate the convection
+  call bma_docalc_convec_ugradvw(RmatrixData,rassemblyData,rmatrixAssembly,&amp;
+      npointsPerElement,nelements,1.0_DP,1,1,&amp;
+      rvectorField=revalVectors%p_RvectorData(1))
+
+end subroutine
+
+  type(t_matrixBlock) :: rmatrix
+  type(t_vectorBlock) :: rvectorVh
+
+  type(t_fev2Vectors) :: rmyVectors
+  type(t_collection) :: rcoll
+  ...
+    ! Parameters
+    rcoll%DquickAccess(1) = nu  ! multiplier
+
+    ! Provide the nonlinearity
+    call fev2_addVectorToEvalList(rmyVectors,rvectorVh,0)
+
+    call bma_buildMatrix (&amp;
+        rmatrix,BMA_CALC_STANDARD,fcalc_DC, rcoll,&amp;
+        revalVectors = rmyVectors)
+
+    call fev2_releaseVectorList (rmyVectors)
+  ...
+</code></pre>
+
+<h2 id="Block-matrices">Block matrices: Advanced operator assembly</h2>
+
+<p>For complex operators, it is necessary to use an appropriately designed callback routine for the matrix assembly. While standard operators can be assembled with the techniques above, the implementation of complex operators involves loops over all elements, cubature points as well as trial and test basis functions - and probably, the dimension of the FE space. However, there is no such a "general" case as it is for the "scalar" assembly. For optimal efficiency and a maximum of generality, one has to implement an operator four times, once for each of the following cases:</p>
+
+<ol>
+<li>Scalar valued trial/test FE space</li>
+<li>Vector valued trial/test FE space</li>
+<li>Scalar valued, interleaved trial/test FE space</li>
+<li>Vector valued, interleaved trial/test FE space</li>
+</ol>
+
+<p>The four implementations are rather similar, however, differ in some small parts of the loops. One should note firthermore that some operators cannot be implemented in all cases. The user has to decide on which implementation is to choose for the desired case.</p>
+
+<blockquote>
+  <p><strong>Remark:</strong> Also the default implementations in <code>blockmatassemblystdop.f90</code> do not cover all the above four cases for all types of finite element spaces. Most implementations cover only case 1 while only the most important standard operators (like Laplace and Mass) are designed for all cases. For the implementation of a new operator, the user is advised to do copy&amp;paste the code for case 1 and later generalise this if necessary.</p>
+</blockquote>
+
+<h3>Input/output of the callback routine</h3>
+
+<p>The callback routine used for the calculation of matrices has the following interface:</p>
+
+<pre><code>subroutine fcalcLocalMatrices(RmatrixData,rassemblyData,rmatrixAssembly,&amp;
+    npointsPerElement,nelements,revalVectors,rcollection)
+</code></pre>
+
+<p>The variables have the following meaning:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RmatrixData</td>
+  <td>An $mtimes n$ array of <code>t_bmaMatrixData</code> structures, one for each submatrix in the global matrix</td>
+</tr>
+<tr>
+  <td>rmatrixData</td>
+  <td>Data necessary for the assembly. Contains determinants and cubature weights for the cubature,...</td>
+</tr>
+<tr>
+  <td>rmatrixAssembly</td>
+  <td>Structure with all data about the assembly</td>
+</tr>
+<tr>
+  <td>npointsPerElement</td>
+  <td>Number of points per element</td>
+</tr>
+<tr>
+  <td>nelements</td>
+  <td>Number of elements</td>
+</tr>
+<tr>
+  <td>revalVectors</td>
+  <td>Provided FEM routines, encapsules nonlinearities and temporary memory</td>
+</tr>
+<tr>
+  <td>rcollection</td>
+  <td>Collection structure for user-defined parameters</td>
+</tr>
+</tbody>
+</table>
+
+<p>The callback routine has to use the values of the finite element trial and test spaces, cubature points/weights and the values of all nonlinearities/coefficients to compute local matrices for a set of <code>nelements</code> elements. The main assembly routine will later on impose these local matrices into the global matrix. Depending on which of the above four cases the callback routine is used four, different variables of the above parameters can be used and have to be written to. Here a small overview about input/output variables in the four cases.</p>
+
+<dl>
+<dt>Case 1: Scalar valued trial/test FE space</dt>
+<dd>
+<p>The following parameters hold:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Input/Output</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RmatrixData(:,:)%p_Dentry</td>
+  <td>Output</td>
+  <td>The local matrix entries, to be computed</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>rassemblyData%p_DcubWeight</td>
+  <td>Input</td>
+  <td>Cubature weights in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%p_DbasTrial</td>
+  <td></td>
+  <td>For all matrices: values of the corresponding trial basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%p_DbasTest</td>
+  <td></td>
+  <td>For all matrices: values of the corresponding test basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndofTrial</td>
+  <td></td>
+  <td>Number of degrees of freedom in the trial space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndofTest</td>
+  <td></td>
+  <td>Number of degrees of freedom in the test space</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndimfeTrial</td>
+  <td>Input</td>
+  <td>=1, indicates scalar-valued trial FE space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndimfeTest</td>
+  <td></td>
+  <td>=1, indicates scalar-valued test FE space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%bisInterleaved</td>
+  <td></td>
+  <td>=.false. here, the matrix is not interleaved</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><p><strong><code>p_Dentry (1:ndofTrial, 1:ndofTest, 1:nelements)</code></strong><br> has to be filled by the callback routine with the entries of the local matrices.</p></li>
+<li><p><strong><code>p_DcubWeight (1:ncubp, 1:nelements)</code></strong><br> specify the cubature weights (including the Jacobian determinant of the mapping, etc.)</p></li>
+<li><p><strong><code>p_DbasTrial (1:ndofTrial, :, 1:ncubp, 1:nelements)</code></strong> and <br><strong><code>p_DbasTest (1:ndofTest, :, 1:ncubp, 1:nelements)</code></strong><br> specify the values of the local basis functions. The 2nd dimension specifies a derivative quantifier DER_xxxx for the desired derivative.</p></li>
+</ul>
+</dd>
+
+<dt>Case 2: Vector valued trial/test FE space</dt>
+<dd>
+<p>The following parameters hold:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Input/Output</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RmatrixData(:,:)%p_Dentry</td>
+  <td>Output</td>
+  <td>The local matrix entries, to be computed</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>rassemblyData%p_DcubWeight</td>
+  <td>Input</td>
+  <td>Cubature weights in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%p_DbasTrial</td>
+  <td></td>
+  <td>For all matrices: values of the corresponding trial basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%p_DbasTest</td>
+  <td></td>
+  <td>For all matrices: values of the corresponding test basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndofTrial</td>
+  <td></td>
+  <td>Number of degrees of freedom in the trial space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndofTest</td>
+  <td></td>
+  <td>Number of degrees of freedom in the test space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndimfeTrial</td>
+  <td></td>
+  <td>>1, Dimension of the trial FE space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndimfeTest</td>
+  <td></td>
+  <td>>1, Dimension of the test FE space</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%bisInterleaved</td>
+  <td>Input</td>
+  <td>=.false. here, the matrix is not interleaved</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><p><strong><code>p_Dentry (1:ndofTrial, 1:ndofTest, 1:nelements)</code></strong><br> has to be filled by the callback routine with the entries of the local matrices.</p></li>
+<li><p><strong><code>p_DcubWeight (1:ncubp, 1:nelements)</code></strong><br> specify the cubature weights (including the Jacobian determinant of the mapping, etc.)</p></li>
+<li><p><strong><code>p_DbasTrial (1:ndofTrial*ndimfeTrial, :, 1:ncubp, 1:nelements)</code></strong> and <br><strong><code>p_DbasTest (1:ndofTest*ndimfeTest, :, 1:ncubp, 1:nelements)</code></strong><br> specify the values of the local basis functions. The 2nd dimension specifies a derivative quantifier DER_xxxx for the desired derivative. More precisely</p>
+
+<ul>
+<li><code>p_DbasTrial (1:ndofTrial + 0*ndofTrial , :,:,:)</code> = 1st dimension, trial space</li>
+<li><code>p_DbasTrial (1:ndofTrial + 1*ndofTrial , :,:,:)</code> = 2nd dimension, trial space</li>
+<li><code>p_DbasTrial (1:ndofTrial + 2*ndofTrial , :,:,:)</code> = 3rd dimension, trial space, ...</li>
+<li><code>p_DbasTest (1:ndofTest + 0*ndofTest , :,:,:)</code> = 1st dimension, test space</li>
+<li><code>p_DbasTest (1:ndofTest + 1*ndofTest , :,:,:)</code> = 2nd dimension, test space</li>
+<li><code>p_DbasTest (1:ndofTest + 2*ndofTest , :,:,:)</code> = 3rd dimension, test space, ...</li>
+</ul></li>
+</ul>
+</dd>
+
+<dt>Case 3: Scalar valued, interleaved trial/test FE space</dt>
+<dd>
+<p>The following parameters hold:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Input/Output</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RmatrixData(:,:)%p_DentryIntl</td>
+  <td>Output</td>
+  <td>The local matrix entries, to be computed</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>rassemblyData%p_DcubWeight</td>
+  <td>Input</td>
+  <td>Cubature weights in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%p_DbasTrial</td>
+  <td></td>
+  <td>For all matrices: values of the corresponding trial basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%p_DbasTest</td>
+  <td></td>
+  <td>For all matrices: values of the corresponding test basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndofTrial</td>
+  <td></td>
+  <td>Number of degrees of freedom in the trial space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndofTest</td>
+  <td></td>
+  <td>Number of degrees of freedom in the test space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%nvar</td>
+  <td></td>
+  <td>Number of variables per matrix entry</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndimfeTrial</td>
+  <td>Input</td>
+  <td>=1, indicates scalar-valued trial FE space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndimfeTest</td>
+  <td></td>
+  <td>=1, indicates scalar-valued test FE space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%bisInterleaved</td>
+  <td></td>
+  <td>=.true. here, the matrix is interleaved</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><p><strong><code>p_DentryIntl (1:nvar, 1:ndofTrial, 1:ndofTest, 1:nelements)</code></strong><br> has to be filled by the callback routine with the entries of the local matrices.</p></li>
+<li><p><strong><code>p_DcubWeight (1:ncubp, 1:nelements)</code></strong><br> specify the cubature weights (including the Jacobian determinant of the mapping, etc.)</p></li>
+<li><p><strong><code>p_DbasTrial (1:ndofTrial, :, 1:ncubp, 1:nelements)</code></strong> and <br><strong><code>p_DbasTest (1:ndofTest, :, 1:ncubp, 1:nelements)</code></strong><br> specify the values of the local basis functions. The 2nd dimension specifies a derivative quantifier DER_xxxx for the desired derivative.</p></li>
+</ul>
+</dd>
+
+<dt>Case 4: Vector valued, interleaved trial/test FE space</dt>
+<dd>
+<p>The following parameters hold:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Input/Output</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RmatrixData(:,:)%p_DentryIntl</td>
+  <td>Output</td>
+  <td>The local matrix entries, to be computed</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>rassemblyData%p_DcubWeight</td>
+  <td>Input</td>
+  <td>Cubature weights in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%p_DbasTrial</td>
+  <td></td>
+  <td>For all matrices: values of the corresponding trial basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%p_DbasTest</td>
+  <td></td>
+  <td>For all matrices: values of the corresponding test basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndofTrial</td>
+  <td></td>
+  <td>Number of degrees of freedom in the trial space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndofTest</td>
+  <td></td>
+  <td>Number of degrees of freedom in the test space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndimfeTrial</td>
+  <td></td>
+  <td>>1, Dimension of the trial FE space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%ndimfeTest</td>
+  <td></td>
+  <td>>1, Dimension of the test FE space</td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%nvar</td>
+  <td></td>
+  <td>Number of variables per matrix entry</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>RmatrixData(:,:)%bisInterleaved</td>
+  <td>Input</td>
+  <td>=.true. here, the matrix is interleaved</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><p><strong><code>p_DentryIntl (1:nvar, 1:ndofTrial, 1:ndofTest, 1:nelements)</code></strong><br> has to be filled by the callback routine with the entries of the local matrices.</p></li>
+<li><p><strong><code>p_DcubWeight (1:ncubp, 1:nelements)</code></strong><br> specify the cubature weights (including the Jacobian determinant of the mapping, etc.)</p></li>
+<li><p><strong><code>p_DbasTrial (1:ndofTrial*ndimfeTrial, :, 1:ncubp, 1:nelements)</code></strong> and <br><strong><code>p_DbasTest (1:ndofTest*ndimfeTest, :, 1:ncubp, 1:nelements)</code></strong><br> specify the values of the local basis functions. The 2nd dimension specifies a derivative quantifier DER_xxxx for the desired derivative. More precisely</p>
+
+<ul>
+<li><code>p_DbasTrial (1:ndofTrial + 0*ndofTrial , :,:,:)</code> = 1st dimension, trial space</li>
+<li><code>p_DbasTrial (1:ndofTrial + 1*ndofTrial , :,:,:)</code> = 2nd dimension, trial space</li>
+<li><code>p_DbasTrial (1:ndofTrial + 2*ndofTrial , :,:,:)</code> = 3rd dimension, trial space, ...</li>
+<li><code>p_DbasTest (1:ndofTest + 0*ndofTest , :,:,:)</code> = 1st dimension, test space</li>
+<li><code>p_DbasTest (1:ndofTest + 1*ndofTest , :,:,:)</code> = 2nd dimension, test space</li>
+<li><code>p_DbasTest (1:ndofTest + 2*ndofTest , :,:,:)</code> = 3rd dimension, test space, ...</li>
+</ul></li>
+</ul>
+</dd>
+</dl>
+
+<h3>Basic structure of the callback routine</h3>
+
+<p>The actual structure of the callback routine is now demonstrated on an example:</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example demonstrates how to set up a Laplace operator in 2D at position (1,1) of a block matrix, here for scalar-valued FEM spaces like $Q_1$, $Q_2$, etc:</p>
+</blockquote>
+
+<pre><code>    subroutine fcalc_laplace(RmatrixData,rassemblyData,rmatrixAssembly,&amp;
+        npointsPerElement,nelements,revalVectors,rcollection)
+
+     ...
+
+      real(DP) :: dbasIx, dbasJx, dbasIy, dbasJy
+      integer :: iel, icubp, idofe, jdofe, ndofTrial, ndofTest
+      real(DP), dimension(:,:,:), pointer :: p_DlocalMat
+      real(DP), dimension(:,:,:,:), pointer :: p_DbasTrial,p_DbasTest
+      real(DP), dimension(:,:), pointer :: p_DcubWeight
+
+      ! Get cubature weights data
+      p_DcubWeight =&gt; rassemblyData%p_DcubWeight
+
+      ! Get local data
+      ndofTrial = RmatrixData(1,1)%ndofTrial
+      ndofTest  = RmatrixData(1,1)%ndofTrial
+      p_DbasTrial =&gt; RmatrixData(1,1)%p_DbasTrial
+      p_DbasTest  =&gt; RmatrixData(1,1)%p_DbasTest
+      p_DlocalMat =&gt; RmatrixData(1,1)%p_Dentry
+
+      ! Loop over the elements in the current set.
+      do iel = 1,nelements
+
+        ! Loop over all cubature points on the current element
+        do icubp = 1,npointsPerElement
+
+          ! Loop over the test functions
+          do idofe=1,ndofTest
+
+            ! Get the values of the test basis functions
+            dbasIx = p_DbasTest(idofe,DER_DERIV2D_X,icubp,iel)
+            dbasIy = p_DbasTest(idofe,DER_DERIV2D_Y,icubp,iel)
+
+            ! Loop over the trial basis functions
+            do jdofe=1,ndofTrial
+
+              ! Get the values of the trial basis functions
+              dbasJx = p_DbasTrial(jdofe,DER_DERIV2D_X,icubp,iel)
+              dbasJy = p_DbasTrial(jdofe,DER_DERIV2D_Y,icubp,iel)
+
+              ! Calculate the local matrix entries
+              p_DlocalMat(jdofe,idofe,iel) = p_DlocalMat(jdofe,idofe,iel) + &amp;
+                  p_DcubWeight(icubp,iel) * ( dbasJx*dbasIx + dbasJy*dbasIy )
+
+            end do ! jdofe
+
+          end do ! idofe
+
+        end do ! icubp
+
+      end do ! iel
+
+    end subroutine
+</code></pre>
+
+<p>In the above example it can be seen that setting up a Laplace matrix needs a callback routine with altogether four nested do loops:</p>
+
+<ul>
+<li>An outer DO loop over elements</li>
+<li>An inner DO loop over cubature points</li>
+<li>For every cubature point, an inner loop over the DOFs in the test space</li>
+<li>For every DOF in the test space, an inner loop over the DOFs in the trial space</li>
+</ul>
+
+<p>In the innerst loop, the actual matrix entries are computed using cubature. The variables <code>dbasIx</code>, <code>dbasIy</code>, <code>dbasJx</code> and <code>dbasJy</code> fetch the values of the basis functions in the cubature points. The sum in the innerst loop</p>
+
+<pre><code>...
+  p_DlocalMat(...) = p_DlocalMat(...) + &amp;
+      p_DcubWeight(...) * ( dbasJx*dbasIx + dbasJy*dbasIy )
+...
+</code></pre>
+
+<p>realises the summation
+$$sum_{x_k}sum_{i,j} omega(x_k) (partial_{x_1}psi_j(x_k) partial_{x_1}varphi_i(x_k) + partial_{x_2}psi_j(x_k) partial_{x_2}varphi_i(x_k) )$$ 
+with $x_k$ the cubature points, $psi_j$ the local test functions and $varphi_i$ the local trial functions on the cell $T$. This is the discrete counterpart to the integral 
+$$(nabla psi_j, nabla varphi_i)<em>T = int_T partial</em>{x_1}psi_j partial_{x_1}varphi_i + partial_{x_2}psi_j partial_{x_2}varphi_i$$
+which realises the local Laplace operator on a cell $T$ in 2D. Summing up the contributions of all elements gives the global Laplace operator.</p>
+
+<blockquote>
+  <p><strong>Remark:</strong> For the actual assembly, the order of the summation is changed. The above loops do not calculate $(nabla psi_j, nabla varphi_i)_T$ but only its contribution in one cubature point for one combination of trial/test functions, summing up later. In this order, the assembly is faster.</p>
+</blockquote>
+
+<h2 id="Block-vectors">Block vectors: Advanced vector assembly</h2>
+
+<p>THe assembly of complex right-hand side vectors is rather similar to the assembly of complex vectors. One needs an appropriately designed callback routine which applies loops over all elements, cubature points as well as trial and test basis functions. For optimal efficiency and a maximum of generality, also here one has to implement an operator four times, once for each of the following cases:</p>
+
+<ol>
+<li>Scalar valued trial/test FE space</li>
+<li>Vector valued trial/test FE space</li>
+<li>Scalar valued, interleaved trial/test FE space</li>
+<li>Vector valued, interleaved trial/test FE space</li>
+</ol>
+
+<h3>Input/output of the callback routine</h3>
+
+<p>The callback routine used for the calculation of matrices has the following interface:</p>
+
+<pre><code>subroutine fcalcLocalVectors(rvectorData,rassemblyData,rvectorAssembly,&amp;
+    npointsPerElement,nelements,revalVectors,rcollection)
+</code></pre>
+
+<p>The variables have the following meaning:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RvectorData</td>
+  <td>An array of <code>t_bmaVectorData</code> structures, one for each subvector in the global vector</td>
+</tr>
+<tr>
+  <td>rassemblyData</td>
+  <td>Data necessary for the assembly. Contains determinants and cubature weights for the cubature,...</td>
+</tr>
+<tr>
+  <td>rvectorAssembly</td>
+  <td>Structure with all data about the assembly</td>
+</tr>
+<tr>
+  <td>npointsPerElement</td>
+  <td>Number of points per element</td>
+</tr>
+<tr>
+  <td>nelements</td>
+  <td>Number of elements</td>
+</tr>
+<tr>
+  <td>revalVectors</td>
+  <td>Provided FEM routines, encapsules nonlinearities and temporary memory</td>
+</tr>
+<tr>
+  <td>rcollection</td>
+  <td>Collection structure for user-defined parameters</td>
+</tr>
+</tbody>
+</table>
+
+<p>The callback routine has to use the values of the finite element test spaces, cubature points/weights and the values of all nonlinearities/coefficients to compute local vectors for a set of <code>nelements</code> elements. The main assembly routine will later on impose these local vectors into the global vector. Depending on which of the above four cases the callback routine is used four, different variables of the above parameters can be used and have to be written to. Here a small overview about input/output variables in the four cases.</p>
+
+<dl>
+<dt>Case 1: Scalar valued test FE space</dt>
+<dd>
+<p>The following parameters hold:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Input/Output</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RvectorData(:)%p_Dentry</td>
+  <td>Output</td>
+  <td>The local vector entries, to be computed</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>rassemblyData%p_DcubWeight</td>
+  <td>Input</td>
+  <td>Cubature weights in all cubature points</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%p_DbasTest</td>
+  <td></td>
+  <td>For all vectors: values of the corresponding test basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%ndofTest</td>
+  <td></td>
+  <td>Number of degrees of freedom in the test space</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>RvectorData(:)%ndimfeTest</td>
+  <td>Input</td>
+  <td>=1, indicates scalar-valued test FE space</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%bisInterleaved</td>
+  <td></td>
+  <td>=.false. here, the vector is not interleaved</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><p><strong><code>p_Dentry (1:ndofTest, 1:nelements)</code></strong><br> has to be filled by the callback routine with the entries of the local vectors.</p></li>
+<li><p><strong><code>p_DcubWeight (1:ncubp, 1:nelements)</code></strong><br> specify the cubature weights (including the Jacobian determinant of the mapping, etc.)</p></li>
+<li><p><strong><code>p_DbasTest (1:ndofTest, :, 1:ncubp, 1:nelements)</code></strong><br> specify the values of the local basis functions. The 2nd dimension specifies a derivative quantifier DER_xxxx for the desired derivative.</p></li>
+</ul>
+</dd>
+
+<dt>Case 2: Vector valued test FE space</dt>
+<dd>
+<p>The following parameters hold:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Input/Output</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RvectorData(:)%p_Dentry</td>
+  <td>Output</td>
+  <td>The local vector entries, to be computed</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>rassemblyData%p_DcubWeight</td>
+  <td>Input</td>
+  <td>Cubature weights in all cubature points</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%p_DbasTest</td>
+  <td></td>
+  <td>For all vectors: values of the corresponding test basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%ndofTest</td>
+  <td></td>
+  <td>Number of degrees of freedom in the test space</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%ndimfeTest</td>
+  <td></td>
+  <td>>1, Dimension of the test FE space</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>RvectorData(:)%bisInterleaved</td>
+  <td>Input</td>
+  <td>=.false. here, the vector is not interleaved</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><p><strong><code>p_Dentry (1:ndofTest, 1:nelements)</code></strong><br> has to be filled by the callback routine with the entries of the local vectors.</p></li>
+<li><p><strong><code>p_DcubWeight (1:ncubp, 1:nelements)</code></strong><br> specify the cubature weights (including the Jacobian determinant of the mapping, etc.)</p></li>
+<li><p><strong><code>p_DbasTest (1:ndofTest*ndimfeTest, :, 1:ncubp, 1:nelements)</code></strong><br> specify the values of the local basis functions. The 2nd dimension specifies a derivative quantifier DER_xxxx for the desired derivative. More precisely</p>
+
+<ul>
+<li><code>p_DbasTest (1:ndofTest + 0*ndofTest , :,:,:)</code> = 1st dimension, test space</li>
+<li><code>p_DbasTest (1:ndofTest + 1*ndofTest , :,:,:)</code> = 2nd dimension, test space</li>
+<li><code>p_DbasTest (1:ndofTest + 2*ndofTest , :,:,:)</code> = 3rd dimension, test space, ...</li>
+</ul></li>
+</ul>
+</dd>
+
+<dt>Case 3: Scalar valued, interleaved test FE space</dt>
+<dd>
+<p>The following parameters hold:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Input/Output</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RvectorData(::)%p_DentryIntl</td>
+  <td>Output</td>
+  <td>The local vector entries, to be computed</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>rassemblyData%p_DcubWeight</td>
+  <td>Input</td>
+  <td>Cubature weights in all cubature points</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%p_DbasTest</td>
+  <td></td>
+  <td>For all vectors: values of the corresponding test basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%ndofTest</td>
+  <td></td>
+  <td>Number of degrees of freedom in the test space</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%nvar</td>
+  <td></td>
+  <td>Number of variables per vector entry</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>RvectorData(:)%ndimfeTest</td>
+  <td>Input</td>
+  <td>=1, indicates scalar-valued test FE space</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%bisInterleaved</td>
+  <td></td>
+  <td>=.true. here, the vector is interleaved</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><p><strong><code>p_DentryIntl (1:nvar, 1:ndofTest, 1:nelements)</code></strong><br> has to be filled by the callback routine with the entries of the local vectors.</p></li>
+<li><p><strong><code>p_DcubWeight (1:ncubp, 1:nelements)</code></strong><br> specify the cubature weights (including the Jacobian determinant of the mapping, etc.)</p></li>
+<li><p><strong><code>p_DbasTest (1:ndofTest, :, 1:ncubp, 1:nelements)</code></strong><br> specify the values of the local basis functions. The 2nd dimension specifies a derivative quantifier DER_xxxx for the desired derivative.</p></li>
+</ul>
+</dd>
+
+<dt>Case 4: Vector valued, interleaved test FE space</dt>
+<dd>
+<p>The following parameters hold:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Input/Output</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RvectorData(:)%p_DentryIntl</td>
+  <td>Output</td>
+  <td>The local vector entries, to be computed</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>rassemblyData%p_DcubWeight</td>
+  <td>Input</td>
+  <td>Cubature weights in all cubature points</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%p_DbasTest</td>
+  <td></td>
+  <td>For all vectors: values of the corresponding test basis functions in all cubature points</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%ndofTest</td>
+  <td></td>
+  <td>Number of degrees of freedom in the test space</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%ndimfeTest</td>
+  <td></td>
+  <td>>1, Dimension of the test FE space</td>
+</tr>
+<tr>
+  <td>RvectorData(:)%nvar</td>
+  <td></td>
+  <td>Number of variables per vector entry</td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>RvectorData(:)%bisInterleaved</td>
+  <td>Input</td>
+  <td>=.true. here, the vector is interleaved</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><p><strong><code>p_DentryIntl (1:nvar, 1:ndofTest, 1:nelements)</code></strong><br> has to be filled by the callback routine with the entries of the local vectors.</p></li>
+<li><p><strong><code>p_DcubWeight (1:ncubp, 1:nelements)</code></strong><br> specify the cubature weights (including the Jacobian determinant of the mapping, etc.)</p></li>
+<li><p><strong><code>p_DbasTest (1:ndofTest*ndimfeTest, :, 1:ncubp, 1:nelements)</code></strong><br> specify the values of the local basis functions. The 2nd dimension specifies a derivative quantifier DER_xxxx for the desired derivative. More precisely</p>
+
+<ul>
+<li><code>p_DbasTest (1:ndofTest + 0*ndofTest , :,:,:)</code> = 1st dimension, test space</li>
+<li><code>p_DbasTest (1:ndofTest + 1*ndofTest , :,:,:)</code> = 2nd dimension, test space</li>
+<li><code>p_DbasTest (1:ndofTest + 2*ndofTest , :,:,:)</code> = 3rd dimension, test space, ...</li>
+</ul></li>
+</ul>
+</dd>
+</dl>
+
+<h3>Basic structure of the callback routine</h3>
+
+<p>The actual structure of the callback routine is now demonstrated on an example:</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example demonstrates how to set up the right-hand side $f=x_1 x_2$ in 2D for the first subvector of a block vector, here for scalar-valued FEM spaces like $Q_1$, $Q_2$, etc:</p>
+</blockquote>
+
+<pre><code>    subroutine fcalc_rhsxy(rvectorData,rassemblyData,rvectorAssembly,&amp;
+        npointsPerElement,nelements,revalVectors,rcollection)
+
+     ...
+
+      ! Local variables
+      integer :: iel, icubp, idofe, dbasI, dval
+      real(DP), dimension(:,:), pointer :: p_DlocalVector
+      real(DP), dimension(:,:,:,:), pointer :: p_DbasTest
+      real(DP), dimension(:,:), pointer :: p_DcubWeight
+      type(t_bmaVectorData), pointer :: p_rvectorData
+      real(DP), dimension(:,:,:), pointer :: p_Dpoints
+
+      ! Get cubature weights data
+      p_DcubWeight =&gt; rassemblyData%p_DcubWeight
+
+      ! Get the coordinates of the cubature points
+      p_Dpoints =&gt; rassemblyData%revalElementSet%p_DpointsReal
+
+      ! Get the data arrays of the subvector
+      p_rvectorData =&gt; RvectorData(icomp)
+      p_DlocalVector =&gt; p_rvectorData%p_Dentry
+      p_DbasTest =&gt; p_rvectorData%p_DbasTest
+
+      ! Loop over the elements in the current set.
+      do iel = 1,nelements
+
+        ! Loop over the cubature points
+        do icubp = 1,npointsPerElement
+
+          ! Get the coordinates of the cubature point.
+          dx = p_Dpoints(1,icubp,iel)
+          dy = p_Dpoints(2,icubp,iel)
+
+          ! Loop over the test space
+          do idofe=1,p_rvectorData%ndofTest
+
+            ! Get the value of the basis function
+            dbasI = p_DbasTest(idofe,DER_FUNC,icubp,iel)
+
+            ! Value of the function f=x_1 x_2
+            dval = dx * dy
+
+            ! Multiply the values of the basis functions
+            ! (1st derivatives) by the cubature weight and sum up
+            ! into the local vectors.
+            p_DlocalVector(idofe,iel) = p_DlocalVector(idofe,iel) + &amp;
+                p_DcubWeight(icubp,iel) * dval * dbasI 
+
+          end do ! jdofe
+
+        end do ! icubp
+
+      end do ! iel
+
+    end subroutine
+</code></pre>
+
+<p>In the above example it can be seen that setting up a right-hand side needs a callback routine with altogether three nested do loops:</p>
+
+<ul>
+<li>An outer DO loop over elements</li>
+<li>An inner DO loop over cubature points</li>
+<li>For every cubature point, an inner loop over the DOFs in the test space</li>
+</ul>
+
+<p>In the innerst loop, the actual vector entries are computed using cubature. The variables <code>dbasI</code> fetches the values of the basis functions in the cubature points. The sum in the innerst loop</p>
+
+<pre><code>...
+  p_DlocalVector(...) = p_DlocalVector(...) + &amp;
+      p_DcubWeight(...) * dval * dbasI
+...
+</code></pre>
+
+<p>realises the summation
+$$sum_{x_k}sum_{i} omega(x_k) f(x_k) psi_i(x_k) $$ 
+with $x_k$ the cubature points and $psi_i$ the test functions on the cell $T$. This is the discrete counterpart to the integral 
+$$(f, psi_i)_T = int_T f psi_i $$
+which realises the local right-hand side on a cell $T$ in 2D. Summing up the contributions of all elements gives the global right-hand side.</p>
+
+<blockquote>
+  <p><strong>Remark:</strong> For the actual assembly, the order of the summation is changed. The above loops do not calculate $(f, psi_i)_T$ but only its contribution in one cubature point for one test functions, summing up later. In this order, the assembly is faster.</p>
+</blockquote>
+
+<h2 id="Accessing-FE-functions">Accessing FE functions and temporary arrays</h2>
+
+<p>As introduced above, it is possible to pass finite element functions an temporary arrays to the callback routine in order to do complex calculations there. To demonstrate the exact passing strategy, we start with an example based on a matrix assembly.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> Assume that there are two finite element functions to be passed to a callback routine as well as a set of temporary arrays.</p>
+  
+  <ul>
+  <li><p>The first finite element function, $v_h=(v_1)$, is a scalar finite element function, denoted by <code>rvectorVh</code> for which we need $v_h$ and $nabla v_h$.</p></li>
+  <li><p>The second one, $w_h=(w_1,w_2,w_3)$, is a vector field for which we also need $w_h$ and $nabla w_h$.</p></li>
+  <li><p>Furthermore, we need a temporary arrays where we store intermediate information for processing $v_h$, $nabla v_h$, $w_h$ and $nabla w_h$.</p></li>
+  <li><p>Finally, we need a temporary arrays that store intermediate information for processing $v_h$, $nabla v_h$, $w_h$ and $nabla w_h$.</p></li>
+  </ul>
+  
+  <p>The main program sets up a vector evaluation structure as follows. Herein, the dummy vector fields use "4" temporary vectors for each dimension, one for the function values and three for the x/y/z derivatives of every component - resulting in 12 temporary arrays in total.</p>
+</blockquote>
+
+<pre><code>    ...
+    type(t_vectorBlock) :: rvectorVh
+    type(t_vectorBlock) :: rvectorWh
+
+    type(t_fev2Vectors) :: rmyVectors
+    ...
+
+    ! V_h, nabla V_h
+    call fev2_addVectorToEvalList(&amp
+        rmyVectors,rvectorVh%RvectorBlock(1),1)
+
+    ! W_h, nabla W_h
+    call fev2_addVectorFieldToEvalList(rmyVectors,1,&amp
+        rvectorWh%RvectorBlock(1),&amp
+        rvectorWh%RvectorBlock(2),&amp
+        rvectorWh%RvectorBlock(3))
+
+    ! Temporary memory, corresponding to V_h, nabla V_h.
+    call fev2_addDummyVectorToEvalList (rmyVectors,4)
+
+    ! Temporary memory, corresponding to W_h, nabla W_h.
+    call fev2_addDummyVecFieldToEvalList (rmyVectors,3,4)
+
+    ! Cell based temp memory, corresponding to V_h, nabla V_h.
+    call fev2_addDummyVectorToEvalList (rmyVectors,4)
+
+    ! Cell based temp memory, corresponding to W_h, nabla W_h.
+    call fev2_addDummyVecFieldToEvalList (rmyVectors,3,4)
+
+    ! Assembly
+    call bma_buildMatrix (rmatrix,BMA_CALC_STANDARD,&amp
+        fcalcMatrix,revalVectors=rmyVectors)
+
+    ! Cleanup
+    call fev2_releaseVectorList (rmyVectors)
+    ...
+</code></pre>
+<p> The callback routine <code>fcalcMatrix</code> which is called in <code>bma_buildMatrix</code> receives a parameter <code>revalVectors=rmyVectors</code> which contains the vectors and temporary arrays <strong>in exactly the order they were added to</strong> <code>rmyVectors</code>. The data is accessible via <code>revalVectors%p_RvectorData</code> which is an array of all data added to rmyVectors. <code>revalVectors%p_RvectorData</code> contains data arrays for all cubature points and all elements that are currently in process of the assembly.</p>
+
+<p>The content of the structure <code>revalVectors%p_RvectorData(i)</code> depends on the type of the data which is represented. The callback routine has to "know" which data is added to <code>revalVectors</code> and use it in the appropriate order. In the following tables, there will be an overview which data is accessible in which situation:</p>
+
+<dl>
+<dt>Structural data</dt>
+<dd>
+<p>The following table depicts general information that describe the type of data represented by <code>revalVectors%p_RvectorData(i)</code>:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>bisInterleaved</td>
+  <td>Specifies if the data is interleaved</td>
+</tr>
+<tr>
+  <td>bisVectorField</td>
+  <td>Specifies if the data is a vector field</td>
+</tr>
+<tr>
+  <td>bisCellBased</td>
+  <td>Specifies if the data is cell based</td>
+</tr>
+<tr>
+  <td>ndimVectorField</td>
+  <td>Dimension of the vector field.</td>
+</tr>
+<tr>
+  <td>nvar</td>
+  <td>Number of entries per vector if the vector is interleaved</td>
+</tr>
+<tr>
+  <td>ndimfe</td>
+  <td>Dimension of the underlying FEM space (for vector valued FEM spaces. =1 for standard FEM spaces)</td>
+</tr>
+<tr>
+  <td>nmaxDerivativeIdx</td>
+  <td>Number of allocated subarrays. This corresponds to the maximum derivative quantifier <code>DER_xxxx</code> that can be used</td>
+</tr>
+</tbody>
+</table>
+</dd>
+
+<dt>Scalar data in every cubature point</dt>
+<dd>
+<p>If the structure represents a scalar FE function in every cubature point:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>p_Ddata</td>
+  <td>Array with values in every cubature point on every element</td>
+</tr>
+</tbody>
+</table>
+</dd>
+
+<dt>Vector data in every cubature point</dt>
+<dd>
+<p>If the structure represents a fector field FE function in every cubature point:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>p_DdataVec</td>
+  <td>Array with values in every dimension, cubature point and on every element</td>
+</tr>
+</tbody>
+</table>
+</dd>
+
+<dt>Interleaved scalar data in every cubature point</dt>
+<dd>
+<p>If the structure represents an interleaved scalar FE function in every cubature point:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>p_DdataIntl</td>
+  <td>Array with values in every dimension, cubature point and on every element</td>
+</tr>
+</tbody>
+</table>
+</dd>
+
+<dt>Scalar data on every element</dt>
+<dd>
+<p>If the structure represents one data entry per element:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>p_DcellData</td>
+  <td>Array with one value per element</td>
+</tr>
+</tbody>
+</table>
+</dd>
+
+<dt>Vector data on every element</dt>
+<dd>
+<p>If the structure represents one vector field data entry per element:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>p_DcellDataVec</td>
+  <td>Array with one value in every dimension on every element</td>
+</tr>
+</tbody>
+</table>
+</dd>
+
+<dt>Interleaved scalar data on every element</dt>
+<dd>
+<p>If the structure represents an one interleaved data entry per element:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>p_DcellDataIntl</td>
+  <td>Array with one value per element</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+
+<p>For vector data added by <code>fev2_addVector_XXXX</code>, the data is initialised with the values in the cubature points on all elements. "Dummy" arrays are treated the same way as data arrays but are not initialised; they represent uninitialised temporary memory the callback routine can use arbitrarily.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> A callback routine <code>fcalcMatrix</code> corresponding to the above code may look like this:</p>
+</blockquote>
+
+<pre><code>    subroutine fcalcMatrix (RmatrixData,rassemblyData,rmatrixAssembly,&amp;
+        npointsPerElement,nelements,revalVectors,rcollection)
+    ...
+
+      real(DP), dimension(:,:,:), pointer   :: p_DdataVh
+      real(DP), dimension(:,:,:,:), pointer :: p_DdataWh
+
+      real(DP), dimension(:,:,:), pointer   :: p_DdataTempVh
+      real(DP), dimension(:,:,:,:), pointer :: p_DdataTempWh
+
+      real(DP), dimension(:,:), pointer     :: p_DdataCellVh
+      real(DP), dimension(:,:,:), pointer   :: p_DdataCellWh
+
+      ! Get the data arrays
+      p_DdataVh     =&gt; revalVectors%p_RvectorData(1)%p_Ddata
+      p_DdataWh     =&gt; revalVectors%p_RvectorData(2)%p_DdataVec
+
+      p_DdataTempVh =&gt; revalVectors%p_RvectorData(1)%p_Ddata   
+      p_DdataTempWh =&gt; revalVectors%p_RvectorData(2)%p_DdataVec
+
+      p_DdataCellVh =&gt; revalVectors%p_RvectorData(1)%p_DcellData   
+      p_DdataCellWh =&gt; revalVectors%p_RvectorData(2)%p_DcellDataVec
+
+      ...
+      do iel = 1,nelements
+        do icubp = 1,npointsPerElement
+
+          ! Get the value of V_h in the cubature point
+          dvh = p_DdataVh(icubp,iel,DER_FUNC)
+
+          ! Save for later use
+          p_DdataTempVh(icubp,iel,DER_FUNC) = dvh**2
+
+          ! Sum up to norm over the cell
+          p_DdataCellVh(iel,DER_FUNC) = p_DdataCellVh(iel,DER_FUNC) + dvh**2
+
+          do idofe=1,ndofTest
+
+            dbasI = p_DbasText(idofe,DER_FUNC,icubp,iel)
+
+            do jdofe=1,ndofTrial
+
+              dbasJ = p_DbasTrial(jdofe,DER_FUNC,icubp,iel)
+
+              ! Calculate the local matrix entries
+              p_DlocalMat(jdofe,idofe,iel) = p_DlocalMat(jdofe,idofe,iel) + &amp;
+                  p_DcubWeight(icubp,iel) * ( dvh*dbasJ*dbasI )
+
+            end do ! jdofe
+          end do
+        end do
+      end do
+      ...
+
+    end subroutine
+</code></pre>
+
+<p>This code calculates the bilinear form $$m(v_h)(varphi_h,psi_h) = ( psi_h, v_h varphi_h )$$ which corresponds to the operator $v_h I$ with $I$ the identity operator (resulting in a mass matrix with nonconstant coefficient).</p>
+
+<p><strong>Using nonconstant data:</strong> The data arrays <code>p_DdataXXXX</code> in this subroutine are extracted from the <code>revalVectors%p_RvectorData(:)</code> structures in exactly the order they were added to <code>rmyVectors</code> above. The shape of the data arrays correspond to the type of data that was added and is designed for fast data access inside of the loops. In the above example, <code>p_DdataVh</code> contains the values of $v_1$ in all cubature points and all elements. As soon as <code>iel</code> and <code>icubp</code> identify one cubature point on one element, the value <code>dvh</code> of $v_1$ can be obtained via <code>p_DdataVh</code> and be used in all the loops over the test and trial functions that calculate the local matrices.</p>
+
+<p><strong>Using temporary arrays:</strong> The temp arrays can be arbitrarily used in the callback routine. In the above example, the value of $v_h^2$ is saved to <code>p_DdataTempVh</code> which has the same layout as <code>p_DdataVh</code>. The data can then be accessed in a later step of the assembly.</p>
+
+<p>Cell based data is used in a similar way. Such temporary data provides one data entry per cell. The above example uses, e.g., <code>p_DdataCellVh</code> to compute the norm of $v_h$ on a cell $T$, $||v_h||_{L_2(T)}$, which may be used later, for example in a stabilisation technique.</p>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+  src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\(','\)']]}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

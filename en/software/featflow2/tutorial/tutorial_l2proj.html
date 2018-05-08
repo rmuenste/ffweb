@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The L2 projection  - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html" class="selected">Tutorial</a><div class="submenu"><a href="tutorial_intro.html">Introduction</a><a href="tutorial_lang.html">Fortran 90/95 for C/C++ programmers</a><a href="tutorial00.html">Tutorial00 - Hi FEAT</a><a href="tutorial01.html">Tutorial01</a><a href="tutorial_programming.html">FEAT2 programming techniques </a><a href="tutorial_l2proj.html" class="selected">The L2 projection </a><a href="tutorial_poisson.html">The poisson equation </a><a href="tutorial_conv-diff.html">The convection-diffusion equation </a><a href="tutorial_lelast.html">Linear elasticity </a><a href="tutorial_stokes.html">The Stokes equations </a><a href="tutorial_navierstokes.html">The Navier-Stokes equations </a></div><a href="../featflow2_concepts.html">Concepts</a></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../tutorial.html">Tutorial</a> » <a href="tutorial_l2proj.html">The L2 projection </a>  </div>
+
+  <hr />
+
+  <h1>The $L_2$ projection</h1>
+
+<p>The $L_2$ projection is a simple projection of an arbitrary function $u\in L_2(\Omega)$ into a finite element space $V_h\subset L_2(\Omega)$, with $\Omega\subset\mathbb{R}^d$ a domain. Mathematically, this can be formulated as a minimisation problem as follows:</p>
+
+<blockquote>
+  <p>Find $u_h\in V_h$ such that
+  $$ J(u_h) := \frac{1}{2}||u_h-u||^2_{L_2(\Omega)} \quad\to\quad\min $$</p>
+</blockquote>
+
+<p>As $J(\cdot)$ is convex, the solution of the above problem is the unique critical point of the above function. Using the Frechet derivative $DJ(u_h)(\cdot)=(u_h-u,\cdot)$ of the above function, the necessary optimality condition reads $$DJ(u_h)v_h = (u_h-u,v_h) = 0 \qquad\text{for all $v_h\in V_h$},$$ or equivalently</p>
+
+<p>$$(u_h,v_h) = (u,v_h) \qquad\text{for all $v_h\in V_h$}.$$</p>
+
+<p>Using the usual finite element method for the approximation, the corresponding discrete counterpart of this system reads $$M x = b$$ with</p>
+
+<ul>
+<li><p>$M$ the mass matrix defined by $m_{ij}=(\varphi_j,\varphi_i)$,</p></li>
+<li><p>$&#92;{\varphi_i&#92;}$ a basis of the finite element space $V_h$,</p></li>
+<li><p>$x$ the vector with degrees of freedom in $u_h=\sum_i x_i \varphi_i$, and</p></li>
+<li><p>the components of $b$ defined by $b_i = (u,\varphi_i)$.</p></li>
+</ul>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+// for correct syntax see http://docs.mathjax.org/en/latest/start.html
+// note that when editing this page these parenthesis need to be
+// escaped with 4 backslashes such that 2 of them end up on the
+// generated web page!
+MathJax.Hub.Config({
+tex2jax: {
+    inlineMath:  [ ['$','$'], ['\\(','\\)'] ]
+}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

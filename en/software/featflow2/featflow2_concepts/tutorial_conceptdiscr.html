@@ -1,0 +1,458 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The discretisation - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html" class="selected">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="tutorial_conceptdiscr.html">The discretisation</a>  </div>
+
+  <hr />
+
+  <h1>Discretisation</h1>
+
+<p>For the discretisation of an equation, one has basically to define a Finite Element space - or more precisely, a tensor product of finite element spaces. These mathematical structures are realised in FEAT2 by two "discretisation" structures:</p>
+
+<ol>
+<li><p><code>t_scalarDiscretisation</code> (spatialdiscretisation.f90)</p>
+
+<ul>
+<li>Encapsules a finite element space $V_h$ over a mesh, e.g., the $Q_1$ space.</li>
+<li>Is connected to a mesh, (possibly) a domain description and transformation rules from reference to real elements.<br><br></li>
+</ul></li>
+<li><p><code>t_blockDiscretisation</code> (spatialdiscretisation.f90)</p>
+
+<ul>
+<li>Encapsules tensor product spaces of finite element spaces, e.g., $X_h = V_h \times V_h$.</li>
+<li>Is realised as a list of <code>t_scalarDiscretisation</code> structures, each describing a finite element subspace in $X_h$.</li>
+<li>Is connected to a mesh and (possibly) a domain description.</li>
+</ul></li>
+</ol>
+
+<p>Routines in the FEAT library are usually based on <code>t_blockDiscretisation</code> as this structure resembles the finite element space of the complete equation.</p>
+
+<blockquote>
+  <p><strong>Special case:</strong> Also simple equations like the Poisson equation are realised by <code>t_blockDiscretisation</code> although they contain only one finite element space. Such an equation is realised using a 1-block tensor product space $X_h$ = $V_h$ and results in the end in a 1x1 block matrix with 1 block in the corresponding block vectors.</p>
+</blockquote>
+
+<h2>Uniform and conformal discretisations</h2>
+
+<p>Currently, FEAT2 supports <em>uniform</em> and <em>conformal</em> discretisations:</p>
+
+<ul>
+<li><strong>Uniform discretisations</strong> contain only one type of finite element for all cells. The transformation rule is the same for all cells. All cells have the same shape, i.e., "mixed" triangulations (like triangles and quads in the same mesh) are not allowed. Hanging nodes are not allowed.</li>
+<li><strong>Conformal discretisations</strong> extend uniform discretisations. It is popssible to mix different type of cells (e.g. triangles and quads) in one mesh. However, hanging nodes are not allowed. All types of finite elements that are used must be "compatible" in terms of degrees of freedom. So it is possible to use a mixed triangle/quad mesh with P1/Q1. However, mixing P1 with Q2 is not possible as the degrees of freedom are not compatible.</li>
+</ul>
+
+<blockquote>
+  <p><strong>Example for a uniform discretisation.</strong> All cells are quads and discretised with the same finite element space $Q_1$.</p>
+</blockquote>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/mesh_uniform.svg" title="A uniform mesh" alt="A uniform mesh" />
+</center></p>
+
+<blockquote>
+  <p><strong>Example for a conformal discretisation.</strong> Mixed triangle/quad mesh, discretised with $P_1$ and $Q_1$. The finite element spaces are chosen in such a way that the degrees of freedom match, here, in the vertices.</p>
+</blockquote>
+
+<p><center>
+<img src="../../../../media/featflow2/tutorial_graphics/mesh_conformal.svg" title="A conformal mesh" alt="A conformal mesh" />
+</center></p>
+
+<h2>Working with finite element spaces</h2>
+
+<p>For the creation of finite element spaces, at least a triangulation is needed - this is called <code>rtriangulation</code> in the following. The module <code>spatialdiscretisation.f90</code> contains a couple of methods to create discretisation structures.</p>
+
+<p>A finite element space is always identified by an "element-ID". All element constants are defined in the module <code>element.f90</code>. The following tables contain an extract of finite element spaces supported by FEAT2.</p>
+
+<h3>1D elements</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Element-ID</th>
+  <th>Type of the element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>EL_P0_1D</td>
+  <td>$P_0$, piecewise constant</td>
+</tr>
+<tr>
+  <td>EL_P1_1D</td>
+  <td>$P_1$, piecewise linear</td>
+</tr>
+<tr>
+  <td>EL_P2_1D</td>
+  <td>$P_2$, piecewise quadratic</td>
+</tr>
+</tbody>
+</table>
+
+<h3>2D elements</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Element-ID</th>
+  <th>Shape</th>
+  <th>Conforming</th>
+  <th>Parametric</th>
+  <th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>EL_P0_2D</td>
+  <td>triangle</td>
+  <td>X</td>
+  <td>X</td>
+  <td>$P_0$, piecewise constant</td>
+</tr>
+<tr>
+  <td>EL_P1_2D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$P_1$, piecewise linear</td>
+</tr>
+<tr>
+  <td>EL_P2_2D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$P_2$, piecewise quadratic</td>
+</tr>
+<tr>
+  <td>EL_P3_2D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$P_3$, piecewise cubic</td>
+</tr>
+<tr>
+  <td>EL_P1T_2D</td>
+  <td></td>
+  <td></td>
+  <td>X</td>
+  <td>Crouzeix-Raviart</td>
+</tr>
+<tr>
+  <td>EL_Q0_2D</td>
+  <td>quad</td>
+  <td>X</td>
+  <td>X</td>
+  <td>$Q_0$, piecewise constant</td>
+</tr>
+<tr>
+  <td>EL_Q1_2D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$Q_1$, piecewise linear</td>
+</tr>
+<tr>
+  <td>EL_Q2_2D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$Q_2$, piecewise quadratic</td>
+</tr>
+<tr>
+  <td>EL_Q3_2D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$Q_3$, piecewise cubic</td>
+</tr>
+<tr>
+  <td>EL_QP1_2D</td>
+  <td></td>
+  <td></td>
+  <td>X</td>
+  <td>$P_1^\text{disc}$, piecewise linear</td>
+</tr>
+<tr>
+  <td>EL_E030_2D</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>$\tilde Q_1$, integral mean value based</td>
+</tr>
+<tr>
+  <td>EL_E031_2D</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>$\tilde Q_1$, midpoint-based</td>
+</tr>
+<tr>
+  <td>EL_EM30_2D</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>$\tilde Q_1$, integral mean value based</td>
+</tr>
+<tr>
+  <td>EL_EM31_2D</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>$\tilde Q_1$, midpoint-based</td>
+</tr>
+</tbody>
+</table>
+
+<h3>3D elements</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Element-ID</th>
+  <th>Shape</th>
+  <th>Conforming</th>
+  <th>Parametric</th>
+  <th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>EL_P0_3D</td>
+  <td>tetra</td>
+  <td>X</td>
+  <td>X</td>
+  <td>$P_0$, piecewise constant</td>
+</tr>
+<tr>
+  <td>EL_P1_3D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$P_1$, piecewise linear</td>
+</tr>
+<tr>
+  <td>EL_P2_3D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$P_2$, piecewise quadratic</td>
+</tr>
+<tr>
+  <td>EL_P3_3D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$P_3$, piecewise cubic</td>
+</tr>
+<tr>
+  <td>EL_Q0_3D</td>
+  <td>hex</td>
+  <td>X</td>
+  <td>X</td>
+  <td>$Q_0$, piecewise constant</td>
+</tr>
+<tr>
+  <td>EL_Q1_3D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$Q_1$, piecewise linear</td>
+</tr>
+<tr>
+  <td>EL_Q2_3D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$Q_2$, piecewise quadratic</td>
+</tr>
+<tr>
+  <td>EL_Q3_3D</td>
+  <td></td>
+  <td>X</td>
+  <td>X</td>
+  <td>$Q_3$, piecewise cubic</td>
+</tr>
+<tr>
+  <td>EL_QP1_2D</td>
+  <td></td>
+  <td></td>
+  <td>X</td>
+  <td>$P_1^\text{disc}$, piecewise linear</td>
+</tr>
+<tr>
+  <td>EL_E030_3D</td>
+  <td></td>
+  <td></td>
+  <td>X</td>
+  <td>$\tilde Q_1$, integral mean value based</td>
+</tr>
+<tr>
+  <td>EL_E031_3D</td>
+  <td></td>
+  <td></td>
+  <td>X</td>
+  <td>$\tilde Q_1$, midpoint-based</td>
+</tr>
+<tr>
+  <td>EL_EM30_3D</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>$\tilde Q_1$, integral mean value based</td>
+</tr>
+<tr>
+  <td>EL_EM31_3D</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>$\tilde Q_1$, midpoint-based</td>
+</tr>
+</tbody>
+</table>
+
+<p>Using the element-ID, a finite element space can be initialised. The module <code>spatialdiscretisation.f90</code> contains a set of routines to create an appropriate <code>t_scalarDiscretisation</code> structure:</p>
+
+<ol>
+<li><p>The following command creates a uniform discretisation with $Q_1$ in 2D based on a mesh <code>rtriangulation</code>. THe mesh is expected to contain only quads. The discretisation structure <code>rspatialDiscr</code> identifies the finite element space:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscr
+...
+call spdiscr_initDiscr_simple (rspatialDiscr,EL_Q1_2D,rtriangulation)
+</code></pre>
+
+<p>If the triangulation is releated to an analytical description of the boundary <code>rboundary</code>, this description has to be specified as well:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscr
+...
+call spdiscr_initDiscr_simple (rspatialDiscr,EL_Q1_2D,rtriangulation,rboundary)
+</code></pre></li>
+<li><p>If the mesh contains triangles and quads, a mixed discretisation has to be created. This is done by the following command, where two finite element identifiers are specified. The example creates a mixed 2D finite element space with $P_1$ to be used for triangles and $Q_1$ for quads:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscr
+...
+call spdiscr_initDiscr_simple (rspatialDiscr,&amp;
+    EL_P1_2D,EL_Q1_2D,rtriangulation)
+</code></pre>
+
+<p>If the triangulation is releated to an analytical description of the boundary <code>rboundary</code>, this description has to be specified as well:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscr
+...
+call spdiscr_initDiscr_simple (rspatialDiscr,&amp;
+    EL_P1_2D,EL_Q1_2D,rtriangulation,rboundary)
+</code></pre></li>
+</ol>
+
+<p>To release a finite element space the routine <code>spdiscr_releaseDiscr</code> has to be used:</p>
+
+<pre><code>call spdiscr_releaseDiscr (rspatialDiscr)
+</code></pre>
+
+<h2>Working with tensor product spaces</h2>
+
+<p>Having defined a set of finite element spaces, a tensor product space (identified by a <code>t_blockDiscretisation</code> structure) can be initialised. This procedure requires three steps: Creation of an empty tensor product space, adding all subspaces and finishing the creation.</p>
+
+<p>The following example demonstrates the creation of a tensor product space $X_h = V_h \times W_h$, where $V_h$ and $W_h$ are identified by <code>rspatialDiscrVh</code> and <code>rspatialDiscrWh</code>, respectively. Similar to the creation of a finite element space above, a triangulation and (possibly) a domain definition has to be specified for the creation of the tensor product space:</p>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscrVh, rspatialDiscrWh
+type(t_blockDiscretisation) :: rblockDiscr
+...
+call spdiscr_initBlockDiscr (rblockDiscr, rtriangulation, rboundary)
+call spdiscr_appendBlockComponent (rblockDiscr, rspatialDiscrVh)
+call spdiscr_appendBlockComponent (rblockDiscr, rspatialDiscrWh)
+call spdiscr_commitBlockDiscr (rblockDiscr)
+</code></pre>
+
+<p>The tensor product space can be released using <code>spdiscr_releaseBlockDiscr</code>:</p>
+
+<pre><code>call spdiscr_releaseBlockDiscr (rblockDiscr)
+</code></pre>
+
+<blockquote>
+  <p><strong>Remark:</strong> If the tensor product space contains a finite element space multiple times, the creation can be simplified. The following example creates a tensor product space $X_h = V_h \times V_h \times V_h \times W_h$:</p>
+</blockquote>
+
+<pre><code>type(t_spatialDiscretisation) :: rspatialDiscrVh, rspatialDiscrWh
+type(t_blockDiscretisation) :: rblockDiscr
+...
+call spdiscr_initBlockDiscr (rblockDiscr, rtriangulation, rboundary)
+call spdiscr_appendBlockComponent (rblockDiscr, rspatialDiscrVh, 3)
+call spdiscr_appendBlockComponent (rblockDiscr, rspatialDiscrWh)
+call spdiscr_commitBlockDiscr (rblockDiscr)
+</code></pre>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+  src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>

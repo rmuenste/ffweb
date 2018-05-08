@@ -1,0 +1,597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Linear solver - Featflow</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <link media="screen, projection" rel="stylesheet" href="../../../../media/css/screen.css" />  <link media="print" rel="stylesheet" href="../../../../media/css/print.css" />  <!--[if IE]><link media="screen, projection" rel="stylesheet" href="/featflow/media/css/ie.css" /><![endif]-->  
+  <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
+<script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
+<script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="header" class="span-24 last">
+  <h1>Featflow</h1>
+  <img src="../../../../media/css/header.png" title="Featflow" alt="Featflow" /></div><!-- #header -->
+
+<div id="links" class="push-1 pull-1 span-22 last">
+<a href="../../../../album/index.html" target="_blank" class="tooltip">Virtual Album of Fluid Motion<span>Optische Messsysteme - Strömungssimulationen - Ingeneurdienstleistungen</span></a>
+<a href="http://www.ianus-simulation.de/" target="_blank" class="tooltip">IANUS Simulation Industrial Corporations<span>Simulation and visualization project for the numerical study of stationary and nonstationary flows in two and three space dimensions which is designed for education and research.
+</span></a></div>
+
+<div id="wrapper" class="push-1 pull-1 span-22 last">
+
+<div id="menu" class="span-5 colborder">
+  <a href="../../../../index.html">Home</a>
+  <a href="../../../contact.html">Contact</a><a href="../../../software.html" class="selected">Software</a><div class="submenu"><a href="../../feat.html">FEAT2D/FEAT3D</a><a href="http://www.feast.tu-dortmund.de/">FEAST</a><a href="../../featflow.html">FEATFLOW</a><a href="../../featflow2.html" class="selected">FEATFLOW2</a><div class="submenu"><a href="../tutorial.html">Tutorial</a><a href="../featflow2_concepts.html" class="selected">Concepts</a><div class="submenu"><a href="tutorial_namingcon.html">Naming conventions</a><a href="tutorial_structures.html">Basic structures</a><a href="concepts_storage.html">Storage management</a><a href="tutorial_conceptmesh.html">The mesh</a><a href="tutorial_conceptdomain.html">The domain</a><a href="tutorial_conceptdiscr.html">The discretisation</a><a href="tutorial_conceptmatvec.html">Matrices/Vectors</a><a href="concept_stdassembly.html">Scalar assembly</a><a href="concept_blockassembly.html">Block assembly</a><a href="tutorial_conceptscub.html">Cubature rules</a><a href="concepts_bdregions.html">Mesh and boundary regions</a><a href="concepts_bdconditions.html">Boundary conditions</a><a href="concepts_linearsolver.html" class="selected">Linear solver</a><a href="concepts_filters.html">Filter techniques</a><a href="concepts_gmg.html">Geometric Multigrid</a></div></div><a href="../../parpp3d.html">parPP3D</a><a href="../../documentation.html">Documentation</a></div><a href="../../../team.html">Team</a><a href="../../../links.html">Links</a><div class="submenu"><a href="../../../links/websites.html">Websites</a><a href="../../../links/software_links.html">Software</a></div><a href="../../../benchmarks.html">Benchmarks</a><div class="submenu"><a href="../../../benchmarks/ff_benchmarks.html">FeatFlow Benchmark Suite</a><a href="../../../benchmarks/cfdbenchmarking.html">CFD Benchmarking Project</a></div><a href="../../../publications.html">Publications</a><a href="../../../services.html">Services</a><div class="submenu"><a href="../../../services/cdrom.html">CD-ROM</a><a href="../../../services/sitemap.html">Sitemap</a><a href="http://www.mathematik.tu-dortmund.de/de/index/impressum.html">Impressum</a></div><a href="../../../news.html">News</a><a href="../../../examples.html">Examples</a></div><!-- #menu -->
+
+<div id="content" class="prepend-top span-15 last clearfix">
+  <div id="breadcrumbs">
+     <a href="../../../../index.html">Home</a> » <a href="../../../software.html">Software</a> » <a href="../../featflow2.html">FEATFLOW2</a> » <a href="../featflow2_concepts.html">Concepts</a> » <a href="concepts_linearsolver.html">Linear solver</a>  </div>
+
+  <hr />
+
+  <h1>The linear solver</h1>
+
+<p>The linear solver implemented in FEAT2 is designed as a black-box preconditioning approach. It covers single-grid as well as multigrid solvers, and iterative solvers can arbitrarily be combined with other solvers as preconditioners. Boundary conditions that stem from a finite element discretisation can be imposed via so-called "filter techniques", i.e., defect vectors are filtered at specific steps of the algorithms to receive the boundary conditions.</p>
+
+<p>To give an introduction to the solver library, one first has to realise a very basic fact: <em>All linear solvers can be expressed as preconditioners.</em></p>
+
+<h2>The preconditioner approach</h2>
+
+<p>Let an arbitrary linear system be given, expressed as $$Ax=b,$$ for a matrix $A\in\mathbb{R}^{n\times n}$ and vectors $x$, $b\in\mathbb{R^n}$. 
+Furthermore, let $P:\mathbb{R}^{n}\to \mathbb{R}^{n}$ be some mapping in the $\mathbb{R}^{n}$. If there is $P=A$, a solution $x^{&#42;}$ of the linear system can be calculated by one step of a defect correction loop: $$x^{&#42;} := x + P^{-1}(b-Ax),$$ or equivalently in three steps,</p>
+
+<p>$$\begin{align}
+  d :=&amp; b-Ax &#92;&#92;
+  P y =&amp; d &#92;&#92;
+  x^{&#42;} :=&amp; x + y
+  \end{align}$$</p>
+
+<p>for a <em>defect</em> vector $d\in\mathbb{R}^{n}$ and a <em>correction</em> vector $y\in\mathbb{R}^{n}$. At this point there are some things to note:</p>
+
+<ul>
+<li><p>The system $P y = d$ is a "homogeneous" linear system. Assume, that there is an index set $I\subset&#92;{1,...,n&#92;}$ identifying the degrees of freedom on the boundary, and that $$x_i = b_i = g_i \qquad\text{for all $i\in I$}$$ for a vector $g\in\mathbb{R^n}$ which encapsules the degrees of freedom on the boundary. The rows $I$ in $A$ replaced by unit vectors. (This is the usual implementation of Dirichlet boundary conditions in FEAT2.) Then, there is necessarily $d_i=0$ in the defect vector for all $i\in I$, and the correction vector $y$ has to fulfil $y_i=0$ for all $i\in I$ as well.</p></li>
+<li><p>The mapping $P^{-1}:d\mapsto y$ is a <em>preconditioner</em>. It is applied to a defect vector $d$ and provides a correction vector $y$ for the solution. It only has to deal with "homogeneous" boundary conditions.</p></li>
+<li><p>The mapping $P^{-1}$ can be any approximation to the matrix $A^{-1}$. In particular, $P^{-1}$ can be expressed by any direct or iterative solver.</p></li>
+</ul>
+
+<p>The last point needs additional clarification. In the above approach, every type of preconditioner (Jacobi, Gauss-Seidel,...) can be imposed as $P$. On the other hand, every linear solver which is able to solve a linear system $Ax=b$ is also capable of solving the linear system $Py=d$: One provides the matrix $A$ as system matrix and the vector $d$ instead of $b$ as right-hand side. A direct solver will compute $y$, an iterative solver an approximation to $y$.</p>
+
+<blockquote>
+  <p><strong>Remark:</strong> The preconditioning system $$Py=d$$ has a very specific style. It has to deal with "homogeneous boundary conditions", i.e., with defect and correction vectors instead of right-hand side and solution vectors $x$ and $b$, respectively. This allows to do nesting with linear solvers.</p>
+</blockquote>
+
+<h2>Nested solvers</h2>
+
+<p>Due to the preconditioning approach, linear solvers can be arbitrarily nested while still keeping a black-box style. The "outer" linear solver is always one step of the above defect correction loop. All other linear solvers are realised as preconditioners in this outer solver -- and thus, all solvers can serve as preconditioners in other linear solvers. Here some examples:</p>
+
+<dl>
+<dt><strong>Jacobi-Solver: DefCorr(Jac)</strong></dt>
+<dd>A Jacobi solver is a defect correction loop with a Jacobi preconditioner. It is realised in the form
+$$ y_{n+1} := y_n + \omega D^{-1} (d - A y_n) $$
+with $D$ the diagonal of the matrix $A$ and $\omega>0$ a damping parameter. The sequence $y_n$ converges to $y$ which is used to compute 
+the final solution $x$, see above. To be more specific, the solver is realised in three steps:
+$$\begin{align}
+  \tilde d :=&amp; d-Ay_n &#92;&#92;
+  P_D \tilde y =&amp; \tilde d &#92;&#92;
+  y_{n+1} :=&amp; y_n + \omega \tilde y
+  \end{align}$$
+with $P_D:=D$ the Jacobi preconditioner.</dd>
+
+<dt><strong>DefCorr(4BiCGStab(ILU))</strong></dt>
+<dd>
+<p>This is an example of three solver levels being nested.</p>
+
+<ul>
+<li><p>The outer iteration is a standard defect correction loop:
+$$ y_{n+1} := y_n + P_{\text{4BiCGStab}} (d - A y_n) $$</p></li>
+<li><p>The preconditioner $P_{\text{4BiCGStab}}$ solves a local system
+$$ P_{\text{4BiCGStab}} \tilde y = (d - A y_n) $$
+to get a correction $\tilde y$ for $y_n$. This is done by applying four steps of a BiCGStab algorithm.</p></li>
+<li><p>BiCGStab however can internally be preconditioned by an arbitrary preconditioner. In this case, the preconditioner is the ILU preconditioner $P_{\text{ILU}}$, which solves a linear system approximately:
+$$ P_{\text{ILU}} y_{\text{B}} = d_{\text{B}} $$
+Here, $d_{\text{B}}$ is a defect vector computed by BiCGStab and $y_{\text{B}}$ the correction vector that BiCGStab is going to use.</p></li>
+</ul>
+</dd>
+</dl>
+
+<h2>The three solution phases</h2>
+
+<p>In FEAT2, solving a linear system always decomposes into three solution phases. These phases are motivated by modern Gauss elimination solvers and proved useful:</p>
+
+<ol>
+<li><p>Symbolic decomposition</p>
+
+<p>During the symbolic decomposition phase, the matrix entries are not available. Linear solvers can prepare all data which is not bound to the matrix entries. This involves allocation of temporary vectors on the one hand, but also a symbolic factorisation/pattern analysis on the other hand (e.g., for LU decomposition solvers). The symbolic decomposition is usually applied only once and repeated only if the structure of the matrix changes (e.g. due to local or global mesh refinement).</p></li>
+<li><p>Numeric decomposition</p>
+
+<p>In this phase, matrix entries are available. Numerical algorithms can apply any preparation in-advance which is necessary to be applied to a specific linear system. This involves, in particular, numerical factorisation like the computation of actual entries in a LU decomposition. The numerical decomposition has only to be repeated if the entries of a matrix change.</p></li>
+<li><p>Solve</p>
+
+<p>In the final phase, the numerical decomposition is applied to actually solve a linear system. This can be a time-consuming task (e.g., for CG algorithms or complex, nested solvers) or can be very fast (e.g. in the LU decomposition, where all the numerical work is done in the numerical decomposition).</p></li>
+</ol>
+
+<h2>Using the linear solver library - the basics</h2>
+
+<p>The linear solver library is encapsuled in the module <code>linearsolver.f90</code>. For setting up a linear system and solving it, one has to apply a specific sequence of commands which is summarised in the following piece of code:</p>
+
+<pre><code>call linsol_initXXXX (...)          ! Setting up a solver tree
+...
+call linsol_setMatrix (...)         ! Define the system matrix
+
+call linsol_initStructure (...)     ! Symbolic decomposition
+call linsol_initData (...)          ! Numeric decomposition
+
+call linsol_solveAdaptively (...)   ! Solve Ax=b
+
+call linsol_doneData (...)          ! Clean up numerical data
+call linsol_doneStructure (...)     ! Clean up symbolical data
+
+call linsol_done (...)              ! Release the solver
+</code></pre>
+
+<p>The code decomposes into the following parts:</p>
+
+<ol>
+<li>With <code>linsol_initXXXX</code> (with "XXXX" replaced by a name of a solver), a "solver tree" is set up. In the simplest case, a solver tree consists of only one (e.g., Gauss elimination) solver. However, more complicated nesting of solvers is possible by defining a solver as preconditioner of another solver, see below.</li>
+<li>The routine <code>linsol_setMatrix</code> is used to attach a system matrix $A$ from the underlying linear system $Ax=b$ to the solver.</li>
+<li>The two commands <code>linsol_initStructure</code> and <code>linsol_initData</code> apply a symbolic and numeric factorisation of the matrix. They prepare the linear solver for being invoked.</li>
+<li>The actual system is solved using <code>linsol_solveAdaptively</code>.</li>
+<li>After solving the system, <code>linsol_doneData</code> and <code>linsol_doneStructure</code> clean up the data that is allocated/created by the corresponing "init" routines. The final <code>linsol_done</code> releases the linear solver.</li>
+</ol>
+
+<p><strong>Remarks</strong>:</p>
+
+<ul>
+<li><p>The solver library is designed to work with tensor product spaces, so all matrices and vectors must be "block matrices" and "block vectors".</p></li>
+<li><p>The <code>linsol_initXXXX</code> used for creation of a solver always return a pointer to a solver structure on the heap. Using this technique, a simple <code>linsol_done()</code> at the end will automatically release all solvers and preconditioners in a solver tree automatically.</p></li>
+</ul>
+
+<p><strong>Example:</strong> The following example demonsrtates how to set up a Gauss elimination solver and solve a system $Ax=b$, where $A$ is given as a matrix <code>rmatrix</code>, $b$ is given as a vector <code>rrhs</code> and $x$ is given as <code>rx</code>; the additional vector <code>rd</code> is a temporary vector which has to be provided to the linear solver.</p>
+
+<pre><code>type(t_matrixBlock) :: rmatrix
+type(t_vectorBlock) :: rrhs, rx, rd
+
+type(t_linsolNode), pointer :: p_rlinsol
+integer :: ierror
+...
+
+! Set up the Gauss elimination solver
+call linsol_initUMFPACK4 (p_rsolver)
+
+! Define the matrix A
+call linsol_setMatrix (p_rsolver,rmatrix)
+
+! Symbolic factorisation
+call linsol_initStructure (p_rsolver,ierror)
+
+if (ierror .ne. LINSOL_ERR_NOERROR) then
+  call output_line ("Error in symbolic factorisation")
+  call sys_halt()
+end if
+
+! Numeric factorisation
+call linsol_initData (p_rsolver,ierror)
+
+if (ierror .ne. LINSOL_ERR_NOERROR) then
+  call output_line ("Error in numeric factorisation")
+  call sys_halt()
+end if
+
+! Solve
+call linsol_solveAdaptively (p_rsolver,rx,rb,rd)
+
+! Clean up
+call linsol_doneData (p_rsolver)
+call linsol_doneStructure (p_rsolver)
+
+call linsol_done (p_rsolver)
+</code></pre>
+
+<p>In the beginning, the UMFPACK Gauss elimination solver is set up by <code>linsol_initUMFPACK4</code>. After attaching the matrix, the symbolic and numeric factorisation is invoked. These two routines return an error code <code>ierror</code> which is <code>LINSOL_ERR_NBOERROR</code> if everything works well. If not, the program can be aborted, e.g., by calling <code>sys_halt()</code>. Afterwards, the system is solved and the structures are cleaned uo.</p>
+
+<h2>Using the linear solver as a preconditioner</h2>
+
+<p>All linear solvers in the library are set up as preconditioners. As a consequence, they are ideally designed to work as a linear preconditioner in a nonlinear loop. This can be done by invoking <code>linsol_precondDefect</code> instead of <code>linsol_solveAdaptively</code>. The routine <code>linsol_precondDefect</code> replaces a given defect by a correction vector obtained by a linear solver.</p>
+
+<p>The following example demonstrates the use of the linear solver in a nonlinear loop. We want to solve a semilinear system of the form $$A(x)x=b.$$ A simple nonlinear loop in this case is the Picard iteration $$x_{n+1} = x_n + P(A(x_n))^{-1} (b-A(x_n)x_n)$$ which we want to realise here.</p>
+
+<pre><code>type(t_matrixBlock) :: rmatrix
+type(t_vectorBlock) :: rrhs, rx, ry, rd
+
+type(t_linsolNode), pointer :: p_rlinsol
+integer :: ierror
+...
+! Create the matrix structure
+...
+
+! Set up the Gauss elimination solver
+call linsol_initUMFPACK4 (p_rsolver)
+
+! Define the matrix A
+call linsol_setMatrix (p_rsolver,rmatrix)
+
+! Symbolic factorisation
+call linsol_initStructure (p_rsolver,ierror)
+
+if (ierror .ne. LINSOL_ERR_NOERROR) then
+  call output_line ("Error in symbolic factorisation")
+  call sys_halt()
+end if
+
+! Set up the right-hand side rrhs
+...
+
+! Initialise solution
+call lsysbl_clearVector (rx)
+
+! Nonlinear loop
+do while (...)   ! not converged
+
+  ! Compute the matrix A(x_n)
+  ...
+
+  ! Numeric factorisation
+  call linsol_initData (p_rsolver,ierror)
+
+  if (ierror .ne. LINSOL_ERR_NOERROR) then
+    call output_line ("Error in numeric factorisation")
+    call sys_halt()
+  end if
+
+  ! Create the nonlinear defect d=b-A(x_n)x_n
+  call lsysbl_copyVector (rrhs,rd)
+  call lsysbl_matVec (rmatrix, rx, rd, -1.0_DP, 1.0_DP)
+
+  ! Preconditioning of the defect; rd is overwritten by y with Py=d
+  call linsol_precondDefect (p_rsolver,rd)
+
+  ! Clean up the numerical factorisation
+  call linsol_doneData (p_rsolver)
+
+  ! Correction: x = x + y
+  call lsysbl_vectorLinearComb (rd,rx,1.0_DP,1.0_DP)
+end do
+
+! Clean up
+call linsol_doneStructure (p_rsolver)
+
+call linsol_done (p_rsolver)
+...
+</code></pre>
+
+<p>Notice that embedded in a nonlinear loop, only the numerical factorisation has to be repeated for every nonlinear step as the matrix structure does not change. The symbolic factorisation is done once before the loop which saves approximately 30 percent of the CPU time for the UMFPACK solver.</p>
+
+<h2>Setting up solver trees</h2>
+
+<p>Due to trhe fact that all solvers are realised as preconditioners, the solver library offers the possibility to set up an arbitrarily nested tree of solvers and preconditioners. The <code>linsol_initXXXX</code> routines in <code>linearsolver.f90</code> always return a pointer to a solver structure which can be used as preconditioner in another solver (provided that the other solver support preconditioners).</p>
+
+<p>Roughly saying, all iterative solvers (including the multigrid solver) support preconditioners and subsolvers. A preconditioner for a solver can be specified in the initialisation of a solver as additional parameter.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> Here an example of a <strong>BiCGStab(ILU0)</strong> solver, i.e., a BiCGStab solver preconditioned with ILU0:</p>
+</blockquote>
+
+<pre><code>type(t_linsolNode), pointer :: p_rpreconditioner
+type(t_linsolNode), pointer :: p_rsolver
+
+call linsol_initILU0(p_rpreconditioner)
+call linsol_initBiCGStab(p_rsolver,p_rpreconditioner)
+
+... (Solver is identified by p_rsolver)
+call linsol_solveAdaptively (p_rsolver,...)
+</code></pre>
+
+<p>As can be seen, <code>linsol_initILU0</code> creates a solver node <code>p_rpreconditioner</code> which is specified as preconditioner in <code>linsol_initBiCGStab</code>.<code>linsol_initBiCGStab</code>creates the actual solver node <code>p_rsolver</code>.</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example creates a solver <strong>DefCorr(4 x BiCGStab(ILU0))</strong>. There is an outer defect correction loop with an inner BiCGSTab algorthm, applying exactly four iterations. BiCGStab is preconditioned by ILU0:</p>
+</blockquote>
+
+<pre><code>type(t_linsolNode), pointer :: p_rprecILU, p_rprecBiCGStab
+type(t_linsolNode), pointer :: p_rsolver
+
+call linsol_initILU0(p_rprecILU)
+call linsol_initBiCGStab(p_rprecBiCGStab,p_rprecILU)
+p_rprecBiCGStab%nminIterations = 4
+p_rprecBiCGStab%nmaxIterations = 4
+call linsol_initDefCorr(p_rsolver,p_rprecBiCGStab)
+
+... (Solver is identified by p_rsolver)
+call linsol_solveAdaptively (p_rsolver,...)
+</code></pre>
+
+<p>Again, every <code>linsol_initXXXX</code> creates a <code>t_linsolNode</code> strucure which can be used in another solver as preconditioner: <code>p_rprecILU</code> is used as precondoitioner for BiCGStab, <code>p_rprecBiCGStab</code> is used as preconditioner for the actual solver <code>p_rsolver</code>. So enforce BiCGSTab applying exactly four iterations, <code>nminIterations</code> and <code>nmaxIterations</code> in the structure <code>p_rprecBiCGStab</code> are set to "4".</p>
+
+<h2>Basic parameters in the solver structure</h2>
+
+<p>THe solver structure <code>t_linsolNode</code> contains a set of parameters with default values which can be modified by the user. The following list gives a brief overview about the most important parameters in this structure:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Parameter</th>
+  <th>Default</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>ioutputLevel</td>
+  <td>0</td>
+  <td>Output level. <br>=-1: no output <br> =0: no output except for warning messages<br> =1: basic output<br> =2: extended output</td>
+</tr>
+<tr>
+  <td>nminIterations</td>
+  <td>1</td>
+  <td>Minimum number of iterations</td>
+</tr>
+<tr>
+  <td>nmaxIterations</td>
+  <td>50</td>
+  <td>Maximum number of iterations</td>
+</tr>
+<tr>
+  <td>iresNorm</td>
+  <td>LINALG_NORML2</td>
+  <td>Type of norm to use for residuals. Default is $||\cdot||_{l_2}$.</td>
+</tr>
+<tr>
+  <td>istoppingCriterion</td>
+  <td>LINSOL_STOP_STANDARD</td>
+  <td>Type of stopping criterion to use. <br> =LINSOL_STOP_STANDARD: Stop if relative (depsRel) and absolute (depsAbs) stopping criterion hold. <br>=LINSOL_STOP_ONEOF: Stop if either the relative (depsRel) or the absolute (depsAbs) stopping criterion holds.</td>
+</tr>
+<tr>
+  <td>depsRel</td>
+  <td>1E-5</td>
+  <td>Relative stopping criterion. Stop if $||\text{defect}|| &lt; \text{depsRel} ||\text{initial defect}||$.<br>=0.0: deactivated.</td>
+</tr>
+<tr>
+  <td>depsAbs</td>
+  <td>1E-5</td>
+  <td>Absolute stopping criterion. Stop if $||\text{defect}|| &lt; \text{depsAbs}$.<br> =0.0: deactivated.</td>
+</tr>
+<tr>
+  <td>depsDiff</td>
+  <td>0.0 (deactivated)</td>
+  <td>Defect improvement stopping criterion. Stop if $||\text{defect}&#95;{\text{new}}|| - ||\text{defect}&#95;{\text{old}}|| &lt; \text{depsDiff} ||\text{defect}&#95;{\text{old}}||$.<br>=0.0: deactivated.</td>
+</tr>
+<tr>
+  <td>ddivRel</td>
+  <td>1E6</td>
+  <td>Relative divergence criterion. Stop if $||\text{defect}|| > \text{ddivRel} ||\text{initial defect}||$.<br>=SYS_INFINITY: deactivated.</td>
+</tr>
+<tr>
+  <td>depsAbs</td>
+  <td>SYS_INFINITY</td>
+  <td>Absolute divergence criterion. Stop if $||\text{defect}|| > \text{ddivAbs}$.<br>=SYS_INFINITY: deactivated.</td>
+</tr>
+<tr>
+  <td>drhsZero</td>
+  <td>1E-90</td>
+  <td>RHS-vector is treated as zero if $||\text{rhs}|| &lt; \text{drhsZero}$.</td>
+</tr>
+<tr>
+  <td>domega</td>
+  <td>1.0</td>
+  <td>Solver dependent damping parameter. Most solvers use this parameter as a final damping, realising the mapping $d \mapsto \omega P^{-1}d$. (I.e., they scale their return value by $\omega$.)<br><strong>Defect correction:</strong> Uses the parameter as damping parameter: $x_{n+1} = x_n + \omega P^{-1} (b-Ax_n)$</td>
+</tr>
+<tr>
+  <td>niteAsymptoticCVR</td>
+  <td>0</td>
+  <td>Numer of iterations to measure the asymptotic convergence rate from. =0: deactivate</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Basic return values</h2>
+
+<p>The linear solver is invoked by</p>
+
+<pre><code>call linsol_solveAdaptively (p_rsolver,...)
+</code></pre>
+
+<p>or</p>
+
+<pre><code>call linsol_precondDefect (p_rsolver,...)
+</code></pre>
+
+<p>for a <code>t_linsolNode</code> structure <code>p_rsolverNode</code>, depending on whether a linear system is to be solved or a defect is to be preconditioned. The <code>t_linsolNode</code> contains a set of status variables which describe the result of the iteration:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>iresult</td>
+  <td>=0: Success <br>=1: iteration broke down, diverging <br>=2: error in the parameters <br> &lt; 0: algorithm-specific error</td>
+</tr>
+<tr>
+  <td>iiterations</td>
+  <td>Number of iterations, the algorithm needed</td>
+</tr>
+<tr>
+  <td>dinitialDefect</td>
+  <td>Initial defect</td>
+</tr>
+<tr>
+  <td>dfinalDefect</td>
+  <td>Final defect</td>
+</tr>
+<tr>
+  <td>dconvergenceRate</td>
+  <td>Convergence rate</td>
+</tr>
+<tr>
+  <td>dasymptoticConvergenceRate</td>
+  <td>Asymptotic convergence rate (computed from the last "niteAsymptoticCVR" steps)</td>
+</tr>
+<tr>
+  <td>dtimeTotal</td>
+  <td>Total computation time</td>
+</tr>
+<tr>
+  <td>dtimeInitStruct</td>
+  <td>Time for structural decomposition</td>
+</tr>
+<tr>
+  <td>dtimeInitData</td>
+  <td>Time for numerical decomposition</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+  <p><strong>Remark:</strong> The user should be aware of the fact that not all parameters are used all the time for all solvers, and not all solvers provide meaningful return values in all return variables. Which parameters in a solver structure are used and which not depend on the actual solver. For example, the UMFPACK Gauss elimination solver does not use the number of minimum/maximum iterations and does not return the initial and final defect or the number of iterations (always set to 1). An iterative solver on the other hand usually uses these parameters and returns meaningful values here. The only variable which is guaranteed to be set by all solvers is <code>iresult</code>.</p>
+</blockquote>
+
+<h2>Extended parameters in the solver structure</h2>
+
+<p>Depending on the type of the solver, there can be found additional parameters in the solver structure which are algorithm dependent. Such "special" parameters are accessible via algorithm dependent "subnode" structures in the solver structure which are only valid for the appropriate solvers. For example, the following list gives a brief overview which substructures in the solver structure <code>t_linsolNode</code> are active for which algorithm:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Algorithm</th>
+  <th>Substructure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Defect correction</td>
+  <td>(t_linsolNode)%p_rsubnodeDefCorr</td>
+</tr>
+<tr>
+  <td>SOR</td>
+  <td>(t_linsolNode)%p_rsubnodeSOR</td>
+</tr>
+<tr>
+  <td>CG</td>
+  <td>(t_linsolNode)%p_rsubnodeCG</td>
+</tr>
+<tr>
+  <td>GMRES</td>
+  <td>(t_linsolNode)%p_rsubnodeGMRES</td>
+</tr>
+<tr>
+  <td>BiCGStab</td>
+  <td>(t_linsolNode)%p_rsubnodeBiCGStab</td>
+</tr>
+<tr>
+  <td>UMFPACK</td>
+  <td>(t_linsolNode)%p_rsubnodeUMFPACK4</td>
+</tr>
+<tr>
+  <td>Multigrid-2</td>
+  <td>(t_linsolNode)%p_rsubnodeMultigrid2</td>
+</tr>
+<tr>
+  <td>...</td>
+  <td>...</td>
+</tr>
+</tbody>
+</table>
+
+<p>After the creation of a solver node, the user can tweak some algorithm specific parameters in these structures if necessary - although the parmeters can usually be left at their default values. Here some examples what can be done with such "special" parameters:</p>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example creates an SOR algorithm and modifies the relaxation parameter.</p>
+</blockquote>
+
+<pre><code>...
+call linsol_initSOR(p_rsolver,1.0_DP)
+
+! Change the parameter from 1.0 to 1.2
+p_rsolver%p_rsubnodeSOR%drelax = 1.2_DP
+...
+</code></pre>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example creates an UMFPACK solver and tells UMFPACK to write out the final matrix in human readable form to a text file on the hard disc before solving the system. (Good for debugging! :-) )</p>
+</blockquote>
+
+<pre><code>...
+call linsol_initUMFPACK4(p_rsolver)
+
+p_rsolver%p_rsubnodeUMFPACK4%imatrixDebugOutput = 1
+p_rsolver%p_rsubnodeUMFPACK4%smatrixName = "mymatrix.txt"
+...
+</code></pre>
+
+<blockquote>
+  <p><strong>Example:</strong> The following example creates a Multigrid solver and changes the cycle to W-cycle. At the end, the system is solved and the total time for smoothing is extracted from the structure.</p>
+</blockquote>
+
+<pre><code>...
+call linsol_initMultigrid2(p_rsolver,nlevels)
+
+p_rsolver%p_rsubnodeMultigrid2%icycle = 2    ! W-cycle
+...
+call linsol_solveAdaptively(p_rsolver,...)
+
+dtimeSmoothing = p_rsolver%p_rsubnodeMultigrid2%dtimePreSmooth + &amp;
+                 p_rsolver%p_rsubnodeMultigrid2%dtimePostSmooth
+</code></pre>
+
+<!-- Java script code to activate LaTex support on this page: -->
+
+<script type="text/javascript"
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config">
+// for correct syntax see http://docs.mathjax.org/en/latest/start.html
+// note that when editing this page these parenthesis need to be
+// escaped with 4 backslashes such that 2 of them end up on the
+// generated web page!
+MathJax.Hub.Config({
+tex2jax: {
+    inlineMath:  [ ['$','$'], ['\\(','\\)'] ]
+}
+});
+</script>
+</div><!-- #content -->
+
+<div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
+<div class="span-10 colborder">
+<span class="label">Address:</span>
+<span class="address"><b>Lehrstuhl III, Angewandte Mathematik und Numerik</b>
+Technische Universität Dortmund
+Vogelpothsweg 87
+44227 Dortmund
+</span><br />
+<span class="label">Phone:</span>+49-231-755-3076<br />
+<span class="label">Fax:</span>+49-231-755-5933<br />
+<span class="label">Email:</span><a href="http://www.mathematik.tu-dortmund.de/email.php?u=featflow&d=featflow.de">FeatFlow.de</a>
+</div>
+<div class="span-9 last">
+<span class="label">Secretaries:</span>
+<span class="address">Alrun Lamprecht
+Susanne Drees</span><br />
+<span class="label">Phone:</span>
+<span class="address">+49-231-755-6840
++49-231-755-3076</span><br />
+<span class="label">Email:</span>
+<span class="address"><a href="http://www.mathematik.tu-dortmund.de/email.php?u=alrun.lamprecht&d=math.tu-dortmund.de">Alrun Lamprecht</a>
+<a href="http://www.mathematik.tu-dortmund.de/email.php?u=susanne.drees&d=math.tu-dortmund.de">Susanne Drees</a>
+</span>
+</div>
+</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+</div><!-- .container -->
+
+</body>
+
+</html>
