@@ -9,6 +9,313 @@
   <link media="screen, projection" rel="stylesheet" href="../../../../media/css/featflow.css" />
 <script type="text/javascript" src="../../../../media/js/mailMaskierung.js"></script>
 <script type="text/javascript" src="../../../../media/js/show_pic.js"></script>
+
+<!--script type="text/javascript" src="../../../../media/bubble3D/bubbletest.js"></script-->
+
+<!-- google charts head part-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="../../../../media/js/example.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/bubbletest.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/circL2.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/circL3.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/circL4.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/massL2.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/massL3.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/massL4.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/sizeL2.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/sizeL2_2.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/sizeL3.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/sizeL3_2.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/sizeL4.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/sizeL4_2.js"></script>
+
+    <!--script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart', 'controls']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {
+
+        var dashboard = new google.visualization.Dashboard(
+          document.getElementById('programmatic_dashboard_div'));
+
+        // We omit "var" so that programmaticSlider is visible to changeRange.
+        var programmaticSlider = new google.visualization.ControlWrapper({
+          'controlType': 'NumberRangeFilter',
+          'containerId': 'programmatic_control_div',
+          'options': {
+            'filterColumnLabel': 'Donuts eaten',
+            'ui': {'labelStacking': 'vertical'}
+          }
+        });
+
+        var programmaticChart  = new google.visualization.ChartWrapper({
+          'chartType': 'PieChart',
+          'containerId': 'programmatic_chart_div',
+          'options': {
+            'width': 300,
+            'height': 300,
+            'legend': 'none',
+            'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+            'pieSliceText': 'value'
+          }
+        });
+
+        var data = google.visualization.arrayToDataTable([
+          ['Name', 'Donuts eaten'],
+          ['Michael' , 5],
+          ['Elisa', 7],
+          ['Robert', 3],
+          ['John', 2],
+          ['Jessica', 6],
+          ['Aaron', 1],
+          ['Margareth', 8]
+        ]);
+
+        dashboard.bind(programmaticSlider, programmaticChart);
+        dashboard.draw(data);
+
+        changeRange = function() {
+          programmaticSlider.setState({'lowValue': 2, 'highValue': 5});
+          programmaticSlider.draw();
+        };
+
+        changeOptions = function() {
+          programmaticChart.setOption('is3D', true);
+          programmaticChart.draw();
+        };
+      }
+
+    </script-->
+    <!--script type="text/javascript">
+      google.charts.load('current', {'packages':['line']});
+      google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'Day');
+      data.addColumn('number', 'Guardians of the Galaxy');
+      data.addColumn('number', 'The Avengers');
+      data.addColumn('number', 'Transformers: Age of Extinction');
+
+      data.addRows([
+        [1,  37.8, 80.8, 41.8],
+        [2,  30.9, 69.5, 32.4],
+        [3,  25.4,   57, 25.7],
+        [4,  11.7, 18.8, 10.5],
+        [5,  11.9, 17.6, 10.4],
+        [6,   8.8, 13.6,  7.7],
+        [7,   7.6, 12.3,  9.6],
+        [8,  12.3, 29.2, 10.6],
+        [9,  16.9, 42.9, 14.8],
+        [10, 12.8, 30.9, 11.6],
+        [11,  5.3,  7.9,  4.7],
+        [12,  6.6,  8.4,  5.2],
+        [13,  4.8,  6.3,  3.6],
+        [14,  4.2,  6.2,  3.4]
+      ]);
+
+      var options = {
+        chart: {
+          title: 'Box Office Earnings in First Two Weeks of Opening',
+          subtitle: 'in millions of dollars (USD)'
+        },
+        width: 620,
+        height: 300,
+      };
+
+      var chart = new google.charts.Line(document.getElementById('line_top_x'));
+
+      chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+  </script-->
+  <!--script>
+google.charts.load('current', 
+{  callback: function () {
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'VIC - STH CRT');
+    data.addColumn('number', 'NSW - MINTO');
+    data.addColumn('number', 'QLD - PINKENBA');
+    data.addColumn('number', 'WA - HAZELMERE');
+
+    data.addRow([new Date('04/01/2001'), 3, 4, 7, 6]);
+    data.addRow([new Date('04/02/2001'), 0, 9, 8, 7]);
+    data.addRow([new Date('04/03/2001'), 9, 9, 0, 7]);
+    data.addRow([new Date('04/04/2001'), 5, 5, 5, 2]);
+    data.addRow([new Date('04/05/2001'), 6, 7, 1, 1]);
+    data.addRow([new Date('04/06/2001'), 4, 4, 1, 9]);
+    data.addRow([new Date('04/07/2001'), 4, 5, 9, 0]);
+
+    var dataOther = new google.visualization.DataTable();
+    dataOther.addColumn('date', 'Date');
+    dataOther.addColumn('number', 'HLS - FLORENCE');
+    dataOther.addColumn('number', 'FGT - GAY');
+    dataOther.addColumn('number', 'KNX - FULTON');
+    dataOther.addColumn('number', 'TN - VOLS');
+
+    dataOther.addRow([new Date('04/01/2001'), 1, 8, 5, 2]);
+    dataOther.addRow([new Date('04/02/2001'), 2, 9, 6, 3]);
+    dataOther.addRow([new Date('04/03/2001'), 3, 0, 7, 4]);
+    dataOther.addRow([new Date('04/04/2001'), 4, 1, 8, 5]);
+    dataOther.addRow([new Date('04/05/2001'), 5, 2, 9, 6]);
+    dataOther.addRow([new Date('04/06/2001'), 6, 3, 0, 7]);
+    dataOther.addRow([new Date('04/07/2001'), 7, 4, 1, 8]);
+
+    var chart = new google.visualization.ChartWrapper({
+      chartType: 'LineChart',
+      containerId: 'daily_container_count_lineChart',
+      options: {
+        theme: 'maximized'
+      }
+    });
+
+    var control = new google.visualization.ControlWrapper({
+      controlType: 'ChartRangeFilter',
+      containerId: 'control_div',
+      options: {
+        filterColumnIndex: 0
+      }
+    });
+
+    var table = new google.visualization.ChartWrapper({
+      chartType: 'Table',
+      containerId: 'table_div',
+      dataTable: dataOther,
+      options: {
+        sortColumn: 1
+      }
+    });
+
+    google.visualization.events.addListener(control, 'statechange', function () {
+      var state = control.getState();
+      var view = new google.visualization.DataView(dataOther);
+      view.setRows(view.getFilteredRows([{column: 0, minValue: state.range.start, maxValue: state.range.end}]));
+      table.setDataTable(view);
+      table.draw();
+    });
+
+    var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));
+    dashboard.bind([control], [chart]);
+    dashboard.draw(data);
+    table.draw();
+  },
+  packages: ['controls', 'corechart', 'table']
+});
+</script-->
+<!--script type="text/javascript">
+      google.charts.load('current', {'packages':['line']});
+      google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'Value');
+    data.addColumn('number', 'Wert');
+    data.addColumn('number', 'Tour');
+    
+    // add 100 rows of pseudo-random-walk data
+    for (var i = 0, val = 50; i < 100; i++) {
+        val += ~~(Math.random() * 5) * Math.pow(-1, ~~(Math.random() * 2));
+        if (val < 0) {
+            val += 5;
+        }
+        if (val > 100) {
+            val -= 5;
+        }
+        data.addRow([new Date(2014, 0, i + 1), val, val+5, val -10]);
+    }
+    
+    var chart = new google.visualization.ChartWrapper({
+        chartType: 'LineChart',
+        containerId: 'chart_div1',
+        options: {
+            height: 400,
+            // omit width, since we set this in CSS
+            chartArea: {
+                width: '75%' // this should be the same as the ChartRangeFilter
+            }
+        }
+    });
+    
+    var control = new google.visualization.ControlWrapper({
+        controlType: 'ChartRangeFilter',
+        containerId: 'control_div1',
+        options: {
+            filterColumnIndex: 0,
+            ui: {
+                chartOptions: {
+                    height: 50,
+                    // omit width, since we set this in CSS
+                    chartArea: {
+                        width: '75%' // this should be the same as the ChartRangeFilter
+                    }
+                }
+            }
+        }
+    });
+    
+    var dashboard = new google.visualization.Dashboard(document.querySelector('#dashboard_div1'));
+    dashboard.bind([control], [chart]);
+    dashboard.draw(data);
+    
+    function zoomLastDay () {
+        var range = data.getColumnRange(0);
+        control.setState({
+            range: {
+                start: new Date(range.max.getFullYear(), range.max.getMonth(), range.max.getDate() - 1),
+                end: range.max
+            }
+        });
+        control.draw();
+    }
+    function zoomLastWeek () {
+        var range = data.getColumnRange(0);
+        control.setState({
+            range: {
+                start: new Date(range.max.getFullYear(), range.max.getMonth(), range.max.getDate() - 7),
+                end: range.max
+            }
+        });
+        control.draw();
+    }
+    function zoomLastMonth () {
+        // zoom here sets the month back 1, which can have odd effects when the last month has more days than the previous month
+        // eg: if the last day is March 31, then zooming last month will give a range of March 3 - March 31, as this sets the start date to February 31, which doesn't exist
+        // you can tweak this to make it function differently if you want
+        var range = data.getColumnRange(0);
+        control.setState({
+            range: {
+                start: new Date(range.max.getFullYear(), range.max.getMonth() - 1, range.max.getDate()),
+                end: range.max
+            }
+        });
+        control.draw();
+    }
+    
+    var runOnce = google.visualization.events.addListener(dashboard, 'ready', function () {
+        google.visualization.events.removeListener(runOnce);
+        
+        if (document.addEventListener) {
+            document.querySelector('#lastDay').addEventListener('click', zoomLastDay);
+            document.querySelector('#lastWeek').addEventListener('click', zoomLastWeek);
+            document.querySelector('#lastMonth').addEventListener('click', zoomLastMonth);
+        }
+        else if (document.attachEvent) {
+            document.querySelector('#lastDay').attachEvent('onclick', zoomLastDay);
+            document.querySelector('#lastWeek').attachEvent('onclick', zoomLastWeek);
+            document.querySelector('#lastMonth').attachEvent('onclick', zoomLastMonth);
+        }
+        else {
+            document.querySelector('#lastDay').onclick = zoomLastDay;
+            document.querySelector('#lastWeek').onclick = zoomLastWeek;
+            document.querySelector('#lastMonth').onclick = zoomLastMonth;
+        }
+    });
+}
+google.load('visualization', '1', {packages:['controls'], callback: drawChart});
+</script-->
+
 </head>
 
 <body>
@@ -50,13 +357,87 @@
 
 <hr />
 
-<h3>Tree-dimensional rising bubbles</h3>
+<h3>Two-dimensional rising bubbles</h3>
 <h2><a name="SECTION00011000000000000000"> General information and references:</a></h2>
+<p>In the absence of analytical solutions...</p>
 
-<!--div><a name="fig_br1000_comparison"></a><a name="44"></a-->
 <h5>FEM Level Set simulation meshes:</h5>
 <div style="text-align: center;"><img src="../../../../media/bubble3D/FEM_Level_Set.png" title="FEM Level Set simulation meshes" alt="FEM Level Set simulation meshes" /></div>
 <hr />
+
+<!-- fuer Kontakt bottom -->
+<div><a name="fig_br1000_comparison"></a><a name="44"></a>
+
+<!-- google charts body part-->
+<!--div id="programmatic_dashboard_div">
+      <table class="columns">
+        <tr>
+          <td>
+            <div id="programmatic_chart_div"></div>
+          </td>
+          <td>
+            <div id="programmatic_control_div" style="padding-left: 2em; min-width: 250px"></div>
+            <div>
+              <button style="margin: 1em 1em 1em 2em" onclick="changeRange();">
+                Select range [2, 5]
+              </button><br />
+              <button style="margin: 1em 1em 1em 2em" onclick="changeOptions();">
+                Make the pie chart 3D
+              </button>
+            </div>
+            <script type="text/javascript">
+              function changeRange() {
+                programmaticSlider.setState({'lowValue': 2, 'highValue': 5});
+                programmaticSlider.draw();
+              }
+
+              function changeOptions() {
+                programmaticChart.setOption('is3D', true);
+                programmaticChart.draw();
+              }
+            </script>
+          </td>
+        </tr>
+      </table>
+</div-->
+
+<!--div id="curve_chart"></div-->
+<!--div id="line_top_x"></div-->
+<div id="circL2"></div>
+<div id="circL3"></div>
+<div id="circL4"></div>
+<div id="massL2"></div>
+<div id="massL3"></div>
+<div id="massL4"></div>
+<div id="sizeL2"></div>
+<div id="sizeL2_2"></div>
+<div id="sizeL3"></div>
+<div id="sizeL3_2"></div>
+<div id="sizeL4"></div>
+<div id="sizeL4_2"></div>
+
+<!--script src="https://www.gstatic.com/charts/loader.js"></script>
+<div id="dashboard_div">
+  <div id="daily_container_count_lineChart" style="width: 100%; height: 100%"></div>
+  <div id="control_div" style="width: 100%; height: 100%"></div>
+</div>
+<div id="table_div"></div>
+
+<div id="dashboard_div1">
+    Zoom<br />
+    <input id="lastDay" type="button" value="Last Day" />
+    <input id="lastWeek" type="button" value="Last Week" />
+    <input id="lastMonth" type="button" value="Last Month" />
+    <div id="chart_div1"></div>
+    <div id="control_div1"></div>
+</div-->
+
+<p class="Space20">Continue reading:</p>
+<ul class="List">
+<li><a href="bubble3D/bubble_configurations.html">Geometry and flow configurations</a></li>
+</ul>
+</div></div><!-- #content -->
+
 
 
 <div id="footer" class="quiet append-1 prepend-1 span-20 last append-bottom">
