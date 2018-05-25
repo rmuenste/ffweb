@@ -50,12 +50,13 @@ function drawChart() {
 
   var options = { 
     title : 'Mass conservation on Level 4',
-    hAxis: {title: 'Time[s]',viewWindow: {min: 0.0, max: 3.0},ticks: [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]}, 
-    vAxis: {title: 'U_z', viewWindow: {min: 0.994, max: 1.002},ticks: [0.994, 0.995, 0.996, 0.997, 0.998, 0.999, 1.0, 1.001, 1.002]}, 
+    hAxis: {title: 'Time[s]',viewWindow: {min: 0.0, max: 3.0}}, 
+    vAxis: {title: 'U_z', viewWindow: {min: 0.994, max: 1.002}}, 
     width: 630, 
     height: 450, 
     legend: { position: 'right', alignment: 'start' }, 
-    chartArea: {  width: "50%", height: "70%" }  
+    chartArea: {  width: "50%", height: "70%" },  
+    explorer: {maxZoomOut: 1, maxZoomIn: .0025} 
   }; 
 
   var chart = new google.visualization.LineChart( 

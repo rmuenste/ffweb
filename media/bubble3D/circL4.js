@@ -50,12 +50,13 @@ function drawChart() {
 
   var options = { 
     title : 'Sphericity on Level 4',
-    hAxis: {title: 'Time[s]',viewWindow: {min: 0.0, max: 3.0},ticks: [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]}, 
-    vAxis: {title: 'U_z', viewWindow: {min: 0.955, max: 1.005},ticks: [0.955, 0.96, 0.965, 0.97, 0.975, 0.98, 0.985, 0.99, 0.995, 1.0, 1.005]}, 
+    hAxis: {title: 'Time[s]',viewWindow: {min: 0.0, max: 3.0}}, 
+    vAxis: {title: 'U_z', viewWindow: {min: 0.955, max: 1.005}}, 
     width: 630, 
     height: 450, 
     legend: { position: 'right', alignment: 'start' }, 
-    chartArea: {  width: "50%", height: "70%" } 
+    chartArea: {  width: "50%", height: "70%" }, 
+    explorer: {maxZoomOut: 1, maxZoomIn: .001} 
   }; 
 
   var chart = new google.visualization.LineChart( 
