@@ -14,8 +14,12 @@
 
 <!-- google charts head part-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript" src="../../../../media/js/example.js"></script>
 <!--script type="text/javascript" src="../../../../media/bubble3D/bubbletest.js"></script-->
+<script type="text/javascript" src="../../../../media/bubble3D/sizeL.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/circL.js"></script>
+<script type="text/javascript" src="../../../../media/bubble3D/massL.js"></script>
 <script type="text/javascript" src="../../../../media/bubble3D/surfL2.js"></script>
 <script type="text/javascript" src="../../../../media/bubble3D/circL2.js"></script>
 <script type="text/javascript" src="../../../../media/bubble3D/circL3.js"></script>
@@ -415,6 +419,20 @@ google.load('visualization', '1', {packages:['controls'], callback: drawChart});
 <div id="sizeL3"></div>
 <div id="sizeL4"></div>
 
+<input type='button' id='b1' value='Sphericity on Level 2' />
+<input type='button' id='b2' value='Sphericity on Level 3' />
+<input type='button' id='b3' value='Sphericity on Level 4' />
+<div id="circL"></div>
+
+<input type='button' id='bm1' value='Mass conservation on Level 2' />
+<input type='button' id='bm2' value='Mass conservation on Level 3' />
+<input type='button' id='bm3' value='Mass conservation on Level 4' />
+<div id="massL"></div>
+
+<input type='button' id='bs1' value='plot size on Level 2' />
+<input type='button' id='bs2' value='plot size on Level 3' />
+<input type='button' id='bs3' value='plot size on Level 4' />
+<div id="sizeL"></div>
 
 <!--script src="https://www.gstatic.com/charts/loader.js"></script>
 <div id="dashboard_div">
